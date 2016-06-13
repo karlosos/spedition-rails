@@ -1,0 +1,10 @@
+<p id="notice"><%= notice %></p>
+<%= @client.name %>
+<%= @client.address.line1 %>
+<%= @client.address.line2 %>
+<%= @client.address.city %>
+<%= @client.address.state %>
+<%= @client.address.zip %>
+<%= @client.address.country %>
+<%= link_to 'Edit', edit_client_path(@client) %> |
+<%= link_to 'Back', clients_path %>
