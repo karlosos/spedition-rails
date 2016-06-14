@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160613093137) do
+ActiveRecord::Schema.define(version: 20160614072044) do
 
   create_table "addresses", force: true do |t|
     t.string   "line1"
@@ -32,6 +32,27 @@ ActiveRecord::Schema.define(version: 20160613093137) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "regon"
+    t.string   "pesel"
+    t.string   "nip"
+    t.string   "invoice_currency"
+    t.string   "freight_currency"
+    t.integer  "payment_term"
+    t.string   "invoice_language"
   end
+
+  create_table "contacts", force: true do |t|
+    t.string   "phone1"
+    t.string   "phone2"
+    t.string   "fax"
+    t.string   "email"
+    t.string   "www"
+    t.integer  "contactable_id"
+    t.string   "contactable_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "contacts", ["contactable_type", "contactable_id"], name: "index_contacts_on_contactable_type_and_contactable_id", unique: true
 
 end
