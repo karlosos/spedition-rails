@@ -2,7 +2,7 @@ require 'test_helper'
 
 class ClientsControllerTest < ActionController::TestCase
   setup do
-    @client = clients(:client_1)
+    @client = clients(:client_google)
   end
 
   test "should get index" do

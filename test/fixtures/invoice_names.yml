@@ -1,11 +1,11 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
-one:
-  number: 1
-  month: 1
-  year: 1
-
-two:
-  number: 1
-  month: 1
-  year: 1
+# # # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# #
+# # one:
+# #   number: 1
+# #   month: 1
+# #   year: 1
+# #
+# name_invoice_one:
+#   number: 1
+#   month: 1
+#   year: 2016

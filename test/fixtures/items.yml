@@ -1,17 +1,19 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
-# one:
-#   name: MyString
-#   pkwiu: MyString
-#   unit: MyString
-#   quantity: 1
-#   tax: MyString
-#   integer: MyString
+# # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 #
-# two:
-#   name: MyString
-#   pkwiu: MyString
-#   unit: MyString
+# item_one:
+#   name: Trasa A-B
+#   pkwiu:
+#   unit: FRACHT
 #   quantity: 1
-#   tax: MyString
-#   integer: MyString
+#   tax:
+#   unit_price_cents: 32132
+#   unit_price_currency: EUR
+#
+# item_two:
+#   name: Trasa Kraków-Warszawa
+#   pkwiu:
+#   unit: FRACHT
+#   quantity: 1
+#   tax:
+#   unit_price_cents: 10232
+#   unit_price_currency: EUR

@@ -4,7 +4,7 @@ class CreateInvoiceNames < ActiveRecord::Migration
       t.integer :number
       t.integer :month
       t.integer :year
-
+      t.belongs_to :invoice, index: true
       t.timestamps
     end
   end

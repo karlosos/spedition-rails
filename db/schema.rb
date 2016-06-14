@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160614103045) do
+ActiveRecord::Schema.define(version: 20160614110221) do
 
   create_table "addresses", force: true do |t|
     t.string   "line1"
@@ -54,6 +54,30 @@ ActiveRecord::Schema.define(version: 20160614103045) do
   end
 
   add_index "contacts", ["contactable_type", "contactable_id"], name: "index_contacts_on_contactable_type_and_contactable_id", unique: true
+
+  create_table "invoice_items", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "invoice_names", force: true do |t|
+    t.integer  "number"
+    t.integer  "month"
+    t.integer  "year"
+    t.integer  "invoice_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "invoice_names", ["invoice_id"], name: "index_invoice_names_on_invoice_id"
+
+  create_table "invoices", force: true do |t|
+    t.datetime "date"
+    t.integer  "client_id"
+    t.integer  "seller_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "items", force: true do |t|
     t.string   "name"
