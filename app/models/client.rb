@@ -5,4 +5,13 @@ class Client < ActiveRecord::Base
   accepts_nested_attributes_for :contact
   validates :address, presence: true
   validates :contact, presence: true
+
+  def self.search(search)
+    if search
+      where('name LIKE ?', "%#{search}%")
+    else
+      all
+    end
+  end
+
 end
