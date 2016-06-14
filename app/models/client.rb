@@ -6,6 +6,9 @@ class Client < ActiveRecord::Base
   validates :address, presence: true
   validates :contact, presence: true
 
+  has_many :invoices_as_seller,    class_name: 'Invoice', foreign_key: 'seller_id'
+  has_many :ivoices_as_buyer, class_name: 'Invoice', foreign_key: 'buyer_id'
+
   def self.search(search)
     if search
       where('name LIKE ?', "%#{search}%")

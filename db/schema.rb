@@ -56,9 +56,14 @@ ActiveRecord::Schema.define(version: 20160614110221) do
   add_index "contacts", ["contactable_type", "contactable_id"], name: "index_contacts_on_contactable_type_and_contactable_id", unique: true
 
   create_table "invoice_items", force: true do |t|
+    t.integer  "invoice_id"
+    t.integer  "item_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "invoice_items", ["invoice_id"], name: "index_invoice_items_on_invoice_id"
+  add_index "invoice_items", ["item_id"], name: "index_invoice_items_on_item_id"
 
   create_table "invoice_names", force: true do |t|
     t.integer  "number"

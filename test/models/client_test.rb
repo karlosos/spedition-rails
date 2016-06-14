@@ -10,4 +10,9 @@ class ClientTest < ActiveSupport::TestCase
     @client.address = nil
     assert_not @client.valid?
   end
+
+  test "Contact should not be nil" do
+    @client.contact = nil
+    assert_not @client.valid?
+  end
 end
