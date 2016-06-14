@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+# one:
+#   name: MyString
+#   pkwiu: MyString
+#   unit: MyString
+#   quantity: 1
+#   tax: MyString
+#   integer: MyString
+#
+# two:
+#   name: MyString
+#   pkwiu: MyString
+#   unit: MyString
+#   quantity: 1
+#   tax: MyString
+#   integer: MyString
