@@ -1,10 +1,16 @@
 <p id="notice"><%= notice %></p>
-<%= @client.name %>
-<%= @client.address.line1 %>
-<%= @client.address.line2 %>
-<%= @client.address.city %>
-<%= @client.address.state %>
-<%= @client.address.zip %>
-<%= @client.address.country %>
-<%= link_to 'Edit', edit_client_path(@client) %> |
-<%= link_to 'Back', clients_path %>
+<ul>
+<li>Nazwa: <%= @client.name %></li>
+<li>Adres: <%= @client.address.line1 %></li>
+<li><%= @client.address.line2 %></li>
+<li>Miasto: <%= @client.address.city %></li>
+<li>State: <%= @client.address.state %></li>
+<li>Kod: <%= @client.address.zip %></li>
+<li>Kraj: <%= @client.address.country %></li>
+<li>Tel: <%= @client.contact.phone1 %></li>
+<li><%= @client.contact.phone2 %></li>
+<li>Fax: <%= @client.contact.fax %></li>
+<li>WWW: <%= @client.contact.www %></li>
+<li><%= link_to 'Edit', edit_client_path(@client) %></li>
+<li><%= link_to 'Back', clients_path %></li>
+</ul>

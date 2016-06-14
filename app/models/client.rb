@@ -4,5 +4,5 @@ class Client < ActiveRecord::Base
   accepts_nested_attributes_for :address
   accepts_nested_attributes_for :contact
   validates :address, presence: true
-  #validates :contact, presence: true
+  validates :contact, presence: true
 end
