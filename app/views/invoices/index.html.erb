@@ -10,9 +10,9 @@
   <tbody>
     <% @invoices.each do |invoice| %>
       <tr>
-        <td><%= @invoice.invoice_name.get_name %></td>
-        <td><%= @invoice.date %></td>
-        <td><%= @invoice.client.name %></td>
+        <td><%= invoice.invoice_name.get_name %></td>
+        <td><%= invoice.date %></td>
+        <td><%= invoice.client.name %></td>
         <td><%= link_to 'Show', invoice %></td>
         <td><%= link_to 'Edit', edit_invoice_path(invoice) %></td>
         <td><%= link_to 'Destroy', invoice, method: :delete, data: { confirm: 'Are you sure?' } %></td>

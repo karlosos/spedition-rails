@@ -24,24 +24,23 @@
   <h3> My </h3>
   <%= invoice_form.collection_select :seller_id, Client.all, :id, :name %>
 
-
-  <!-- <%= invoice_form.fields_for :invoice_items do |invoice_item_form| %>
-    <%= invoice_item_form.fields_for :item do |item_form| %>
-      <%= item_form.text_field :name %>
-    <% end %>
-  <% end %> -->
-
+  <h3> Usługi/towary </h3>
+  <ul>
+  <%= invoice_form.fields_for :invoice_items do |builder| %>
+  <li>
+    <%= builder.label :quantity %>
+    <%= builder.number_field :quantity %> <br>
+    <%= builder.collection_select :item_id, Item.all, :id, :name %>
+    <!-- <%= builder.fields_for :item do |item| %>
+      <%= item.label :name %> <br>
+      <%= item.text_field :name %> <br>
+      <%= item.label :unit %> <br>
+      <%= item.text_field :unit %>
+    <% end %> -->
+  </li>
+  <% end %>
+  <ul>
   <div class="actions">
     <%= invoice_form.submit %>
   </div>
 <% end %>
-
-<!-- <%= simple_form_for(@invoice) do |form| %>
-
-  <%= form.input :date %>
-  <% form.simple_fields_for :items do |item_form| %>
-    <% item_form.input :name %>
-  <% end %>
-
-  <%= form.submit "Submit" %>
-<% end %> -->

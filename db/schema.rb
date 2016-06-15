@@ -58,8 +58,13 @@ ActiveRecord::Schema.define(version: 20160614110221) do
   create_table "invoice_items", force: true do |t|
     t.integer  "invoice_id"
     t.integer  "item_id"
+    t.integer  "quantity"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "price_cents",         default: 0,     null: false
+    t.string   "price_currency",      default: "EUR", null: false
+    t.integer  "unit_price_cents",    default: 0,     null: false
+    t.string   "unit_price_currency", default: "EUR", null: false
   end
 
   add_index "invoice_items", ["invoice_id"], name: "index_invoice_items_on_invoice_id"
@@ -88,12 +93,9 @@ ActiveRecord::Schema.define(version: 20160614110221) do
     t.string   "name"
     t.string   "pkwiu"
     t.string   "unit"
-    t.integer  "quantity"
     t.integer  "tax"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "price_cents",         default: 0,     null: false
-    t.string   "price_currency",      default: "EUR", null: false
     t.integer  "unit_price_cents",    default: 0,     null: false
     t.string   "unit_price_currency", default: "EUR", null: false
   end

@@ -1,6 +1,5 @@
 class AddPriceToItems < ActiveRecord::Migration
   def change
-  add_money :items, :price
   add_money :items, :unit_price
 
   #add_monetize :items, :price

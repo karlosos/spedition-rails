@@ -6,7 +6,7 @@ class Invoice < ActiveRecord::Base
   has_many :items, through: :invoice_items
 
   #accepts_nested_attributes_for :client
-#  accepts_nested_attributes_for :seller
+  #accepts_nested_attributes_for :seller
   accepts_nested_attributes_for :invoice_name
   accepts_nested_attributes_for :invoice_items
 
@@ -14,5 +14,5 @@ class Invoice < ActiveRecord::Base
   validates :seller, presence: true
   validates :invoice_name, presence: true
   validates :date, presence: true
-  validates :items, :length => { :minimum => 1 }
+  validates :invoice_items, :length => { :minimum => 1 }
 end

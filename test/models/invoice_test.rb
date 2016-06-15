@@ -2,8 +2,10 @@ require 'test_helper'
 
 class InvoiceTest < ActiveSupport::TestCase
   def setup
-    @item1 = Item.new(name: "Transport na trasie A-B", unit: "FRACHT", quantity: 1, tax: nil, unit_price_cents: Money.new(62700, 'EUR'))
-    @item2 = Item.new(name: "Transport na trasie A-B", unit: "FRACHT", quantity: 1, tax: nil, unit_price_cents: Money.new(43827, 'EUR'))
+    @item1 = Item.new(name: "Transport na trasie A-B", unit: "FRACHT", tax: nil, unit_price_cents: Money.new(62700, 'EUR'))
+    @item2 = Item.new(name: "Transport na trasie A-B", unit: "FRACHT", tax: nil, unit_price_cents: Money.new(43827, 'EUR'))
+    @invoice_item1 = InvoiceItem.new(item: @item1, quantity: 2)
+    @invoice_item2 = InvoiceItem.new(item: @item2, quantity: 4)
     @address = Address.new(line1: "ul. Cicha 132 m.16", city: "Gniezno", zip: "62-200", country: "Polska")
     @contact = Contact.new()
     @client = Client.new(name: "Company A", address: @address, contact: @contact)
@@ -21,8 +23,8 @@ class InvoiceTest < ActiveSupport::TestCase
     @invoice.invoice_name = @invoice_name
     @invoice.client = @client
     @invoice.seller = @seller
-    @invoice.items << @item1
-    @invoice.items << @item2
+    @invoice.invoice_items << @invoice_item1
+    @invoice.invoice_items << @invoice_item2
   end
 
   test "client should be present" do
@@ -45,11 +47,11 @@ class InvoiceTest < ActiveSupport::TestCase
     assert_not @invoice.valid?
   end
 
-  test "at least one item should be present" do
-    @invoice.items.each do |item|
-      @invoice.items.delete(item)
+  test "at least one invoice_item should be present" do
+    @invoice.invoice_items.each do |invoice_item|
+      @invoice.invoice_items.delete(invoice_item)
     end
-    assert_equal 0, @invoice.items.size
+    assert_equal 0, @invoice.invoice_items.size
     assert_not @invoice.valid?
   end
 end
