@@ -4,6 +4,6 @@ class InvoiceName < ActiveRecord::Base
     validates :year, presence: true, numericality: { only_integer: true, greater_than: 0 }
 
     def get_name
-      return "#{number}/#{month}#{year}"
+      return "#{number}/#{month}/#{year}"
     end
 end

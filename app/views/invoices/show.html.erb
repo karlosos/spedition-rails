@@ -1,7 +1,25 @@
 <p id="notice"><%= notice %></p>
-<%= @invoice.invoice_name.get_name %>
-<%= @invoice.date %>
-<%= @invoice.client.name %>
 
+<h3> Numer </h3>
+<%= @invoice.invoice_name.get_name %>
+
+<h3> Data </h3>
+<%= @invoice.date %>
+
+<h3> Klient </h3>
+<%= @invoice.client.name %> <br>
+<%= @invoice.client.address.line1 %> <br>
+<%= @invoice.client.address.city %> <br>
+<%= @invoice.client.address.country %> <br>
+
+<h3> Usługi </h3>
+<% @invoice.invoice_items.each do |invoice_item| %>
+  <h4><%= invoice_item.item.name %></h4>
+  Sztuk: <%= invoice_item.quantity %> <br>
+  jm: <%= invoice_item.item.unit %> <br>
+  Cena za jm: <%= invoice_item.unit_price %> <br>
+  Cena: <%= invoice_item.price %>
+<% end %>
+<br>
 <%= link_to 'Edit', edit_invoice_path(@invoice) %> |
 <%= link_to 'Back', invoices_path %>

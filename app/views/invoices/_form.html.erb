@@ -30,6 +30,8 @@
   <li>
     <%= builder.label :quantity %>
     <%= builder.number_field :quantity %> <br>
+    <%= builder.label :unit_price_cents %>
+    <%= builder.number_field :unit_price_cents %> <br>
     <%= builder.collection_select :item_id, Item.all, :id, :name %>
     <!-- <%= builder.fields_for :item do |item| %>
       <%= item.label :name %> <br>

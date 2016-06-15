@@ -79,7 +79,8 @@ class InvoicesController < ApplicationController
       :date,
       :seller_id,
       :client_id,
-      invoice_items_attributes: [ :id, :item_id, :quantity, item_attributes:
+      invoice_items_attributes: [ :id, :item_id, :quantity, :unit_price_cents,
+        item_attributes:
         [:name, :unit, :id ]
         ],
       invoice_name_attributes: [:number, :month, :year],
