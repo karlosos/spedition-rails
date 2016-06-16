@@ -28,7 +28,7 @@ gem 'money-rails'
 gem 'simple_form'
 gem 'country_select'
 gem 'jquery-turbolinks'
-gem 'chosen-rails'
+#gem 'chosen-rails'
 
 group :development, :test do
   gem 'sqlite3',     '1.3.9'
