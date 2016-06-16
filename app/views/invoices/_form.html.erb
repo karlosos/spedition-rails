@@ -27,23 +27,9 @@
   <h3> Usługi/towary </h3>
   <ul>
   <%= invoice_form.fields_for :invoice_items do |builder| %>
-  <li>
-      <%= builder.label "Destroy" %>
-      <%= builder.hidden_field :_destroy %>
-      <%= link_to "remove", "#", class: "remove_invoice_items" %> <br>
-      <%= builder.label :quantity %>
-      <%= builder.number_field :quantity %> <br>
-      <%= builder.label :unit_price_cents %>
-      <%= builder.number_field :unit_price_cents %> <br>
-      <%= builder.collection_select :item_id, Item.all, :id, :name %>
-      <!-- <%= builder.fields_for :item do |item| %>
-        <%= item.label :name %> <br>
-        <%= item.text_field :name %> <br>
-        <%= item.label :unit %> <br>
-        <%= item.text_field :unit %>
-      <% end %> -->
-  </li>
+    <%= render 'invoice_item_fields', f: builder %>
   <% end %>
+  <%= link_to_add_invoice_item "Dodaj towar", invoice_form, :invoice_items %>
   <ul>
   <div class="actions">
     <%= invoice_form.submit %>
