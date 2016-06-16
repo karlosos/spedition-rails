@@ -8,7 +8,7 @@ class Invoice < ActiveRecord::Base
   #accepts_nested_attributes_for :client
   #accepts_nested_attributes_for :seller
   accepts_nested_attributes_for :invoice_name
-  accepts_nested_attributes_for :invoice_items
+  accepts_nested_attributes_for :invoice_items, allow_destroy: true
 
   validates :client, presence: true
   validates :seller, presence: true
