@@ -5,6 +5,10 @@ class ClientsController < ApplicationController
   # GET /clients.json
   def index
     @clients = Client.joins(:address).search(params[:search]).order(sort_column + " " + sort_direction).paginate(:page => params[:page], :per_page => 30)
+    respond_to do |format|
+      format.html
+      format.json { render json: Client.joins(:address).where("name like ?", "%#{params[:q]}%") }
+    end
   end
 
   # GET /clients/1

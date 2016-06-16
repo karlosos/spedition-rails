@@ -28,6 +28,7 @@ gem 'money-rails'
 gem 'simple_form'
 gem 'country_select'
 gem 'jquery-turbolinks'
+gem "select2-rails"
 #gem 'chosen-rails'
 
 group :development, :test do

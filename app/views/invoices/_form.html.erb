@@ -18,11 +18,11 @@
     <% render :partial => 'invoice_name_form', :locals => {:f => invoice_name_form} %>
   <% end %>
 
-  <h3> Klient </h3>
-  <%= invoice_form.collection_select :client_id, Client.all, :id, :name %>
+  <h3> Ajax send requests but I have Client.all </h3>
+  <%= invoice_form.collection_select :client_id, Client.all.limit(2), :id, :name %>
 
-  <h3> My </h3>
-  <%= invoice_form.collection_select :seller_id, Client.all, :id, :name %>
+  <h3> Ajax not working </h3>
+  <%= invoice_form.collection_select :seller_id, [], :id, :name %>
 
   <h3> Usługi/towary </h3>
   <ul>

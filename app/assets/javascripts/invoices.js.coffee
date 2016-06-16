@@ -10,5 +10,28 @@ jQuery ->
     $(this).before($(this).data('fields').replace(regexp, time))
     event.preventDefault()
 
-  $('#invoice_client_id').chosen()
-  $('#invoice_seller_id').chosen()
+  $('#invoice_client_id').select2
+    theme: 'bootstrap'
+    ajax:
+      url: '/clients.json'
+      dataType: 'json'
+      results: (data, page) ->
+        { results: $.map(data, (client, i) ->
+          {
+            id: client.id
+            text: client.name
+          }
+        ) }
+
+    $('#invoice_seller_id').select2
+      theme: 'bootstrap'
+      ajax:
+        url: '/clients.json'
+        dataType: 'json'
+        results: (data, page) ->
+          { results: $.map(data, (client, i) ->
+            {
+              id: client.id
+              text: client.name
+            }
+          ) }
