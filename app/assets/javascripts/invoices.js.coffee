@@ -9,3 +9,6 @@ jQuery ->
     regexp = new RegExp($(this).data('id'), 'g')
     $(this).before($(this).data('fields').replace(regexp, time))
     event.preventDefault()
+
+  $('#invoice_client_id').chosen()
+  $('#invoice_seller_id').chosen()

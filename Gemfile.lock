@@ -41,6 +41,10 @@ GEM
       columnize (~> 0.8)
       debugger-linecache (~> 1.2)
       slop (~> 3.6)
+    chosen-rails (1.5.2)
+      coffee-rails (>= 3.2)
+      railties (>= 3.0)
+      sass-rails (>= 3.2)
     coderay (1.1.1)
     coffee-rails (4.0.1)
       coffee-script (>= 2.2.0)
@@ -210,6 +214,7 @@ PLATFORMS
 DEPENDENCIES
   bootstrap-sass
   byebug (= 3.4.0)
+  chosen-rails
   coffee-rails (~> 4.0.0)
   country_select
   guard-minitest (= 2.3.1)
