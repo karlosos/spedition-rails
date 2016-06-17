@@ -9,6 +9,9 @@ jQuery ->
     regexp = new RegExp($(this).data('id'), 'g')
     $(this).before($(this).data('fields').replace(regexp, time))
     event.preventDefault()
+    $('.invoice_items_form').find('select').select2
+        theme: 'bootstrap'
+
 
   $('#invoice_client_id').select2
     theme: 'bootstrap'
@@ -37,3 +40,6 @@ jQuery ->
             text: client.name
           }
        )}
+
+    $('.invoice_items_form').find('select').select2
+        theme: 'bootstrap'

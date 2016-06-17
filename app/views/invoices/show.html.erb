@@ -17,8 +17,8 @@
   <h4><%= invoice_item.item.name %></h4>
   Sztuk: <%= invoice_item.quantity %> <br>
   jm: <%= invoice_item.item.unit %> <br>
-  Cena za jm: <%= invoice_item.unit_price %> <br>
-  Cena: <%= invoice_item.price %>
+  Cena za jm: <%= humanized_money_with_symbol invoice_item.unit_price %> <br>
+  Cena: <%= humanized_money_with_symbol invoice_item.price %>
 <% end %>
 <br>
 <%= link_to 'Edit', edit_invoice_path(@invoice) %> |

@@ -16,7 +16,7 @@ class InvoicesController < ApplicationController
   # GET /invoices/new
   def new
     @invoice = Invoice.new
-    3.times { @invoice.invoice_items.build }
+    @invoice.invoice_items.build
     @invoice.build_invoice_name
     # @item = @invoice_items.build_item
     # @item2 = @invoice_items.build_item
@@ -79,7 +79,7 @@ class InvoicesController < ApplicationController
       :date,
       :seller_id,
       :client_id,
-      invoice_items_attributes: [ :id, :item_id, :quantity, :unit_price_cents, :_destroy,
+      invoice_items_attributes: [ :id, :item_id, :quantity, :unit_price, :_destroy,
         item_attributes:
         [:name, :unit, :id ]
         ],

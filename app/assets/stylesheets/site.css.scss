@@ -68,3 +68,33 @@ th .desc:after {
 select {
   width: 300px;
 }
+
+input {
+  @extend .form-control;
+}
+
+.remove_invoice_items {
+  @extend .btn;
+  @extend .btn-danger;
+}
+
+.add_fields {
+  @extend .btn;
+  @extend .btn-success;
+}
+
+.invoice_name_form {
+  input {
+    width: 100px;
+    display: inline;
+  }
+}
+.invoice_items_form {
+  input[type="number"] {
+    width: 100px;
+  }
+
+  li {
+    list-style-type: none;
+  }
+}

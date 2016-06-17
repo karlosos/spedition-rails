@@ -10,28 +10,40 @@
       </ul>
     </div>
   <% end %>
-  <h3> Data </h3>
-  <%= invoice_form.text_field :date %>
+  <div class="invoice-form form-group">
 
-  <h3> Nazwa faktury </h3>
-  <%= invoice_form.fields_for :invoice_name do |invoice_name_form| %>
-    <% render :partial => 'invoice_name_form', :locals => {:f => invoice_name_form} %>
-  <% end %>
+    <%= label_tag :date, "Data wystawienia faktury" %>
+    <%= invoice_form.date_field :date, value: Date.today %>
 
-  <h3> Klient </h3>
-  <%= invoice_form.collection_select :client_id, [], :id, :name %>
+    <h3> Numer faktury </h3>
+    <%= invoice_form.fields_for :invoice_name do |invoice_name_form| %>
+      <% render :partial => 'invoice_name_form', :locals => {:f => invoice_name_form} %>
+    <% end %>
 
-  <h3> My </h3>
-  <%= invoice_form.collection_select :seller_id, [], :id, :name %>
+    <hr>
 
-  <h3> Usługi/towary </h3>
-  <ul>
-  <%= invoice_form.fields_for :invoice_items do |builder| %>
-    <%= render 'invoice_item_fields', f: builder %>
-  <% end %>
-  <%= link_to_add_invoice_item "Dodaj towar", invoice_form, :invoice_items %>
-  <ul>
-  <div class="actions">
-    <%= invoice_form.submit %>
+    <h3> Nabywca </h3>
+    <%= invoice_form.collection_select :client_id, Client.limit(1), :id, :name %>
+
+    <h3> My </h3>
+    <%= invoice_form.collection_select :seller_id, Client.limit(1), :id, :name %>
+
+    <hr>
+
+    <h3> Towary </h3>
+    <ul class="invoice_items_form">
+      <hr>
+      <%= invoice_form.fields_for :invoice_items do |builder| %>
+        <%= render 'invoice_item_fields', f: builder %>
+      <% end %>
+      <%= link_to_add_invoice_item "Dodaj towar", invoice_form, :invoice_items %>
+    </ul>
+
+    <hr>
+
+    <div class="actions">
+      <%= invoice_form.submit %>
+    </div>
+
   </div>
 <% end %>
