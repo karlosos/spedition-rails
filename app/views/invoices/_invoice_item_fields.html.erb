@@ -4,7 +4,7 @@
     <%= f.label :quantity, "Ilość" %>
     <%= f.number_field :quantity, value: 1 %>
     <%= f.label :unit_price_cents, "Cena za sztukę" %>
-    <%= f.number_field :unit_price, :step => 'any' %> <br>
+    <%= f.number_field :unit_price, :step => 'any', :class => 'unit_price' %> <br>
 
 
     <!-- <%= f.fields_for :item do |item| %>

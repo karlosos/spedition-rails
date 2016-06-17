@@ -12,7 +12,6 @@ jQuery ->
     $('.invoice_items_form').find('select').select2
         theme: 'bootstrap'
 
-
   $('#invoice_client_id').select2
     theme: 'bootstrap'
     ajax:
@@ -43,3 +42,10 @@ jQuery ->
 
     $('.invoice_items_form').find('select').select2
         theme: 'bootstrap'
+
+    $('.select2-hidden-accessible').change ->
+      item_id = $(this).find(":selected").val()
+      console.log($(this).parent().find('.unit_price').val(item_id))
+      # ajax:
+      #   url: "items/#{item_id}"
+      #   dataType: 'json'
