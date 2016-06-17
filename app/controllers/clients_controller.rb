@@ -7,7 +7,12 @@ class ClientsController < ApplicationController
     @clients = Client.joins(:address).search(params[:search]).order(sort_column + " " + sort_direction).paginate(:page => params[:page], :per_page => 30)
     respond_to do |format|
       format.html
-      format.json { render json: Client.joins(:address).where("lower(name) like ?", "%#{params[:q].downcase}%").limit(2) }
+      if params[:q].present?
+        query = params[:q].downcase
+      else
+        query = ""
+      end
+      format.json { render json: Client.joins(:address).where("lower(name) like ?", "%#{query}%").limit(2) }
     end
   end
 
