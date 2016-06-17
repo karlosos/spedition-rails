@@ -98,3 +98,15 @@ input {
     list-style-type: none;
   }
 }
+
+/* clients index */
+.clients_search {
+  input[type="text"] {
+    width: 300px;
+    display: inline;
+  }
+  input[type="submit"] {
+    width: 100px;
+    display: inline;
+  }
+}

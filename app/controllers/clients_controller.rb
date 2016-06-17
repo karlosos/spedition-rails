@@ -81,8 +81,7 @@ class ClientsController < ApplicationController
     end
 
     def sort_column
-      #Client.column_names.include?(params[:sort]) ? params[:sort] : "name"
-      params[:sort] || "name"
+      Client.joins(:address).joins(:contact).column_names.include?(params[:sort]) ? params[:sort] : "name"
     end
 
     def sort_direction
