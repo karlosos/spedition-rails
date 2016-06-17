@@ -15,23 +15,25 @@ jQuery ->
     ajax:
       url: '/clients.json'
       dataType: 'json'
-      results: (data, page) ->
-        { results: $.map(data, (client, i) ->
+      processResults: (data) ->
+        return {
+        results: $.map(data, (client, i) ->
           {
             id: client.id
             text: client.name
           }
-        ) }
+       )}
 
-    $('#invoice_seller_id').select2
-      theme: 'bootstrap'
-      ajax:
-        url: '/clients.json'
-        dataType: 'json'
-        results: (data, page) ->
-          { results: $.map(data, (client, i) ->
-            {
-              id: client.id
-              text: client.name
-            }
-          ) }
+  $('#invoice_seller_id').select2
+    theme: 'bootstrap'
+    ajax:
+      url: '/clients.json'
+      dataType: 'json'
+      processResults: (data) ->
+        return {
+        results: $.map(data, (client, i) ->
+          {
+            id: client.id
+            text: client.name
+          }
+       )}
