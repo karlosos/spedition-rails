@@ -1,6 +1,6 @@
 class Client < ActiveRecord::Base
-  has_one :address, :as => :addressable
-  has_one :contact, :as => :contactable
+  has_one :address, :as => :addressable, :dependent => :destroy
+  has_one :contact, :as => :contactable, :dependent => :destroy
   accepts_nested_attributes_for :address
   accepts_nested_attributes_for :contact
   validates :address, presence: true
