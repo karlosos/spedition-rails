@@ -11,6 +11,20 @@ jQuery ->
     event.preventDefault()
     $('.invoice_items_form').find('select').select2
         theme: 'bootstrap'
+    $('.select2-hidden-accessible').change ->
+      item_id = $(this).find(":selected").val()
+      unit_price_input = $(this).parent().find('.unit_price')
+      unit_price = 0;
+      $.ajax "/items/#{item_id}.json",
+        type: 'GET'
+        dataType: 'json'
+        error: (jqXHR, textStatus, errorThrown) ->
+            console.log(textStatus)
+        success: (data, textStatus, jqXHR) ->
+            console.log(data['unit_price'])
+            unit_price = data['unit_price']
+            unit_price = unit_price.toString().replace(",",".")
+            unit_price_input.val(unit_price)
 
   $('#invoice_client_id').select2
     theme: 'bootstrap'
