@@ -6,4 +6,8 @@ class InvoiceName < ActiveRecord::Base
     def get_name
       return "#{number}/#{month}/#{year}"
     end
+
+    def self.get_last_number_for_month(month)
+      return InvoiceName.where(month: month).order("number DESC").limit(1)
+    end
 end
