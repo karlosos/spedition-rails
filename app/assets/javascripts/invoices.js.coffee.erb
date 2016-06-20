@@ -54,34 +54,37 @@ jQuery ->
           }
        )}
 
-    $('.invoice_items_form').find('select').select2
-        theme: 'bootstrap'
+  $('.invoice_items_form').find('select').select2
+      theme: 'bootstrap'
 
-    $('.select2-hidden-accessible').change ->
-      item_id = $(this).find(":selected").val()
-      unit_price_input = $(this).parent().find('.unit_price')
-      unit_price = 0;
-      $.ajax "/items/#{item_id}.json",
-        type: 'GET'
-        dataType: 'json'
-        error: (jqXHR, textStatus, errorThrown) ->
-            console.log(textStatus)
-        success: (data, textStatus, jqXHR) ->
-            console.log(data['unit_price'])
-            unit_price = data['unit_price']
-            unit_price = unit_price.toString().replace(",",".")
-            unit_price_input.val(unit_price)
+  $('.select2-hidden-accessible').change ->
+    item_id = $(this).find(":selected").val()
+    unit_price_input = $(this).parent().find('.unit_price')
+    unit_price = 0;
+    $.ajax "/items/#{item_id}.json",
+      type: 'GET'
+      dataType: 'json'
+      error: (jqXHR, textStatus, errorThrown) ->
+          console.log(textStatus)
+      success: (data, textStatus, jqXHR) ->
+          console.log(data['unit_price'])
+          unit_price = data['unit_price']
+          unit_price = unit_price.toString().replace(",",".")
+          unit_price_input.val(unit_price)
 
-    $('#invoice_date').change ->
-      date = new Date($(this).val())
-      month = date.getMonth()+1
-      year = date.getYear() + 1900
-      console.log(year)
-      $.ajax "/invoices/invoice_name/#{year}/#{month}.json",
-        type: 'GET'
-        dataType: 'json'
-        success: (data, textStatus, jqXHR) ->
-          console.log(data['number'])
-          $('#invoice_invoice_name_attributes_number').val(data['number'])
-          $('#invoice_invoice_name_attributes_month').val(month)
-          $('#invoice_invoice_name_attributes_year').val(year)
+  $('#invoice_date').change ->
+    date = new Date($(this).val())
+    month = date.getMonth()+1
+    year = date.getYear() + 1900
+    console.log(year)
+    $.ajax "/invoices/invoice_name/#{year}/#{month}.json",
+      type: 'GET'
+      dataType: 'json'
+      success: (data, textStatus, jqXHR) ->
+        console.log(data['number'])
+        $('#invoice_invoice_name_attributes_number').val(data['number'])
+        $('#invoice_invoice_name_attributes_month').val(month)
+        $('#invoice_invoice_name_attributes_year').val(year)
+
+  $('#datetimepicker1').datepicker ->
+    locale: 'pl'

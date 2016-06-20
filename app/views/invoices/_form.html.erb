@@ -11,9 +11,13 @@
     </div>
   <% end %>
   <div class="invoice-form form-group">
-
     <%= label_tag :date, "Data wystawienia faktury" %>
-    <%= invoice_form.date_field :date, value: Date.today %>
+    <div class='input-group date' id='datetimepicker1' data-date-format="yyyy-mm-dd" locale="pl">
+        <%= invoice_form.text_field :date, { class: "form-control", value: Date.today } %>
+        <span class="input-group-addon">
+            <span class="glyphicon glyphicon-calendar"></span>
+        </span>
+    </div>
 
     <h3> Numer faktury </h3>
     <%= invoice_form.fields_for :invoice_name do |invoice_name_form| %>
