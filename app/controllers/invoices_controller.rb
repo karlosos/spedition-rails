@@ -20,7 +20,7 @@ class InvoicesController < ApplicationController
     @invoice.build_invoice_name
     @invoice.invoice_name.month = Date.today.month
     @invoice.invoice_name.year = Date.today.year
-    @invoice.invoice_name.number = InvoiceName.get_last_number_for_month(Date.today.month) + 1
+    @invoice.invoice_name.number = InvoiceName.get_last_number_for_month(Date.today.month, Date.today.year)
     # @item = @invoice_items.build_item
     # @item2 = @invoice_items.build_item
   end
@@ -71,7 +71,7 @@ class InvoicesController < ApplicationController
 
   # GET /invoices/invoice_name/1.json
   def last_invoice_number_for_month
-    @invoice_name = InvoiceName.get_last_number_for_month(params[:month])
+    @invoice_name = InvoiceName.get_last_number_for_month(params[:month], params[:year])
   end
 
   private

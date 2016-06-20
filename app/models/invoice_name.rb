@@ -7,8 +7,8 @@ class InvoiceName < ActiveRecord::Base
       return "#{number}/#{month}/#{year}"
     end
 
-    def self.get_last_number_for_month(month)
-      last_invoice_name = InvoiceName.where(month: month).order("number DESC").limit(1).first
+    def self.get_last_number_for_month(month, year)
+      last_invoice_name = InvoiceName.where('month = ? AND year = ?' , month, year).order("number DESC").limit(1).first
       if last_invoice_name
         last_invoice_name.number + 1
       else
