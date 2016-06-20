@@ -18,6 +18,9 @@ class InvoicesController < ApplicationController
     @invoice = Invoice.new
     @invoice.invoice_items.build
     @invoice.build_invoice_name
+    @invoice.invoice_name.month = Date.today.month
+    @invoice.invoice_name.year = Date.today.year
+    @invoice.invoice_name.number = InvoiceName.get_last_number_for_month(Date.today.month).number + 1
     # @item = @invoice_items.build_item
     # @item2 = @invoice_items.build_item
   end
@@ -64,6 +67,11 @@ class InvoicesController < ApplicationController
       format.html { redirect_to invoices_url, notice: 'Invoice was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  # GET /invoices/invoice_name/1.json
+  def last_invoice_number_for_month
+    @invoice_name = InvoiceName.get_last_number_for_month(params[:month])
   end
 
   private

@@ -14,7 +14,7 @@ jQuery ->
     $('.select2-hidden-accessible').change ->
       item_id = $(this).find(":selected").val()
       unit_price_input = $(this).parent().find('.unit_price')
-      unit_price = 0;
+      unit_price = 0
       $.ajax "/items/#{item_id}.json",
         type: 'GET'
         dataType: 'json'
