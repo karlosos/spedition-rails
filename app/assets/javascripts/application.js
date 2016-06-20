@@ -19,3 +19,4 @@
 //= require bootstrap
 //= require bootstrap-datepicker
 //= require bootstrap-datepicker/locales/bootstrap-datepicker.pl.js
+//= require select2_locale_pl

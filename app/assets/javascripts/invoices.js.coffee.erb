@@ -28,6 +28,8 @@ jQuery ->
 
   $('#invoice_client_id').select2
     theme: 'bootstrap'
+    formatNoMatches: (term) ->
+      console.log("brak wynikow")
     ajax:
       url: '/clients.json'
       dataType: 'json'
@@ -56,6 +58,10 @@ jQuery ->
 
   $('.invoice_items_form').find('select').select2
       theme: 'bootstrap'
+      placeholder: {
+        id: '-1',
+        text: 'Select an option'
+      }
 
   $('.invoice_items_form').find($('.select2-hidden-accessible')).change ->
     item_id = $(this).find(":selected").val()
