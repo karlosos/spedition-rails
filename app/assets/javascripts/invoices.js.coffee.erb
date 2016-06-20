@@ -83,3 +83,5 @@ jQuery ->
         success: (data, textStatus, jqXHR) ->
           console.log(data['number'])
           $('#invoice_invoice_name_attributes_number').val(data['number'])
+          $('#invoice_invoice_name_attributes_month').val(month)
+          $('#invoice_invoice_name_attributes_year').val(year)
