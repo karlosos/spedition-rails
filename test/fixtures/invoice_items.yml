@@ -5,10 +5,10 @@
 # # # below each fixture, per the syntax in the comments below
 # # #
 #
-# invoice_items_one:
-#   item: item_one
-#   invoice: invoice_one
-#
-# invoice_items_two:
-#   item: item_two
-#   invoice: invoice_one
+invoice_items_one:
+  item: item_one
+  invoice: invoice_one
+
+invoice_items_two:
+  item: item_two
+  invoice: invoice_one

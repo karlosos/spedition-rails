@@ -5,7 +5,9 @@
 # #   month: 1
 # #   year: 1
 # #
-# name_invoice_one:
-#   number: 1
-#   month: 1
-#   year: 2016
+
+name_invoice_one:
+  number: 1
+  month: 1
+  year: 2016
+  invoice: invoice_one

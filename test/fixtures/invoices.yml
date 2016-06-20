@@ -10,7 +10,7 @@
 # # two: {}
 # # #  column: value
 #
-# invoice_one:
-#   date: <%= DateTime.now %>
-#   seller_id: 1
-#   client_id: 2
+invoice_one:
+  date: <%= DateTime.now %>
+  seller: client_google
+  client: client_microsoft

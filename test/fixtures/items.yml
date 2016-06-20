@@ -1,19 +1,17 @@
 # # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 #
-# item_one:
-#   name: Trasa A-B
-#   pkwiu:
-#   unit: FRACHT
-#   quantity: 1
-#   tax:
-#   unit_price_cents: 32132
-#   unit_price_currency: EUR
-#
-# item_two:
-#   name: Trasa Kraków-Warszawa
-#   pkwiu:
-#   unit: FRACHT
-#   quantity: 1
-#   tax:
-#   unit_price_cents: 10232
-#   unit_price_currency: EUR
+item_one:
+  name: Trasa A-B
+  pkwiu:
+  unit: FRACHT
+  tax:
+  unit_price_cents: 32132
+  unit_price_currency: EUR
+
+item_two:
+  name: Trasa Kraków-Warszawa
+  pkwiu:
+  unit: FRACHT
+  tax:
+  unit_price_cents: 10232
+  unit_price_currency: EUR
