@@ -1,11 +1,15 @@
 <h1>Listing invoices</h1>
+<%= form_tag clients_path, :method => 'get' do %>
+  <%= hidden_field_tag :direction, params[:direction] %>
+  <%= hidden_field_tag :sort, params[:sort] %>
+<% end %>
 
 <table class="table">
   <thead>
     <tr>
-      <th>Numer</th>
-      <th>Data</th>
-      <th>Klient</th>
+      <th>numer faktury</th>
+      <th><%= sortable "date" %></th>
+      <th><%= sortable "clients.name" %></th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -23,7 +27,7 @@
     <% end %>
   </tbody>
 </table>
-
+<%= will_paginate @posts %>
 <br>
 
 <%= link_to 'New Invoice', new_invoice_path %>
