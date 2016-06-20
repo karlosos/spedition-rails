@@ -1,1 +1,1 @@
-json.extract! @invoice_name, :number, :month, :year
+json.number @invoice_name

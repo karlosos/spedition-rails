@@ -8,6 +8,11 @@ class InvoiceName < ActiveRecord::Base
     end
 
     def self.get_last_number_for_month(month)
-      return InvoiceName.where(month: month).order("number DESC").limit(1).first
+      last_invoice_name = InvoiceName.where(month: month).order("number DESC").limit(1).first
+      if last_invoice_name
+        last_invoice_name.number + 1
+      else
+        1
+      end
     end
 end

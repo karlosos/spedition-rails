@@ -71,3 +71,13 @@ jQuery ->
             unit_price = data['unit_price']
             unit_price = unit_price.toString().replace(",",".")
             unit_price_input.val(unit_price)
+
+    $('#invoice_date').change ->
+      month = new Date($(this).val()).getMonth()+1
+      console.log(month)
+      $.ajax "/invoices/invoice_name/#{month}.json",
+        type: 'GET'
+        dataType: 'json'
+        success: (data, textStatus, jqXHR) ->
+          console.log(data['number'])
+          $('#invoice_invoice_name_attributes_number').val(data['number'])
