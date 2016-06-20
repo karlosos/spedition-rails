@@ -11,7 +11,7 @@ jQuery ->
     event.preventDefault()
     $('.invoice_items_form').find('select').select2
         theme: 'bootstrap'
-    $('.select2-hidden-accessible').change ->
+    $('.invoice_items_form').find($('.select2-hidden-accessible')).change ->
       item_id = $(this).find(":selected").val()
       unit_price_input = $(this).parent().find('.unit_price')
       unit_price = 0
@@ -57,7 +57,7 @@ jQuery ->
   $('.invoice_items_form').find('select').select2
       theme: 'bootstrap'
 
-  $('.select2-hidden-accessible').change ->
+  $('.invoice_items_form').find($('.select2-hidden-accessible')).change ->
     item_id = $(this).find(":selected").val()
     unit_price_input = $(this).parent().find('.unit_price')
     unit_price = 0;
