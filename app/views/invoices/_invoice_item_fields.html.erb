@@ -1,6 +1,7 @@
 <li>
     <%= f.label :item_id, "Nazwa towaru" %>
     <%= f.collection_select :item_id, Item.all, :id, :name %>
+    <%= link_to 'Dodaj towar (jeżeli nie znalazłeś)', new_item_path, class: "create_object"%> <br>
     <%= f.label :quantity, "Ilość" %>
     <%= f.number_field :quantity, value: 1 %>
     <%= f.label :unit_price_cents, "Cena za sztukę" %>

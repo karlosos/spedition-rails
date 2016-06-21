@@ -29,7 +29,7 @@ jQuery ->
   $('#invoice_client_id').select2
     theme: 'bootstrap'
     formatNoMatches: (term) ->
-      console.log("brak wynikow")
+     "<em>#{term}</em> not found.<br><a href='#' id='new_contact'>Create new contact?</a>"
     ajax:
       url: '/clients.json'
       dataType: 'json'
@@ -58,10 +58,8 @@ jQuery ->
 
   $('.invoice_items_form').find('select').select2
       theme: 'bootstrap'
-      placeholder: {
-        id: '-1',
-        text: 'Select an option'
-      }
+      formatNoMatches: (term) ->
+        "<em>#{term}</em> not found.<br><a href='#' id='new_contact'>Create new contact?</a>"
 
   $('.invoice_items_form').find($('.select2-hidden-accessible')).change ->
     item_id = $(this).find(":selected").val()
@@ -91,6 +89,11 @@ jQuery ->
         $('#invoice_invoice_name_attributes_number').val(data['number'])
         $('#invoice_invoice_name_attributes_month').val(month)
         $('#invoice_invoice_name_attributes_year').val(year)
+
+  $('.create_object').click (e) ->
+    url = $(this).attr("href")
+    window.open(url, 'co to', 'toolbars=0,width=500,height=600,left=200,top=200,scrollbars=1,resizable=1')
+    e.preventDefault()
 
   $('#datetimepicker1').datepicker ->
     locale: 'pl'

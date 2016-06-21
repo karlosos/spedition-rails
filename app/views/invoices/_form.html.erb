@@ -35,6 +35,7 @@
       <% sellers = [@invoice.seller, ] %>
     <% end %>
     <%= invoice_form.collection_select :client_id, Client.limit(3), :id, :name %>
+    <%= link_to 'Dodaj klienta (jeżeli nie znalazłeś)', new_client_path, class: 'create_object' %>
 
     <h3> My </h3>
     <%= invoice_form.collection_select :seller_id, Client.limit(3), :id, :name %>
