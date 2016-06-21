@@ -5,6 +5,15 @@ class ItemsController < ApplicationController
   # GET /items.json
   def index
     @items = Item.all
+    respond_to do |format|
+      format.html
+      if params[:q].present?
+        query = params[:q].downcase
+      else
+        query = ""
+      end
+      format.json { render json: Item.where("lower(name) like ?", "%#{query}%").limit(2) }
+    end
   end
 
   # GET /items/1

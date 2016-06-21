@@ -11,6 +11,22 @@ jQuery ->
     event.preventDefault()
     $('.invoice_items_form').find('select').select2
         theme: 'bootstrap'
+        ajax:
+          url: '/items.json'
+          dataType: 'json'
+          processResults: (data) ->
+            return {
+            results: $.map(data, (item, i) ->
+              {
+                id: item.id
+                text: item.name
+              }
+           )}
+    $('.create_object').click (e) ->
+      url = $(this).attr("href")
+      window.open(url, 'co to', 'toolbars=0,width=500,height=600,left=200,top=200,scrollbars=1,resizable=1')
+      e.preventDefault()
+
     $('.invoice_items_form').find($('.select2-hidden-accessible')).change ->
       item_id = $(this).find(":selected").val()
       unit_price_input = $(this).parent().find('.unit_price')
@@ -58,6 +74,17 @@ jQuery ->
 
   $('.invoice_items_form').find('select').select2
       theme: 'bootstrap'
+      ajax:
+        url: '/items.json'
+        dataType: 'json'
+        processResults: (data) ->
+          return {
+          results: $.map(data, (item, i) ->
+            {
+              id: item.id
+              text: item.name
+            }
+         )}
       formatNoMatches: (term) ->
         "<em>#{term}</em> not found.<br><a href='#' id='new_contact'>Create new contact?</a>"
 
