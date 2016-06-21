@@ -1,9 +1,16 @@
 jQuery ->
-  $('form').on 'click', '.remove_invoice_items', (event) ->
-    $(this).prev('input[type=hidden]').val('1')
-    $(this).closest('li').hide()
-    event.preventDefault()
+  pageLoad()
 
+pageLoad = () ->
+  invoice_item_add_event()
+  invoice_item_remove_event()
+  startSelect()
+  invoice_name_get_on_date_change()
+  create_object_links()
+  date_picker_start()
+  invoice_items_price_update_on_item_change()
+
+invoice_item_add_event = () ->
   $('form').on 'click', '.add_fields', (event) ->
     time = new Date().getTime()
     regexp = new RegExp($(this).data('id'), 'g')
@@ -22,87 +29,63 @@ jQuery ->
                 text: item.name
               }
            )}
-    $('.create_object').click (e) ->
-      url = $(this).attr("href")
-      window.open(url, 'co to', 'toolbars=0,width=500,height=600,left=200,top=200,scrollbars=1,resizable=1')
-      e.preventDefault()
+    create_object_links()
+    invoice_items_price_update_on_item_change()
 
-    $('.invoice_items_form').find($('.select2-hidden-accessible')).change ->
-      item_id = $(this).find(":selected").val()
-      unit_price_input = $(this).parent().find('.unit_price')
-      unit_price = 0
-      $.ajax "/items/#{item_id}.json",
-        type: 'GET'
-        dataType: 'json'
-        error: (jqXHR, textStatus, errorThrown) ->
-            console.log(textStatus)
-        success: (data, textStatus, jqXHR) ->
-            console.log(data['unit_price'])
-            unit_price = data['unit_price']
-            unit_price = unit_price.toString().replace(",",".")
-            unit_price_input.val(unit_price)
+invoice_item_remove_event = () ->
+  $('form').on 'click', '.remove_invoice_items', (event) ->
+    $(this).prev('input[type=hidden]').val('1')
+    $(this).closest('li').hide()
+    event.preventDefault()
 
-  $('#invoice_client_id').select2
-    theme: 'bootstrap'
-    formatNoMatches: (term) ->
-     "<em>#{term}</em> not found.<br><a href='#' id='new_contact'>Create new contact?</a>"
-    ajax:
-      url: '/clients.json'
-      dataType: 'json'
-      processResults: (data) ->
-        return {
-        results: $.map(data, (client, i) ->
-          {
-            id: client.id
-            text: client.name
-          }
-       )}
-
-  $('#invoice_seller_id').select2
-    theme: 'bootstrap'
-    ajax:
-      url: '/clients.json'
-      dataType: 'json'
-      processResults: (data) ->
-        return {
-        results: $.map(data, (client, i) ->
-          {
-            id: client.id
-            text: client.name
-          }
-       )}
-
-  $('.invoice_items_form').find('select').select2
+startSelect = () ->
+    $('#invoice_client_id').select2
       theme: 'bootstrap'
+      formatNoMatches: (term) ->
+       "<em>#{term}</em> not found.<br><a href='#' id='new_contact'>Create new contact?</a>"
       ajax:
-        url: '/items.json'
+        url: '/clients.json'
         dataType: 'json'
         processResults: (data) ->
           return {
-          results: $.map(data, (item, i) ->
+          results: $.map(data, (client, i) ->
             {
-              id: item.id
-              text: item.name
+              id: client.id
+              text: client.name
             }
          )}
-      formatNoMatches: (term) ->
-        "<em>#{term}</em> not found.<br><a href='#' id='new_contact'>Create new contact?</a>"
 
-  $('.invoice_items_form').find($('.select2-hidden-accessible')).change ->
-    item_id = $(this).find(":selected").val()
-    unit_price_input = $(this).parent().find('.unit_price')
-    unit_price = 0;
-    $.ajax "/items/#{item_id}.json",
-      type: 'GET'
-      dataType: 'json'
-      error: (jqXHR, textStatus, errorThrown) ->
-          console.log(textStatus)
-      success: (data, textStatus, jqXHR) ->
-          console.log(data['unit_price'])
-          unit_price = data['unit_price']
-          unit_price = unit_price.toString().replace(",",".")
-          unit_price_input.val(unit_price)
+    $('#invoice_seller_id').select2
+      theme: 'bootstrap'
+      ajax:
+        url: '/clients.json'
+        dataType: 'json'
+        processResults: (data) ->
+          return {
+          results: $.map(data, (client, i) ->
+            {
+              id: client.id
+              text: client.name
+            }
+         )}
 
+    $('.invoice_items_form').find('select').select2
+        theme: 'bootstrap'
+        ajax:
+          url: '/items.json'
+          dataType: 'json'
+          processResults: (data) ->
+            return {
+            results: $.map(data, (item, i) ->
+              {
+                id: item.id
+                text: item.name
+              }
+           )}
+        formatNoMatches: (term) ->
+          "<em>#{term}</em> not found.<br><a href='#' id='new_contact'>Create new contact?</a>"
+
+invoice_name_get_on_date_change = () ->
   $('#invoice_date').change ->
     date = new Date($(this).val())
     month = date.getMonth()+1
@@ -117,10 +100,28 @@ jQuery ->
         $('#invoice_invoice_name_attributes_month').val(month)
         $('#invoice_invoice_name_attributes_year').val(year)
 
+create_object_links = () ->
   $('.create_object').click (e) ->
     url = $(this).attr("href")
     window.open(url, 'co to', 'toolbars=0,width=500,height=600,left=200,top=200,scrollbars=1,resizable=1')
     e.preventDefault()
 
-  $('#datetimepicker1').datepicker ->
-    locale: 'pl'
+date_picker_start = () ->
+    $('#datetimepicker1').datepicker ->
+      locale: 'pl'
+
+invoice_items_price_update_on_item_change = () ->
+  $('.invoice_items_form').find($('.select2-hidden-accessible')).change ->
+    item_id = $(this).find(":selected").val()
+    unit_price_input = $(this).parent().find('.unit_price')
+    unit_price = 0;
+    $.ajax "/items/#{item_id}.json",
+      type: 'GET'
+      dataType: 'json'
+      error: (jqXHR, textStatus, errorThrown) ->
+          console.log(textStatus)
+      success: (data, textStatus, jqXHR) ->
+          console.log(data['unit_price'])
+          unit_price = data['unit_price']
+          unit_price = unit_price.toString().replace(",",".")
+          unit_price_input.val(unit_price)
