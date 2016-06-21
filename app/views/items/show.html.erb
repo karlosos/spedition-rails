@@ -1,4 +1,17 @@
 <p id="notice"><%= notice %></p>
+<h3>Nazwa</h3>
+<%= @item.name %>
+
+<h3>Cena za <%= @item.unit %></h3>
+<%= "#{humanized_money_with_symbol @item.unit_price}/#{@item.unit}" %>
+
+<h3> pkwiu </h3>
+<%= @item.pkwiu %>
+
+<h3> tax </h3>
+<%= @item.tax %>
+
+<br>
 
 <%= link_to 'Edit', edit_item_path(@item) %> |
 <%= link_to 'Back', items_path %>
