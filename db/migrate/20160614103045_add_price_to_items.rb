@@ -4,5 +4,5 @@ class AddPriceToItems < ActiveRecord::Migration
 
   #add_monetize :items, :price
   #add_monetize :items, :unit_price
-end
+  end
 end

@@ -53,13 +53,13 @@
 
     <hr>
 
-    <h3> Wartość </h3>
-    <%= invoice_form.label :date, "Netto" %>
-    <%= invoice_form.number_field :date, :readonly => true  %>
-    <%= invoice_form.label :date, "VAT" %>
-    <%= invoice_form.number_field :date, :readonly => true  %>
-    <%= invoice_form.label :date, "Brutto" %>
-    <%= invoice_form.number_field :date, :readonly => true  %>
+    <h3> Wartość </h3>  
+    <%= invoice_form.label :net_price_cents, "Netto" %>
+    <%= invoice_form.number_field :net_price, :readonly => true  %>
+    <%= invoice_form.label :value_added_tax_cents, "VAT" %>
+    <%= invoice_form.number_field :value_added_tax, :readonly => true  %>
+    <%= invoice_form.label :total_selling_price_cents, "Brutto" %>
+    <%= invoice_form.number_field :total_selling_price, :readonly => true  %>
 
     <div class="actions">
       <%= invoice_form.submit %>

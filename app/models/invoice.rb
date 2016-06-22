@@ -5,6 +5,16 @@ class Invoice < ActiveRecord::Base
   has_many :invoice_items, inverse_of: :invoice
   has_many :items, through: :invoice_items
 
+  monetize :value_added_tax_cents, :numericality => {
+    :greater_than_or_equal_to => 0
+  }
+  monetize :net_price_cents, :numericality => {
+    :greater_than_or_equal_to => 0
+  }
+  monetize :total_selling_price_cents, :numericality => {
+    :greater_than_or_equal_to => 0
+  }
+  
   #accepts_nested_attributes_for :client
   #accepts_nested_attributes_for :seller
   accepts_nested_attributes_for :invoice_name

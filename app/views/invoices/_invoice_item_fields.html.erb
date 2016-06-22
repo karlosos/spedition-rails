@@ -6,15 +6,15 @@
     <%= f.number_field :quantity, value: 1 %> <br>
     <%= f.label :unit_price_cents, "Cena netto" %>
     <%= f.number_field :unit_price, :step => 'any', :class => 'unit_price' %> <br>
-    <%= f.label :unit_price, "Stawka VAT" %>
-    <%= f.number_field :unit_price, :step => 'any' %> <br>
+    <%= f.label :tax_rate, "Stawka VAT" %>
+    <%= f.number_field :tax_rate %> <br>
     <h3> Wartość </h3>
-    <%= f.label :unit_price_cents, "Wartość netto" %>
-    <%= f.number_field :unit_price, :readonly => true  %> <br>
-    <%= f.label :unit_price_cents, "Wartość vat" %>
-    <%= f.number_field :unit_price, :readonly => true  %> <br>
-    <%= f.label :unit_price_cents, "Wartość brutto" %>
-    <%= f.number_field :unit_price, :readonly => true %> <br>
+    <%= f.label :net_price_cents, "Wartość netto" %>
+    <%= f.number_field :net_price, :readonly => true  %> <br>
+    <%= f.label :value_added_tax_cents, "Wartość vat" %>
+    <%= f.number_field :value_added_tax, :readonly => true  %> <br>
+    <%= f.label :total_selling_price_cents, "Wartość brutto" %>
+    <%= f.number_field :total_selling_price, :readonly => true %> <br>
 
     <!-- <%= f.fields_for :item do |item| %>
       <%= item.label :name %> <br>
