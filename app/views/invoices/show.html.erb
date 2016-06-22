@@ -18,8 +18,15 @@
   Sztuk: <%= invoice_item.quantity %> <br>
   jm: <%= invoice_item.item.unit %> <br>
   Cena za jm: <%= humanized_money_with_symbol invoice_item.unit_price %> <br>
-  Cena: <%= humanized_money_with_symbol invoice_item.price %>
+  Wartość netto: <%= humanized_money_with_symbol invoice_item.net_price %>
+  Wartość vat: <%= humanized_money_with_symbol invoice_item.value_added_tax %>
+  Wartosć: <%= humanized_money_with_symbol invoice_item.total_selling_price %>
 <% end %>
+
+<h3> Wartość </h3>
+Wartość netto: <%= humanized_money_with_symbol @invoice.net_price %>
+Wartość vat: <%= humanized_money_with_symbol @invoice.value_added_tax %>
+Wartosć: <%= humanized_money_with_symbol @invoice.total_selling_price %>
 <br>
 <%= link_to 'Edit', edit_invoice_path(@invoice) %> |
 <%= link_to 'Back', invoices_path %>

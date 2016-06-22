@@ -70,11 +70,14 @@ invoice_calculate = () ->
   total_selling_price = 0
 
   net_price_inputs.each (index, element) ->
-    net_price += parseFloat($(this).val())
+    if ($(this).is(":visible"))
+      net_price += parseFloat($(this).val())
   value_added_tax_inputs.each (index, element) ->
-    value_added_tax += parseFloat($(this).val())
+    if ($(this).is(":visible"))
+      value_added_tax += parseFloat($(this).val())
   total_selling_price_inputs.each (index, element) ->
-    total_selling_price += parseFloat($(this).val())
+    if ($(this).is(":visible"))
+      total_selling_price += parseFloat($(this).val())
 
   invoice_net_price.val(net_price)
   invoice_value_added_tax.val(value_added_tax)
@@ -85,6 +88,7 @@ invoice_item_remove_event = () ->
     $(this).prev('input[type=hidden]').val('1')
     $(this).closest('li').hide()
     event.preventDefault()
+    invoice_calculate()
 
 startSelect = () ->
     $('#invoice_client_id').select2
