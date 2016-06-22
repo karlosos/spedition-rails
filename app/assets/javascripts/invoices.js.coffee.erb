@@ -9,6 +9,7 @@ pageLoad = () ->
   create_object_links()
   date_picker_start()
   invoice_items_price_update_on_item_change()
+  invoice_item_calculate_on_change()
 
 invoice_item_add_event = () ->
   $('form').on 'click', '.add_fields', (event) ->
@@ -31,6 +32,53 @@ invoice_item_add_event = () ->
            )}
     create_object_links()
     invoice_items_price_update_on_item_change()
+    invoice_item_calculate_on_change()
+
+invoice_item_calculate_on_change = () ->
+  $('.invoice_items_form').find('.editable_invoice_item_input').change ->
+    parent = $(this).parent()
+
+    net_price_input = parent.find('.net_price')
+    value_added_tax_input = parent.find('.value_added_tax')
+    total_selling_price_input = parent.find('.total_selling_price')
+
+    quantity = parent.find('.quantity').val()
+    unit_price = parent.find('.unit_price').val()
+    tax_rate = parent.find('.tax_rate').val()
+
+    net_price = quantity * unit_price
+    value_added_tax = net_price * (tax_rate/100)
+    total_selling_price = net_price + value_added_tax
+
+    net_price_input.val(net_price)
+    value_added_tax_input.val(value_added_tax)
+    total_selling_price_input.val(total_selling_price)
+
+    invoice_calculate()
+
+invoice_calculate = () ->
+  net_price_inputs = $('.net_price')
+  value_added_tax_inputs = $('.value_added_tax')
+  total_selling_price_inputs = $('.total_selling_price')
+
+  invoice_net_price = $('#invoice_net_price')
+  invoice_value_added_tax = $('#invoice_value_added_tax')
+  invoice_total_selling_price = $('#invoice_total_selling_price')
+
+  net_price = 0
+  value_added_tax = 0
+  total_selling_price = 0
+
+  net_price_inputs.each (index, element) ->
+    net_price += parseFloat($(this).val())
+  value_added_tax_inputs.each (index, element) ->
+    value_added_tax += parseFloat($(this).val())
+  total_selling_price_inputs.each (index, element) ->
+    total_selling_price += parseFloat($(this).val())
+
+  invoice_net_price.val(net_price)
+  invoice_value_added_tax.val(value_added_tax)
+  invoice_total_selling_price.val(total_selling_price)
 
 invoice_item_remove_event = () ->
   $('form').on 'click', '.remove_invoice_items', (event) ->
@@ -90,7 +138,7 @@ invoice_name_get_on_date_change = () ->
     date = new Date($(this).val())
     month = date.getMonth()+1
     year = date.getYear() + 1900
-    console.log(year)
+    #console.log(year)
     $.ajax "/invoices/invoice_name/#{year}/#{month}.json",
       type: 'GET'
       dataType: 'json'
