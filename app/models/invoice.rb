@@ -38,8 +38,10 @@ class Invoice < ActiveRecord::Base
       where('date LIKE ? AND clients.name LIKE ? AND date >= ?', "%#{date}%", "%#{client_name}%", "#{date_start}")
     elsif date_stop.present?
       where('date LIKE ? AND clients.name LIKE ? AND date <= ?', "%#{date}%", "%#{client_name}%", "#{date_stop}")
-    else
+    elsif date.present?
       where('date LIKE ? AND clients.name LIKE ?', "%#{date}%", "%#{client_name}%")
+    else
+      where('clients.name LIKE ?', "%#{client_name}%")
     end
   end
 end
