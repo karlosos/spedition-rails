@@ -39,7 +39,7 @@ class Invoice < ActiveRecord::Base
     elsif date_stop.present?
       where('clients.name LIKE ? AND date <= ?', "%#{client_name}%", "#{date_stop}")
     elsif date.present?
-      where('date == ? AND clients.name LIKE ?', "#{date}", "%#{client_name}%")
+      where('to_date(cast(date as TEXT),'YYYY-MM-DD' LIKE ? AND clients.name LIKE ?', "%#{date}%", "%#{client_name}%")
     else
       where('clients.name LIKE ?', "%#{client_name}%")
     end
