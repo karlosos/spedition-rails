@@ -1,10 +1,31 @@
 <h1>Witaj</h1>
-<p>Tutaj będzie opis</p>
 
 <h2>Stworzone funkcjonalności</h2>
 <ul>
-  <li><%= link_to "Klienci (tworzenie, przeglądanie, usuwanie)", clients_path %></li>
-  <li><%= link_to "Faktury uproszczenie (tworzenie, przeglądanie, usuwanie)", invoices_path %></li>
+  <li>
+    <%= link_to "Klienci (tworzenie, przeglądanie, usuwanie)", clients_path %>
+    <ul>
+      <li>Tworzenie, edycja, przegladanie</li>
+      <li>Wyszukiwanie, paginacja</li>
+    </ul>
+  </li>
+  <li>
+    <%= link_to "Faktury uproszczenie (tworzenie, przeglądanie, usuwanie)", invoices_path %>
+    <ul>
+      <li> Wyszukiwanie faktur po datach, nazwach klientow </li>
+      <li> Linki do tworzenia uslug/klientow przy tworzeniu faktury (w przyszlosci zmiana na nakladke</li>
+      <li> Dodanie wyliczania wartosci netto/brutto/vat po stronie klienta js (dodac walidacje w na serwerze tego)</li>
+    </ul>
+
+  </li>
+
+  <li>
+    <%= link_to "Uslugi/towary", items_path %>
+    <ul>
+      <li>Tworzenie, edycja, przegladanie</li>
+    </ul>
+  </li>
+
 </ul>
 
 <h2>Następne funkcjonalności</h2>
