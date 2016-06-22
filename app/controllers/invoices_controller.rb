@@ -16,8 +16,20 @@ class InvoicesController < ApplicationController
     else
       client_name_search_param = ""
     end
-    
-    search_params = { :client_name => client_name_search_param, :date => date_search_param }
+
+    if params[:date_start].present?
+      date_start_search_param = params[:date_start]
+    else
+      date_start_search_param = ""
+    end
+
+    if params[:date_stop].present?
+      date_stop_search_param = params[:date_stop]
+    else
+      date_stop_search_param = ""
+    end
+
+    search_params = { :client_name => client_name_search_param, :date => date_search_param, :date_start => date_start_search_param, :date_stop => date_stop_search_param }
 
     @invoices = Invoice.joins(:invoice_name).joins(:client).search(search_params).order(sort_column + " " + sort_direction).paginate(:page => params[:page], :per_page => 30)
   end

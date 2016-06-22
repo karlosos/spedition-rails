@@ -27,15 +27,19 @@ class Invoice < ActiveRecord::Base
   validates :invoice_items, :length => { :minimum => 1 }
 
   def self.search(search_params)
-    date = ""
-    client_name = ""
-    if search_params[:date]
-      date = search_params[:date]
-    end
-    if search_params[:client_name]
-      client_name = search_params[:client_name]
-    end
+    date = search_params[:date]
+    client_name = search_params[:client_name]
+    date_start = search_params[:date_start]
+    date_stop = search_params[:date_stop]
 
-    where('date LIKE ? AND clients.name LIKE ? ', "%#{date}%", "%#{client_name}%")
+    if date_stop.present? && date_start.present?
+      where('date LIKE ? AND clients.name LIKE ? AND date >= ? AND date <= ? ', "%#{date}%", "%#{client_name}%", "#{date_start}", "#{date_stop}")
+    elsif date_start.present?
+      where('date LIKE ? AND clients.name LIKE ? AND date >= ?', "%#{date}%", "%#{client_name}%", "#{date_start}")
+    elsif date_stop.present?
+      where('date LIKE ? AND clients.name LIKE ? AND date <= ?', "%#{date}%", "%#{client_name}%", "#{date_stop}")
+    else
+      where('date LIKE ? AND clients.name LIKE ?', "%#{date}%", "%#{client_name}%")
+    end
   end
 end
