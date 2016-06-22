@@ -5,8 +5,21 @@ class InvoicesController < ApplicationController
   # GET /invoices
   # GET /invoices.json
   def index
-    #@invoices = Invoice.all
-    @invoices = Invoice.joins(:invoice_name).joins(:client).order(sort_column + " " + sort_direction).paginate(:page => params[:page], :per_page => 30)
+    if params[:date].present?
+      date_search_param = params[:date]
+    else
+      date_search_param = ""
+    end
+
+    if params[:client_name].present?
+      client_name_search_param = params[:client_name]
+    else
+      client_name_search_param = ""
+    end
+    
+    search_params = { :client_name => client_name_search_param, :date => date_search_param }
+
+    @invoices = Invoice.joins(:invoice_name).joins(:client).search(search_params).order(sort_column + " " + sort_direction).paginate(:page => params[:page], :per_page => 30)
   end
 
   # GET /invoices/1

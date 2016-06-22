@@ -99,6 +99,18 @@ input {
   }
 }
 
+/* invoices index */
+.search_invoice_form {
+  input {
+    display: inline;
+    width: 300px;
+  }
+
+  #advanced_search_invoice_form {
+    display: none;
+  }
+}
+
 /* clients index */
 .clients_search {
   input[type="text"] {
@@ -109,4 +121,8 @@ input {
     width: 100px;
     display: inline;
   }
+}
+
+.input-group-addon {
+  width: 0%;
 }

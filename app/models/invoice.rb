@@ -14,7 +14,7 @@ class Invoice < ActiveRecord::Base
   monetize :total_selling_price_cents, :numericality => {
     :greater_than_or_equal_to => 0
   }
-  
+
   #accepts_nested_attributes_for :client
   #accepts_nested_attributes_for :seller
   accepts_nested_attributes_for :invoice_name
@@ -25,4 +25,17 @@ class Invoice < ActiveRecord::Base
   validates :invoice_name, presence: true
   validates :date, presence: true
   validates :invoice_items, :length => { :minimum => 1 }
+
+  def self.search(search_params)
+    date = ""
+    client_name = ""
+    if search_params[:date]
+      date = search_params[:date]
+    end
+    if search_params[:client_name]
+      client_name = search_params[:client_name]
+    end
+
+    where('date LIKE ? AND clients.name LIKE ? ', "%#{date}%", "%#{client_name}%")
+  end
 end

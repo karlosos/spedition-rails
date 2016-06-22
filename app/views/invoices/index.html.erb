@@ -1,7 +1,45 @@
 <h1>Listing invoices</h1>
-<%= form_tag clients_path, :method => 'get' do %>
-  <%= hidden_field_tag :direction, params[:direction] %>
-  <%= hidden_field_tag :sort, params[:sort] %>
+
+<%= form_tag invoices_path, :method => 'get' do %>
+  <div class="search_invoice_form">
+    <div id="short_search_invoice_form">
+      <%= hidden_field_tag :direction, params[:direction] %>
+      <%= hidden_field_tag :sort, params[:sort] %>
+      <%= label_tag :date, "Data wystawienia faktury" %>
+      <div class='input-group date' id='datetimepicker1' data-date-format="yyyy-mm-dd" locale="pl">
+          <%= text_field_tag :date %>
+          <span class="input-group-addon">
+              <span class="glyphicon glyphicon-calendar"></span>
+          </span>
+      </div>
+      <a href="" id="advanced_search_button">Zaawansowane wyszukiwanie</a>
+    </div>
+
+    <div id="advanced_search_invoice_form">
+      <%= label_tag :date_start, "Od" %>
+      <div class='input-group date' id='datetimepicker1' data-date-format="yyyy-mm-dd" locale="pl">
+          <%= text_field_tag :date_start %>
+          <span class="input-group-addon">
+              <span class="glyphicon glyphicon-calendar"></span>
+          </span>
+      </div>
+
+      <%= label_tag :date_stop, "Do" %>
+      <div class='input-group date' id='datetimepicker1' data-date-format="yyyy-mm-dd" locale="pl">
+          <%= text_field_tag :date_stop %>
+          <span class="input-group-addon">
+              <span class="glyphicon glyphicon-calendar"></span>
+          </span>
+      </div>
+
+      <%= label_tag :client_name, "Nazwa klienta" %>
+      <div>
+        <%= text_field_tag :client_name %>
+      </div>
+    </div>
+    <%= submit_tag "Search", :date => nil, :client_name => nil %>
+    <a href="" id="reset_search_button">Resetuj</a>
+  </div>
 <% end %>
 
 <table class="table">
