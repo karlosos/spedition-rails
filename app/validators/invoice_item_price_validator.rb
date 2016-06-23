@@ -17,7 +17,7 @@ class InvoiceItemPriceValidator < ActiveModel::Validator
       end
 
       if calculated_value_added_tax != value_added_tax
-        record.errors[:value_added_tax] << "Value added tax is #{value_added_tax} should be #{calculated_value_added_tax}. Tax_rate = #{tax_rate}, #{tax_rate/100}"
+        record.errors[:value_added_tax] << "Value added tax is #{value_added_tax} should be #{calculated_value_added_tax}."
       end
 
       if calculated_total_selling_price != total_selling_price

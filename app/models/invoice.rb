@@ -26,6 +26,8 @@ class Invoice < ActiveRecord::Base
   validates :date, presence: true
   validates :invoice_items, :length => { :minimum => 1 }
 
+  validates_with InvoicePriceValidator
+
   def self.search(search_params)
     date = search_params[:date]
     client_name = search_params[:client_name]
