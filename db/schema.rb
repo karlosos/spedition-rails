@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160622055423) do
+ActiveRecord::Schema.define(version: 20160623112454) do
 
   create_table "addresses", force: true do |t|
     t.string   "line1"
@@ -61,8 +61,6 @@ ActiveRecord::Schema.define(version: 20160622055423) do
     t.integer  "quantity"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "price_cents",                  default: 0,     null: false
-    t.string   "price_currency",               default: "EUR", null: false
     t.integer  "unit_price_cents",             default: 0,     null: false
     t.string   "unit_price_currency",          default: "EUR", null: false
     t.integer  "tax_rate"

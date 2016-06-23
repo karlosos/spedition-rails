@@ -116,7 +116,7 @@ class InvoicesController < ApplicationController
       :net_price,
       :value_added_tax,
       :total_selling_price,
-      invoice_items_attributes: [ :id, :item_id, :quantity, :unit_price, :net_price, :value_added_tax, :total_selling_price, :_destroy,
+      invoice_items_attributes: [ :id, :item_id, :quantity, :unit_price, :net_price, :value_added_tax, :total_selling_price, :tax_rate, :_destroy,
         item_attributes:
         [:name, :unit, :id ]
         ],
