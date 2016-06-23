@@ -14,3 +14,6 @@ invoice_one:
   date: <%= DateTime.now %>
   seller: client_google
   client: client_microsoft
+  net_price_cents: 44900
+  value_added_tax_cents: 10576
+  total_selling_price_cents: 55476

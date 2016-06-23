@@ -27,12 +27,12 @@ class InvoiceItemTest < ActiveSupport::TestCase
     @invoice.invoice_items << @invoice_item2
   end
 
-  test "price should be updated after update" do
-    money = Money.new(100, 'EUR')
-    quantity = 4
-    @invoice_item.unit_price = money
-    @invoice_item.quantity = quantity
-    @invoice_item.save
-    assert_equal money * quantity, @invoice_item.price
-  end
+  # test "price should be updated after update" do
+  #   money = Money.new(100, 'EUR')
+  #   quantity = 4
+  #   @invoice_item.unit_price = money
+  #   @invoice_item.quantity = quantity
+  #   @invoice_item.save
+  #   assert_equal money * quantity, @invoice_item.price
+  # end
 end
