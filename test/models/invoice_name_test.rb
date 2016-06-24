@@ -2,7 +2,7 @@ require 'test_helper'
 
 class InvoiceNameTest < ActiveSupport::TestCase
   def setup
-    @invoice_name = InvoiceName.new(number: 2, month: 5, year: 2016)
+    @invoice_name = invoice_names(:name_invoice_one)
   end
 
   test "number should be present" do
@@ -46,4 +46,16 @@ class InvoiceNameTest < ActiveSupport::TestCase
     @invoice_name.year = -3
     assert_not @invoice_name.valid?
   end
+
+  test "number/month/year should be unique" do
+    @new_invoice_name = @invoice_name.dup
+    assert_not @new_invoice_name.valid?
+  end
+
+  test "different number should be valid" do
+    @new_invoice_name = @invoice_name.dup
+    @new_invoice_name.number = @new_invoice_name.number + 1
+    assert @new_invoice_name.valid?
+  end
+
 end
