@@ -5,7 +5,9 @@
     <%= f.label :name, "Nazwa" %>
     <%= f.text_field :name %>
     <%= f.label :unit, "jm" %>
-    <%= f.text_field :unit %>
+    <% units = ['fracht', 'kg', 'szt', 'godz', 'dni', 'mc', 'km', 'm2'] %>
+    <%= f.select :unit, options_for_select(units.collect { |c| [ c, c ] }) %> <br>
+
     <%= f.label :unit_price_cents, "Cena za jm #{@item.unit}" %>
     <%= f.number_field :unit_price, :step => 'any' %> <br>
     <%= f.label :tax, "Tax?!", :step => 'any'  %>
