@@ -28,17 +28,16 @@
 
     <h3> Nabywca </h3>
     <% if @invoice.client.nil? || @invoice.seller.nil? %>
-      <% clients = Client.limit(2) %>
-      <% sellers = Client.limit(2) %>
+      <% clients = Client.all.limit(0) %>
+      <% sellers = Client.all.limit(0) %>
     <% else %>
       <% clients = [@invoice.client, ] %>
       <% sellers = [@invoice.seller, ] %>
     <% end %>
-    <%= invoice_form.collection_select :client_id, Client.limit(3), :id, :name %>
-    <%= link_to 'Dodaj klienta (jeżeli nie znalazłeś)', new_client_path, class: 'create_object' %>
+    <%= invoice_form.collection_select :client_id, clients, 'id', 'name', prompt: 'Wybierz klienta' %>
 
     <h3> My </h3>
-    <%= invoice_form.collection_select :seller_id, Client.limit(3), :id, :name %>
+    <%= invoice_form.collection_select :seller_id, sellers, 'id', 'name', prompt: 'Wybierz sprzedawce' %>
 
     <hr>
 

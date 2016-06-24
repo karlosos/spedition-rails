@@ -95,8 +95,6 @@ invoice_item_remove_event = () ->
 startSelect = () ->
     $('#invoice_client_id').select2
       theme: 'bootstrap'
-      formatNoMatches: (term) ->
-       "<em>#{term}</em> not found.<br><a href='#' id='new_contact'>Create new contact?</a>"
       ajax:
         url: '/clients.json'
         dataType: 'json'
@@ -108,6 +106,11 @@ startSelect = () ->
               text: client.name
             }
          )}
+      language:
+        noResults: ->
+           return "<a href='/clients/new' class='create_object' target='_blank'>Dodaj klienta</a>"
+      escapeMarkup: (markup) ->
+        return markup;
 
     $('#invoice_seller_id').select2
       theme: 'bootstrap'
@@ -125,6 +128,9 @@ startSelect = () ->
 
     $('.invoice_items_form').find('select').select2
         theme: 'bootstrap'
+        placeholder:
+          id: "-1",
+          placeholder: "Select an option"
         ajax:
           url: '/items.json'
           dataType: 'json'
@@ -136,8 +142,11 @@ startSelect = () ->
                 text: item.name
               }
            )}
-        formatNoMatches: (term) ->
-          "<em>#{term}</em> not found.<br><a href='#' id='new_contact'>Create new contact?</a>"
+        language:
+          noResults: ->
+            return "<a href='/items/new' class='create_object' target='_blank'>Dodaj przedmiot</a>"
+        escapeMarkup: (markup) ->
+          return markup;
 
 invoice_name_get_on_date_change = () ->
   $('#invoice_date').change ->
