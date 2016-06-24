@@ -35,14 +35,14 @@ class Invoice < ActiveRecord::Base
     date_stop = search_params[:date_stop]
 
     if date_stop.present? && date_start.present?
-      where('clients.name LIKE ? AND date >= ? AND date <= ? ', "%#{client_name}%", "#{date_start}", "#{date_stop}")
+      where('clients.name LIKE ? AND date >= ? AND date <= ? ', "%#{client_name}%", date_start.to_datetime, date_stop.to_datetime)
     elsif date_start.present?
-      where('clients.name LIKE ? AND date >= ?', "%#{client_name}%", "#{date_start}")
+      where('clients.name LIKE ? AND date >= ?', "%#{client_name}%", date_start.to_datetime)
     elsif date_stop.present?
-      where('clients.name LIKE ? AND date <= ?', "%#{client_name}%", "#{date_stop}")
+      where('clients.name LIKE ? AND date <= ?', "%#{client_name}%", date_stop.to_datetime)
     elsif date.present?
-      #where('date LIKE ? AND clients.name LIKE ?', "%#{date}%", "%#{client_name}%")
-      where('clients.name LIKE ?', "%#{client_name}%")
+      where('date = ? AND clients.name LIKE ?', date.to_datetime, "%#{client_name}%")
+      #where('clients.name LIKE ?', "%#{client_name}%")
     else
       where('clients.name LIKE ?', "%#{client_name}%")
     end
