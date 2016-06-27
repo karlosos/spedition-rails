@@ -24,6 +24,9 @@ class Invoice < ActiveRecord::Base
   validates :seller, presence: true
   validates :invoice_name, presence: true
   validates :date, presence: true
+  validates :client_street, presence: true
+  validates :client_zip, presence: true
+  validates :client_city, presence: true
   validates :invoice_items, :length => { :minimum => 1 }
 
   validates_with InvoicePriceValidator

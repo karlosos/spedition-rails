@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160627100147) do
+ActiveRecord::Schema.define(version: 20160627102036) do
 
   create_table "addresses", force: true do |t|
     t.string   "line1"
@@ -99,6 +99,13 @@ ActiveRecord::Schema.define(version: 20160627100147) do
     t.string   "net_price_currency",           default: "EUR", null: false
     t.integer  "total_selling_price_cents",    default: 0,     null: false
     t.string   "total_selling_price_currency", default: "EUR", null: false
+    t.text     "client_street"
+    t.string   "client_name"
+    t.string   "client_zip"
+    t.string   "client_city"
+    t.string   "client_country"
+    t.string   "client_email"
+    t.string   "client_phone"
   end
 
   create_table "items", force: true do |t|

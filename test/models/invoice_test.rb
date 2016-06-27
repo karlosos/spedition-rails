@@ -64,4 +64,19 @@ class InvoiceTest < ActiveSupport::TestCase
     end
     assert_equal sum_total_selling_price, total_selling_price
   end
+
+  test "client_street should be present" do
+    @invoice.client_street = " "
+    assert_not @invoice.valid?
+  end
+
+  test "client_zip should be present" do
+    @invoice.client_zip = " "
+    assert_not @invoice.valid?
+  end
+
+  test "client_city should be present" do
+    @invoice.client_city = " "
+    assert_not @invoice.valid?
+  end
 end

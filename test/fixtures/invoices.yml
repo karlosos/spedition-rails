@@ -17,3 +17,6 @@ invoice_one:
   net_price_cents: 44900
   value_added_tax_cents: 10576
   total_selling_price_cents: 55476
+  client_street: "Cicha 12"
+  client_city: "Szczecin"
+  client_zip: "70-300"
