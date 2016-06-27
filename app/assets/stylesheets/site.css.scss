@@ -134,3 +134,25 @@ input {
 .input-group-addon {
   width: 0%;
 }
+
+/* invoice show */
+
+#invoice {
+  background-color: white;
+  -webkit-box-shadow: 1px 3px 5px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 1px 3px 5px 0px rgba(0,0,0,0.75);
+  box-shadow: 1px 3px 5px 0px rgba(0,0,0,0.75);
+  font-size: 110%;
+  border: 1px solid #ddd;
+  padding: 20px;
+  min-width: 700px;
+  width: auto;
+  overflow: visible;
+  margin: auto auto 20px auto;
+  margin-top: 50px;
+  height: 828.517px;
+}
+
+.invoice_bold {
+  font-weight: bold;
+}
