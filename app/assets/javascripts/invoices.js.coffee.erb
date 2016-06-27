@@ -6,6 +6,7 @@ pageLoad = () ->
   invoice_item_remove_event()
   startSelect()
   invoice_name_get_on_date_change()
+  invoice_client_info_get_on_client_change()
   create_object_links()
   date_picker_start()
   invoice_item_calculate_on_change()
@@ -190,6 +191,29 @@ invoice_name_get_on_date_change = () ->
         $('#invoice_invoice_name_attributes_number').val(data['number'])
         $('#invoice_invoice_name_attributes_month').val(month)
         $('#invoice_invoice_name_attributes_year').val(year)
+
+invoice_client_info_get_on_client_change = () ->
+  $('#invoice_client_id').change ->
+    client_street = $('#invoice_client_street')
+    client_zip = $('#invoice_client_zip')
+    client_city = $('#invoice_client_city')
+    client_country = $('#invoice_client_country')
+    client_email = $('#invoice_client_email')
+    client_phone = $('#invoice_client_phone')
+    client_id = $(this).val()
+    $.ajax "/clients/#{client_id}.json",
+      type: 'GET'
+      dataType: 'json'
+      error: (jqXHR, textStatus, errorThrown) ->
+        console.log(textStatus)
+      success: (data, textStatus, jqXHR) ->
+        console.log(data['client_street'])
+        client_street.val(data['client_street'])
+        client_zip.val(data['client_zip'])
+        client_city.val(data['client_city'])
+        client_country.val(data['client_country'])
+        client_email.val(data['client_email'])
+        client_phone.val(data['client_phone'])
 
 create_object_links = () ->
   $('.create_object').click (e) ->
