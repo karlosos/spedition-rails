@@ -1,46 +1,53 @@
-<h1>Listing clients</h1>
+<div class="row">
+  <div class="col-sm-3">
 
-<%= form_tag clients_path, :method => 'get' do %>
-  <%= hidden_field_tag :direction, params[:direction] %>
-  <%= hidden_field_tag :sort, params[:sort] %>
-  <p class="clients_search">
-    <%= text_field_tag :search, params[:search] %>
-    <%= submit_tag "Search", :name => nil %>
-  </p>
-<% end %>
-
-<table class="table">
-  <thead>
-    <tr>
-      <th><%= sortable "name" %></th>
-      <th><%= sortable "addresses.line1" %></th>
-      <th><%= sortable "addresses.line2" %></th>
-      <th><%= sortable "addresses.city" %></th>
-      <th><%= sortable "addresses.state" %></th>
-      <th><%= sortable "addresses.zip" %></th>
-      <th><%= sortable "addresses.country" %></th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @clients.each do |client| %>
+    <div class="search_invoice_form">
+      <div id="short_search_invoice_form">
+        <%= form_tag clients_path, :method => 'get' do %>
+          <%= hidden_field_tag :direction, params[:direction] %>
+          <%= hidden_field_tag :sort, params[:sort] %>
+          <p class="clients_search">
+            <%= text_field_tag :search, params[:search] %>
+            <%= submit_tag "Search", :name => nil %>
+          </p>
+        <% end %>
+        <%= button_to 'New Client', new_client_path, class: 'btn-primary' %>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-9">
+  <h1>Listing clients</h1>
+  <table class="table">
+    <thead>
       <tr>
-        <td><%= client.name %></td>
-        <td><%= client.address.line1 %></td>
-        <td><%= client.address.line2 %></td>
-        <td><%= client.address.city %></td>
-        <td><%= client.address.state %></td>
-        <td><%= client.address.zip %></td>
-        <td><%= client.address.country %></td>
-        <td><%= link_to 'Show', client %></td>
-        <td><%= link_to 'Edit', edit_client_path(client) %></td>
-        <td><%= link_to 'Destroy', client, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <th><%= sortable "name" %></th>
+        <th><%= sortable "addresses.line1" %></th>
+        <th><%= sortable "addresses.line2" %></th>
+        <th><%= sortable "addresses.city" %></th>
+        <th><%= sortable "addresses.state" %></th>
+        <th><%= sortable "addresses.zip" %></th>
+        <th><%= sortable "addresses.country" %></th>
+        <th colspan="3"></th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
-<%= will_paginate @posts %>
-<br>
+    </thead>
 
-<%= link_to 'New Client', new_client_path %>
+    <tbody>
+      <% @clients.each do |client| %>
+        <tr>
+          <td><%= client.name %></td>
+          <td><%= client.address.line1 %></td>
+          <td><%= client.address.line2 %></td>
+          <td><%= client.address.city %></td>
+          <td><%= client.address.state %></td>
+          <td><%= client.address.zip %></td>
+          <td><%= client.address.country %></td>
+          <td><%= link_to 'Show', client %></td>
+          <td><%= link_to 'Edit', edit_client_path(client) %></td>
+          <td><%= link_to 'Destroy', client, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <%= will_paginate @posts %>
+  <br>
+</div>
