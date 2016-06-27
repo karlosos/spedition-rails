@@ -1,77 +1,84 @@
-<h1>Listing invoices</h1>
-
 <%= form_tag invoices_path, :method => 'get' do %>
-  <div class="search_invoice_form">
-    <div id="short_search_invoice_form">
-      <%= hidden_field_tag :direction, params[:direction] %>
-      <%= hidden_field_tag :sort, params[:sort] %>
-      <%= label_tag :date, "Data wystawienia faktury" %>
-      <div class='input-group date' id='datetimepicker1' data-date-format="yyyy-mm-dd" locale="pl">
+<div class="row">
+  <div class="col-sm-3">
+
+    <div class="search_invoice_form">
+      <div id="short_search_invoice_form">
+        <%= hidden_field_tag :direction, params[:direction] %>
+        <%= hidden_field_tag :sort, params[:sort] %>
+        <%= label_tag :date, "Data wystawienia faktury" %>
+        <div class='input-group date' id='datetimepicker1' data-date-format="yyyy-mm-dd" locale="pl">
           <%= text_field_tag :date %>
           <span class="input-group-addon">
-              <span class="glyphicon glyphicon-calendar"></span>
+            <span class="glyphicon glyphicon-calendar"></span>
           </span>
+        </div>
+        <a href="" id="advanced_search_button">Zaawansowane wyszukiwanie</a>
       </div>
-      <a href="" id="advanced_search_button">Zaawansowane wyszukiwanie</a>
-    </div>
 
-    <div id="advanced_search_invoice_form">
-      <%= label_tag :date_start, "Od" %>
-      <div class='input-group date' id='datetimepicker1' data-date-format="yyyy-mm-dd" locale="pl">
+      <div id="advanced_search_invoice_form">
+        <%= label_tag :date_start, "Od" %>
+        <div class='input-group date' id='datetimepicker1' data-date-format="yyyy-mm-dd" locale="pl">
           <%= text_field_tag :date_start %>
           <span class="input-group-addon">
-              <span class="glyphicon glyphicon-calendar"></span>
+            <span class="glyphicon glyphicon-calendar"></span>
           </span>
-      </div>
+        </div>
 
-      <%= label_tag :date_stop, "Do" %>
-      <div class='input-group date' id='datetimepicker1' data-date-format="yyyy-mm-dd" locale="pl">
+        <%= label_tag :date_stop, "Do" %>
+        <div class='input-group date' id='datetimepicker1' data-date-format="yyyy-mm-dd" locale="pl">
           <%= text_field_tag :date_stop %>
           <span class="input-group-addon">
-              <span class="glyphicon glyphicon-calendar"></span>
+            <span class="glyphicon glyphicon-calendar"></span>
           </span>
-      </div>
+        </div>
 
-      <%= label_tag :client_name, "Nazwa klienta" %>
-      <div>
-        <%= text_field_tag :client_name %>
+        <%= label_tag :client_name, "Nazwa klienta" %>
+        <div>
+          <%= text_field_tag :client_name %>
+        </div>
       </div>
+      <%= submit_tag "Search", :date => nil, :client_name => nil %>
+      <a href="" id="reset_search_button">Resetuj</a>
+      <br>
+      <%= button_to 'New Invoice', new_invoice_path, class: "button-success" %>
     </div>
-    <%= submit_tag "Search", :date => nil, :client_name => nil %>
-    <a href="" id="reset_search_button">Resetuj</a>
   </div>
-<% end %>
+  <div class="col-sm-9">
+    <h1>Listing invoices</h1>
 
-<table class="table">
-  <thead>
-    <tr>
-      <th>numer faktury</th>
-      <th><%= sortable "date" %></th>
-      <th><%= sortable "clients.name" %></th>
-      <th><%= sortable "net_price_cents" %></th>
-      <th><%= sortable "value_added_tax_cents" %></th>
-      <th><%= sortable "total_selling_price_cents" %></th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @invoices.each do |invoice| %>
-      <tr>
-        <td><%= invoice.invoice_name.get_name %></td>
-        <td><%= invoice.date %></td>
-        <td><%= invoice.client.name %></td>
-        <td><%= humanized_money_with_symbol invoice.net_price %></td>
-        <td><%= humanized_money_with_symbol invoice.value_added_tax %></td>
-        <td><%= humanized_money_with_symbol invoice.total_selling_price %></td>
-        <td><%= link_to 'Show', invoice %></td>
-        <td><%= link_to 'Edit', edit_invoice_path(invoice) %></td>
-        <td><%= link_to 'Destroy', invoice, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
     <% end %>
-  </tbody>
-</table>
-<%= will_paginate @posts %>
-<br>
 
-<%= link_to 'New Invoice', new_invoice_path %>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>numer faktury</th>
+          <th><%= sortable "date" %></th>
+          <th><%= sortable "clients.name" %></th>
+          <th><%= sortable "net_price_cents" %></th>
+          <th><%= sortable "value_added_tax_cents" %></th>
+          <th><%= sortable "total_selling_price_cents" %></th>
+          <th colspan="3"></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @invoices.each do |invoice| %>
+        <tr>
+          <td><%= invoice.invoice_name.get_name %></td>
+          <td><%= invoice.date %></td>
+          <td><%= invoice.client.name %></td>
+          <td><%= humanized_money_with_symbol invoice.net_price %></td>
+          <td><%= humanized_money_with_symbol invoice.value_added_tax %></td>
+          <td><%= humanized_money_with_symbol invoice.total_selling_price %></td>
+          <td><%= link_to 'Show', invoice %></td>
+          <td><%= link_to 'Edit', edit_invoice_path(invoice) %></td>
+          <td><%= link_to 'Destroy', invoice, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <%= will_paginate @posts %>
+    <br>
+  </div>
+</div>

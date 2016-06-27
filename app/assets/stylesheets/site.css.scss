@@ -10,6 +10,7 @@ html {
 body {
   /* Margin bottom by footer height */
   margin-bottom: 60px;
+  padding-top: 50px;
 }
 
 .footer {
@@ -101,13 +102,22 @@ input {
 
 /* invoices index */
 .search_invoice_form {
+  margin-top: 30px;
+
   input {
     display: inline;
-    width: 300px;
   }
 
   #advanced_search_invoice_form {
     display: none;
+  }
+
+  #client_name {
+    width: 236px;
+  }
+
+  input[type="submit"] {
+    width: 236px;
   }
 }
 
