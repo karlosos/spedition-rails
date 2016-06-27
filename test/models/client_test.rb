@@ -2,7 +2,7 @@ require 'test_helper'
 
 class ClientTest < ActiveSupport::TestCase
   def setup
-    @address = Address.new(line1: "ul. Cicha 132 m.16", city: "Gniezno", zip: "62-200", country: "Polska")
+    @address = Address.new(street: "ul. Cicha 132 m.16", city: "Gniezno", zip: "62-200", country: "Polska")
     @client = Client.new(name: "Company A", address: @address)
   end
 

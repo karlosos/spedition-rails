@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160624124119) do
+ActiveRecord::Schema.define(version: 20160627100147) do
 
   create_table "addresses", force: true do |t|
     t.string   "line1"
@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 20160624124119) do
     t.string   "addressable_type"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "street"
   end
 
   add_index "addresses", ["addressable_type", "addressable_id"], name: "index_addresses_on_addressable_type_and_addressable_id", unique: true

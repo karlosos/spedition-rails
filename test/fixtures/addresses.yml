@@ -1,12 +1,12 @@
 address_google:
-  line1: "ul. Śnieżna 12"
+  street: "ul. Sniezna 12"
   city: "Gniezno"
   country: "USA"
   zip: "23-323"
   addressable: client_google (Client)
 
 address_microsoft:
-  line1: "ul. Cicha 12"
+  street: "ul. Cicha 12"
   city: "Gniezno"
   country: "Poland"
   zip: "23-323"

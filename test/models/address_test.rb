@@ -2,11 +2,16 @@ require 'test_helper'
 
 class AddressTest < ActiveSupport::TestCase
   def setup
-    @address = Address.new(line1: "ul. Cicha 132 m.16", city: "Gniezno", zip: "62-200", country: "Polska")
+    @address = Address.new(street: "ul. Cicha 132 m.16", city: "Gniezno", zip: "62-200", country: "Polska")
   end
 
-  test "line1 should be present" do
+  test "line1 doesn't need to be present" do
     @address.line1 = "      "
+    assert @address.valid?
+  end
+
+  test "street should be present" do
+    @address.street = " "
     assert_not @address.valid?
   end
 

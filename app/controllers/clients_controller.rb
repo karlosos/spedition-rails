@@ -88,7 +88,7 @@ class ClientsController < ApplicationController
     def client_params
       #params.fetch(:client, {})
       #params.require(:client).permit!
-      params.require(:client).permit(:name, address_attributes: [:line1, :line2, :city, :state, :country, :zip], contact_attributes: [:phone1, :phone2, :fax, :email, :www])
+      params.require(:client).permit(:name, address_attributes: [:street, :line1, :line2, :city, :state, :country, :zip], contact_attributes: [:phone1, :phone2, :fax, :email, :www])
     end
 
     def sort_column

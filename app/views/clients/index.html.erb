@@ -21,8 +21,7 @@
     <thead>
       <tr>
         <th><%= sortable "name" %></th>
-        <th><%= sortable "addresses.line1" %></th>
-        <th><%= sortable "addresses.line2" %></th>
+        <th><%= sortable "addresses.street" %></th>
         <th><%= sortable "addresses.city" %></th>
         <th><%= sortable "addresses.state" %></th>
         <th><%= sortable "addresses.zip" %></th>
@@ -35,8 +34,7 @@
       <% @clients.each do |client| %>
         <tr>
           <td><%= client.name %></td>
-          <td><%= client.address.line1 %></td>
-          <td><%= client.address.line2 %></td>
+          <td><%= client.address.street %></td>
           <td><%= client.address.city %></td>
           <td><%= client.address.state %></td>
           <td><%= client.address.zip %></td>
