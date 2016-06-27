@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160623112454) do
+ActiveRecord::Schema.define(version: 20160624124119) do
 
   create_table "addresses", force: true do |t|
     t.string   "line1"
@@ -58,12 +58,12 @@ ActiveRecord::Schema.define(version: 20160623112454) do
   create_table "invoice_items", force: true do |t|
     t.integer  "invoice_id"
     t.integer  "item_id"
-    t.integer  "quantity"
+    t.integer  "quantity",                     default: 1
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "unit_price_cents",             default: 0,     null: false
     t.string   "unit_price_currency",          default: "EUR", null: false
-    t.integer  "tax_rate"
+    t.integer  "tax_rate",                     default: 23
     t.integer  "value_added_tax_cents",        default: 0,     null: false
     t.string   "value_added_tax_currency",     default: "EUR", null: false
     t.integer  "net_price_cents",              default: 0,     null: false

@@ -3,18 +3,18 @@
   <%= f.collection_select :item_id, Item.all, :id, :name, prompt: 'Wybierz towar' %>
   <%= link_to 'Dodaj towar (jeżeli nie znalazłeś)', new_item_path, class: "create_object"%> <br>
   <%= f.label :quantity, "Ilość" %>
-  <%= f.number_field :quantity, { value: 1, class: 'quantity editable_invoice_item_input' } %> <br>
+  <%= f.number_field :quantity, { class: 'quantity editable_invoice_item_input' } %> <br>
   <%= f.label :unit_price_cents, "Cena netto" %>
-  <%= f.number_field :unit_price, { :step => 'any', :class => 'unit_price editable_invoice_item_input' } %> <br>
+  <%= f.number_field :unit_price, { :step => 'any', :class => 'unit_price editable_invoice_item_input', :precision => 2} %> <br>
   <%= f.label :tax_rate, "Stawka VAT" %>
   <%= f.number_field :tax_rate, { :class => 'tax_rate editable_invoice_item_input' } %> <br>
   <h3> Wartość </h3>
-  <%= f.label :net_price_cents, "Wartość netto" %>
-  <%= f.number_field :net_price, { :readonly => true, class: 'net_price' } %> <br>
+  <%= f.label :net_price_cents, "Wartość netto", :step => '0.01' %>
+  <%= f.number_field :net_price, { :readonly => true, class: 'net_price', :step => '0.01', :precision => 2} %> <br>
   <%= f.label :value_added_tax_cents, "Wartość vat" %>
-  <%= f.number_field :value_added_tax, { :readonly => true, class: 'value_added_tax' }  %> <br>
+  <%= f.number_field :value_added_tax, { :readonly => true, class: 'value_added_tax', :step => '0.01', :precision => 2}  %> <br>
   <%= f.label :total_selling_price_cents, "Wartość brutto" %>
-  <%= f.number_field :total_selling_price, { :readonly => true, class: 'total_selling_price' } %> <br>
+  <%= f.number_field :total_selling_price, { :readonly => true, class: 'total_selling_price', :step => '0.01', :precision => 2} %> <br>
 
   <!-- <%= f.fields_for :item do |item| %>
     <%= item.label :name %> <br>
