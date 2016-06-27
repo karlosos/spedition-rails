@@ -17,21 +17,21 @@ invoice_item_add_event = () ->
   $('form').on 'click', '.add_fields', (event) ->
     time = new Date().getTime()
     regexp = new RegExp($(this).data('id'), 'g')
-    $(this).before($(this).data('fields').replace(regexp, time))
+    $(this).parent().parent().before($(this).data('fields').replace(regexp, time))
     event.preventDefault()
     $('.invoice_items_form').find('select').select2
-        theme: 'bootstrap'
-        ajax:
-          url: '/items.json'
-          dataType: 'json'
-          processResults: (data) ->
-            return {
-            results: $.map(data, (item, i) ->
-              {
-                id: item.id
-                text: item.name
-              }
-           )}
+      theme: 'bootstrap'
+      ajax:
+        url: '/items.json'
+        dataType: 'json'
+        processResults: (data) ->
+          return {
+          results: $.map(data, (item, i) ->
+            {
+              id: item.id
+              text: item.name
+            }
+          )}
     create_object_links()
     invoice_items_price_update_on_item_change()
     invoice_item_calculate_on_change()
@@ -62,7 +62,7 @@ invoice_item_calculate = (invoice_item_group) ->
 
 invoice_item_calculate_on_change = () ->
   $('.invoice_items_form').find('.editable_invoice_item_input').change ->
-    invoice_item_calculate($(this).parent())
+    invoice_item_calculate($(this).parent().parent())
     # parent = $(this).parent()
     #
     # net_price_input = parent.find('.net_price')
@@ -116,65 +116,65 @@ invoice_calculate = () ->
 invoice_item_remove_event = () ->
   $('form').on 'click', '.remove_invoice_items', (event) ->
     $(this).prev('input[type=hidden]').val('1')
-    $(this).closest('li').hide()
+    $(this).closest('tr').hide()
     event.preventDefault()
     invoice_calculate()
 
 startSelect = () ->
-    $('#invoice_client_id').select2
-      theme: 'bootstrap'
-      ajax:
-        url: '/clients.json'
-        dataType: 'json'
-        processResults: (data) ->
-          return {
-          results: $.map(data, (client, i) ->
-            {
-              id: client.id
-              text: client.name
-            }
-         )}
-      language:
-        noResults: ->
-           return "<a href='/clients/new' class='create_object' target='_blank'>Dodaj klienta</a>"
-      escapeMarkup: (markup) ->
-        return markup;
+  $('#invoice_client_id').select2
+    theme: 'bootstrap'
+    ajax:
+      url: '/clients.json'
+      dataType: 'json'
+      processResults: (data) ->
+        return {
+        results: $.map(data, (client, i) ->
+          {
+            id: client.id
+            text: client.name
+          }
+        )}
+    language:
+      noResults: ->
+        return "<a href='/clients/new' class='create_object' target='_blank'>Dodaj klienta</a>"
+    escapeMarkup: (markup) ->
+      return markup;
 
-    $('#invoice_seller_id').select2
-      theme: 'bootstrap'
-      ajax:
-        url: '/clients.json'
-        dataType: 'json'
-        processResults: (data) ->
-          return {
-          results: $.map(data, (client, i) ->
-            {
-              id: client.id
-              text: client.name
-            }
-         )}
+  $('#invoice_seller_id').select2
+    theme: 'bootstrap'
+    ajax:
+      url: '/clients.json'
+      dataType: 'json'
+      processResults: (data) ->
+        return {
+        results: $.map(data, (client, i) ->
+          {
+            id: client.id
+            text: client.name
+          }
+        )}
 
-    $('.invoice_items_form').find('select').select2
-        theme: 'bootstrap'
-        placeholder:
-          id: "-1",
-          placeholder: "Select an option"
-        ajax:
-          url: '/items.json'
-          dataType: 'json'
-          processResults: (data) ->
-            return {
-            results: $.map(data, (item, i) ->
-              {
-                id: item.id
-                text: item.name
-              }
-           )}
-        language:
-          noResults: ->
-            return "<a href='/items/new' class='create_object' target='_blank'>Dodaj przedmiot</a>"
-        escapeMarkup: (markup) ->
-          return markup;
+  $('.invoice_items_form').find('select').select2
+    theme: 'bootstrap'
+    placeholder:
+      id: "-1",
+      placeholder: "Select an option"
+    ajax:
+      url: '/items.json'
+      dataType: 'json'
+      processResults: (data) ->
+        return {
+        results: $.map(data, (item, i) ->
+          {
+            id: item.id
+            text: item.name
+          }
+        )}
+    language:
+      noResults: ->
+        return "<a href='/items/new' class='create_object' target='_blank'>Dodaj przedmiot</a>"
+    escapeMarkup: (markup) ->
+      return markup;
 
 invoice_name_get_on_date_change = () ->
   $('#invoice_date').change ->
@@ -198,29 +198,29 @@ create_object_links = () ->
     e.preventDefault()
 
 date_picker_start = () ->
-    $('#datetimepicker1').datepicker ->
-      locale: 'pl'
+  $('#datetimepicker1').datepicker ->
+    locale: 'pl'
 
-    $('.date').datepicker ->
-      locale: 'pl'
+  $('.date').datepicker ->
+    locale: 'pl'
 
 invoice_items_price_update_on_item_change = () ->
   $('.invoice_items_form').find($('.select2-hidden-accessible')).change ->
     item_id = $(this).find(":selected").val()
-    unit_price_input = $(this).parent().find('.unit_price')
-    parent = $(this).parent()
+    unit_price_input = $(this).parent().parent().find('.unit_price')
+    parent = $(this).parent().parent()
     unit_price = 0;
     $.ajax "/items/#{item_id}.json",
       type: 'GET'
       dataType: 'json'
       error: (jqXHR, textStatus, errorThrown) ->
-          console.log(textStatus)
+        console.log(textStatus)
       success: (data, textStatus, jqXHR) ->
-          console.log(data['unit_price'])
-          unit_price = data['unit_price']
-          unit_price = unit_price.toString().replace(",",".")
-          unit_price_input.val(unit_price)
-          invoice_item_calculate(parent)
+        console.log(data['unit_price'])
+        unit_price = data['unit_price']
+        unit_price = unit_price.toString().replace(",",".")
+        unit_price_input.val(unit_price)
+        invoice_item_calculate(parent)
 
 
 
