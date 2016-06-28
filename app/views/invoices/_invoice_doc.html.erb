@@ -5,7 +5,7 @@
       <%= @invoice.invoice_name.get_name %>
       <br><br>
       <span class="invoice_bold">Data wystawienia:</span>
-      Miasto, <%= @invoice.date.strftime('%F') %>
+      <%= @invoice.place %>, <%= @invoice.date.strftime('%F') %>
       <br>
       <span class="invoice_bold">Data sprzedaży:</span>
       <%= @invoice.date.strftime('%F') %>

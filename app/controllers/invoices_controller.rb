@@ -111,6 +111,7 @@ class InvoicesController < ApplicationController
       #params.fetch(:invoice, {})
       params.require(:invoice).permit(
       :date,
+      :place,
       :seller_id,
       :client_id,
       :client_street,
