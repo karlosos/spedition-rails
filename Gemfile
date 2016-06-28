@@ -31,6 +31,8 @@ gem 'jquery-turbolinks'
 gem "select2-rails"
 gem 'bootstrap-datepicker-rails'
 #gem 'chosen-rails'
+gem 'wkhtmltopdf-binary'
+gem 'wicked_pdf'
 
 group :development, :test do
   gem 'sqlite3',     '1.3.9'

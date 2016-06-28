@@ -1,6 +1,15 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 @import "http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css";
+
+@import "bootstrap/variables";
+@import "bootstrap/mixins";
+
+@include make-grid(sm);
+@include make-grid(md);
+@include make-grid(lg);
+
+
 html {
   position: relative;
   min-height: 100%;
@@ -114,6 +123,47 @@ input {
   width: 0;
 }
 /* invoice show */
+@mixin invoice-parameters {
+
+}
+
+@mixin invoice-params {
+  font-size: 12px;
+  overflow: visible;
+  line-height: 1.428571429;
+  color: #333333;
+  .invoice_items {
+    th {
+      background-color: #f1f1f1;
+    }
+  }
+  .invoice_summary {
+    float: right;
+    width: 99%;
+    th {
+      text-align: right;
+      padding: 5px;
+    }
+    td {
+      width: 17%;
+      padding: 5px;
+      text-align: right;
+    }
+  }
+  .invoice_price_in_words {
+    tr {
+      vertical-align: top;
+    }
+    th {
+      width: 25%;
+    }
+  }
+  .invoice_bold {
+    font-weight: bold;
+  }
+
+}
+
 #invoice_page {
   background-color: white;
   -webkit-box-shadow: 1px 3px 5px 0 rgba(0,0,0,0.75);
@@ -124,39 +174,11 @@ input {
   height: 11.7in;
   margin: 50px auto 20px;
   #invoice {
-    font-size: 12px;
-    overflow: visible;
+    @include invoice-params;
     padding: 1.0in 0.75in 0.75in;
-    line-height: 1.428571429;
-    color: #333333;
-    .invoice_items {
-      th {
-        background-color: #f1f1f1;
-      }
-    }
-    .invoice_summary {
-      float: right;
-      width: 99%;
-      th {
-        text-align: right;
-        padding: 5px;
-      }
-      td {
-        width: 17%;
-        padding: 5px;
-        text-align: right;
-      }
-    }
-    .invoice_price_in_words {
-      tr {
-        vertical-align: top;
-      }
-      th {
-        width: 25%;
-      }
-    }
-    .invoice_bold {
-      font-weight: bold;
-    }
   }
+}
+
+#invoice {
+  @include invoice-params;
 }

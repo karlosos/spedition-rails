@@ -37,6 +37,14 @@ class InvoicesController < ApplicationController
   # GET /invoices/1
   # GET /invoices/1.json
   def show
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render pdf: "faktura",   # Excluding ".pdf" extension.
+               encoding: "UTF-8"
+      end
+      format.json
+    end
   end
 
   # GET /invoices/new
