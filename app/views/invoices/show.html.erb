@@ -1,72 +1,8 @@
 <p id="notice"><%= notice %></p>
 
-<div id="invoice">
-  <div class="row">
-    <div class="col-sm-4">
-      <span class="invoice_bold">Faktura numer</span> <%= @invoice.invoice_name.get_name %>
-      <br><br>
-      <span class="invoice_bold">Data wystawienia</span> <%= @invoice.date %> <br>
-      <span class="invoice_bold">Data sprzedaży</span> <%= @invoice.date %> <br>
-    </div>
-  </div>
-
-  <hr>
-
-
-  <div class="row">
-    <div class="col-sm-6">
-      <p class="invoice_bold">Sprzedawca</p>
-      <%= @invoice.seller.name %> <br>
-      <%= @invoice.seller.address.line1 %> <br>
-      <%= @invoice.seller.address.zip %> <%= @invoice.seller.address.city %> <br>
-      <%= @invoice.seller.address.country %> <br>
-    </div>
-
-    <div class="col-sm-6">
-      <p class="invoice_bold"> Nabywca </p>
-      <%= @invoice.client.name %> <br>
-      <%= @invoice.client_street %> <br>
-      <%= @invoice.client_zip %>  <%= @invoice.client_city %> <br>
-      <%= @invoice.client_country %> <br>
-    </div>
-  </div>
-  <hr>
-  <div class="row">
-    <div class="col-sm-12">
-      <table class="table table-bordered">
-        <thead>
-          <th>LP</th>
-          <th>Nazwa towaru/usługi</th>
-          <th>Ilość</th>
-          <th>Cena netto</th>
-          <th>Wartość netto</th>
-          <th>VAT %</th>
-          <th>Wartość VAT</th>
-          <th>Wartość brutto</th>
-        </thead>
-        <tbody>
-          <% @invoice.invoice_items.each do |invoice_item| %>
-            <tr>
-              <td></td>
-              <td><%= invoice_item.item.name %></td>
-              <td><%= invoice_item.quantity %> <%= invoice_item.item.unit %></td>
-              <td><%= humanized_money_with_symbol invoice_item.unit_price %></td>
-              <td><%= humanized_money_with_symbol invoice_item.net_price %></td>
-              <td><%= invoice_item.tax_rate %></td>
-              <td><%= humanized_money_with_symbol invoice_item.value_added_tax %></td>
-              <td><%= humanized_money_with_symbol invoice_item.total_selling_price %></td>
-            </tr>
-          <% end %>
-    </tbody>
-  </table>
-  </div>
-  </div>
-  <h3> Wartość </h3>
-  Wartość netto: <%= humanized_money_with_symbol @invoice.net_price %>
-  Wartość vat: <%= humanized_money_with_symbol @invoice.value_added_tax %>
-  Wartosć: <%= humanized_money_with_symbol @invoice.total_selling_price %>
-  <br>
+<div id="invoice_page">
+  <%= render 'invoice_doc' %>
 </div>
-
-  <%= link_to 'Edit', edit_invoice_path(@invoice) %> |
-  <%= link_to 'Back', invoices_path %>
+<%= link_to 'Edit', edit_invoice_path(@invoice) %>
+|
+<%= link_to 'Back', invoices_path %>

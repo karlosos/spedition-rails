@@ -1,0 +1,128 @@
+<div id="invoice">
+  <div class="row">
+    <div class="col-sm-12">
+      <span class="invoice_bold">Faktura numer:</span>
+      <%= @invoice.invoice_name.get_name %>
+      <br><br>
+      <span class="invoice_bold">Data wystawienia:</span>
+      Miasto, <%= @invoice.date.strftime('%F') %>
+      <br>
+      <span class="invoice_bold">Data sprzedaży:</span>
+      <%= @invoice.date.strftime('%F') %>
+      <br>
+      <span class="invoice_bold">Termin płatności:</span>
+      <%= @invoice.date.strftime('%F') %>
+      <br>
+      <span class="invoice_bold">Płatność:</span>
+      Przelew
+      <br>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="row">
+    <div class="col-sm-6">
+      <p class="invoice_bold">Sprzedawca</p>
+      <%= @invoice.seller.name %>
+      <br>
+      <%= @invoice.seller.address.line1 %>
+      <br>
+      <%= @invoice.seller.address.zip %>
+      <%= @invoice.seller.address.city %>
+      <br>
+      <%= @invoice.seller.address.country %>
+      <br>
+    </div>
+
+    <div class="col-sm-6">
+      <p class="invoice_bold">
+        Nabywca
+      </p>
+      <%= @invoice.client.name %>
+      <br>
+      <%= @invoice.client_street %>
+      <br>
+      <%= @invoice.client_zip %>
+      <%= @invoice.client_city %>
+      <br>
+      <%= @invoice.client_country %>
+      <br>
+    </div>
+  </div>
+  <hr>
+  <div class="row">
+    <div class="col-sm-12">
+      <table class="table table-bordered invoice_items">
+        <thead>
+          <th>LP</th>
+          <th>Nazwa towaru/usługi</th>
+          <th>Ilość</th>
+          <th>Cena netto</th>
+          <th>Wartość netto</th>
+          <th>VAT %</th>
+          <th>Wartość VAT</th>
+          <th>Wartość brutto</th>
+        </thead>
+        <tbody>
+          <% @invoice.invoice_items.each do |invoice_item| %>
+          <tr>
+            <td></td>
+            <td><%= invoice_item.item.name %></td>
+            <td><%= invoice_item.quantity %>
+              <%= invoice_item.item.unit %></td>
+            <td><%= humanized_money_with_symbol invoice_item.unit_price %></td>
+            <td><%= humanized_money_with_symbol invoice_item.net_price %></td>
+            <td><%= invoice_item.tax_rate %></td>
+            <td><%= humanized_money_with_symbol invoice_item.value_added_tax %></td>
+            <td><%= humanized_money_with_symbol invoice_item.total_selling_price %></td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+    <table class="invoice_summary">
+      <tr>
+        <th class="invoice_bold"> Wartość netto </th>
+        <td> <%= humanized_money_with_symbol @invoice.net_price %> </td>
+        <td> W PLNACH</td>
+      </tr>
+      <tr>
+        <th class="invoice_bold"> Wartość VAT </th>
+        <td> <%= humanized_money_with_symbol @invoice.value_added_tax %> </td>
+        <td> W PLN </td>
+      </tr>
+      <tr>
+        <th class="invoice_bold">Wartość brutto</th>
+        <td><%= humanized_money_with_symbol @invoice.total_selling_price %></td>
+        <td></td>
+      </tr>
+  </table>
+</div>
+  </div>
+  <hr>
+
+  <div class="row">
+    <div class="col-sm-12">
+      Kurs waluty EUR/PLN 4,3935, tabela kursów średnich NBP nr 118/A/NBP/2016/ z dnia 2016-06-21 <br>
+      <span class="invoice_bold">Przeliczona kwota VAT: 9,75 PLN</span>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="row">
+    <div class="col-sm-12">
+      <table class="invoice_price_in_words">
+        <tr>
+          <th>Do zapłaty </th>
+          <td>11,91 EUR <br>
+          Słownie: jedenaście EUR dziewięćdziesiąt jeden cents </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
