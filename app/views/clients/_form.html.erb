@@ -16,6 +16,11 @@
     <%= f.text_field :name %>
   </p>
 
+  <p>
+    <%= f.label :nip %><br />
+    <%= f.text_field :nip %>
+  </p>
+
   <%= f.fields_for :address do |address| %>
    <%= render :partial => 'shared/address', :locals => {:f => address} %>
   <% end %>

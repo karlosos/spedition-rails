@@ -28,7 +28,7 @@
       <br>
       <%= @invoice.seller.address.line1 %>
       <br>
-      <%= @invoice.seller.address.zip %>
+      <%= @invoice.seller.address.zip %>,
       <%= @invoice.seller.address.city %>
       <br>
       <%= @invoice.seller.address.country %>
@@ -43,11 +43,12 @@
       <br>
       <%= @invoice.client_street %>
       <br>
-      <%= @invoice.client_zip %>
+      <%= @invoice.client_zip %>,
       <%= @invoice.client_city %>
       <br>
       <%= @invoice.client_country %>
       <br>
+      NIP <%= @invoice.client.nip %>
     </div>
   </div>
   <hr>
