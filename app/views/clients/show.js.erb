@@ -1,2 +1,6 @@
 $('#new_client_modal').modal_success();
-$("#invoice_client_id").select2('data', {id: <%= @client.id %>, text: <%= @client.name %>});      
+id = <%= @client.id %>
+name = <%= @client.name %>
+var option = $('<option selected>'+name+'</option>').val(""+id);
+console.log(option)
+$("#invoice_client_id").append(option).trigger('change');
