@@ -20,3 +20,66 @@
 //= require bootstrap-datepicker
 //= require bootstrap-datepicker/locales/bootstrap-datepicker.pl.js
 //= require select2_locale_pl
+
+$(document).ready(function(){
+
+  $(document).bind('ajaxError', 'form#new_client', function(event, jqxhr, settings, exception){
+
+    // note: jqxhr.responseJSON undefined, parsing responseText instead
+    $(event.data).render_form_errors( $.parseJSON(jqxhr.responseText) );
+
+  });
+
+});
+
+(function($) {
+
+  $.fn.modal_success = function(){
+    // close modal
+    this.modal('hide');
+
+    // clear form input elements
+    // todo/note: handle textarea, select, etc
+    this.find('form input[type="text"]').val('');
+
+    // clear error state
+    this.clear_previous_errors();
+  };
+
+  $.fn.render_form_errors = function(errors){
+
+    console.log('chce rendererowarac errory');
+
+    $form = this;
+    this.clear_previous_errors();
+    model = this.data('model');
+
+    console.log(model)
+    //client_contact_attributes_fax
+    // show error messages in input form-group help-block
+    $.each(errors, function(field, messages){
+      console.log(field)
+      if(field.search('[.]') > 0) {
+        association = field.substring(0, field.search('[.]'));
+        association = association + "_attributes";
+        attribute = field.substring(field.search('[.]')+1);
+        $input = $('input[name="' + model + '[' + association + ']' + '[' + attribute + ']"]');
+        console.log('input[name="' + model + '[' + association + ']' + '[' + attribute + ']"]');
+        $input.closest('.form-group').addClass('has-error').find('.help-block').html( messages.join(' & ') );
+      } else {
+      $input = $('input[name="' + model + '[' + field + ']"]');
+      console.log('input[name="' + model + '[' + field + ']"]')
+      $input.closest('.form-group').addClass('has-error').find('.help-block').html( messages.join(' & ') );
+      }
+    });
+
+  };
+
+  $.fn.clear_previous_errors = function(){
+    $('.form-group.has-error', this).each(function(){
+      $('.help-block', $(this)).html('');
+      $(this).removeClass('has-error');
+    });
+  }
+
+}(jQuery));
