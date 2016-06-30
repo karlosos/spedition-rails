@@ -172,7 +172,7 @@ input {
   border: 1px solid #ddd;
   width: 8.27in;
   height: 11.7in;
-  margin: 50px auto 20px;
+  margin: 0px auto 20px;
   #invoice {
     @include invoice-params;
     padding: 1.0in 0.75in 0.75in;
@@ -181,4 +181,26 @@ input {
 
 #invoice {
   @include invoice-params;
+}
+
+
+/* menu bar */
+.menubar {
+  min-height: 40px;
+  line-height: 40px;
+  font-size: 15px;
+  background-color: rgb(247, 247, 247);
+  border: 1px solid rgb(201, 201, 201);
+  border-radius: 5px;
+  padding-left: 15px;
+  padding-right: 15px;
+  color: rgb(79, 79, 79);
+  ul {
+    margin: 0;
+    padding: 0;
+    li {
+      padding: 5px;
+      display: inline;
+    }
+  }
 }

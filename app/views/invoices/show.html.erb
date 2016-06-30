@@ -1,8 +1,29 @@
 <p id="notice"><%= notice %></p>
 
+<nav class="navbar menubar">
+  <ul>
+    <li>
+    <%= link_to_menu_invoice("Drukuj", "glyphicon-print", invoice_path(@invoice, :format => :pdf)) %>
+    </li>
+
+    <li>
+    <%= link_to_menu_invoice("Pobierz PDF", "glyphicon-cloud-download", invoice_path(@invoice, :format => :pdf)) %>
+    </li>
+
+    <li>
+    <%= link_to_menu_invoice("Edytuj", "glyphicon-edit", edit_invoice_path(@invoice)) %>
+    </li>
+
+    <li>
+    <%= link_to_menu_invoice("Usuń", "glyphicon-trash", invoice_path(@invoice), 1) %>
+    </li>
+  </ul>
+</nav>
+
 <div id="invoice_page">
   <%= render 'invoice_doc' %>
 </div>
+
 <%= link_to 'Edit', edit_invoice_path(@invoice) %>
 |
 <%= link_to 'Back', invoices_path %>
