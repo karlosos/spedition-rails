@@ -13,6 +13,8 @@ pageLoad = () ->
   invoice_items_price_update_on_item_change()
   advanced_search_button_event()
   reset_search_button_event()
+  get_currency_rate()
+  get_currency_rate_on_date_change()
 
 invoice_item_add_event = () ->
   $('form').on 'click', '.add_fields', (event) ->
@@ -275,3 +277,21 @@ simple_search_clear = () ->
 
 advanced_search_clear = () ->
   $('#advanced_search_invoice_form').find('input').val("")
+
+get_currency_rate_on_date_change = () ->
+  $('#invoice_date').change ->
+    get_currency_rate()
+
+get_currency_rate = () ->
+    date = $('#invoice_date').val()
+    console.log(date)
+    url = "http://api.nbp.pl/api/exchangerates/rates/A/EUR/" + date
+    console.log(url)
+
+    $.ajax url,
+      type: 'GET'
+      dataType: 'json'
+      error: (jqXHR, textStatus, errorThrown) ->
+        console.log(textStatus)
+      success: (data, textStatus, jqXHR) ->
+        console.log(data)
