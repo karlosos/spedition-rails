@@ -2,22 +2,24 @@ jQuery ->
   pageLoad()
 
 pageLoad = () ->
-  invoice_item_add_event()
-  invoice_item_remove_event()
+  invoice_items_functions()
   startSelect()
   invoice_name_get_on_date_change()
   invoice_client_info_get_on_client_change()
-  create_object_links()
   date_picker_start()
+  sidebar_functions()
+  currency_rate_functions()
+  modal_functions()
+
+#
+# Invoice items
+#
+invoice_items_functions = () ->
+  invoice_item_add_event()
+  invoice_item_remove_event()
+  create_object_links()
   invoice_item_calculate_on_change()
   invoice_items_price_update_on_item_change()
-  advanced_search_button_event()
-  reset_search_button_event()
-  get_currency_rate()
-  get_currency_rate_on_date_change()
-  $('.optional').hide()
-  $('#show_more_modal').click ->
-    $('.optional').toggle()
 
 invoice_item_add_event = () ->
   $('form').on 'click', '.add_fields', (event) ->
@@ -41,6 +43,30 @@ invoice_item_add_event = () ->
     create_object_links()
     invoice_items_price_update_on_item_change()
     invoice_item_calculate_on_change()
+
+create_object_links = () ->
+  $('.create_object').click (e) ->
+    url = $(this).attr("href")
+    window.open(url, 'co to', 'toolbars=0,width=500,height=600,left=200,top=200,scrollbars=1,resizable=1')
+    e.preventDefault()
+
+invoice_items_price_update_on_item_change = () ->
+  $('.invoice_items_form').find($('.select2-hidden-accessible')).change ->
+    item_id = $(this).find(":selected").val()
+    unit_price_input = $(this).parent().parent().find('.unit_price')
+    parent = $(this).parent().parent()
+    unit_price = 0;
+    $.ajax "/items/#{item_id}.json",
+      type: 'GET'
+      dataType: 'json'
+      error: (jqXHR, textStatus, errorThrown) ->
+        console.log(textStatus)
+      success: (data, textStatus, jqXHR) ->
+        console.log(data['unit_price'])
+        unit_price = data['unit_price']
+        unit_price = unit_price.toString().replace(",",".")
+        unit_price_input.val(unit_price)
+        invoice_item_calculate(parent)
 
 invoice_item_calculate = (invoice_item_group) ->
   parent = invoice_item_group
@@ -69,28 +95,13 @@ invoice_item_calculate = (invoice_item_group) ->
 invoice_item_calculate_on_change = () ->
   $('.invoice_items_form').find('.editable_invoice_item_input').change ->
     invoice_item_calculate($(this).parent().parent())
-    # parent = $(this).parent()
-    #
-    # net_price_input = parent.find('.net_price')
-    # value_added_tax_input = parent.find('.value_added_tax')
-    # total_selling_price_input = parent.find('.total_selling_price')
-    #
-    # quantity = parseInt(parent.find('.quantity').val())
-    # unit_price = parseFloat(parent.find('.unit_price').val())
-    # tax_rate = parseInt(parent.find('.tax_rate').val())
-    #
-    # net_price = quantity * unit_price
-    # net_price = parseFloat(net_price).toFixed(2)
-    # value_added_tax = net_price * (tax_rate/100)
-    # value_added_tax = parseFloat(value_added_tax).toFixed(2)
-    # total_selling_price = parseFloat(net_price) + parseFloat(value_added_tax)
-    # total_selling_price = parseFloat(total_selling_price).toFixed(2)
-    #
-    # net_price_input.val(parseFloat(net_price).toFixed(2))
-    # value_added_tax_input.val(parseFloat(value_added_tax).toFixed(2))
-    # total_selling_price_input.val(parseFloat(total_selling_price).toFixed(2))
 
-    #invoice_calculate()
+invoice_item_remove_event = () ->
+  $('form').on 'click', '.remove_invoice_items', (event) ->
+    $(this).prev('input[type=hidden]').val('1')
+    $(this).closest('tr').hide()
+    event.preventDefault()
+    invoice_calculate()
 
 invoice_calculate = () ->
   net_price_inputs = $('.net_price')
@@ -119,13 +130,23 @@ invoice_calculate = () ->
   invoice_value_added_tax.val(value_added_tax.toFixed(2))
   invoice_total_selling_price.val(total_selling_price.toFixed(2))
 
-invoice_item_remove_event = () ->
-  $('form').on 'click', '.remove_invoice_items', (event) ->
-    $(this).prev('input[type=hidden]').val('1')
-    $(this).closest('tr').hide()
-    event.preventDefault()
-    invoice_calculate()
+#
+# Modal functions
+#
+modal_functions = () ->
+  hide_optional_fields_in_modal()
+  toogle_optional_fields_in_modal_on_click()
 
+hide_optional_fields_in_modal = () ->
+  $('.optional').hide()
+
+toogle_optional_fields_in_modal_on_click = () ->
+  $('#show_more_modal').click ->
+    $('.optional').toggle()
+
+#
+# Select 2 opions
+#
 startSelect = () ->
   $('#invoice_client_id').select2
     theme: 'bootstrap'
@@ -182,6 +203,9 @@ startSelect = () ->
     escapeMarkup: (markup) ->
       return markup;
 
+#
+# Invoice name
+#
 invoice_name_get_on_date_change = () ->
   $('#invoice_date').change ->
     date = new Date($(this).val())
@@ -197,6 +221,9 @@ invoice_name_get_on_date_change = () ->
         $('#invoice_invoice_name_attributes_month').val(month)
         $('#invoice_invoice_name_attributes_year').val(year)
 
+#
+# Invoice client
+#
 invoice_client_info_get_on_client_change = () ->
   $('#invoice_client_id').change ->
     client_street = $('#invoice_client_street')
@@ -220,12 +247,9 @@ invoice_client_info_get_on_client_change = () ->
         client_email.val(data['client_email'])
         client_phone.val(data['client_phone'])
 
-create_object_links = () ->
-  $('.create_object').click (e) ->
-    url = $(this).attr("href")
-    window.open(url, 'co to', 'toolbars=0,width=500,height=600,left=200,top=200,scrollbars=1,resizable=1')
-    e.preventDefault()
-
+#
+# Datepicker
+#
 date_picker_start = () ->
   $('#datetimepicker1').datepicker ->
     locale: 'pl'
@@ -233,25 +257,12 @@ date_picker_start = () ->
   $('.date').datepicker ->
     locale: 'pl'
 
-invoice_items_price_update_on_item_change = () ->
-  $('.invoice_items_form').find($('.select2-hidden-accessible')).change ->
-    item_id = $(this).find(":selected").val()
-    unit_price_input = $(this).parent().parent().find('.unit_price')
-    parent = $(this).parent().parent()
-    unit_price = 0;
-    $.ajax "/items/#{item_id}.json",
-      type: 'GET'
-      dataType: 'json'
-      error: (jqXHR, textStatus, errorThrown) ->
-        console.log(textStatus)
-      success: (data, textStatus, jqXHR) ->
-        console.log(data['unit_price'])
-        unit_price = data['unit_price']
-        unit_price = unit_price.toString().replace(",",".")
-        unit_price_input.val(unit_price)
-        invoice_item_calculate(parent)
-
-
+#
+# Sidebar
+#
+sidebar_functions = () ->
+    advanced_search_button_event()
+    reset_search_button_event()
 
 advanced_search_button_event = () ->
   $('#advanced_search_button').click (e) ->
@@ -280,6 +291,13 @@ simple_search_clear = () ->
 
 advanced_search_clear = () ->
   $('#advanced_search_invoice_form').find('input').val("")
+
+#
+# Currency exchange
+#
+currency_rate_functions = () ->
+    get_currency_rate()
+    get_currency_rate_on_date_change()
 
 get_currency_rate_on_date_change = () ->
   $('#invoice_date').change ->
