@@ -15,6 +15,9 @@ pageLoad = () ->
   reset_search_button_event()
   get_currency_rate()
   get_currency_rate_on_date_change()
+  $('.optional').hide()
+  $('#show_more_modal').click ->
+    $('.optional').toggle()
 
 invoice_item_add_event = () ->
   $('form').on 'click', '.add_fields', (event) ->
