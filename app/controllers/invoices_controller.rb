@@ -53,7 +53,7 @@ class InvoicesController < ApplicationController
     @client = Client.new
     @client.build_address
     @client.build_contact
-    
+
     @invoice = Invoice.new
     @invoice.invoice_items.build
     @invoice.build_invoice_name
@@ -131,6 +131,9 @@ class InvoicesController < ApplicationController
       :seller_id,
       :client_id,
       :client_street,
+      :currency_rate_table_name,
+      :currency_rate_name,
+      :currency_rate,
       :client_zip,
       :client_city,
       :net_price,
