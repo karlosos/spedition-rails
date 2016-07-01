@@ -37,6 +37,9 @@ $(document).ready(function(){
 
   });
 
+  $('#new_client_modal').on('shown.bs.modal', function () {
+    $('#client_name').focus()
+  })
 });
 
 (function($) {
@@ -90,3 +93,9 @@ $(document).ready(function(){
   }
 
 }(jQuery));
+
+
+function collapse_select() {
+  $('#new_client_modal').modal('toggle')
+  $('#invoice_client_id').select2("close")
+}
