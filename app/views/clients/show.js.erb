@@ -1,6 +1,0 @@
-$('#new_client_modal').modal_success();
-id = <%= @client.id %>
-name = <%= @client.name %>
-var option = $('<option selected>'+name+'</option>').val(""+id);
-console.log(option)
-$("#invoice_client_id").append(option).trigger('change');

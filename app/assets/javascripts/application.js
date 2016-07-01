@@ -22,6 +22,13 @@
 //= require select2_locale_pl
 
 $(document).ready(function(){
+  $(document).bind("ajax:success",'form#new_client', function(evt, data, status, xhr){
+     var $form = $(this);
+     $('#new_client_modal').modal_success();
+     var option = $('<option selected>'+data.name+'</option>').val(""+data.id);
+     console.log(option)
+     $("#invoice_client_id").append(option).trigger('change');
+   })
 
   $(document).bind('ajaxError', 'form#new_client', function(event, jqxhr, settings, exception){
 
