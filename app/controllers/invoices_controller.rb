@@ -81,7 +81,10 @@ class InvoicesController < ApplicationController
         format.html { redirect_to @invoice, notice: 'Invoice was successfully created.' }
         format.json { render :show, status: :created, location: @invoice }
       else
-        format.html { render :new }
+        @client = Client.new
+        @client.build_address
+        @client.build_contact
+        format.html { render :new, :locals => { :client => @client } }
         format.json { render json: @invoice.errors, status: :unprocessable_entity }
       end
     end
@@ -95,7 +98,10 @@ class InvoicesController < ApplicationController
         format.html { redirect_to @invoice, notice: 'Invoice was successfully updated.' }
         format.json { render :show, status: :ok, location: @invoice }
       else
-        format.html { render :edit }
+        @client = Client.new
+        @client.build_address
+        @client.build_contact
+        format.html { render :edit, :locals => { :client => @client } }
         format.json { render json: @invoice.errors, status: :unprocessable_entity }
       end
     end
