@@ -31,6 +31,24 @@ class Invoice < ActiveRecord::Base
 
   validates_with InvoicePriceValidator
 
+  ISSUED    = 1
+  SENT      = 2
+  COMPLETED = 3
+
+
+  STATUSES = {
+    ISSUED    => 'wystawiona',
+    SENT    => 'wysłana',
+    COMPLETED => 'zapłacona'
+  }
+
+  validates_inclusion_of :status, :in => STATUSES.keys,
+    :message => "{{value}} must be in #{STATUSES.values.join ','}"
+
+  def status_name
+    STATUSES[status]
+  end
+
   def self.search(search_params)
     date = search_params[:date]
     client_name = search_params[:client_name]
