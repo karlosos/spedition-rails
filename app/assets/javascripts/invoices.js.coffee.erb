@@ -10,6 +10,7 @@ pageLoad = () ->
   sidebar_functions()
   currency_rate_functions()
   modal_functions()
+  invoice_status_functions()
 
 #
 # Invoice items
@@ -322,3 +323,24 @@ get_currency_rate = () ->
         currency_rate_table_name.val(data["rates"][0]["no"])
         currency_rate.val(data["rates"][0]["mid"].toString().replace(".",","))
         currency_rate_name.val(data["code"])
+
+invoice_status_functions = () ->
+  change_invoice_status_on_select_change()
+
+change_invoice_status_on_select_change = () ->
+  $('.invoice-status').change ->
+    status_index = $(this).val()
+    invoice_id = $(this).attr("invoice-id")
+    console.log(invoice_id)
+    console.log(status_index)
+    url = '/invoices/' + invoice_id
+
+    $.ajax url,
+      type: 'PUT'
+      dataType: 'json'
+      data:
+            invoice : { status: status_index }
+      error: (jqXHR, textStatus, errorThrown) ->
+        console.log(textStatus)
+      success: (data, textStatus, jqXHR) ->
+        console.log(data)

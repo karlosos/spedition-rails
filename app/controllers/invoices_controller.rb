@@ -137,6 +137,7 @@ class InvoicesController < ApplicationController
       :seller_id,
       :client_id,
       :client_street,
+      :status,
       :currency_rate_table_name,
       :currency_rate_name,
       :currency_rate,

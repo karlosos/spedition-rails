@@ -73,7 +73,7 @@
           <td><%= humanized_money_with_symbol invoice.value_added_tax %></td>
           <td><%= humanized_money_with_symbol invoice.total_selling_price %></td>
           <td>
-            <select class="form-control" id="sel1">
+            <select class="form-control invoice-status" invoice-id="<%= invoice.id %>">
               <option value="" hidden selected><%= invoice.status_name %></option>
               <option value="1">Wystawiona</option>
               <option value="2">Wysłana</option>
