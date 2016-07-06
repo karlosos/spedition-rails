@@ -332,6 +332,7 @@ change_invoice_status_on_select_change = () ->
     status_index = $(this).attr("value")
     invoice_id = $(this).parent().parent().attr("invoice-id")
     main_button = $(this).parent().parent().parent().find('.status')
+    toggle_button = $(this).parent().parent().parent().find('.dropdown-toggle')
     console.log(invoice_id)
     console.log(status_index)
     url = '/invoices/' + invoice_id
@@ -346,3 +347,7 @@ change_invoice_status_on_select_change = () ->
       success: (data, textStatus, jqXHR) ->
         console.log(data)
         main_button.html(data["status"]);
+        button_classes = "btn status btn-status-"+status_index
+        toggle_classes = "btn dropdown-toggle btn-status-"+status_index
+        main_button.attr('class', button_classes)
+        toggle_button.attr('class', toggle_classes)

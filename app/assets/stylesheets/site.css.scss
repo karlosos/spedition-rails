@@ -205,6 +205,7 @@ input {
   }
 }
 
+/* invoice index */
 .invoice-status {
   width: 100px;
   height: 34px;
@@ -212,5 +213,17 @@ input {
   .status {
     width: 70px;
     height: 34px;
+  }
+
+  .btn-status-1 {
+    @extend .btn-danger;
+  }
+
+  .btn-status-2 {
+    @extend .btn-warning;
+  }
+
+  .btn-status-3 {
+    @extend .btn-success;
   }
 }

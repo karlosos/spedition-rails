@@ -74,8 +74,9 @@
           <td><%= humanized_money_with_symbol invoice.total_selling_price %></td>
           <td>
             <div class="btn-group invoice-status" invoice-id="<%= invoice.id %>">
-              <button type="button" class="btn btn-primary status" data-toggle="dropdown"><%= invoice.status_name %></button>
-              <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+              <% button_status_class = "btn-status-#{invoice.status}" %>
+              <button type="button" class="btn <%= button_status_class %> status" data-toggle="dropdown"><%= invoice.status_name %></button>
+              <button type="button" class="btn <%= button_status_class %> dropdown-toggle" data-toggle="dropdown">
                 <span class="caret"></span>
               </button>
               <ul class="dropdown-menu" role="menu" invoice-id="<%= invoice.id %>">
