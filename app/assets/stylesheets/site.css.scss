@@ -204,3 +204,13 @@ input {
     }
   }
 }
+
+.invoice-status {
+  width: 100px;
+  height: 34px;
+
+  .status {
+    width: 70px;
+    height: 34px;
+  }
+}

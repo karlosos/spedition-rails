@@ -328,9 +328,10 @@ invoice_status_functions = () ->
   change_invoice_status_on_select_change()
 
 change_invoice_status_on_select_change = () ->
-  $('.invoice-status').change ->
-    status_index = $(this).val()
-    invoice_id = $(this).attr("invoice-id")
+  $('.invoice_option').click (e) ->
+    status_index = $(this).attr("value")
+    invoice_id = $(this).parent().parent().attr("invoice-id")
+    main_button = $(this).parent().parent().parent().find('.status')
     console.log(invoice_id)
     console.log(status_index)
     url = '/invoices/' + invoice_id
@@ -344,3 +345,4 @@ change_invoice_status_on_select_change = () ->
         console.log(textStatus)
       success: (data, textStatus, jqXHR) ->
         console.log(data)
+        main_button.html(data["status"]);
