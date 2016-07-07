@@ -122,6 +122,11 @@ class InvoicesController < ApplicationController
     @invoice_name = InvoiceName.get_last_number_for_month(params[:month], params[:year])
   end
 
+  def update_multiple
+    Invoice.where(id: params[:invoice_ids]).update_all(["status=?", params[:status]])
+    redirect_to invoices_path  
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_invoice

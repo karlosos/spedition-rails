@@ -41,15 +41,24 @@
       <%= submit_tag "Search", :date => nil, :client_name => nil %>
       <a href="" id="reset_search_button">Resetuj</a>
       <br>
+      <% end %>
       <%= link_to 'New Invoice', new_invoice_path, class: "button-success" %>
     </div>
   </div>
   <div class="col-sm-9">
     <h1>Listing invoices</h1>
 
-    <% end %>
+    <%= form_tag update_multiple_invoices_path, :method => :put do %>
+    <nav class="navbar menubar update_invoices">
+      <ul>
+        <li>
+          <%= select_tag "status", "<option value='1'>wystawiona</option><option value='2'>wysłana</option><option value='3'>zapłacona</option>".html_safe, { class: 'form-control' } %>
+          <%= submit_tag "Aktualizuj" %>
+        </li>
+      </ul>
+    </nav>
 
-    <table class="table">
+    <table class="table invoices_table">
       <thead>
         <tr>
           <th></th>
@@ -67,7 +76,7 @@
       <tbody>
         <% @invoices.each do |invoice| %>
         <tr>
-          <td></td>
+          <td><%= check_box_tag 'invoice_ids[]', invoice.id %></td>
           <td><%= link_to invoice.invoice_name.get_name, invoice %></td>
           <td><%= link_to "#{humanized_money_with_symbol invoice.net_price}", invoice %></td>
           <td><%= link_to "#{humanized_money_with_symbol invoice.total_selling_price}", invoice %></td>
@@ -108,6 +117,7 @@
         <% end %>
       </tbody>
     </table>
+    <% end %>
     <%= will_paginate @posts %>
     <br>
   </div>

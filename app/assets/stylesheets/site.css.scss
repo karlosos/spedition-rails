@@ -187,6 +187,7 @@ input {
 /* menu bar */
 .menubar {
   min-height: 40px;
+  height: 40px;
   line-height: 40px;
   font-size: 15px;
   background-color: rgb(247, 247, 247);
@@ -225,5 +226,23 @@ input {
 
   .btn-status-3 {
     @extend .btn-success;
+  }
+}
+
+.invoices_table {
+  td {
+    vertical-align: middle !important;
+  }
+}
+
+
+.update_invoices {
+  input {
+    width: auto;
+    display: inline;
+  }
+  select {
+    width: auto;
+    display: inline;
   }
 }

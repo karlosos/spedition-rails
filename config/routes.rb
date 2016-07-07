@@ -1,9 +1,14 @@
 Rails.application.routes.draw do
   root 'pages#home'
   resources :clients
-  resources :invoices
+  resources :invoices do
+    collection do
+      put 'update_multiple'
+    end
+  end
   resources :items
   get 'invoices/invoice_name/:year/:month' => 'invoices#last_invoice_number_for_month'
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
