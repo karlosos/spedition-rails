@@ -315,9 +315,12 @@ get_currency_rate_on_date_change = () ->
 
 get_currency_rate = () ->
     date = $('#invoice_date').val()
-    console.log(date)
-    url = "http://api.nbp.pl/api/exchangerates/rates/A/EUR/" + date
-    console.log(url)
+    #console.log(date)
+    date = moment(date)
+    day_before_date = date.subtract(1, 'days')
+    day_before_date_format = day_before_date.format('YYYY-MM-DD')
+    #console.log(day_before_date_format);
+    url = "http://api.nbp.pl/api/exchangerates/rates/A/EUR/" + day_before_date_format
     currency_rate_table_name = $('#invoice_currency_rate_table_name')
     currency_rate_name = $('#invoice_currency_rate_name')
     currency_rate = $('#invoice_currency_rate')
@@ -328,7 +331,7 @@ get_currency_rate = () ->
       error: (jqXHR, textStatus, errorThrown) ->
         console.log(textStatus)
       success: (data, textStatus, jqXHR) ->
-        console.log(data)
+        #console.log(data)
         currency_rate_table_name.val(data["rates"][0]["no"])
         currency_rate.val(data["rates"][0]["mid"].toString())
         currency_rate_name.val(data["code"])

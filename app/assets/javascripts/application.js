@@ -20,6 +20,7 @@
 //= require bootstrap-datepicker
 //= require bootstrap-datepicker/locales/bootstrap-datepicker.pl.js
 //= require select2_locale_pl
+//= require moment.min.js
 
 $(document).ready(function(){
   $(document).bind("ajax:success",'form#new_client', function(evt, data, status, xhr){
