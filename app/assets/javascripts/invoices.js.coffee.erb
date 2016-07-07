@@ -1,3 +1,5 @@
+#= require invoices_price_in_words.js
+
 jQuery ->
   pageLoad()
 
@@ -130,6 +132,13 @@ invoice_calculate = () ->
   invoice_net_price.val(parseFloat(net_price).toFixed(2))
   invoice_value_added_tax.val(value_added_tax.toFixed(2))
   invoice_total_selling_price.val(total_selling_price.toFixed(2))
+  after_float_point = total_selling_price.toFixed(2) - Math.floor(total_selling_price.toFixed(2))
+  after_float_point = after_float_point.toFixed(2) * 100
+  if after_float_point < 10
+    after_float_point = "0" + after_float_point.toFixed()
+
+  total_price_in_words = polishToWords(total_selling_price.toFixed(2)) + " euro " + after_float_point + "/100"
+  console.log(total_price_in_words)
 
 #
 # Modal functions
