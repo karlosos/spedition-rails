@@ -120,6 +120,13 @@
 
   <div class="row">
     <div class="col-sm-12">
+      <%= invoice_form.label :total_price_in_words, "Kwota słownie" %>
+      <%= invoice_form.text_field :total_price_in_words %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-12">
       <%= label_tag :currency_rate_table_name, "Tabela kursu" %>
       <%= invoice_form.text_field :currency_rate_table_name, :readonly => true %>
       <%= label_tag :currency_rate_name, "Nazwa kursu" %>

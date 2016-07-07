@@ -138,7 +138,7 @@ invoice_calculate = () ->
     after_float_point = "0" + after_float_point.toFixed()
 
   total_price_in_words = polishToWords(total_selling_price.toFixed(2)) + " euro " + after_float_point + "/100"
-  console.log(total_price_in_words)
+  $('#invoice_total_price_in_words').val(total_price_in_words)
 
 #
 # Modal functions

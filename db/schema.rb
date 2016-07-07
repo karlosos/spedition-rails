@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160705185244) do
+ActiveRecord::Schema.define(version: 20160707120723) do
 
   create_table "addresses", force: true do |t|
     t.string   "line1"
@@ -111,6 +111,7 @@ ActiveRecord::Schema.define(version: 20160705185244) do
     t.string   "currency_rate_name"
     t.decimal  "currency_rate"
     t.integer  "status",                       default: 1
+    t.string   "total_price_in_words"
   end
 
   create_table "items", force: true do |t|
