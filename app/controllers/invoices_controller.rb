@@ -124,7 +124,7 @@ class InvoicesController < ApplicationController
 
   def update_multiple
     Invoice.where(id: params[:invoice_ids]).update_all(["status=?", params[:status]])
-    redirect_to invoices_path  
+    redirect_to invoices_path
   end
 
   private
@@ -151,6 +151,7 @@ class InvoicesController < ApplicationController
       :net_price,
       :value_added_tax,
       :total_selling_price,
+      :total_price_in_words,
       invoice_items_attributes: [ :id, :item_id, :quantity, :unit_price, :net_price, :value_added_tax, :total_selling_price, :tax_rate, :_destroy,
         item_attributes:
         [:name, :unit, :id ]

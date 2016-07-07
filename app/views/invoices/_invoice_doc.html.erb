@@ -122,7 +122,7 @@
         <tr>
           <th>Do zapłaty </th>
           <td><%= humanized_money_with_symbol @invoice.total_selling_price %><br>
-          Słownie: jedenaście EUR dziewięćdziesiąt jeden cents </td>
+          Słownie: <%= @invoice.total_price_in_words %> </td>
         </tr>
       </table>
     </div>
