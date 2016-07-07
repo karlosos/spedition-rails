@@ -324,8 +324,13 @@ get_currency_rate = () ->
         currency_rate.val(data["rates"][0]["mid"].toString().replace(".",","))
         currency_rate_name.val(data["code"])
 
+#
+# Invoice status
+#
 invoice_status_functions = () ->
   change_invoice_status_on_select_change()
+  show_menu_on_invoice_update_checkbox_ticked()
+  check_invoice_update_checkboxes()
 
 change_invoice_status_on_select_change = () ->
   $('.invoice_option').click (e) ->
@@ -351,3 +356,17 @@ change_invoice_status_on_select_change = () ->
         toggle_classes = "btn dropdown-toggle btn-status-"+status_index
         main_button.attr('class', button_classes)
         toggle_button.attr('class', toggle_classes)
+
+show_menu_on_invoice_update_checkbox_ticked = () ->
+  $('.invoices_table').find('input').change ->
+    check_invoice_update_checkboxes()
+
+check_invoice_update_checkboxes = () ->
+    checked_count = $('.invoices_table').find('input[type="checkbox"]:checked').length;
+    if checked_count > 0
+      $('.update_invoices').show()
+      $('#invoices_to_update_count').show()
+      $('#invoices_to_update_count').html(checked_count)
+    else
+      $('.update_invoices').hide()
+      $('#invoices_to_update_count').hide()

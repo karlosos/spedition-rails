@@ -52,6 +52,9 @@
     <nav class="navbar menubar update_invoices">
       <ul>
         <li>
+          <span id="invoices_to_update_count"></span> faktury do edycji
+        </li>
+        <li>
           <%= select_tag "status", "<option value='1'>wystawiona</option><option value='2'>wysłana</option><option value='3'>zapłacona</option>".html_safe, { class: 'form-control' } %>
           <%= submit_tag "Aktualizuj" %>
         </li>
