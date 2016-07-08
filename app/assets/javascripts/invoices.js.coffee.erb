@@ -43,6 +43,7 @@ invoice_item_add_event = () ->
               text: item.name
             }
           )}
+
     create_object_links()
     invoice_items_price_update_on_item_change()
     invoice_item_calculate_on_change()
@@ -173,7 +174,7 @@ startSelect = () ->
         )}
     language:
       noResults: ->
-        return "<a type=\"button\" class=\"btn btn-info btn-lg\" onclick='collapse_select()'>Stwórz klienta</a>"
+        return "<a type=\"button\" class=\"btn btn-info btn-lg\" onclick='show_client_modal()'>Stwórz klienta</a>"
     escapeMarkup: (markup) ->
       return markup;
 
@@ -209,7 +210,7 @@ startSelect = () ->
         )}
     language:
       noResults: ->
-        return "<a href='/items/new' class='create_object' target='_blank'>Dodaj przedmiot</a>"
+        return "<a type=\"button\" class=\"btn btn-info btn-lg\" onclick='show_item_modal()'>Stwórz towar</a>"
     escapeMarkup: (markup) ->
       return markup;
 

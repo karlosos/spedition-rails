@@ -54,6 +54,8 @@ class InvoicesController < ApplicationController
     @client.build_address
     @client.build_contact
 
+    @item = Item.new
+
     @invoice = Invoice.new
     @invoice.invoice_items.build
     @invoice.build_invoice_name
@@ -69,6 +71,8 @@ class InvoicesController < ApplicationController
     @client = Client.new
     @client.build_address
     @client.build_contact
+
+    @item = Item.new
   end
 
   # POST /invoices

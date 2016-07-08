@@ -1,0 +1,62 @@
+<!-- Modal -->
+<div id="new_item_modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Modal Header</h4>
+      </div>
+      <div class="modal-body">
+        <%= form_for @item, remote: true, :url => items_path( :format => :json ), :html => {:method => :post, 'data-model' => 'item' } do |f| %>
+        <% if @client.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@client.errors.count, "error") %>
+            prohibited this client from being saved:</h2>
+
+          <ul>
+            <% @client.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+        <% end %>
+
+        <div class="form-group">
+          <%= f.label :name %><br/>
+          <%= f.text_field :name, :required => true %>
+          <span class="help-block"></span>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :unit, "jednostka miary" %>
+          <% units = ['fracht', 'kg', 'szt', 'godz', 'dni', 'mc', 'km', 'm2'] %>
+          <%= f.select :unit, options_for_select(units.collect { |c| [ c, c ] }) %>
+          <span class="help-block"></span>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :unit_price_cents, "Cena netto (za jm)" %>
+          <%= f.number_field :unit_price, :step => 'any' %>
+          <span class="help-block"></span>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :tax, "Tax?!", :step => 'any'  %>
+          <%= f.number_field :tax, :step => 'any' %>
+          <span class="help-block"></span>
+        </div>
+
+        <div class="actions">
+          <%= f.submit %>
+        </div>
+        <% end %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -23,6 +23,7 @@
 //= require moment.min.js
 
 $(document).ready(function(){
+  // client
   $(document).bind("ajax:success",'form#new_client', function(evt, data, status, xhr){
      var $form = $(this);
      $('#new_client_modal').modal_success();
@@ -40,6 +41,27 @@ $(document).ready(function(){
 
   $('#new_client_modal').on('shown.bs.modal', function () {
     $('#client_name').focus()
+  })
+
+  // item
+  $(document).bind("ajax:success",'form#new_item', function(evt, data, status, xhr){
+    console.log("item")
+     var $form = $(this);
+     $('#new_item_modal').modal_success();
+     //var option = $('<option selected>'+data.name+'</option>').val(""+data.id);
+     //console.log(option)
+     //$("#invoice_client_id").append(option).trigger('change');
+   })
+
+  $(document).bind('ajaxError', 'form#new_item', function(event, jqxhr, settings, exception){
+
+    // note: jqxhr.responseJSON undefined, parsing responseText instead
+    $(event.data).render_form_errors( $.parseJSON(jqxhr.responseText) );
+
+  });
+
+  $('#new_item_modal').on('shown.bs.modal', function () {
+    $('#item_name').focus()
   })
 });
 
@@ -96,7 +118,12 @@ $(document).ready(function(){
 }(jQuery));
 
 
-function collapse_select() {
+function show_client_modal() {
   $('#new_client_modal').modal('toggle')
+  $('#invoice_client_id').select2("close")
+}
+
+function show_item_modal() {
+  $('#new_item_modal').modal('toggle')
   $('#invoice_client_id').select2("close")
 }
