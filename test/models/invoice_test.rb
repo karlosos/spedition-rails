@@ -79,4 +79,14 @@ class InvoiceTest < ActiveSupport::TestCase
     @invoice.client_city = " "
     assert_not @invoice.valid?
   end
+
+  test "status should be present" do
+    @invoice.status = nil
+    assert_not @invoice.valid?
+  end
+
+  test "total price in words should be present" do
+    @invoice.total_price_in_words = " "
+    assert_not @invoice.valid?
+  end
 end

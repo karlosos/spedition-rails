@@ -20,3 +20,7 @@ invoice_one:
   client_street: "Cicha 12"
   client_city: "Szczecin"
   client_zip: "70-300"
+  currency_rate: "4.03"
+  currency_rate_name: "EUR"
+  currency_rate_table_name: "125/A/NBP/2016"
+  status: 2

@@ -28,6 +28,7 @@ class Invoice < ActiveRecord::Base
   validates :client_zip, presence: true
   validates :client_city, presence: true
   validates :invoice_items, :length => { :minimum => 1 }
+  validates :total_price_in_words, presence: true
 
   validates_with InvoicePriceValidator
 
