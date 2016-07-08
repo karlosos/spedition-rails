@@ -17,6 +17,11 @@
       </div>
 
       <div id="advanced_search_invoice_form">
+        <%= label_tag :invoice_name, "Numer faktury" %>
+        <%= number_field_tag :invoice_name_number %>
+        <%= number_field_tag :invoice_name_month %>
+        <%= number_field_tag :invoice_name_year %>
+
         <%= label_tag :date_start, "Od" %>
         <div class='input-group date' id='datetimepicker1' data-date-format="yyyy-mm-dd" locale="pl">
           <%= text_field_tag :date_start %>

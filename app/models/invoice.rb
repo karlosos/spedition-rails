@@ -55,8 +55,13 @@ class Invoice < ActiveRecord::Base
     client_name = search_params[:client_name]
     date_start = search_params[:date_start]
     date_stop = search_params[:date_stop]
+    invoice_name_number = search_params[:invoice_name_number]
+    invoice_name_month = search_params[:invoice_name_month]
+    invoice_name_year = search_params[:invoice_name_year]
 
-    if date_stop.present? && date_start.present?
+    if invoice_name_number.present? && invoice_name_month.present? && invoice_name_year.present?
+      where('invoice_names.number = ? AND invoice_names.month = ? AND invoice_names.year = ?', invoice_name_number, invoice_name_month, invoice_name_year)
+    elsif date_stop.present? && date_start.present?
       where('clients.name LIKE ? AND date >= ? AND date <= ? ', "%#{client_name}%", date_start.to_datetime, date_stop.to_datetime)
     elsif date_start.present?
       where('clients.name LIKE ? AND date >= ?', "%#{client_name}%", date_start.to_datetime)
