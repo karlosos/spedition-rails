@@ -9,7 +9,7 @@
 
         <%= label_tag :date, "Data wystawienia faktury" %>
         <div class='input-group date' id='datetimepicker1' data-date-format="yyyy-mm-dd" locale="pl">
-          <%= text_field_tag :date %>
+          <%= text_field_tag :date, params[:date] %>
           <span class="input-group-addon">
             <span class="glyphicon glyphicon-calendar"></span>
           </span>
@@ -19,23 +19,27 @@
 
       <div id="advanced_search_invoice_form">
         <%= label_tag :invoice_name, "Numer faktury" %>
-        <%= number_field_tag :invoice_name_number %>
-        <%= number_field_tag :invoice_name_month %>
-        <%= number_field_tag :invoice_name_year %>
+        <%= number_field_tag :invoice_name_number, params[:invoice_name_number] %>
+        <%= number_field_tag :invoice_name_month, params[:invoice_name_month] %>
+        <%= number_field_tag :invoice_name_year, params[:invoice_name_year] %>
 
         <% label_tag :statuses, "Status faktury" %>
 
         <div class="form_short">
+          <% statuses = params[:statuses] %>
+          <% if statuses.nil? %>
+            <% statuses = Array.new %>
+          <% end %>
           <table>
-          <tr><td><%= check_box_tag "statuses[]", 1 %> Wystawiona</tr></td>
-          <tr><td><%= check_box_tag "statuses[]", 2 %> Wysłana</tr></td>
-          <tr><td><%= check_box_tag "statuses[]", 3 %> Zapłacona</tr></td>
+          <tr><td><%= check_box_tag "statuses[]", 1, statuses.include?('1') %> Wystawiona</tr></td>
+          <tr><td><%= check_box_tag "statuses[]", 2, statuses.include?('2') %> Wysłana</tr></td>
+          <tr><td><%= check_box_tag "statuses[]", 3, statuses.include?('3') %> Zapłacona</tr></td>
           </table>
         </div>
 
         <%= label_tag :date_start, "Od" %>
         <div class='input-group date' id='datetimepicker1' data-date-format="yyyy-mm-dd" locale="pl">
-          <%= text_field_tag :date_start %>
+          <%= text_field_tag :date_start, params[:date_start] %>
           <span class="input-group-addon">
             <span class="glyphicon glyphicon-calendar"></span>
           </span>
@@ -43,7 +47,7 @@
 
         <%= label_tag :date_stop, "Do" %>
         <div class='input-group date' id='datetimepicker1' data-date-format="yyyy-mm-dd" locale="pl">
-          <%= text_field_tag :date_stop %>
+          <%= text_field_tag :date_stop, params[:date_stop] %>
           <span class="input-group-addon">
             <span class="glyphicon glyphicon-calendar"></span>
           </span>
@@ -51,7 +55,7 @@
 
         <%= label_tag :client_name, "Nazwa klienta" %>
         <div>
-          <%= text_field_tag :client_name %>
+          <%= text_field_tag :client_name, params[:client_name] %>
         </div>
       </div>
       <%= submit_tag "Search", :date => nil, :client_name => nil %>
