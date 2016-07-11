@@ -6,6 +6,7 @@
       <div id="short_search_invoice_form">
         <%= hidden_field_tag :direction, params[:direction] %>
         <%= hidden_field_tag :sort, params[:sort] %>
+
         <%= label_tag :date, "Data wystawienia faktury" %>
         <div class='input-group date' id='datetimepicker1' data-date-format="yyyy-mm-dd" locale="pl">
           <%= text_field_tag :date %>
@@ -21,6 +22,16 @@
         <%= number_field_tag :invoice_name_number %>
         <%= number_field_tag :invoice_name_month %>
         <%= number_field_tag :invoice_name_year %>
+
+        <% label_tag :statuses, "Status faktury" %>
+
+        <div class="form_short">
+          <table>
+          <tr><td><%= check_box_tag "statuses[]", 1 %> Wystawiona</tr></td>
+          <tr><td><%= check_box_tag "statuses[]", 2 %> Wysłana</tr></td>
+          <tr><td><%= check_box_tag "statuses[]", 3 %> Zapłacona</tr></td>
+          </table>
+        </div>
 
         <%= label_tag :date_start, "Od" %>
         <div class='input-group date' id='datetimepicker1' data-date-format="yyyy-mm-dd" locale="pl">

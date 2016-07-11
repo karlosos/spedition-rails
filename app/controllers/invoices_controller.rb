@@ -33,7 +33,7 @@ class InvoicesController < ApplicationController
       :date => date_search_param, :date_start => date_start_search_param,
       :date_stop => date_stop_search_param, :invoice_name_number => params[:invoice_name_number],
       :invoice_name_month => params[:invoice_name_month],
-      :invoice_name_year => params[:invoice_name_year]
+      :invoice_name_year => params[:invoice_name_year], :statuses => params[:statuses]
     }
 
     @client = Client.new

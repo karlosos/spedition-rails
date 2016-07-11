@@ -102,6 +102,11 @@ input {
   }
   #advanced_search_invoice_form {
     display: none;
+    .form_short {
+      input {
+        width: auto;
+      }
+    }
   }
   #client_name {
     width: 236px;

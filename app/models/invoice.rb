@@ -58,20 +58,31 @@ class Invoice < ActiveRecord::Base
     invoice_name_number = search_params[:invoice_name_number]
     invoice_name_month = search_params[:invoice_name_month]
     invoice_name_year = search_params[:invoice_name_year]
+    statuses = search_params[:statuses]
+
+    @invoices = Invoice.all
 
     if invoice_name_number.present? && invoice_name_month.present? && invoice_name_year.present?
-      where('invoice_names.number = ? AND invoice_names.month = ? AND invoice_names.year = ?', invoice_name_number, invoice_name_month, invoice_name_year)
-    elsif date_stop.present? && date_start.present?
-      where('clients.name LIKE ? AND date >= ? AND date <= ? ', "%#{client_name}%", date_start.to_datetime, date_stop.to_datetime)
-    elsif date_start.present?
-      where('clients.name LIKE ? AND date >= ?', "%#{client_name}%", date_start.to_datetime)
-    elsif date_stop.present?
-      where('clients.name LIKE ? AND date <= ?', "%#{client_name}%", date_stop.to_datetime)
-    elsif date.present?
-      where('date = ? AND clients.name LIKE ?', date.to_datetime, "%#{client_name}%")
-      #where('clients.name LIKE ?', "%#{client_name}%")
-    else
-      where('clients.name LIKE ?', "%#{client_name}%")
+      @invoices = @invoices.where('invoice_names.number = ? AND invoice_names.month = ? AND invoice_names.year = ?', invoice_name_number, invoice_name_month, invoice_name_year)
     end
+
+    if date_stop.present? && date_start.present?
+      @invoices = @invoices.where('clients.name LIKE ? AND date >= ? AND date <= ? ', "%#{client_name}%", date_start.to_datetime, date_stop.to_datetime)
+    elsif date_start.present?
+      @invoices = @invoices.where('clients.name LIKE ? AND date >= ?', "%#{client_name}%", date_start.to_datetime)
+    elsif date_stop.present?
+      @invoices = @invoices.where('clients.name LIKE ? AND date <= ?', "%#{client_name}%", date_stop.to_datetime)
+    end
+
+    if date.present?
+      @invoices = @invoices.where('date = ? AND clients.name LIKE ?', date.to_datetime, "%#{client_name}%")
+      #where('clients.name LIKE ?', "%#{client_name}%")
+    end
+
+    if statuses
+      @invoices = @invoices.where('status IN (?)', statuses)
+    end
+
+    @invoices = @invoices.where('clients.name LIKE ?', "%#{client_name}%")
   end
 end
