@@ -382,6 +382,12 @@ get_currency_rate = () ->
     #console.log(date)
     date = moment(date)
     day_before_date = date.subtract(1, 'days')
+    console.log(day_before_date.weekday())
+    if day_before_date.weekday() == 6
+      day_before_date = day_before_date.subtract(1, 'days')
+    else if day_before_date.weekday() == 0
+      day_before_date = day_before_date.subtract(2, 'days')
+
     day_before_date_format = day_before_date.format('YYYY-MM-DD')
     #console.log(day_before_date_format);
     url = "http://api.nbp.pl/api/exchangerates/rates/A/EUR/" + day_before_date_format
