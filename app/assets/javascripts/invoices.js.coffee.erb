@@ -285,15 +285,19 @@ invoice_name_get_on_date_change = () ->
     date = new Date($(this).val())
     month = date.getMonth()+1
     year = date.getYear() + 1900
-    #console.log(year)
-    $.ajax "/invoices/invoice_name/#{year}/#{month}.json",
-      type: 'GET'
-      dataType: 'json'
-      success: (data, textStatus, jqXHR) ->
-        console.log(data['number'])
-        $('#invoice_invoice_name_attributes_number').val(data['number'])
-        $('#invoice_invoice_name_attributes_month').val(month)
-        $('#invoice_invoice_name_attributes_year').val(year)
+
+    invoice_month = String($('#invoice_invoice_name_attributes_month').val())
+    console.log(invoice_month)
+    console.log(String(month))
+    if String(month) != invoice_month
+      $.ajax "/invoices/invoice_name/#{year}/#{month}.json",
+        type: 'GET'
+        dataType: 'json'
+        success: (data, textStatus, jqXHR) ->
+          console.log(data['number'])
+          $('#invoice_invoice_name_attributes_number').val(data['number'])
+          $('#invoice_invoice_name_attributes_month').val(month)
+          $('#invoice_invoice_name_attributes_year').val(year)
 
 #
 # Invoice client
