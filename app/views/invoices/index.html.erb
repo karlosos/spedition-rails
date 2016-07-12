@@ -76,7 +76,9 @@
         </li>
         <li>
           <%= select_tag "status", "<option value='1'>wystawiona</option><option value='2'>wysłana</option><option value='3'>zapłacona</option>".html_safe, { class: 'form-control' } %>
-          <%= submit_tag "Aktualizuj" %>
+          <%= submit_tag "Aktualizuj status" %>
+
+          <%= submit_tag "Pobierz faktury" %>
         </li>
       </ul>
     </nav>

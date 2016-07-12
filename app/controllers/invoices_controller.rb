@@ -132,30 +132,26 @@ class InvoicesController < ApplicationController
   end
 
   def update_multiple
-    Invoice.where(id: params[:invoice_ids]).update_all(["status=?", params[:status]])
-    redirect_to invoices_path
-  end
+    if params[:commit] == 'Aktualizuj status'
+      Invoice.where(id: params[:invoice_ids]).update_all(["status=?", params[:status]])
+      redirect_to invoices_path
+    elsif params[:commit] == 'Pobierz faktury'
+      require 'zip'
+      @invoices = Invoice.where(id: params[:invoice_ids])
+      stringio = Zip::OutputStream.write_buffer do |zio|
+        @invoices.each do |invoice|
+          #create and add a pdf file for this record
+          dec_pdf = render_to_string :pdf => "#{invoice.get_file_name}.pdf", :template => '/invoices/show.pdf.erb', :locals => { :@invoice => invoice}, encoding: "UTF-8"
 
-  def zip_multiple
-    require 'zip'
-    @invoices = Invoice.all
-    stringio = Zip::OutputStream.write_buffer do |zio|
-      @invoices.each do |invoice|
-        zio.put_next_entry("#{invoice.id}_test.txt")
-        zio.write "Hello #{invoice.client_name}!"
-        #create and add a pdf file for this record
-        dec_pdf = render_to_string :pdf => "#{invoice.id}.pdf", :template => '/invoices/show.pdf.erb', :locals => { :@invoice => invoice}, encoding: "UTF-8"
-
-        zio.put_next_entry("#{invoice.id}.pdf")
-        zio << dec_pdf
+          zio.put_next_entry("#{invoice.get_file_name}.pdf")
+          zio << dec_pdf
+        end
       end
+      stringio.rewind
+      #just using variable assignment for clarity here
+      binary_data = stringio.sysread
+      send_data(binary_data, :type => 'application/zip', :filename => "faktury.zip")
     end
-    # This is needed because we are at the end of the stream and
-    # will send zero bytes otherwise
-    stringio.rewind
-    #just using variable assignment for clarity here
-    binary_data = stringio.sysread
-    send_data(binary_data, :type => 'application/zip', :filename => "test_dec_page.zip")
   end
 
   private

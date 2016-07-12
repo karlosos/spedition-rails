@@ -50,6 +50,14 @@ class Invoice < ActiveRecord::Base
     STATUSES[status]
   end
 
+  def get_name
+    return "#{invoice_name.number}/#{invoice_name.month}/#{invoice_name.year}"
+  end
+
+  def get_file_name
+    return "#{invoice_name.number}-#{invoice_name.month}-#{invoice_name.year}"
+  end
+
   def self.search(search_params)
     date = search_params[:date]
     client_name = search_params[:client_name]
