@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   resources :invoices do
     collection do
       put 'update_multiple'
+      get 'zip_multiple'
     end
   end
   resources :items
