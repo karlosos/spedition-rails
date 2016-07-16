@@ -1,4 +1,4 @@
-json.extract! @client, :id, :name, :created_at, :updated_at
+json.client_name @client.name
 json.client_street @client.address.street
 json.client_zip @client.address.zip
 json.client_city @client.address.city

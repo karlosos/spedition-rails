@@ -35,6 +35,29 @@ class InvoiceTest < ActiveSupport::TestCase
     assert_not @invoice.valid?
   end
 
+  test "at least one item should be present" do
+    @invoice.items.each do |item|
+      @invoice.items.delete(item)
+    end
+    assert_equal 0, @invoice.items.size
+    assert_not @invoice.valid?
+  end
+
+  test "value_added_tax_cents must be present" do
+    @invoice.value_added_tax_cents = nil
+    assert_not @invoice.valid?
+  end
+
+  test "net_price_cents must be present" do
+    @invoice.net_price_cents = nil
+    assert_not @invoice.valid?
+  end
+
+  test "total_selling_price_cents must be present" do
+    @invoice.total_selling_price_cents = nil
+    assert_not @invoice.valid?
+  end
+
   test "invoice net price should be equal to sum of all invoice_items net prices" do
     assert @invoice.invoice_items.size > 0
     net_price = @invoice.net_price
@@ -70,6 +93,11 @@ class InvoiceTest < ActiveSupport::TestCase
     assert_not @invoice.valid?
   end
 
+  test "client_name should be present" do
+    @invoice.client_name = ""
+    assert_not @invoice.valid?
+  end
+
   test "client_zip should be present" do
     @invoice.client_zip = " "
     assert_not @invoice.valid?
@@ -80,6 +108,41 @@ class InvoiceTest < ActiveSupport::TestCase
     assert_not @invoice.valid?
   end
 
+  test "client_country should be present" do
+    @invoice.client_country = " "
+    assert_not @invoice.valid?
+  end
+
+  test "client_phone doesn't need to be present" do
+    @invoice.client_phone = " "
+    assert @invoice.valid?
+  end
+
+  test "client_email doesn't need to be present" do
+    @invoice.client_email = " "
+    assert @invoice.valid?
+  end
+
+  test "place should be present" do
+    @invoice.place = " "
+    assert_not @invoice.valid?
+  end
+
+  test "currency_rate_table_name should be present if other currency" do
+    @invoice.currency_rate_table_name = " "
+    assert_not @invoice.valid?
+  end
+
+  test "currency_rate should be present if other currency" do
+    @invoice.currency_rate = " "
+    assert_not @invoice.valid?
+  end
+
+  test "currency_rate_name should be present if other currency" do
+    @invoice.currency_rate_name = " "
+    assert_not @invoice.valid?
+  end
+
   test "status should be present" do
     @invoice.status = nil
     assert_not @invoice.valid?
@@ -87,6 +150,11 @@ class InvoiceTest < ActiveSupport::TestCase
 
   test "total price in words should be present" do
     @invoice.total_price_in_words = " "
+    assert_not @invoice.valid?
+  end
+
+  test "deadline should be present" do
+    @invoice.deadline = nil
     assert_not @invoice.valid?
   end
 end

@@ -24,16 +24,24 @@ class Invoice < ActiveRecord::Base
   validates :seller, presence: true
   validates :invoice_name, presence: true
   validates :date, presence: true
+  validates :place, presence: true
+  validates :client_name, presence: true
   validates :client_street, presence: true
   validates :client_zip, presence: true
   validates :client_city, presence: true
+  validates :client_country, presence: true
   validates :invoice_items, :length => { :minimum => 1 }
   validates :total_price_in_words, presence: true
+  validates :currency_rate_table_name, presence: true
+  validates :currency_rate, presence: true
+  validates :currency_rate_name, presence: true
+  validates :deadline, presence: true
 
   validates_with InvoicePriceValidator
 
   before_save do
     self.date_deadline = self.date + (self.deadline).days
+    true
   end
 
   ISSUED    = 1
@@ -54,7 +62,6 @@ class Invoice < ActiveRecord::Base
     STATUSES[status]
   end
 
-
   def get_name
     return "#{invoice_name.number}/#{invoice_name.month}/#{invoice_name.year}"
   end
@@ -62,7 +69,6 @@ class Invoice < ActiveRecord::Base
   def get_file_name
     return "#{invoice_name.number}-#{invoice_name.month}-#{invoice_name.year}"
   end
-
 
   def overdue
     date_deadline = date + (deadline).days

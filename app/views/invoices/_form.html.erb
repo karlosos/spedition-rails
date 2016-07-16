@@ -60,6 +60,8 @@
         Nabywca
       </h3>
       <%= invoice_form.collection_select :client_id, clients, 'id', 'name', prompt: 'Wybierz klienta' %>
+      <%= label_tag :client_name, "Nazwa klienta" %>
+      <%= invoice_form.text_field :client_name %>
       <%= label_tag :client_street, "Ulica i numer" %>
       <%= invoice_form.text_field :client_street %>
       <%= label_tag :client_zip, "Kod pocztowy" %>

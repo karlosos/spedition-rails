@@ -12,11 +12,13 @@
 #
 invoice_one:
   date: <%= DateTime.now %>
+  place: Szczecin
   seller: client_google
   client: client_microsoft
   net_price_cents: 44900
   value_added_tax_cents: 10576
   total_selling_price_cents: 55476
+  total_price_in_words: "554 EURO 76/100"
   client_street: "Cicha 12"
   client_city: "Szczecin"
   client_zip: "70-300"
@@ -24,3 +26,11 @@ invoice_one:
   currency_rate_name: "EUR"
   currency_rate_table_name: "125/A/NBP/2016"
   status: 2
+  deadline: 50
+  date_deadline: <%= DateTime.now + 50.days %>
+  client_name: Google
+  client_zip: 71-200
+  client_city: Szczecin
+  client_country: Polska
+  client_email: test@email.com
+  client_phone: 7230232

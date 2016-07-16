@@ -303,6 +303,7 @@ invoice_name_get_on_date_change = () ->
 #
 invoice_client_info_get_on_client_change = () ->
   $('#invoice_client_id').change ->
+    client_name = $('#invoice_client_name')
     client_street = $('#invoice_client_street')
     client_zip = $('#invoice_client_zip')
     client_city = $('#invoice_client_city')
@@ -317,6 +318,7 @@ invoice_client_info_get_on_client_change = () ->
         console.log(textStatus)
       success: (data, textStatus, jqXHR) ->
         console.log(data['client_street'])
+        client_name.val(data['client_name'])
         client_street.val(data['client_street'])
         client_zip.val(data['client_zip'])
         client_city.val(data['client_city'])

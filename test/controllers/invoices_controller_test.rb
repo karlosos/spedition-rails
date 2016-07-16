@@ -26,14 +26,15 @@ class InvoicesControllerTest < ActionController::TestCase
             "year"=>"2016"
           },
           place: "Szczecin",
-          seller_id: "2",
-          client_id:"2",
-          client_street: "ehehh",
-          client_zip: "hehehh",
-          client_city: "eheh",
-          client_country: "heheh",
-          client_email: "hhehe",
-          client_phone: "ehhehe",
+          seller_id: clients(:client_google).id,
+          client_id: clients(:client_microsoft).id,
+          client_name: "Nazwa",
+          client_street: "Ulica",
+          client_zip: "23-232",
+          client_city: "Miasto",
+          client_country: "Polska",
+          client_email: "test@example.pl",
+          client_phone: "732-320-322",
           invoice_items_attributes:
           {
             "0" => {

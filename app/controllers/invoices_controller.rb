@@ -93,6 +93,8 @@ class InvoicesController < ApplicationController
         @client = Client.new
         @client.build_address
         @client.build_contact
+
+        @item = Item.new
         format.html { render :new, :locals => { :client => @client } }
         format.json { render json: @invoice.errors, status: :unprocessable_entity }
       end
@@ -110,6 +112,8 @@ class InvoicesController < ApplicationController
         @client = Client.new
         @client.build_address
         @client.build_contact
+
+        @item = Item.new
         format.html { render :edit, :locals => { :client => @client } }
         format.json { render json: @invoice.errors, status: :unprocessable_entity }
       end
