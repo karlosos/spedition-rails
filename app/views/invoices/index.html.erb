@@ -94,7 +94,7 @@
           <th><%= sortable "date", "Data wystawienia" %></th>
           <th>Produkty</th>
           <th><%= sortable "status", "Status" %></th>
-          <th></th>
+          <th><%= sortable "date_deadline", "Prz." %></th>
           <th></th>
         </tr>
       </thead>
@@ -127,6 +127,8 @@
               </ul>
           </div>
           </td>
+          <% overdue_class = overdue_class_for(invoice.overdue.round) %>
+          <td><div class="btn <%= overdue_class %> overdue"><%= invoice.overdue.round %></div></td>
           <td>
             <div class="btn-group invoice-status" invoice-id="<%= invoice.id %>">
               <button type="button" class="btn btn-secondary" data-toggle="dropdown"><span class="glyphicon glyphicon-cog"></span></button>
@@ -139,7 +141,6 @@
                 <li><%= link_to 'Destroy', invoice, method: :delete, data: { confirm: 'Are you sure?' } %></li>
               </ul>
           </td>
-          <td><%= invoice.overdue.round %></td>
         </tr>
         <% end %>
       </tbody>

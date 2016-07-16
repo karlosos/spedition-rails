@@ -32,6 +32,10 @@ class Invoice < ActiveRecord::Base
 
   validates_with InvoicePriceValidator
 
+  before_save do
+    self.date_deadline = self.date + (self.deadline).days
+  end
+
   ISSUED    = 1
   SENT      = 2
   COMPLETED = 3
@@ -58,6 +62,7 @@ class Invoice < ActiveRecord::Base
   def get_file_name
     return "#{invoice_name.number}-#{invoice_name.month}-#{invoice_name.year}"
   end
+
 
   def overdue
     date_deadline = date + (deadline).days
