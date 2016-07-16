@@ -5,6 +5,7 @@ class Client < ActiveRecord::Base
   accepts_nested_attributes_for :contact
   validates :address, presence: true
   validates :contact, presence: true
+  validates :name, presence: true
 
   has_many :invoices_as_seller,    class_name: 'Invoice', foreign_key: 'seller_id'
   has_many :ivoices_as_buyer, class_name: 'Invoice', foreign_key: 'buyer_id'

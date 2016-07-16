@@ -15,23 +15,9 @@ class ItemTest < ActiveSupport::TestCase
     assert_not @item.valid?
   end
 
-  # test "quantity should be present" do
-  #   @item.quantity = nil
-  #   assert_not @item.valid?
-  # end
-
   test "unit_price should be present" do
     @item.unit_price_cents = nil
     assert_not @item.valid?
   end
-
-  # test "price should be updated after update" do
-  #   money = Money.new(100, 'EUR')
-  #   quantity = 4
-  #   @item.unit_price = money
-  #   @item.quantity = quantity
-  #   @item.save
-  #   assert_equal money * quantity, @item.price
-  # end
 
 end

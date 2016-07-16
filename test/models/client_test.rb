@@ -2,8 +2,7 @@ require 'test_helper'
 
 class ClientTest < ActiveSupport::TestCase
   def setup
-    @address = Address.new(street: "ul. Cicha 132 m.16", city: "Gniezno", zip: "62-200", country: "Polska")
-    @client = Client.new(name: "Company A", address: @address)
+    @client = clients(:client_google)
   end
 
   test "Adress should not be nil" do
@@ -14,5 +13,14 @@ class ClientTest < ActiveSupport::TestCase
   test "Contact should not be nil" do
     @client.contact = nil
     assert_not @client.valid?
+  end
+
+  test "Name should be present" do
+    @client.name = " "
+    assert_not @client.valid?
+  end
+
+  test "Client should be valid" do
+    assert @client.valid?
   end
 end
