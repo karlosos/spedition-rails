@@ -118,7 +118,7 @@ class Invoice < ActiveRecord::Base
       @invoices = @invoices.where('status IN (?)', statuses)
     end
 
-    if client_name
+    if client_name.present?
       @invoices = @invoices.where('lower(client_name) LIKE ?', "%#{client_name}%")
     end
 
