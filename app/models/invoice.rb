@@ -1,4 +1,6 @@
 class Invoice < ActiveRecord::Base
+  default_scope { order('invoice_names.year DESC, invoice_names.month, invoice_names.number') }
+
   has_one :invoice_name, :dependent => :destroy
   belongs_to :seller, class_name: "Client", foreign_key: "seller_id"
   belongs_to :client, class_name:  "Client", foreign_key: "client_id"
@@ -76,6 +78,9 @@ class Invoice < ActiveRecord::Base
   def self.search(search_params)
     date = search_params[:date]
     client_name = search_params[:client_name]
+    if client_name
+      client_name = client_name.downcase
+    end
     date_start = search_params[:date_start]
     date_stop = search_params[:date_stop]
     invoice_name_number = search_params[:invoice_name_number]
@@ -113,6 +118,6 @@ class Invoice < ActiveRecord::Base
       @invoices = @invoices.where('status IN (?)', statuses)
     end
 
-    @invoices = @invoices.where('lower(client_name) LIKE ?', "%#{client_name.downcase}%")
+    @invoices = @invoices.where('lower(client_name) LIKE ?', "%#{client_name}%")
   end
 end
