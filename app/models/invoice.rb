@@ -113,6 +113,6 @@ class Invoice < ActiveRecord::Base
       @invoices = @invoices.where('status IN (?)', statuses)
     end
 
-    @invoices = @invoices.where('clients.name LIKE ?', "%#{client_name}%")
+    @invoices = @invoices.where('lower(client_name) LIKE ?', "%#{client_name.downcase}%")
   end
 end
