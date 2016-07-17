@@ -78,6 +78,7 @@ class Invoice < ActiveRecord::Base
   def self.search(search_params)
     date = search_params[:date]
     client_name = search_params[:client_name]
+    client_id = search_params[:client_id]
     if client_name
       client_name = client_name.downcase
     end
@@ -90,6 +91,9 @@ class Invoice < ActiveRecord::Base
 
     @invoices = Invoice.all
 
+    if client_id.present?
+      @invoices = @invoices.where('clients.id = ?', client_id)
+    end
     if invoice_name_number.present?
       @invoices = @invoices.where('invoice_names.number = ?', invoice_name_number)
     end

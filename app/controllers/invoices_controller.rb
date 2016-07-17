@@ -5,7 +5,7 @@ class InvoicesController < ApplicationController
   # GET /invoices
   # GET /invoices.json
   def index
-    search_params = { :client_name => params[:client_name],
+    search_params = { :client_name => params[:client_name], :client_id => params[:client_id],
       :date => params[:date], :date_start => params[:date_start],
       :date_stop => params[:date_stop], :invoice_name_number => params[:invoice_name_number],
       :invoice_name_month => params[:invoice_name_month],
