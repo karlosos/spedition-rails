@@ -43,6 +43,7 @@ body {
 .pretty th .desc {
   background-image: url("/images/down_arrow.gif");
 }
+
 th .asc:after {
   width: 0;
   height: 0;
@@ -94,6 +95,11 @@ input {
     list-style-type: none;
   }
 }
+/* indexes */
+td {
+  vertical-align: middle !important;
+}
+
 /* invoices index */
 .search_invoice_form {
   margin-top: 30px;
