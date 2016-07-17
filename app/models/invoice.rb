@@ -15,8 +15,6 @@ class Invoice < ActiveRecord::Base
     :greater_than_or_equal_to => 0
   }
 
-  #accepts_nested_attributes_for :client
-  #accepts_nested_attributes_for :seller
   accepts_nested_attributes_for :invoice_name
   accepts_nested_attributes_for :invoice_items, allow_destroy: true
 
@@ -87,8 +85,16 @@ class Invoice < ActiveRecord::Base
 
     @invoices = Invoice.all
 
-    if invoice_name_number.present? && invoice_name_month.present? && invoice_name_year.present?
-      @invoices = @invoices.where('invoice_names.number = ? AND invoice_names.month = ? AND invoice_names.year = ?', invoice_name_number, invoice_name_month, invoice_name_year)
+    if invoice_name_number.present?
+      @invoices = @invoices.where('invoice_names.number', invoice_name_number)
+    end
+
+    if invoice_name_month.present?
+      @invoices = @invoices.where('invoice_names.month = ?', invoice_name_month)
+    end
+
+    if invoice_name_year.present?
+      @invoices = @invoices.where('invoice_names.year = ?', invoice_name_year)
     end
 
     if date_stop.present? && date_start.present?
@@ -101,7 +107,6 @@ class Invoice < ActiveRecord::Base
 
     if date.present?
       @invoices = @invoices.where('date = ? AND clients.name LIKE ?', date.to_datetime, "%#{client_name}%")
-      #where('clients.name LIKE ?', "%#{client_name}%")
     end
 
     if statuses

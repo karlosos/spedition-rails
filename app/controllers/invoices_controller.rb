@@ -5,33 +5,9 @@ class InvoicesController < ApplicationController
   # GET /invoices
   # GET /invoices.json
   def index
-    if params[:date].present?
-      date_search_param = params[:date]
-    else
-      date_search_param = ""
-    end
-
-    if params[:client_name].present?
-      client_name_search_param = params[:client_name]
-    else
-      client_name_search_param = ""
-    end
-
-    if params[:date_start].present?
-      date_start_search_param = params[:date_start]
-    else
-      date_start_search_param = ""
-    end
-
-    if params[:date_stop].present?
-      date_stop_search_param = params[:date_stop]
-    else
-      date_stop_search_param = ""
-    end
-
-    search_params = { :client_name => client_name_search_param,
-      :date => date_search_param, :date_start => date_start_search_param,
-      :date_stop => date_stop_search_param, :invoice_name_number => params[:invoice_name_number],
+    search_params = { :client_name => params[:client_name],
+      :date => params[:date], :date_start => params[:date_start],
+      :date_stop => params[:date_stop], :invoice_name_number => params[:invoice_name_number],
       :invoice_name_month => params[:invoice_name_month],
       :invoice_name_year => params[:invoice_name_year], :statuses => params[:statuses]
     }
@@ -172,6 +148,7 @@ class InvoicesController < ApplicationController
       :place,
       :seller_id,
       :client_id,
+      :client_name,
       :client_street,
       :client_country,
       :client_email,
