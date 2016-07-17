@@ -1,5 +1,5 @@
 class Invoice < ActiveRecord::Base
-  default_scope { order('invoice_names.year DESC, invoice_names.month DESC, invoice_names.number DESC') }
+  #default_scope { order('invoice_names.year DESC, invoice_names.month DESC, invoice_names.number DESC') }
 
   has_one :invoice_name, :dependent => :destroy
   belongs_to :seller, class_name: "Client", foreign_key: "seller_id"
@@ -122,6 +122,6 @@ class Invoice < ActiveRecord::Base
       @invoices = @invoices.where('lower(client_name) LIKE ?', "%#{client_name}%")
     end
 
-    return @invoices
+    return @invoices.order('invoice_names.year DESC, invoice_names.month DESC, invoice_names.number DESC')
   end
 end
