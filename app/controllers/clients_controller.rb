@@ -4,13 +4,11 @@ class ClientsController < ApplicationController
   # GET /clients
   # GET /clients.json
   def index
-    if params[:search].present?
-      search = params[:search]
-    else
-      search = ""
-    end
+    search_params = { :name => params[:name], :street => params[:street], :city => params[:city],
+      :nip => params[:nip]
+    }
 
-    @clients = Client.joins(:address).search(search).order(sort_column + " " + sort_direction).paginate(:page => params[:page], :per_page => 30)
+    @clients = Client.joins(:address).search(search_params).order(sort_column + " " + sort_direction).paginate(:page => params[:page], :per_page => 30)
     respond_to do |format|
       format.html
       if params[:q].present?
