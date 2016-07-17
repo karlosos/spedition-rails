@@ -110,7 +110,7 @@
           <td><%= link_to invoice.date.strftime('%F'), invoice %></td>
           <td>
             <% invoice.items.each do |product| %>
-              <%= product.name %>
+              <%= link_to product.name, product%>
             <% end %>
           </td>
           <td>

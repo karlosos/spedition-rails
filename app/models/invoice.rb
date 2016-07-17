@@ -79,6 +79,7 @@ class Invoice < ActiveRecord::Base
     date = search_params[:date]
     client_name = search_params[:client_name]
     client_id = search_params[:client_id]
+    item_id = search_params[:item_id]
     if client_name
       client_name = client_name.downcase
     end
@@ -126,6 +127,9 @@ class Invoice < ActiveRecord::Base
       @invoices = @invoices.where('lower(client_name) LIKE ?', "%#{client_name}%")
     end
 
+    if item_id.present?
+      @invoices = @invoices.where('invoice_items.item_id = ?', item_id)
+    end
     return @invoices.order('invoice_names.year DESC, invoice_names.month DESC, invoice_names.number DESC')
   end
 end

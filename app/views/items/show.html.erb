@@ -1,3 +1,19 @@
+<nav class="navbar menubar">
+  <ul>
+    <li>
+    <%= link_to_menu_item("Edytuj", "glyphicon-edit", edit_item_path(@item)) %>
+    </li>
+
+    <li>
+    <%= link_to_menu_item("Usuń", "glyphicon-trash", items_path(@item), 1) %>
+    </li>
+
+    <li>
+    <%= link_to_menu_item("Zobacz faktury", "glyphicon-search", invoices_path(:item_id=>@item.id)) %>
+    </li>
+  </ul>
+</nav>
+
 <h3>Nazwa</h3>
 <%= @item.name %>
 
@@ -11,6 +27,3 @@
 <%= @item.tax %>
 
 <br>
-
-<%= link_to 'Edit', edit_item_path(@item) %> |
-<%= link_to 'Back', items_path %>

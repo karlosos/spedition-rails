@@ -1,10 +1,11 @@
 class ItemsController < ApplicationController
   before_action :set_item, only: [:show, :edit, :update, :destroy]
+  helper_method :sort_column, :sort_direction
 
   # GET /items
   # GET /items.json
   def index
-    @items = Item.all
+    @items = Item.all.order(sort_column + " " + sort_direction).paginate(:page => params[:page], :per_page => 30)
     respond_to do |format|
       format.html
       if params[:q].present?
@@ -79,5 +80,17 @@ class ItemsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def item_params
       params.require(:item).permit(:name, :unit, :unit_price, :pkwiu, :tax)
+    end
+
+    def sort_column
+      if params[:sort].present?
+        params[:sort]
+      else
+        "name"
+      end
+    end
+
+    def sort_direction
+      %w[asc desc].include?(params[:direction]) ? params[:direction] : "desc"
     end
 end
