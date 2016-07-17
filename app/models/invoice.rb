@@ -1,5 +1,5 @@
 class Invoice < ActiveRecord::Base
-  default_scope { order('invoice_names.year DESC, invoice_names.month, invoice_names.number') }
+  default_scope { order('invoice_names.year DESC, invoice_names.month DESC, invoice_names.number DESC') }
 
   has_one :invoice_name, :dependent => :destroy
   belongs_to :seller, class_name: "Client", foreign_key: "seller_id"
@@ -91,7 +91,7 @@ class Invoice < ActiveRecord::Base
     @invoices = Invoice.all
 
     if invoice_name_number.present?
-      @invoices = @invoices.where('invoice_names.number', invoice_name_number)
+      @invoices = @invoices.where('invoice_names.number = ?', invoice_name_number)
     end
 
     if invoice_name_month.present?
@@ -103,21 +103,25 @@ class Invoice < ActiveRecord::Base
     end
 
     if date_stop.present? && date_start.present?
-      @invoices = @invoices.where('clients.name LIKE ? AND date >= ? AND date <= ? ', "%#{client_name}%", date_start.to_datetime, date_stop.to_datetime)
+      @invoices = @invoices.where('date >= ? AND date <= ? ', date_start.to_datetime, date_stop.to_datetime)
     elsif date_start.present?
-      @invoices = @invoices.where('clients.name LIKE ? AND date >= ?', "%#{client_name}%", date_start.to_datetime)
+      @invoices = @invoices.where('date >= ?', date_start.to_datetime)
     elsif date_stop.present?
-      @invoices = @invoices.where('clients.name LIKE ? AND date <= ?', "%#{client_name}%", date_stop.to_datetime)
+      @invoices = @invoices.where('date <= ?', date_stop.to_datetime)
     end
 
     if date.present?
-      @invoices = @invoices.where('date = ? AND clients.name LIKE ?', date.to_datetime, "%#{client_name}%")
+      @invoices = @invoices.where('date = ?', date.to_datetime)
     end
 
     if statuses
       @invoices = @invoices.where('status IN (?)', statuses)
     end
 
-    @invoices = @invoices.where('lower(client_name) LIKE ?', "%#{client_name}%")
+    if client_name
+      @invoices = @invoices.where('lower(client_name) LIKE ?', "%#{client_name}%")
+    end
+
+    return @invoices
   end
 end
