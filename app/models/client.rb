@@ -25,17 +25,17 @@ class Client < ActiveRecord::Base
 
     if street.present?
       street = street.downcase
-      @clients = @clients.where('lower(addresses.street) LIKE ?', "#{street}")
+      @clients = @clients.where('lower(addresses.street) LIKE ?', "%#{street}%")
     end
 
     if city.present?
       city = city.downcase
-      @clients = @clients.where('lower(addresses.city) LIKE ?', "#{city}")
+      @clients = @clients.where('lower(addresses.city) LIKE ?', "%#{city}%")
     end
 
     if nip.present?
       nip = nip.downcase
-      @clients = @clients.where('lower(nip) LIKE ?', "#{nip}")
+      @clients = @clients.where('lower(nip) LIKE ?', "%#{nip}%")
     end
 
     return @clients
