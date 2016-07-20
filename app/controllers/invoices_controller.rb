@@ -64,6 +64,7 @@ class InvoicesController < ApplicationController
     #@invoice.items << Item.new(params[:item])
     respond_to do |format|
       if @invoice.save
+        update_client_info(@invoice, invoice_params)
         format.html { redirect_to @invoice, notice: 'Invoice was successfully created.' }
         format.json { render :show, status: :created, location: @invoice }
       else
@@ -183,5 +184,31 @@ class InvoicesController < ApplicationController
 
     def sort_direction
       %w[asc desc].include?(params[:direction]) ? params[:direction] : "desc"
+    end
+
+    def update_client_info(invoice, invoice_params)
+      client = invoice.client
+      if client.name != invoice_params[:client_name]
+        client.name = invoice_params[:client_name]
+      end
+      if client.address.street != invoice_params[:client_street]
+        client.address.street = invoice_params[:client_street]
+      end
+      if client.address.zip != invoice_params[:client_zip]
+        client.address.zip = invoice_params[:client_zip]
+      end
+      if client.address.city != invoice_params[:client_city]
+        client.address.city = invoice_params[:client_city]
+      end
+      if client.address.country != invoice_params[:client_country]
+        client.address.country = invoice_params[:client_country]
+      end
+      if client.contact.email != invoice_params[:client_email]
+        client.contact.email = invoice_params[:client_email]
+      end
+      if client.contact.phone1 != invoice_params[:client_phone]
+        client.contact.phone1 = invoice_params[:client_phone]
+      end
+      client.save
     end
 end
