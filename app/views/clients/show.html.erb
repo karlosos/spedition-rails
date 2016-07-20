@@ -1,15 +1,15 @@
 <nav class="navbar menubar">
   <ul>
     <li>
-    <%= link_to_menu_client("Edytuj", "glyphicon-edit", edit_client_path(@client)) %>
+    <%= link_to_menu("Edytuj", "glyphicon-edit", edit_client_path(@client)) %>
     </li>
 
     <li>
-    <%= link_to_menu_client("Usuń", "glyphicon-trash", client_path(@client), 1) %>
+    <%= link_to_menu("Usuń", "glyphicon-trash", client_path(@client), 1) %>
     </li>
 
     <li>
-    <%= link_to_menu_client("Zobacz faktury", "glyphicon-search", invoices_path(:client_id=>@client.id)) %>
+    <%= link_to_menu("Zobacz faktury", "glyphicon-search", invoices_path(:client_id=>@client.id)) %>
     </li>
   </ul>
 </nav>
