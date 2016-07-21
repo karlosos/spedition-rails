@@ -8,7 +8,17 @@ class Client < ActiveRecord::Base
   validates :name, presence: true
 
   has_many :invoices_as_seller,    class_name: 'Invoice', foreign_key: 'seller_id'
-  has_many :ivoices_as_buyer, class_name: 'Invoice', foreign_key: 'buyer_id'
+  has_many :invoices_as_client, class_name: 'Invoice', foreign_key: 'client_id'
+
+  def debt
+    debt = Money.new(0, 'EUR')
+    self.invoices_as_client.each do |invoice|
+      if invoice.status < 3
+        debt += invoice.total_selling_price
+      end
+    end
+    return debt
+  end
 
   def self.search(search_params)
     name = search_params[:name]

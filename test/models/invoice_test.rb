@@ -157,4 +157,8 @@ class InvoiceTest < ActiveSupport::TestCase
     @invoice.deadline = nil
     assert_not @invoice.valid?
   end
+
+  test "should return valid debt" do
+    assert_equal(@invoice.total_selling_price, @invoice.client.debt)
+  end
 end
