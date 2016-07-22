@@ -89,7 +89,7 @@
       <tr>
         <th class="invoice_bold"> Wartość netto </th>
         <td> <%= humanized_money_with_symbol @invoice.net_price %> </td>
-        <% Money.add_rate("EUR", "PLN", @invoice.currency_rate) %>
+        <% Money.add_rate(@invoice.currency_rate_name, @invoice.invoice_exchange_currency, @invoice.currency_rate) %>
         <td> <%= humanized_money_with_symbol @invoice.net_price.exchange_to("PLN") %></td>
       </tr>
       <tr>
@@ -109,12 +109,14 @@
 
   <div class="row">
     <div class="col-xs-12">
-      Kurs waluty <%= @invoice.currency_rate_name %>/PLN <%= @invoice.currency_rate.to_s.gsub(".", ",") %>, tabela kursów średnich NBP nr <%= @invoice.currency_rate_table_name %> z dnia <%= @invoice.date.strftime('%F') %> <br>
-      <span class="invoice_bold">Przeliczona kwota VAT: <%= @invoice.value_added_tax.exchange_to("PLN").to_s.gsub(".", ",")   %> PLN</span>
+      <% if @invoice.currency_rate_table_name.present? %>
+        Kurs waluty <%= @invoice.currency_rate_name %>/PLN <%= @invoice.currency_rate.to_s.gsub(".", ",") %>, tabela kursów średnich NBP nr <%= @invoice.currency_rate_table_name %> z dnia <%= @invoice.date.strftime('%F') %> <br>
+        <span class="invoice_bold">Przeliczona kwota VAT: <%= @invoice.value_added_tax.exchange_to("PLN").to_s.gsub(".", ",")   %> PLN</span>
+        <hr>
+      <% end %>
     </div>
   </div>
 
-  <hr>
 
   <div class="row">
     <div class="col-xs-12">

@@ -32,8 +32,8 @@ class Invoice < ActiveRecord::Base
   validates :client_country, presence: true
   validates :invoice_items, :length => { :minimum => 1 }
   validates :total_price_in_words, presence: true
-  validates :currency_rate_table_name, presence: true
-  validates :currency_rate, presence: true
+  # validates :currency_rate_table_name, presence: true
+  # validates :currency_rate, presence: true
   validates :currency_rate_name, presence: true
   validates :deadline, presence: true
 

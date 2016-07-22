@@ -162,10 +162,14 @@ class InvoicesController < ApplicationController
       :client_zip,
       :client_city,
       :net_price,
+      :net_price_currency,
       :value_added_tax,
+      :value_added_tax_currency,
       :total_selling_price,
+      :total_selling_price_currency,
       :total_price_in_words,
-      invoice_items_attributes: [ :id, :item_id, :quantity, :unit_price, :net_price, :value_added_tax, :total_selling_price, :tax_rate, :_destroy,
+      :total_price_in_words_currency,
+      invoice_items_attributes: [ :id, :item_id, :quantity, :unit_price, :unit_price_currency, :net_price, :net_price_currency, :value_added_tax, :value_added_tax_currency, :total_selling_price, :total_selling_price_currency, :tax_rate, :_destroy,
         item_attributes:
         [:name, :unit, :id ]
         ],
