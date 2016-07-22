@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160716121458) do
+ActiveRecord::Schema.define(version: 20160722125932) do
 
   create_table "addresses", force: true do |t|
     t.string   "line1"
@@ -114,6 +114,9 @@ ActiveRecord::Schema.define(version: 20160716121458) do
     t.string   "total_price_in_words"
     t.integer  "deadline",                     default: 50
     t.datetime "date_deadline"
+    t.string   "invoice_currency",             default: "EUR"
+    t.string   "invoice_exchange_currency",    default: "PLN"
+    t.string   "invoice_language",             default: "PL"
   end
 
   create_table "items", force: true do |t|

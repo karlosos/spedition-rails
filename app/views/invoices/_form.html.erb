@@ -122,6 +122,21 @@
   </div>
 
   <div class="row">
+    <div class="col-sm-3">
+      <%= invoice_form.label :invoice_currency, "Waluta" %>
+      <%= invoice_form.text_field :invoice_currency %>
+    </div>
+    <div class="col-sm-3">
+      <%= invoice_form.label :invoice_language, "Język" %>
+      <%= invoice_form.text_field :invoice_language %>
+    </div>
+    <div class="col-sm-3">
+      <%= invoice_form.label :invoice_exchange_currency, "Przeliczanie na walutę" %>
+      <%= invoice_form.text_field :invoice_exchange_currency %>
+    </div>
+  </div>
+
+  <div class="row">
     <div class="col-sm-12">
       <%= invoice_form.label :total_price_in_words, "Kwota słownie" %>
       <%= invoice_form.text_field :total_price_in_words %>
