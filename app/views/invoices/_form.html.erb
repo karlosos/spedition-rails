@@ -123,8 +123,11 @@
 
   <div class="row">
     <div class="col-sm-3">
-      <%= invoice_form.label :invoice_currency, "Waluta" %>
-      <%= invoice_form.text_field :invoice_currency %>
+      <% currencies = ["EUR", "USD", "PLN"] %>
+      <div class="form-group">
+        <%= invoice_form.label :currency_rate_name, "Waluta" %>
+        <%= invoice_form.collection_select :currency_rate_name, currencies, :to_s, :to_s, { include_blank: false }, { class: "form-control" } %>
+      </div>
     </div>
     <div class="col-sm-3">
       <%= invoice_form.label :invoice_language, "Język" %>
@@ -147,8 +150,7 @@
     <div class="col-sm-12">
       <%= label_tag :currency_rate_table_name, "Tabela kursu" %>
       <%= invoice_form.text_field :currency_rate_table_name, :readonly => true %>
-      <%= label_tag :currency_rate_name, "Nazwa kursu" %>
-      <%= invoice_form.text_field :currency_rate_name, :readonly => true %>
+
       <%= label_tag :currency_rate, "Kurs" %>
       <%= invoice_form.text_field :currency_rate, :readonly => true %>
     </div>

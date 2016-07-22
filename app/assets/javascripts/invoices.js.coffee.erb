@@ -382,9 +382,16 @@ currency_rate_functions = () ->
 get_currency_rate_on_date_change = () ->
   $('#invoice_date').change ->
     get_currency_rate()
+  $('#invoice_currency_rate_name').change ->
+    get_currency_rate()
 
 get_currency_rate = () ->
     date = $('#invoice_date').val()
+    currency = $('#invoice_currency_rate_name').val()
+    to_currency = $('#invoice_invoice_exchange_currency').val()
+    if currency == to_currency
+      clear_currency_exchange()
+      return 0
     #console.log(date)
     date = moment(date)
     day_before_date = date.subtract(1, 'days')
@@ -400,12 +407,12 @@ get_currency_rate = () ->
     # currency_rate_table_name = $('#invoice_currency_rate_table_name')
     # currency_rate_name = $('#invoice_currency_rate_name')
     # currency_rate = $('#invoice_currency_rate')
-    get_currency_rate_from_date(day_before_date, 0)
+    get_currency_rate_from_date(day_before_date, currency, 0)
 
-get_currency_rate_from_date = (date, recurrency_level) ->
-    url = "http://api.nbp.pl/api/exchangerates/rates/A/EUR/" + date.format('YYYY-MM-DD')
+get_currency_rate_from_date = (date, currency, recurrency_level) ->
+    url = "http://api.nbp.pl/api/exchangerates/rates/A/"+currency+"/" + date.format('YYYY-MM-DD')
     currency_rate_table_name = $('#invoice_currency_rate_table_name')
-    currency_rate_name = $('#invoice_currency_rate_name')
+    #currency_rate_name = $('#invoice_currency_rate_name')
     currency_rate = $('#invoice_currency_rate')
 
     $.ajax url,
@@ -413,14 +420,19 @@ get_currency_rate_from_date = (date, recurrency_level) ->
       dataType: 'json'
       error: (jqXHR, textStatus, errorThrown) ->
         if recurrency_level < 5
-          get_currency_rate_from_date(date.subtract(1, 'days'), recurrency_level+1)
+          get_currency_rate_from_date(date.subtract(1, 'days'), currency, recurrency_level+1)
         #console.log(textStatus)
       success: (data, textStatus, jqXHR) ->
         #console.log(data)
         currency_rate_table_name.val(data["rates"][0]["no"])
         currency_rate.val(data["rates"][0]["mid"].toString())
-        currency_rate_name.val(data["code"])
+        #currency_rate_name.val(data["code"])
 
+clear_currency_exchange = () ->
+  currency_rate_table_name = $('#invoice_currency_rate_table_name')
+  currency_rate = $('#invoice_currency_rate')
+  currency_rate_table_name.val('')
+  currency_rate.val('')
 #
 # Invoice status
 #
