@@ -137,8 +137,11 @@
       <%= invoice_form.text_field :invoice_language %>
     </div>
     <div class="col-sm-3">
-      <%= invoice_form.label :invoice_exchange_currency, "Przeliczanie na walutę" %>
-      <%= invoice_form.text_field :invoice_exchange_currency %>
+      <div class="form-group">
+        <% exchange_currencies = ["PLN", "Nie przeliczaj"] %>
+        <%= invoice_form.label :invoice_exchange_currency, "Przeliczanie na walutę" %>
+        <%= invoice_form.collection_select :invoice_exchange_currency, exchange_currencies, :to_s, :to_s, { include_blank: false }, { class: "form-control" } %>
+      </div>
     </div>
   </div>
 

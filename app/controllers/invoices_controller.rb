@@ -156,6 +156,8 @@ class InvoicesController < ApplicationController
       :client_email,
       :client_phone,
       :status,
+      :invoice_language,
+      :invoice_exchange_currency,
       :currency_rate_table_name,
       :currency_rate_name,
       :currency_rate,

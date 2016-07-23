@@ -75,6 +75,14 @@ class Invoice < ActiveRecord::Base
     return (Time.now - date_deadline)/(60*60*24)*-1
   end
 
+  def proper_exchange_currency
+    if !invoice_exchange_currency.present? || invoice_exchange_currency == "Nie przeliczaj"
+      return currency_rate_name
+    else
+      return invoice_exchange_currency
+    end
+  end
+
   def self.search(search_params)
     date = search_params[:date]
     client_name = search_params[:client_name]

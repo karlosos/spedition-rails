@@ -386,14 +386,17 @@ get_currency_rate_on_date_change = () ->
     currency = $('#invoice_currency_rate_name').val()
     $('.currency').val(currency)
     get_currency_rate()
+  $('#invoice_invoice_exchange_currency').change ->
+    get_currency_rate()
 
 get_currency_rate = () ->
     date = $('#invoice_date').val()
     currency = $('#invoice_currency_rate_name').val()
     to_currency = $('#invoice_invoice_exchange_currency').val()
-    if currency == to_currency
+    if currency == to_currency || to_currency == "Nie przeliczaj"
       clear_currency_exchange()
       return 0
+
     #console.log(date)
     date = moment(date)
     day_before_date = date.subtract(1, 'days')
