@@ -386,6 +386,7 @@ get_currency_rate_on_date_change = () ->
     currency = $('#invoice_currency_rate_name').val()
     $('.currency').val(currency)
     get_currency_rate()
+    $('.currency_change_warning').show()
   $('#invoice_invoice_exchange_currency').change ->
     get_currency_rate()
 

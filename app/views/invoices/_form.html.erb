@@ -125,6 +125,15 @@
   </div>
 
   <div class="row">
+    <div class="col-sm-12">
+      <div class="alert alert-warning currency_change_warning">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>Uwaga!</strong> Waluta została zmieniona. Ceny produktów nie zostały przeliczone na inną walutę. Nanieś stosowne zmiany.
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
     <div class="col-sm-3">
       <% currencies = ["EUR", "USD", "PLN"] %>
       <div class="form-group">
@@ -133,8 +142,11 @@
       </div>
     </div>
     <div class="col-sm-3">
-      <%= invoice_form.label :invoice_language, "Język" %>
-      <%= invoice_form.text_field :invoice_language %>
+      <% languages = ["PL",] %>
+      <div class="form-group">
+        <%= invoice_form.label :invoice_language, "Język" %>
+        <%= invoice_form.collection_select :invoice_language, languages, :to_s, :to_s, { include_blank: false }, { class: "form-control" } %>
+      </div>
     </div>
     <div class="col-sm-3">
       <div class="form-group">
