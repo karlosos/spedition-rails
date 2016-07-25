@@ -9,6 +9,7 @@ class Client < ActiveRecord::Base
 
   has_many :invoices_as_seller,    class_name: 'Invoice', foreign_key: 'seller_id'
   has_many :invoices_as_client, class_name: 'Invoice', foreign_key: 'client_id'
+  has_many :transport_orders, class_name: 'TransportOrder', foreign_key: 'client_id'
 
   def debt
     debt = Money.new(0, 'EUR')

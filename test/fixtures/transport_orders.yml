@@ -1,0 +1,20 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+# This model initially had no columns defined.  If you add columns to the
+# model remove the '{}' from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+transport_order_one:
+  client: client_google
+  carrier: carrier_one
+  route: 95111 Rehau nach 52074 Aachen
+  distance: 213.3
+  loading_country: DE
+  loading_zip: 95111
+  loading_city: Rehau
+  loading_date: <%= DateTime.new(2016, 6, 30, 22, 00, 0) %>
+  unloading_country: DE
+  unloading_zip: 52074
+  unloading_city: Aachen
+  unloading_date: <%= DateTime.new(2016, 7, 25, 22, 00, 0) %>
+  freight_rate_cents: 55476
