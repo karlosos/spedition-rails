@@ -3,6 +3,7 @@ class TransportOrderName < ActiveRecord::Base
   validates :year, presence: true, numericality: { only_integer: true, greater_than: 0 }
   validates :number, uniqueness: { scope: [:year] }
   belongs_to :transport_order
+  validates :transport_order, presence: true
 
   def get_name
     return "ZL #{number}/#{year}"
