@@ -1,0 +1,39 @@
+<%= simple_form_for(@carrier) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <p>
+      <%= f.label :registration_number %><br />
+      <%= f.text_field :registration_number %>
+    </p>
+
+    <p>
+      <%= f.label :size %><br />
+      <%= f.text_field :size %>
+    </p>
+
+    <p>
+      <%= f.label :driver_name %><br />
+      <%= f.text_field :driver_name %>
+    </p>
+
+    <p>
+      <%= f.label :driver_email %><br />
+      <%= f.text_field :driver_email %>
+    </p>
+
+    <p>
+      <%= f.label :carrier_name %><br />
+      <%= f.text_field :carrier_name %>
+    </p>
+
+    <p>
+      <%= f.label :carrier_email %><br />
+      <%= f.text_field :carrier_email %>
+    </p>
+
+    <div class="actions">
+      <%= f.submit %>
+    </div>
+  </div>
+<% end %>
