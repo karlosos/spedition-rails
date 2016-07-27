@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160725132354) do
+ActiveRecord::Schema.define(version: 20160727131714) do
 
   create_table "addresses", force: true do |t|
     t.string   "line1"
@@ -166,8 +166,11 @@ ActiveRecord::Schema.define(version: 20160725132354) do
     t.datetime "unloading_date"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "freight_rate_cents",    default: 0,     null: false
-    t.string   "freight_rate_currency", default: "EUR", null: false
+    t.integer  "freight_rate_cents",     default: 0,     null: false
+    t.string   "freight_rate_currency",  default: "EUR", null: false
+    t.integer  "seller_id"
+    t.integer  "profit_margin_cents",    default: 0,     null: false
+    t.string   "profit_margin_currency", default: "EUR", null: false
   end
 
 end

@@ -1,4 +1,80 @@
 <p id="notice"><%= notice %></p>
+<div class="row">
+  <div class="col-md-3">
+    <h3>Numer zlecenia:</h3>
+    <%= @transport_order.transport_order_name.get_name %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-4">
+    <p>
+      <h3>Klient:</h3>
+      <%= @transport_order.client.name %> <br>
+      <%= @transport_order.client.address.street %>
+      <%= @transport_order.client.address.zip %>, <%= @transport_order.client.address.city %>
+    </p>
+  </div>
+  <div class="col-md-4">
+    <p>
+      <h3>Przewoźnik:</h3>
+      <%= @transport_order.carrier.carrier_name %> <br>
+      <%= @transport_order.carrier.registration_number %>
+    </p>
+  </div>
+  <div class="col-md-4">
+    <p>
+      <h3>Sprzedawca:</h3>
+      <%= @transport_order.seller.name %> <br>
+      <%= @transport_order.seller.address.street %>
+      <%= @transport_order.seller.address.zip %>, <%= @transport_order.client.address.city %>
+    </p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-6">
+    <h3> Załadunek </h3>
+    <%= "#{@transport_order.loading_zip}, #{@transport_order.loading_city}" %> <br>
+    Data załadunku: <%= @transport_order.loading_date %>
+  </div>
+
+  <div class="col-md-6">
+    <h3> Rozładunek </h3>
+    <%= "#{@transport_order.unloading_zip}, #{@transport_order.unloading_city}" %> <br>
+    Data rozaładunku: <%= @transport_order.unloading_date %>
+  </div>
+</div>
+
+<hr>
+
+<div class="row">
+  <div class="col-md-12">
+    <p>
+      Trasa: <%= @transport_order.route %>
+    </p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-4">
+    <p>
+      Dystans: <%= @transport_order.distance %> km
+    </p>
+  </div>
+
+  <div class="col-md-4">
+    <p>
+      Wartość frachtu: <%= humanized_money_with_symbol @transport_order.freight_rate %>
+    </p>
+  </div>
+
+  <div class="col-md-4">
+    <p>
+      Wartość marży: <%= humanized_money_with_symbol @transport_order.profit_margin %>
+    </p>
+  </div>
+</div>
 
 <%= link_to 'Edit', edit_transport_order_path(@transport_order) %> |
 <%= link_to 'Back', transport_orders_path %>

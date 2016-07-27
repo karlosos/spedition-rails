@@ -13,93 +13,127 @@
   <% end %>
 
   <div class="form-inputs">
-    <%= label_tag :transport_order_name, "Numer zlecenia" %>
-    <%= f.fields_for :transport_order_name do |transport_order_name_form| %>
-      <% render :partial => 'transport_order_name_form', :locals => {:f => transport_order_name_form} %>
-    <% end %>
-
-    <p>
-      <%= f.label :client %><br />
-      <%= f.collection_select :client_id, Client.all, 'id', 'name', prompt: 'Wybierz klienta' %>
-    </p>
-
-    <p>
-      <%= f.label :carrier %><br />
-      <%= f.collection_select :carrier_id, Carrier.all, 'id', 'registration_number', prompt: 'Wybierz klienta' %>
-    </p>
-
-    <p>
-      <%= f.label :route, "Trasa" %><br />
-      <%= f.text_field :route %>
-    </p>
-
-    <p>
-      <%= f.label :distance, "Dystans" %><br />
-      <%= f.number_field :distance %>
-    </p>
-
-    <p>
-      <%= f.label :freight_rate, "Wartość frachtu" %><br />
-      <%= f.number_field :freight_rate %>
-    </p>
-
-    <p>
-      <%= f.label :loading_country %><br />
-      <%= f.text_field :loading_country %>
-    </p>
-
-    <p>
-      <%= f.label :loading_zip %><br />
-      <%= f.text_field :loading_zip %>
-    </p>
-
-    <p>
-      <%= f.label :loading_city %><br />
-      <%= f.text_field :loading_city %>
-    </p>
-
-    <p>
-      <%= label_tag :loading_date, "Data wystawienia faktury" %>
-      <div class='input-group date' id='datetimepicker1' data-date-format="yyyy-mm-dd" locale="pl">
-        <%= f.text_field :loading_date, { class: "form-control", value: Date.today, :readonly => true } %>
-        <span class="input-group-addon">
-          <span class="glyphicon glyphicon-calendar"></span>
-        </span>
+    <div class="row">
+      <div class="col-md-3">
+        <%= label_tag :transport_order_name, "Numer zlecenia" %>
+        <%= f.fields_for :transport_order_name do |transport_order_name_form| %>
+          <% render :partial => 'transport_order_name_form', :locals => {:f => transport_order_name_form} %>
+        <% end %>
       </div>
-    </p>
+    </div>
 
-    <p>
-      <%= f.label :unloading_country %><br />
-      <%= f.text_field :unloading_country %>
-    </p>
-
-    <p>
-      <%= f.label :unloading_zip %><br />
-      <%= f.text_field :unloading_zip %>
-    </p>
-
-    <p>
-      <%= f.label :unloading_city %><br />
-      <%= f.text_field :unloading_city %>
-    </p>
-
-    <p>
-      <%= label_tag :unloading_date, "Data wystawienia faktury" %>
-      <div class='input-group date' id='datetimepicker2' data-date-format="yyyy-mm-dd" locale="pl">
-        <%= f.text_field :unloading_date, { class: "form-control", value: Date.today, :readonly => true } %>
-        <span class="input-group-addon">
-          <span class="glyphicon glyphicon-calendar"></span>
-        </span>
+    <div class="row">
+      <div class="col-md-4">
+        <p>
+          <%= f.label :client, "Klient" %><br />
+          <%= f.collection_select :client_id, Client.all, 'id', 'name', prompt: 'Wybierz klienta' %>
+        </p>
       </div>
-    </p>
+      <div class="col-md-4">
+        <p>
+          <%= f.label :carrier, "Zleceniobiorca" %><br />
+          <%= f.collection_select :carrier_id, Carrier.all, 'id', 'registration_number', prompt: 'Wybierz klienta' %>
+        </p>
+      </div>
+      <div class="col-md-4">
+        <p>
+          <%= f.label :seller_id, "Zleceniodawca" %><br />
+          <%= f.collection_select :seller_id, Client.all, 'id', 'name', prompt: 'Wybierz zleceniodawca' %>
+        </p>
+      </div>
+    </div>
 
+    <div class="row">
+      <div class="col-md-6">
+        <h2> Załadunek </h2>
+        <p>
+          <%= f.label :loading_country %><br />
+          <%= f.text_field :loading_country %>
+        </p>
 
+        <p>
+          <%= f.label :loading_zip %><br />
+          <%= f.text_field :loading_zip %>
+        </p>
+
+        <p>
+          <%= f.label :loading_city %><br />
+          <%= f.text_field :loading_city %>
+        </p>
+
+        <p>
+          <%= label_tag :loading_date, "Data załadunku" %>
+          <div class='input-group date' id='datetimepicker1' data-date-format="yyyy-mm-dd" locale="pl">
+            <%= f.text_field :loading_date, { class: "form-control", value: Date.today, :readonly => true } %>
+            <span class="input-group-addon">
+              <span class="glyphicon glyphicon-calendar"></span>
+            </span>
+          </div>
+        </p>
+      </div>
+
+      <div class="col-md-6">
+        <h2> Rozładunek </h2>
+        <p>
+          <%= f.label :unloading_country %><br />
+          <%= f.text_field :unloading_country %>
+        </p>
+
+        <p>
+          <%= f.label :unloading_zip %><br />
+          <%= f.text_field :unloading_zip %>
+        </p>
+
+        <p>
+          <%= f.label :unloading_city %><br />
+          <%= f.text_field :unloading_city %>
+        </p>
+
+        <p>
+          <%= label_tag :unloading_date, "Data rozładunku" %>
+          <div class='input-group date' id='datetimepicker2' data-date-format="yyyy-mm-dd" locale="pl">
+            <%= f.text_field :unloading_date, { class: "form-control", value: Date.today, :readonly => true } %>
+            <span class="input-group-addon">
+              <span class="glyphicon glyphicon-calendar"></span>
+            </span>
+          </div>
+        </p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <p>
+          <%= f.label :route, "Trasa" %><br />
+          <%= f.text_field :route %>
+        </p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-4">
+        <p>
+          <%= f.label :distance, "Dystans" %><br />
+          <%= f.number_field :distance %>
+        </p>
+      </div>
+
+      <div class="col-md-4">
+        <p>
+          <%= f.label :freight_rate, "Wartość frachtu" %><br />
+          <%= f.number_field :freight_rate %>
+        </p>
+      </div>
+
+      <div class="col-md-4">
+        <p>
+          <%= f.label :profit_margin, "Marża" %><br />
+          <%= f.number_field :profit_margin %>
+        </p>
+      </div>
+    </div>
     <div class="actions">
       <%= f.submit %>
     </div>
-  </div>
-
-  <div class="form-actions">
-    <%= f.button :submit %>
   </div>
 <% end %>
