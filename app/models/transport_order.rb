@@ -7,6 +7,8 @@ class TransportOrder < ActiveRecord::Base
     :greater_than_or_equal_to => 0
   }
 
+  accepts_nested_attributes_for :transport_order_name
+
   validates :transport_order_name, presence: true
   validates :carrier, presence: true
   validates :client, presence: true

@@ -2,7 +2,7 @@ require 'test_helper'
 
 class CarriersControllerTest < ActionController::TestCase
   setup do
-    @carrier = carriers(:one)
+    @carrier = carriers(:carrier_one)
   end
 
   test "should get index" do
@@ -18,7 +18,14 @@ class CarriersControllerTest < ActionController::TestCase
 
   test "should create carrier" do
     assert_difference('Carrier.count') do
-      post :create, carrier: {  }
+      post :create, carrier: {
+        registration_number: "ZS32201",
+        size: "2m x 3m",
+        driver_name: "Karol Cichy",
+        driver_email: "cichy@email.com",
+        carrier_name: "Trans",
+        carrier_email: "trans@super.pl"
+      }
     end
 
     assert_redirected_to carrier_path(assigns(:carrier))
@@ -35,7 +42,14 @@ class CarriersControllerTest < ActionController::TestCase
   end
 
   test "should update carrier" do
-    patch :update, id: @carrier, carrier: {  }
+    patch :update, id: @carrier, carrier: {
+      registration_number: "ZS32201",
+      size: "2m x 3m",
+      driver_name: "Karol Cichy",
+      driver_email: "cichy@email.com",
+      carrier_name: "Trans",
+      carrier_email: "trans@super.pl"
+    }
     assert_redirected_to carrier_path(assigns(:carrier))
   end
 

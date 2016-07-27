@@ -1,0 +1,23 @@
+<h1>Listing transport_orders</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @transport_orders.each do |transport_order| %>
+      <tr>
+        <td><%= link_to 'Show', transport_order %></td>
+        <td><%= link_to 'Edit', edit_transport_order_path(transport_order) %></td>
+        <td><%= link_to 'Destroy', transport_order, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Transport order', new_transport_order_path %>
