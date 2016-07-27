@@ -40,7 +40,9 @@ class InvoicesControllerTest < ActionController::TestCase
         total_price_in_words: "jeden euro 60/100",
         currency_rate_table_name: "129/A/NBP/2016",
         currency_rate_name: "EUR",
-        currency_rate: "4.4469"
+        currency_rate: "4.4469",
+        invoice_exchange_currency: "PLN",
+        invoice_language: "PL"
       }
   end
 

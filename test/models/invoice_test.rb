@@ -128,15 +128,15 @@ class InvoiceTest < ActiveSupport::TestCase
     assert_not @invoice.valid?
   end
 
-  test "currency_rate_table_name should be present if other currency" do
-    @invoice.currency_rate_table_name = " "
-    assert_not @invoice.valid?
-  end
-
-  test "currency_rate should be present if other currency" do
-    @invoice.currency_rate = " "
-    assert_not @invoice.valid?
-  end
+  # test "currency_rate_table_name should be present if other currency" do
+  #   @invoice.currency_rate_table_name = " "
+  #   assert_not @invoice.valid?
+  # end
+  #
+  # test "currency_rate should be present if other currency" do
+  #   @invoice.currency_rate = " "
+  #   assert_not @invoice.valid?
+  # end
 
   test "currency_rate_name should be present if other currency" do
     @invoice.currency_rate_name = " "
@@ -156,5 +156,9 @@ class InvoiceTest < ActiveSupport::TestCase
   test "deadline should be present" do
     @invoice.deadline = nil
     assert_not @invoice.valid?
+  end
+
+  test "should return valid debt" do
+    assert_equal(@invoice.total_selling_price, @invoice.client.debt)
   end
 end

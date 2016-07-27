@@ -16,7 +16,8 @@ class ClientsController < ApplicationController
       else
         query = ""
       end
-      format.json { render json: Client.joins(:address).where("lower(name) like ?", "%#{query}%").limit(2) }
+      @clients = @clients.where("lower(name) like ? OR lower(addresses.street) like ? OR lower(nip) like ? OR lower(city) like ? OR lower(zip) like ?", "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%").limit(15)
+      format.json
     end
   end
 

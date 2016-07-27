@@ -95,6 +95,11 @@ input {
     list-style-type: none;
   }
 }
+
+.currency_change_warning {
+  display: none;
+  margin-top: 20px;
+}
 /* indexes */
 td {
   vertical-align: middle !important;
@@ -167,6 +172,7 @@ td {
     }
     th {
       width: 25%;
+      padding-right: 15px;
     }
   }
   .invoice_bold {

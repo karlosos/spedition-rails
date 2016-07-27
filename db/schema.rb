@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160716121458) do
+ActiveRecord::Schema.define(version: 20160725132354) do
 
   create_table "addresses", force: true do |t|
     t.string   "line1"
@@ -28,6 +28,17 @@ ActiveRecord::Schema.define(version: 20160716121458) do
   end
 
   add_index "addresses", ["addressable_type", "addressable_id"], name: "index_addresses_on_addressable_type_and_addressable_id", unique: true
+
+  create_table "carriers", force: true do |t|
+    t.string   "registration_number"
+    t.string   "size"
+    t.string   "carrier_name"
+    t.string   "carrier_email"
+    t.string   "driver_name"
+    t.string   "driver_email"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "clients", force: true do |t|
     t.string   "name"
@@ -114,6 +125,9 @@ ActiveRecord::Schema.define(version: 20160716121458) do
     t.string   "total_price_in_words"
     t.integer  "deadline",                     default: 50
     t.datetime "date_deadline"
+    t.string   "invoice_currency",             default: "EUR"
+    t.string   "invoice_exchange_currency",    default: "PLN"
+    t.string   "invoice_language",             default: "PL"
   end
 
   create_table "items", force: true do |t|
@@ -125,6 +139,35 @@ ActiveRecord::Schema.define(version: 20160716121458) do
     t.datetime "updated_at"
     t.integer  "unit_price_cents",    default: 0,     null: false
     t.string   "unit_price_currency", default: "EUR", null: false
+  end
+
+  create_table "transport_order_names", force: true do |t|
+    t.integer  "number"
+    t.integer  "year"
+    t.integer  "transport_order_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "transport_order_names", ["transport_order_id"], name: "index_transport_order_names_on_transport_order_id"
+
+  create_table "transport_orders", force: true do |t|
+    t.integer  "client_id"
+    t.integer  "carrier_id"
+    t.string   "route"
+    t.decimal  "distance"
+    t.string   "loading_country"
+    t.string   "loading_zip"
+    t.string   "loading_city"
+    t.datetime "loading_date"
+    t.string   "unloading_country"
+    t.string   "unloading_zip"
+    t.string   "unloading_city"
+    t.datetime "unloading_date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "freight_rate_cents",    default: 0,     null: false
+    t.string   "freight_rate_currency", default: "EUR", null: false
   end
 
 end

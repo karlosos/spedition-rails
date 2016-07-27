@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   root 'pages#home'
   resources :clients
+  resources :carriers
+  resources :transport_orders
   resources :invoices do
     collection do
       put 'update_multiple'

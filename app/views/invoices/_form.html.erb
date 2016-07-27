@@ -114,10 +114,46 @@
     <div class="col-sm-3">
       <%= invoice_form.label :net_price_cents, "Netto" %>
       <%= invoice_form.number_field :net_price, :readonly => true, :step => '0.01'  %>
+      <%= invoice_form.hidden_field :net_price_currency, :readonly => true, :class => 'currency' %>
       <%= invoice_form.label :value_added_tax_cents, "VAT" %>
       <%= invoice_form.number_field :value_added_tax, :readonly => true, :step => '0.01' %>
+      <%= invoice_form.hidden_field :value_added_tax_currency, :readonly => true, :class => 'currency'  %>
       <%= invoice_form.label :total_selling_price_cents, "Brutto" %>
       <%= invoice_form.number_field :total_selling_price, :readonly => true, :step => '0.01' %>
+      <%= invoice_form.hidden_field :total_selling_price_currency, :readonly => true, :class => 'currency' %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="alert alert-warning currency_change_warning">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>Uwaga!</strong> Waluta została zmieniona. Ceny produktów nie zostały przeliczone na inną walutę. Nanieś stosowne zmiany.
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-3">
+      <% currencies = ["EUR", "USD", "PLN"] %>
+      <div class="form-group">
+        <%= invoice_form.label :currency_rate_name, "Waluta" %>
+        <%= invoice_form.collection_select :currency_rate_name, currencies, :to_s, :to_s, { include_blank: false }, { class: "form-control" } %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <% languages = ["PL",] %>
+      <div class="form-group">
+        <%= invoice_form.label :invoice_language, "Język" %>
+        <%= invoice_form.collection_select :invoice_language, languages, :to_s, :to_s, { include_blank: false }, { class: "form-control" } %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="form-group">
+        <% exchange_currencies = ["PLN", "Nie przeliczaj"] %>
+        <%= invoice_form.label :invoice_exchange_currency, "Przeliczanie na walutę" %>
+        <%= invoice_form.collection_select :invoice_exchange_currency, exchange_currencies, :to_s, :to_s, { include_blank: false }, { class: "form-control" } %>
+      </div>
     </div>
   </div>
 
@@ -132,8 +168,7 @@
     <div class="col-sm-12">
       <%= label_tag :currency_rate_table_name, "Tabela kursu" %>
       <%= invoice_form.text_field :currency_rate_table_name, :readonly => true %>
-      <%= label_tag :currency_rate_name, "Nazwa kursu" %>
-      <%= invoice_form.text_field :currency_rate_name, :readonly => true %>
+
       <%= label_tag :currency_rate, "Kurs" %>
       <%= invoice_form.text_field :currency_rate, :readonly => true %>
     </div>

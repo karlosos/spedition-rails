@@ -1,0 +1,11 @@
+<p id="notice"><%= notice %></p>
+
+Numer rejestracyjny: <%= @carrier.registration_number %> <br>
+Wymiary: <%= @carrier.size %> <br>
+Imie i nazwisko kierowcy: <%= @carrier.driver_name %> <br>
+Email kierowcy: <%= @carrier.driver_email %> <br>
+Nazwa przewoźnika: <%= @carrier.carrier_name %> <br>
+Email przewoźnika: <%= @carrier.carrier_email %> <br>
+
+<%= link_to 'Edit', edit_carrier_path(@carrier) %> |
+<%= link_to 'Back', carriers_path %>
