@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160727131714) do
+ActiveRecord::Schema.define(version: 20160727155955) do
 
   create_table "addresses", force: true do |t|
     t.string   "line1"
@@ -141,6 +141,18 @@ ActiveRecord::Schema.define(version: 20160727131714) do
     t.string   "unit_price_currency", default: "EUR", null: false
   end
 
+  create_table "loading_places", force: true do |t|
+    t.integer  "transport_order_id"
+    t.string   "city"
+    t.string   "zip"
+    t.string   "country"
+    t.datetime "date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "loading_places", ["transport_order_id"], name: "index_loading_places_on_transport_order_id"
+
   create_table "transport_order_names", force: true do |t|
     t.integer  "number"
     t.integer  "year"
@@ -172,5 +184,17 @@ ActiveRecord::Schema.define(version: 20160727131714) do
     t.integer  "profit_margin_cents",    default: 0,     null: false
     t.string   "profit_margin_currency", default: "EUR", null: false
   end
+
+  create_table "unloading_places", force: true do |t|
+    t.integer  "transport_order_id"
+    t.string   "city"
+    t.string   "zip"
+    t.string   "country"
+    t.datetime "date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "unloading_places", ["transport_order_id"], name: "index_unloading_places_on_transport_order_id"
 
 end

@@ -15,7 +15,7 @@ csv.each do |row|
   t.build_address
   t.build_contact
   t.name = row['name']
-  t.address.line1 = row['line1']
+  t.address.street = row['line1']
   t.address.zip = row['zip']
   t.address.state = row['state']
   t.address.city = row['city']

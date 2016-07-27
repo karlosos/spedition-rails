@@ -282,3 +282,13 @@ td {
     display: inline;
   }
 }
+
+.remove_loading_places {
+  @extend .btn;
+  @extend .btn-danger;
+}
+
+.add_loading_places {
+  @extend .btn;
+  @extend .btn-success;
+}

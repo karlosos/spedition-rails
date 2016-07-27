@@ -1,0 +1,20 @@
+jQuery ->
+  pageLoad()
+
+pageLoad = () ->
+  invoice_item_add_event()
+  loading_places_remove_event()
+
+invoice_item_add_event = () ->
+  $('form').on 'click', '.add_loading_place', (event) ->
+    time = new Date().getTime()
+    regexp = new RegExp($(this).data('id'), 'g')
+    $(this).parent().before($(this).data('fields').replace(regexp, time))
+    event.preventDefault()
+
+loading_places_remove_event = () ->
+  $('form').on 'click', '.remove_loading_places', (event) ->
+    $(this).prev('input[type=hidden]').val('1')
+    $(this).closest('div').hide()
+    event.preventDefault()
+    invoice_calculate()
