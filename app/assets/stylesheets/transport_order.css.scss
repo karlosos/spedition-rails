@@ -1,3 +1,5 @@
+/* EDIT CREATE */
+
 .transport_order_name_form {
   input {
     width: 100px;
@@ -10,7 +12,14 @@
   @extend .btn-danger;
 }
 
-.add_loading_places {
+.add_loading_place {
   @extend .btn;
   @extend .btn-success;
 }
+
+.transport_order_form {
+  .row {
+    margin-bottom: 20px;
+  }
+}
+/* INDEX PAGE */

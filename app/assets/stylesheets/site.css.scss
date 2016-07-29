@@ -9,7 +9,6 @@
 @include make-grid(md);
 @include make-grid(lg);
 
-
 html {
   position: relative;
   min-height: 100%;
@@ -265,7 +264,7 @@ td {
   }
 }
 
-/* */
+/* invoice index */
 .container {
   padding-top: 20px;
 }
@@ -275,3 +274,5 @@ td {
   width: 50px;
   padding: 2px;
 }
+
+@import 'transport_order.css.scss'

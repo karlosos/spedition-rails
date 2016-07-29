@@ -22,11 +22,5 @@ class TransportOrder < ActiveRecord::Base
   validates :transport_order_name, presence: true
   validates :carrier, presence: true
   validates :client, presence: true
-  validates :loading_city, presence: true
-  validates :loading_country, presence: true
-  validates :loading_zip, presence: true
-  validates :unloading_city, presence: true
-  validates :unloading_country, presence: true
-  validates :unloading_zip, presence: true
   validates :route, presence: true
 end
