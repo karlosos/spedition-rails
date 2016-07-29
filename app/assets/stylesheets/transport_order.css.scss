@@ -1,0 +1,16 @@
+.transport_order_name_form {
+  input {
+    width: 100px;
+    display: inline;
+  }
+}
+
+.remove_loading_places {
+  @extend .btn;
+  @extend .btn-danger;
+}
+
+.add_loading_places {
+  @extend .btn;
+  @extend .btn-success;
+}
