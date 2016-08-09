@@ -23,4 +23,6 @@ class TransportOrder < ActiveRecord::Base
   validates :carrier, presence: true
   validates :client, presence: true
   validates :route, presence: true
+  validates :loading_places, :length => { :minimum => 1 }
+  validates :unloading_places, :length => { :minimum => 1 }
 end

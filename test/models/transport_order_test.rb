@@ -29,40 +29,19 @@ class TransportOrderTest < ActiveSupport::TestCase
     assert_not @transport_order.valid?
   end
 
-  test "loading country should be present" do
-    assert @transport_order.loading_country.present?
-    @transport_order.loading_country = nil
+  test "at least one loading_place should be present" do
+    @transport_order.loading_places.each do |loading_places|
+      @transport_order.loading_places.delete(loading_places)
+    end
+    assert_equal 0, @transport_order.loading_places.size
     assert_not @transport_order.valid?
   end
 
-  test "loading zip should be present" do
-    assert @transport_order.loading_zip.present?
-    @transport_order.loading_zip = nil
+  test "at least one unloading_place should be present" do
+    @transport_order.unloading_places.each do |unloading_place|
+      @transport_order.unloading_places.delete(unloading_place)
+    end
+    assert_equal 0, @transport_order.unloading_places.size
     assert_not @transport_order.valid?
   end
-
-  test "loading city should be present" do
-    assert @transport_order.loading_city.present?
-    @transport_order.loading_city = nil
-    assert_not @transport_order.valid?
-  end
-
-  test "unloading country should be present" do
-    assert @transport_order.unloading_country.present?
-    @transport_order.unloading_country = nil
-    assert_not @transport_order.valid?
-  end
-
-  test "unloading zip should be present" do
-    assert @transport_order.unloading_zip.present?
-    @transport_order.unloading_zip = nil
-    assert_not @transport_order.valid?
-  end
-
-  test "unloading city should be present" do
-    assert @transport_order.unloading_city.present?
-    @transport_order.loading_city = nil
-    assert_not @transport_order.valid?
-  end
-
 end

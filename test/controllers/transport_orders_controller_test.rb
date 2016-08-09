@@ -27,15 +27,23 @@ class TransportOrdersControllerTest < ActionController::TestCase
         carrier_id: carriers(:carrier_one).id,
         route: "Polska - Niemcy",
         distance: "213",
+        loading_places_attributes: 
+        {
+          "0" => {
+            country: "Poland",
+            city: "Szczecin",
+            zip: "71-800"
+          }
+        },
+        unloading_places_attributes: 
+        {
+          "0" => {
+            country: "DE",
+            city: "Munchen",
+            zip: "DE0232103"
+          }
+        },
         freight_rate: "210.30",
-        loading_country: "PL",
-        loading_zip: "71-800",
-        loading_city: "Szczecin",
-        loading_date: "2016-07-26",
-        unloading_country: "DE",
-        unloading_zip: "DE0232103",
-        unloading_city: "Munchen",
-        unloading_date: "2016-07-26"
       }
     end
 

@@ -4,8 +4,10 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
-one: {}
-# column: value
-#
-two: {}
-#  column: value
+
+unloading_place_one:
+  transport_order: transport_order_one
+  city: Warszawa
+  zip: 01-300
+  country: Poland
+  date: <%= DateTime.now + 10.days %>
