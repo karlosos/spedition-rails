@@ -34,18 +34,62 @@
 <div class="row">
   <div class="col-md-6">
     <h3> Załadunek </h3>
-    <%= "#{@transport_order.loading_zip}, #{@transport_order.loading_city}" %> <br>
-    Data załadunku: <%= @transport_order.loading_date %>
+    <% @transport_order.loading_places.each do |loading_place| %>
+      <%= "#{loading_place.zip}, #{loading_place.city}" %> <br>
+      Data załadunku: <%= loading_place.date %>
+      <hr>
+    <% end %>
   </div>
 
   <div class="col-md-6">
     <h3> Rozładunek </h3>
-    <%= "#{@transport_order.unloading_zip}, #{@transport_order.unloading_city}" %> <br>
-    Data rozaładunku: <%= @transport_order.unloading_date %>
+    <% @transport_order.unloading_places.each do |unloading_place| %>
+      <%= "#{unloading_place.zip}, #{unloading_place.city}" %> <br>
+      Data rozładunku: <%= unloading_place.date %>
+      <hr>
+    <% end %>
   </div>
 </div>
 
-<hr>
+<div class="row">
+  <h3>Opis ładunku</h3>
+  <div class="col-md-3">
+    Waga
+    <%= @transport_order.freichtage_description.weight %>
+  </div>
+
+  <div class="col-md-3">
+    Objętość
+    <%= @transport_order.freichtage_description.value %>
+  </div>
+
+  <div class="col-md-3">
+    Długość
+    <%= @transport_order.freichtage_description.length %>
+  </div>
+
+  <div class="col-md-3">
+    Szerokość
+    <%= @transport_order.freichtage_description.width %>
+  </div>
+
+  <div class="col-md-3">
+    Wysokość
+    <%= @transport_order.freichtage_description.height %>
+  </div>
+
+  <div class="col-md-3">
+    Ilość palet/opakowań
+    <%= @transport_order.freichtage_description.packages %>
+  </div>
+
+  <div class="col-md-3">
+    Typ palet/opakowań
+    <%= @transport_order.freichtage_description.packages_type %>
+  </div>
+</div>
+
+<hr> 
 
 <div class="row">
   <div class="col-md-12">

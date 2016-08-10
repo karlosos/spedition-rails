@@ -1,6 +1,6 @@
 class TransportOrder < ActiveRecord::Base
   has_one :transport_order_name, :dependent => :destroy
-  has_one :freichtage_description, :depedent => :destroy
+  has_one :freichtage_description, :dependent => :destroy
   has_many :loading_places, inverse_of: :transport_order
   has_many :unloading_places, inverse_of: :transport_order
 
@@ -17,6 +17,7 @@ class TransportOrder < ActiveRecord::Base
   }
 
   accepts_nested_attributes_for :transport_order_name
+  accepts_nested_attributes_for :freichtage_description
   accepts_nested_attributes_for :loading_places
   accepts_nested_attributes_for :unloading_places
 

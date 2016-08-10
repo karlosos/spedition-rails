@@ -83,6 +83,15 @@
     </div>
 
     <div class="row">
+      <h2> Opis ładunku </h2>
+      <div class="col-md-12">
+        <%= f.fields_for :freichtage_description do |freichtage_description_form| %>
+          <% render :partial => 'freichtage_description_form', :locals => {:f => freichtage_description_form} %>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="row">
       <div class="col-md-12">
         <p>
           <%= f.label :route, "Trasa" %><br />
