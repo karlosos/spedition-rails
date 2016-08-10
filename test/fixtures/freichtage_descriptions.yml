@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+freichtage_description_one:
+  weight: 10.3
+  value: 20.3
+  length: 3.99
+  width: 2.30
+  height: 2.40
+  packages: 4
+  packages_type: palety
+  transport_order: transport_order_one
