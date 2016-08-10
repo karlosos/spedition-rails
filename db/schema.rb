@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160810101759) do
+ActiveRecord::Schema.define(version: 20160810172038) do
 
   create_table "addresses", force: true do |t|
     t.string   "line1"
@@ -198,6 +198,19 @@ ActiveRecord::Schema.define(version: 20160810101759) do
     t.integer  "seller_id"
     t.integer  "profit_margin_cents",    default: 0,     null: false
     t.string   "profit_margin_currency", default: "EUR", null: false
+    t.text     "client_street"
+    t.string   "client_name"
+    t.string   "client_zip"
+    t.string   "client_city"
+    t.string   "client_country"
+    t.string   "client_email"
+    t.string   "client_phone"
+    t.string   "carrier_name"
+    t.string   "carrier_driver_name"
+    t.string   "carrier_street"
+    t.string   "carrier_country"
+    t.string   "carrier_city"
+    t.string   "carrier_zip"
   end
 
   create_table "unloading_places", force: true do |t|

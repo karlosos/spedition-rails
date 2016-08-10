@@ -27,4 +27,22 @@ class TransportOrder < ActiveRecord::Base
   validates :route, presence: true
   validates :loading_places, :length => { :minimum => 1 }
   validates :unloading_places, :length => { :minimum => 1 }
+
+  before_save do
+    self.client_name = self.client.name
+    self.client_street = self.client.address.street
+    self.client_zip = self.client.address.zip
+    self.client_city = self.client.address.city
+    self.client_country = self.client.address.country
+    self.client_email = self.client.contact.email
+    self.client_phone = self.client.contact.phone1
+
+    self.carrier_name = self.carrier.carrier_name
+    self.carrier_driver_name = self.carrier.driver_name
+    self.carrier_street = self.carrier.address.street
+    self.carrier_zip = self.carrier.address.zip
+    self.carrier_city = self.carrier.address.city
+    self.carrier_country = self.carrier.address.country
+    true
+  end
 end
