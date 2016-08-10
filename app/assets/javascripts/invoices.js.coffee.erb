@@ -211,7 +211,7 @@ modal_actions = () ->
     return
 
 hide_optional_fields_in_modal = () ->
-  $('.optional').hide()
+  $('.modal-body').find('.optional').hide()
 
 toogle_optional_fields_in_modal_on_click = () ->
   $('#show_more_modal').click ->

@@ -32,6 +32,14 @@
       <%= f.text_field :carrier_email %>
     </p>
 
+    <%= f.fields_for :address do |address| %>
+      <%= render :partial => 'shared/address', :locals => {:f => address} %>
+    <% end %>
+
+    <%= f.fields_for :contact do |contact| %>
+      <%= render :partial => 'shared/contact', :locals => {:f => contact} %>
+    <% end %>
+
     <div class="actions">
       <%= f.submit %>
     </div>
