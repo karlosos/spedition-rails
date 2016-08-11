@@ -4,6 +4,7 @@ jQuery ->
 pageLoad = () ->
   invoice_item_add_event()
   loading_places_remove_event()
+  loading_status_functions()
 
 invoice_item_add_event = () ->
   $('form').on 'click', '.add_loading_place', (event) ->
@@ -18,3 +19,34 @@ loading_places_remove_event = () ->
     $(this).closest('div').hide()
     event.preventDefault()
     invoice_calculate()
+
+#
+# Invoice status
+#
+loading_status_functions = () ->
+  change_loading_status_on_select_change()
+
+change_loading_status_on_select_change = () ->
+  $('.transport_option').click (e) ->
+    status_index = $(this).attr("value")
+    transport_order_id = $(this).parent().parent().attr("transport-order-id")
+    main_button = $(this).parent().parent().parent().find('.status')
+    toggle_button = $(this).parent().parent().parent().find('.dropdown-toggle')
+    console.log(transport_order_id)
+    console.log(status_index)
+    url = '/transport_orders/' + transport_order_id
+
+    $.ajax url,
+      type: 'PUT'
+      dataType: 'json'
+      data:
+            transport_order : { loading_status: status_index }
+      error: (jqXHR, textStatus, errorThrown) ->
+        console.log(textStatus)
+      success: (data, textStatus, jqXHR) ->
+        console.log(data)
+        main_button.html(data["status"]);
+        button_classes = "btn status btn-status-"+status_index
+        toggle_classes = "btn dropdown-toggle btn-status-"+status_index
+        main_button.attr('class', button_classes)
+        toggle_button.attr('class', toggle_classes)

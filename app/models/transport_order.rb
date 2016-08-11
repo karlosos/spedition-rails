@@ -45,4 +45,13 @@ class TransportOrder < ActiveRecord::Base
     self.carrier_country = self.carrier.address.country
     true
   end
+
+  def loading_status_human
+    if self.loading_status == true
+      return "Wysłano"
+    else
+      return "Nie wysłano"
+    end
+  end
+
 end

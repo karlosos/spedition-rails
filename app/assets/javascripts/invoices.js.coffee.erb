@@ -154,7 +154,7 @@ modal_functions = () ->
 modal_success_binds = () ->
   $(document).bind("ajax:success", (event, data, status, xhr) ->
     if ( event.target.id == "new_client" )
-      option = $('<option selected>' + data.name + '</option>').val("" + data.id);
+      option = $('<option selected>' + data.client_info + '</option>').val("" + data.id);
       $("#invoice_client_id").append(option).trigger('change');
       $('#new_client_modal').modal_success();
       console.log("klient")
@@ -250,7 +250,7 @@ startSelect = () ->
         results: $.map(data, (client, i) ->
           {
             id: client.id
-            text: client.name
+            text: client.client_info
           }
         )}
 

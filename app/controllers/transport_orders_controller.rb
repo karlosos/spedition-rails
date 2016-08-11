@@ -74,6 +74,6 @@ class TransportOrdersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def transport_order_params
-      params.require(:transport_order).permit(:client_id, :carrier_id, :seller_id, :distance_id, :freight_rate, :profit_margin, :loading_country, :loading_zip, :loading_city, :loading_date, :unloading_country, :unloading_zip, :distance, :unloading_city, :unloading_date, :route, transport_order_name_attributes: [:number, :year], loading_places_attributes: [ :id, :zip, :city, :country], unloading_places_attributes: [ :id, :zip, :city, :country], freichtage_description_attributes: [ :weight, :value, :length, :width, :height, :packages, :packages_type ])
+      params.require(:transport_order).permit(:loading_status, :client_id, :carrier_id, :seller_id, :distance_id, :freight_rate, :profit_margin, :loading_country, :loading_zip, :loading_city, :loading_date, :unloading_country, :unloading_zip, :distance, :unloading_city, :unloading_date, :route, transport_order_name_attributes: [:number, :year], loading_places_attributes: [ :id, :zip, :city, :country], unloading_places_attributes: [ :id, :zip, :city, :country], freichtage_description_attributes: [ :weight, :value, :length, :width, :height, :packages, :packages_type ])
     end
 end

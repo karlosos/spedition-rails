@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160810172038) do
+ActiveRecord::Schema.define(version: 20160810184207) do
 
   create_table "addresses", force: true do |t|
     t.string   "line1"
@@ -193,11 +193,11 @@ ActiveRecord::Schema.define(version: 20160810172038) do
     t.datetime "unloading_date"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "freight_rate_cents",     default: 0,     null: false
-    t.string   "freight_rate_currency",  default: "EUR", null: false
+    t.integer  "freight_rate_cents",      default: 0,     null: false
+    t.string   "freight_rate_currency",   default: "EUR", null: false
     t.integer  "seller_id"
-    t.integer  "profit_margin_cents",    default: 0,     null: false
-    t.string   "profit_margin_currency", default: "EUR", null: false
+    t.integer  "profit_margin_cents",     default: 0,     null: false
+    t.string   "profit_margin_currency",  default: "EUR", null: false
     t.text     "client_street"
     t.string   "client_name"
     t.string   "client_zip"
@@ -211,6 +211,9 @@ ActiveRecord::Schema.define(version: 20160810172038) do
     t.string   "carrier_country"
     t.string   "carrier_city"
     t.string   "carrier_zip"
+    t.boolean  "loading_status",          default: false
+    t.boolean  "unloading_status",        default: false
+    t.boolean  "driver_documents_status", default: false
   end
 
   create_table "unloading_places", force: true do |t|
