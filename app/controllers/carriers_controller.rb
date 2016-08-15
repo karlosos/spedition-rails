@@ -58,7 +58,15 @@ class CarriersController < ApplicationController
   def destroy
     @carrier.destroy
     respond_to do |format|
-      format.html { redirect_to carriers_url, notice: 'Carrier was successfully destroyed.' }
+      if @carrier.errors.messages.any?
+        notice = ''
+        @carrier.errors.messages.each do |message|
+          notice += message[1][0]
+        end
+      else
+        notice = 'Carrier was successfully destroyed.'
+      end
+      format.html { redirect_to carriers_url, notice: notice }
       format.json { head :no_content }
     end
   end
