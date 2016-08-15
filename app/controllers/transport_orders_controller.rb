@@ -4,7 +4,28 @@ class TransportOrdersController < ApplicationController
   # GET /transport_orders
   # GET /transport_orders.json
   def index
-    @transport_orders = TransportOrder.all
+    search_params = {
+      :transport_order_name_number => params[:transport_order_name_number],
+      :transport_order_name_year => params[:transport_order_name_year],
+      :freight_rate_cents => params[:freight_rate],
+      :zip => params[:zip],
+      :city => params[:city],
+      :client_name => params[:client_name],
+      :client_id => params[:client_id],
+      :carrier_name => params[:carrier_name],
+      :driver_name => params[:driver_name],
+      :registration_number => params[:registration_number],
+      :loading_date => params[:loading_date],
+      :unloading_date => params[:unloading_date],
+      :loading_statuses => params[:loading_statuses],
+      :loading_date_start => params[:loading_date_start],
+      :loading_date_stop => params[:loading_date_stop],
+      :unloading_date_start => params[:unloading_date_start],
+      :unloading_date_stop => params[:unloading_date_stop],
+      :loading_statuses => params[:loading_statuses]
+    }
+
+    @transport_orders = TransportOrder.joins(:transport_order_name).joins(:client).joins(:carrier).joins(:loading_places).joins(:unloading_places).search(search_params).order(sort_column + " " + sort_direction).paginate(:page => params[:page], :per_page => 30)
   end
 
   # GET /transport_orders/1
@@ -75,5 +96,17 @@ class TransportOrdersController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def transport_order_params
       params.require(:transport_order).permit(:loading_status, :client_id, :carrier_id, :seller_id, :distance_id, :freight_rate, :profit_margin, :loading_country, :loading_zip, :loading_city, :loading_date, :unloading_country, :unloading_zip, :distance, :unloading_city, :unloading_date, :route, transport_order_name_attributes: [:number, :year], loading_places_attributes: [ :id, :zip, :city, :country], unloading_places_attributes: [ :id, :zip, :city, :country], freichtage_description_attributes: [ :weight, :value, :length, :width, :height, :packages, :packages_type ])
+    end
+
+    def sort_column
+      if params[:sort].present?
+        params[:sort]
+      else
+        "created_at"
+      end
+    end
+
+    def sort_direction
+      %w[asc desc].include?(params[:direction]) ? params[:direction] : "desc"
     end
 end

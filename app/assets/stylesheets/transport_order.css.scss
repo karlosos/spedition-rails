@@ -24,10 +24,10 @@
 }
 /* INDEX PAGE */
 
-  .btn-status-false {
-    @extend .btn-danger;
-  }
+.btn-status-false {
+  @extend .btn-danger;
+}
 
-  .btn-status-true {
-    @extend .btn-success;
-  }
+.btn-status-true {
+  @extend .btn-success;
+}

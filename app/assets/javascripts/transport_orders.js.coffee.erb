@@ -21,7 +21,7 @@ loading_places_remove_event = () ->
     invoice_calculate()
 
 #
-# Invoice status
+# Loading status
 #
 loading_status_functions = () ->
   change_loading_status_on_select_change()
@@ -50,3 +50,39 @@ change_loading_status_on_select_change = () ->
         toggle_classes = "btn dropdown-toggle btn-status-"+status_index
         main_button.attr('class', button_classes)
         toggle_button.attr('class', toggle_classes)
+
+#
+# Sidebar
+#
+sidebar_functions = () ->
+    advanced_search_button_event()
+    reset_search_button_event()
+
+advanced_search_button_event = () ->
+  $('#advanced_search_button').click (e) ->
+    advanced_search_form = $('#advanced_search_invoice_form')
+    if advanced_search_form.is(":visible")
+      advanced_search_form.hide(300)
+      $(this).text("Zaawansowane wyszukiwanie")
+      advanced_search_clear()
+      e.preventDefault()
+    else
+      advanced_search_form.show(300)
+      $(this).text("Tylko proste wyszukiwanie")
+      e.preventDefault()
+
+reset_search_button_event = () ->
+  $('#reset_search_button').click (e) ->
+    invoice_search_clear()
+    e.preventDefault()
+
+invoice_search_clear = () ->
+  simple_search_clear()
+  advanced_search_clear()
+
+simple_search_clear = () ->
+  $('#short_search_form').find('input').val("")
+
+advanced_search_clear = () ->
+  $('#advanced_search_form').find('input').val("")
+  $('#advanced_search_form').find('input[type=checkbox]').prop('checked', false);

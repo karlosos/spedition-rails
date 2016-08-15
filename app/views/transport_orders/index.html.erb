@@ -1,11 +1,98 @@
 <h1>Listing transport_orders</h1>
+<%= form_tag transport_orders_path, :method => 'get' do %>
+<div class="row">
+  <div class="col-sm-3">
+    <div class="search_form">
+      <div id="short_search_form">
+        <%= hidden_field_tag :direction, params[:direction] %>
+        <%= hidden_field_tag :sort, params[:sort] %>
 
-<table class="table">
+        <%= label_tag :transport_order_name, "Numer zlecenia" %>
+        <%= number_field_tag :transport_order_name_number, params[:transport_order_name_number] %>
+        <%= number_field_tag :transport_order_name_year, params[:transport_order_name_year] %>
+
+        <%= label_tag :freight_rate, "Wartość frachtu" %>
+        <%= number_field_tag :freight_rate, params[:freight_rate], :step => 0.01  %>
+
+        <%= label_tag :zip, "ZIP" %>
+        <%= text_field_tag :zip, params[:zip] %>
+
+        <%= label_tag :city, "Miasto" %>
+        <%= text_field_tag :city, params[:city] %>
+
+        <%= label_tag :client_name, "Klient" %>
+        <%= text_field_tag :client_name, params[:client_name] %>
+
+        <%= label_tag :carrier_name, "Przewoźnik" %>
+        <%= text_field_tag :carrier_name, params[:carrier_name] %>
+
+        <%= label_tag :driver_name, "Kierowca" %>
+        <%= text_field_tag :driver_name, params[:driver_name] %>
+
+        <%= label_tag :registration_number, "Nr rejestracyjny" %>
+        <%= text_field_tag :registration_number, params[:registration_number] %>
+
+        <%= label_tag :loading_date, "Data załadunku" %>
+        <div class='input-group date' id='datetimepicker1' data-date-format="yyyy-mm-dd" locale="pl">
+          <%= text_field_tag :loading_date, params[:loading_date] %>
+          <span class="input-group-addon">
+            <span class="glyphicon glyphicon-calendar"></span>
+          </span>
+        </div>
+
+        <%= label_tag :unloading_date, "Data rozładunku" %>
+        <div class='input-group date' id='datetimepicker1' data-date-format="yyyy-mm-dd" locale="pl">
+          <%= text_field_tag :loading_date, params[:loading_date] %>
+          <span class="input-group-addon">
+            <span class="glyphicon glyphicon-calendar"></span>
+          </span>
+        </div>
+        <a href="" id="advanced_search_button">Zaawansowane wyszukiwanie</a>
+      </div>
+
+      <div id="advanced_search_form">
+        <% label_tag :statuses, "Status rozładunku" %>
+
+        <div class="form_short">
+          <% loading_statuses = params[:loading_statuses] %>
+          <% if loading_statuses.nil? %>
+            <% loading_statuses = Array.new %>
+          <% end %>
+          <table>
+            <tr><td><%= check_box_tag "loading_statuses[]", true, loading_statuses.include?('true') %>Załadowany</tr></td>
+          </table>
+        </div>
+
+        <%= label_tag :loading_date_start, "Data rozładunku od" %>
+        <div class='input-group date' id='datetimepicker1' data-date-format="yyyy-mm-dd" locale="pl">
+          <%= text_field_tag :loading_date_start, params[:loading_date_start] %>
+          <span class="input-group-addon">
+            <span class="glyphicon glyphicon-calendar"></span>
+          </span>
+        </div>
+
+        <%= label_tag :loading_date_stop, "Data rozładunku do" %>
+        <div class='input-group date' id='datetimepicker1' data-date-format="yyyy-mm-dd" locale="pl">
+          <%= text_field_tag :loading_date_stop, params[:loading_date_stop] %>
+          <span class="input-group-addon">
+            <span class="glyphicon glyphicon-calendar"></span>
+          </span>
+        </div>
+      </div>
+      <%= submit_tag "Search", :date => nil, :client_name => nil %>
+      <a href="" id="reset_search_button">Resetuj</a>
+      <br>
+      <% end %>
+      <%= link_to 'New Transport order', new_transport_order_path, class: "button-success" %>
+    </div>
+  </div>
+  <div class="col-sm-9">
+    <table class="table">
   <thead>
     <tr>
       <th>Nr zlecenia</th>
       <th>Wartość frachtu</th>
-      <th>Cena frachtu dla przewoźnika</th>
+      <th>Cena z marżą</th>
       <th>Trasa</th>
       <th colspan="3"></th>
     </tr>
@@ -21,10 +108,7 @@
         <td>
           <div class="btn-group loading-status" transport-order-id="<%= transport_order.id %>">
             <% button_status_class = "btn-status-#{transport_order.loading_status}" %>
-            <button type="button" class="btn <%= button_status_class %> status" data-toggle="dropdown"><%= transport_order.loading_status_human %></button>
-            <button type="button" class="btn <%= button_status_class %> dropdown-toggle" data-toggle="dropdown">
-              <span class="caret"></span>
-            </button>
+            <button type="button" class="btn <%= button_status_class %> status dropdown-toggle" data-toggle="dropdown"><%= transport_order.loading_status_human %><span class="caret"></span></button>
             <ul class="dropdown-menu" role="menu" transport-order-id="<%= transport_order.id %>">
               <li><a class="transport_option" href="#" value="false">Niewysłano info o załadunku</a></li>
               <li><a class="transport_option" href="#" value="true">Wysłano info o załadunku</a></li>
@@ -47,7 +131,6 @@
     <% end %>
   </tbody>
 </table>
-
-<br>
-
-<%= link_to 'New Transport order', new_transport_order_path %>
+    <%= will_paginate @posts %>
+  </div>
+</div>

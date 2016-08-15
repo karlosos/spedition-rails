@@ -2,8 +2,8 @@
 <div class="row">
   <div class="col-sm-3">
 
-    <div class="search_invoice_form">
-      <div id="short_search_invoice_form">
+    <div class="search_form">
+      <div id="short_search_form">
         <%= hidden_field_tag :direction, params[:direction] %>
         <%= hidden_field_tag :sort, params[:sort] %>
 
@@ -17,7 +17,7 @@
         <a href="" id="advanced_search_button">Zaawansowane wyszukiwanie</a>
       </div>
 
-      <div id="advanced_search_invoice_form">
+      <div id="advanced_search_form">
         <%= label_tag :invoice_name, "Numer faktury" %>
         <%= number_field_tag :invoice_name_number, params[:invoice_name_number] %>
         <%= number_field_tag :invoice_name_month, params[:invoice_name_month] %>
