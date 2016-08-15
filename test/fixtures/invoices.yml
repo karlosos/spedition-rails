@@ -11,6 +11,7 @@
 # # #  column: value
 #
 invoice_one:
+  kind: vat
   date: <%= DateTime.now %>
   place: Szczecin
   seller: client_google

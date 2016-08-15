@@ -5,6 +5,7 @@ class InvoicesControllerTest < ActionController::TestCase
     @invoice = invoices(:invoice_one)
 
     @invoice_params = {
+        kind: 'vat',
         date: "2016-07-07",
         invoice_name_attributes: {
           "number"=>"9",

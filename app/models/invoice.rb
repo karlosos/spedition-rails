@@ -20,6 +20,7 @@ class Invoice < ActiveRecord::Base
   accepts_nested_attributes_for :invoice_name
   accepts_nested_attributes_for :invoice_items, allow_destroy: true
 
+  validates :kind, presence: true
   validates :client, presence: true
   validates :seller, presence: true
   validates :invoice_name, presence: true
@@ -55,8 +56,12 @@ class Invoice < ActiveRecord::Base
     COMPLETED => 'zapłacona'
   }
 
+  KINDS = ['vat', 'proforma', 'correction']
+
   validates_inclusion_of :status, :in => STATUSES.keys,
     :message => "{{value}} must be in #{STATUSES.values.join ','}"
+
+  validates_inclusion_of :kind, :in => KINDS, :message => "{{value}} must be in #{KINDS.join ','}"
 
   def status_name
     STATUSES[status]

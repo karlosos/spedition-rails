@@ -5,6 +5,11 @@ class InvoiceTest < ActiveSupport::TestCase
     @invoice = invoices(:invoice_one)
   end
 
+  test 'kind should be present' do
+      @invoice.kind = nil
+      assert_not @invoice.valid?
+  end
+
   test "client should be present" do
     @invoice.client = nil
     assert_not @invoice.valid?
