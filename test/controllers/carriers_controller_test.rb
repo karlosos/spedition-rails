@@ -54,7 +54,19 @@ class CarriersControllerTest < ActionController::TestCase
   end
 
   test "should destroy carrier" do
+    @carrier.transport_orders.each do |transport_order|
+        @carrier.transport_orders.delete(transport_order)
+      end
     assert_difference('Carrier.count', -1) do
+      delete :destroy, id: @carrier
+    end
+
+    assert_redirected_to carriers_path
+  end
+
+  test "should not destroy carrier if has transport_orders" do
+    assert @carrier.transport_orders.count > 0
+    assert_difference('Carrier.count', 0) do
       delete :destroy, id: @carrier
     end
 

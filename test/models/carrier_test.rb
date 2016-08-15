@@ -40,4 +40,20 @@ class CarrierTest < ActiveSupport::TestCase
     @carrier.driver_email = nil
     assert_not @carrier.valid?
   end
+
+  test "should be removed if has transport_orders" do
+    @carrier.transport_orders.each do |transport_order|
+        @carrier.transport_orders.delete(transport_order)
+      end
+    assert_difference('Carrier.count', -1) do
+      @carrier.destroy
+    end
+  end
+
+  test "should not be removed if has transport_orders" do
+    assert @carrier.transport_orders.count > 0
+    assert_difference('Carrier.count', 0) do
+      @carrier.destroy
+    end
+  end
 end
