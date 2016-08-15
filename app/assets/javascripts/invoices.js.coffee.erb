@@ -310,6 +310,7 @@ invoice_client_info_get_on_client_change = () ->
     client_country = $('#invoice_client_country')
     client_email = $('#invoice_client_email')
     client_phone = $('#invoice_client_phone')
+    clinet_nip = $('#invoice_client_nip')
     client_id = $(this).val()
     $.ajax "/clients/#{client_id}.json",
       type: 'GET'
@@ -325,6 +326,7 @@ invoice_client_info_get_on_client_change = () ->
         client_country.val(data['client_country'])
         client_email.val(data['client_email'])
         client_phone.val(data['client_phone'])
+        client_nip.val(data['client_nip'])
 
 #
 # Datepicker

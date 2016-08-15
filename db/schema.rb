@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160810184207) do
+ActiveRecord::Schema.define(version: 20160815120649) do
 
   create_table "addresses", force: true do |t|
     t.string   "line1"
@@ -38,6 +38,7 @@ ActiveRecord::Schema.define(version: 20160810184207) do
     t.string   "driver_email"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "nip"
   end
 
   create_table "clients", force: true do |t|
@@ -143,6 +144,7 @@ ActiveRecord::Schema.define(version: 20160810184207) do
     t.string   "invoice_currency",             default: "EUR"
     t.string   "invoice_exchange_currency",    default: "PLN"
     t.string   "invoice_language",             default: "PL"
+    t.string   "client_nip"
   end
 
   create_table "items", force: true do |t|
@@ -214,6 +216,8 @@ ActiveRecord::Schema.define(version: 20160810184207) do
     t.boolean  "loading_status",          default: false
     t.boolean  "unloading_status",        default: false
     t.boolean  "driver_documents_status", default: false
+    t.string   "client_nip"
+    t.string   "carrier_nip"
   end
 
   create_table "unloading_places", force: true do |t|

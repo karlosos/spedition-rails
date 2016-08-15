@@ -30,6 +30,7 @@ class TransportOrder < ActiveRecord::Base
 
   before_save do
     self.client_name = self.client.name
+    self.client_nip = self.client.nip
     self.client_street = self.client.address.street
     self.client_zip = self.client.address.zip
     self.client_city = self.client.address.city
@@ -38,6 +39,7 @@ class TransportOrder < ActiveRecord::Base
     self.client_phone = self.client.contact.phone1
 
     self.carrier_name = self.carrier.carrier_name
+    self.carrier_nip = self.carrier.nip
     self.carrier_driver_name = self.carrier.driver_name
     self.carrier_street = self.carrier.address.street
     self.carrier_zip = self.carrier.address.zip
