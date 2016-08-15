@@ -46,6 +46,8 @@ class TransportOrder < ActiveRecord::Base
     true
   end
 
+  before_save :update_loading_date, if: :loading_status_changed?
+
   def loading_status_human
     if self.loading_status == true
       return "Wysłano"
@@ -166,5 +168,14 @@ class TransportOrder < ActiveRecord::Base
     end
 
     return @transport_orders.order('transport_order_names.year DESC, transport_order_names.number DESC')
+  end
+
+  private
+
+  def update_loading_date
+    self.loading_places.each do |loading_place|
+      loading_place.date = DateTime.now
+      loading_place.save
+    end
   end
 end
