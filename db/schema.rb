@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160816111125) do
+ActiveRecord::Schema.define(version: 20160816120750) do
 
   create_table "addresses", force: true do |t|
     t.string   "line1"
@@ -148,6 +148,8 @@ ActiveRecord::Schema.define(version: 20160816111125) do
     t.string   "client_nip"
     t.string   "kind"
   end
+
+  add_index "invoices", ["kind"], name: "index_invoices_on_kind"
 
   create_table "items", force: true do |t|
     t.string   "name"

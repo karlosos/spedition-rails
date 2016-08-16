@@ -18,6 +18,9 @@
       </div>
 
       <div id="advanced_search_form">
+        <%= label_tag :kind, "Typ faktury" %>
+        <%= select_tag :kind, options_from_collection_for_select(Invoice::KINDS, :to_s, :to_s), selected: params[:kind] %>
+
         <%= label_tag :invoice_name, "Numer faktury" %>
         <%= number_field_tag :invoice_name_number, params[:invoice_name_number] %>
         <%= number_field_tag :invoice_name_month, params[:invoice_name_month] %>

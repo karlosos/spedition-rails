@@ -89,6 +89,7 @@ class Invoice < ActiveRecord::Base
   end
 
   def self.search(search_params)
+    kind = search_params[:kind]
     date = search_params[:date]
     client_name = search_params[:client_name]
     client_id = search_params[:client_id]
@@ -104,6 +105,10 @@ class Invoice < ActiveRecord::Base
     statuses = search_params[:statuses]
 
     @invoices = Invoice.all
+
+    if kind.present?
+      @invoices = @invoices.where('lower(kind) LIKE ?', "%#{kind.downcase}%")
+    end
 
     if client_id.present?
       @invoices = @invoices.where('clients.id = ?', client_id)
