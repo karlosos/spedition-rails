@@ -2,19 +2,45 @@ class InvoiceName < ActiveRecord::Base
     validates :number, presence: true, numericality: { only_integer: true, greater_than: 0 }
     validates :month, presence: true, numericality: { only_integer: true, greater_than: 0, less_than: 13 }
     validates :year, presence: true, numericality: { only_integer: true, greater_than: 0 }
-    validates :number, uniqueness: { scope: [:month, :year] }
+    validates :number, uniqueness: { scope: [:month, :year, :prefix] }
     belongs_to :invoice
 
     def get_name
-      return "#{number}/#{month}/#{year}"
+      return "#{prefix}#{number}/#{month}/#{year}"
+    end
+    
+    def self.get_prefix_for_kind(kind)
+      if kind == 'vat'
+        return ''
+      elsif kind == 'proforma'
+        return 'P'
+      elsif kind == 'correction'
+        return 'K'
+      end
     end
 
-    def self.get_last_number_for_month(month, year)
-      last_invoice_name = InvoiceName.where('month = ? AND year = ?' , month, year).order("number DESC").limit(1).first
-      if last_invoice_name
-        last_invoice_name.number + 1
-      else
-        1
+    def self.get_last_number_for_date(date, kind = 'vat')
+      date = DateTime.parse(date)
+      month = date.month
+      year = date.year
+
+      number_month_year_kind = ['vat', 'proforma']
+      number_year_kind = ['correction']
+
+      if kind == 'vat' || kind = 'proforma'
+        last_invoice_name = InvoiceName.joins(:invoice).where('month = ? AND year = ? AND invoices.kind = ?' , month, year, kind).order("number DESC").limit(1).first
+        if last_invoice_name
+          return last_invoice_name.number + 1
+        else
+          return 1
+        end
+      elsif kind == 'correction'
+        last_invoice_name = InvoiceName.joins(:invoice).where('year = ? AND invoices.kind = ?', year, kind).order("number DESC").limit(1).first
+        if last_invoice_name
+          return last_invoice_name.number + 1
+        else
+          return 1
+        end
       end
     end
 end

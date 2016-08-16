@@ -43,7 +43,7 @@ class InvoicesController < ApplicationController
     @invoice.build_invoice_name
     @invoice.invoice_name.month = Date.today.month
     @invoice.invoice_name.year = Date.today.year
-    @invoice.invoice_name.number = InvoiceName.get_last_number_for_month(Date.today.month, Date.today.year)
+    @invoice.invoice_name.number = InvoiceName.get_last_number_for_date(DateTime.now.strftime('%F'))
     # @item = @invoice_items.build_item
     # @item2 = @invoice_items.build_item
   end
@@ -109,8 +109,9 @@ class InvoicesController < ApplicationController
   end
 
   # GET /invoices/invoice_name/1.json
-  def last_invoice_number_for_month
-    @invoice_name = InvoiceName.get_last_number_for_date(params[:month], params[:year], params[:invoice_kind])
+  def last_invoice_number_for_date
+    @invoice_number = InvoiceName.get_last_number_for_date(params[:date], params[:kind])
+    @invoice_prefix = InvoiceName.get_prefix_for_kind(params[:kind])
   end
 
   def update_multiple
@@ -176,7 +177,7 @@ class InvoicesController < ApplicationController
         item_attributes:
         [:name, :unit, :id ]
         ],
-      invoice_name_attributes: [:number, :month, :year],
+      invoice_name_attributes: [:prefix, :number, :month, :year],
       )
     end
 

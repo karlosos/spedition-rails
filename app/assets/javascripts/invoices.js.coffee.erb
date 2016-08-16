@@ -7,6 +7,7 @@ pageLoad = () ->
   startSelect()
   invoice_items_functions()
   invoice_name_get_on_date_change()
+  invoice_name_get_on_kind_change()
   invoice_client_info_get_on_client_change()
   date_picker_start()
   sidebar_functions()
@@ -281,23 +282,30 @@ startSelect = () ->
 #
 invoice_name_get_on_date_change = () ->
   $('#invoice_date').change ->
-    date = new Date($(this).val())
-    month = date.getMonth()+1
-    year = date.getYear() + 1900
+    invoice_get_name()
 
-    invoice_month = String($('#invoice_invoice_name_attributes_month').val())
-    console.log(invoice_month)
-    console.log(String(month))
-    if String(month) != invoice_month
-      $.ajax "/invoices/invoice_name/#{year}/#{month}.json",
-        type: 'GET'
-        dataType: 'json'
-        success: (data, textStatus, jqXHR) ->
-          console.log(data['number'])
-          $('#invoice_invoice_name_attributes_number').val(data['number'])
-          $('#invoice_invoice_name_attributes_month').val(month)
-          $('#invoice_invoice_name_attributes_year').val(year)
+invoice_name_get_on_kind_change = () ->
+  $('#invoice_kind').change ->
+    invoice_get_name(true)
 
+invoice_get_name = (force = false) ->
+  date = new Date($('#invoice_date').val())
+  month = date.getMonth()+1
+  year = date.getYear() + 1900
+  date_s = $('#invoice_date').val()
+  kind = $('#invoice_kind').val()
+  invoice_month = String($('#invoice_invoice_name_attributes_month').val())
+  if String(date.getMonth()+1) != invoice_month || force
+    $.ajax "/invoices/invoice_name/#{kind}/#{date_s}.json",
+      type: 'GET'
+      dataType: 'json'
+      success: (data, textStatus, jqXHR) ->
+        console.log(data['number'])
+        $('#invoice_invoice_name_attributes_number').val(data['number'])
+        $('#invoice_invoice_name_attributes_month').val(month)
+        $('#invoice_invoice_name_attributes_year').val(year)
+        $('#invoice_invoice_name_attributes_prefix').val(data['prefix'])
+        $('#invoice_name').val(''+data['prefix']+data['number']+'/'+month+'/'+year)
 #
 # Invoice client
 #
@@ -310,7 +318,7 @@ invoice_client_info_get_on_client_change = () ->
     client_country = $('#invoice_client_country')
     client_email = $('#invoice_client_email')
     client_phone = $('#invoice_client_phone')
-    clinet_nip = $('#invoice_client_nip')
+    client_nip = $('#invoice_client_nip')
     client_id = $(this).val()
     $.ajax "/clients/#{client_id}.json",
       type: 'GET'

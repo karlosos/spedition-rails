@@ -1,5 +1,7 @@
 <div class="invoice_name_form">
-  <%= f.number_field :number, :readonly => true %>
-  <%= f.number_field :month, :readonly => true %>
-  <%= f.number_field :year, :readonly => true %>
+  <input type="text" id="invoice_name"></input>
+  <%= f.hidden_field :prefix, :readonly => true %>
+  <%= f.hidden_field :number, :readonly => true %>
+  <%= f.hidden_field :month, :readonly => true %>
+  <%= f.hidden_field :year, :readonly => true %>
 </div>

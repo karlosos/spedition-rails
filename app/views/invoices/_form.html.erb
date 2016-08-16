@@ -15,6 +15,10 @@
 <% end %>
 <div class="invoice-form form-group">
   <div class="row">
+    <div class="col-sm-2">
+      <%= label_tag :kind, "Faktura" %>
+      <%= invoice_form.collection_select :kind, Invoice::KINDS, :to_s, :to_s, { include_blank: false }, { class: "form-control" } %>
+    </div>
     <div class="col-sm-3">
       <%= label_tag :date, "Data wystawienia faktury" %>
       <div class='input-group date' id='datetimepicker1' data-date-format="yyyy-mm-dd" locale="pl">
@@ -25,7 +29,7 @@
       </div>
     </div>
 
-    <div class="col-sm-4">
+    <div class="col-sm-2">
       <%= label_tag :invoice_name_form, "Numer faktury" %>
       <%= invoice_form.fields_for :invoice_name do |invoice_name_form| %>
       <% render :partial => 'invoice_name_form', :locals => {:f => invoice_name_form} %>

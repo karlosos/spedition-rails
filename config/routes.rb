@@ -10,7 +10,7 @@ Rails.application.routes.draw do
     end
   end
   resources :items
-  get 'invoices/invoice_name/:year/:month' => 'invoices#last_invoice_number_for_month'
+  get 'invoices/invoice_name/:kind/:date' => 'invoices#last_invoice_number_for_date'
 
 
   # The priority is based upon order of creation: first created -> highest priority.
