@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160816120750) do
+ActiveRecord::Schema.define(version: 20160817132551) do
 
   create_table "addresses", force: true do |t|
     t.string   "line1"
@@ -83,6 +83,46 @@ ActiveRecord::Schema.define(version: 20160816120750) do
 
   add_index "freichtage_descriptions", ["transport_order_id"], name: "index_freichtage_descriptions_on_transport_order_id"
 
+  create_table "invoice_item_corrections", force: true do |t|
+    t.integer  "invoice_id"
+    t.integer  "item_id"
+    t.string   "item_name"
+    t.string   "item_name_correction"
+    t.integer  "quantity",                                default: 1
+    t.integer  "quantity_correction",                     default: 1
+    t.integer  "tax_rate",                                default: 23
+    t.integer  "tax_rate_correction",                     default: 23
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "unit_price_cents",                        default: 0,     null: false
+    t.string   "unit_price_currency",                     default: "EUR", null: false
+    t.integer  "unit_price_correction_cents",             default: 0,     null: false
+    t.string   "unit_price_correction_currency",          default: "EUR", null: false
+    t.integer  "unit_price_difference_cents",             default: 0,     null: false
+    t.string   "unit_price_difference_currency",          default: "EUR", null: false
+    t.integer  "value_added_tax_cents",                   default: 0,     null: false
+    t.string   "value_added_tax_currency",                default: "EUR", null: false
+    t.integer  "value_added_tax_correction_cents",        default: 0,     null: false
+    t.string   "value_added_tax_correction_currency",     default: "EUR", null: false
+    t.integer  "value_added_tax_difference_cents",        default: 0,     null: false
+    t.string   "value_added_tax_difference_currency",     default: "EUR", null: false
+    t.integer  "net_price_cents",                         default: 0,     null: false
+    t.string   "net_price_currency",                      default: "EUR", null: false
+    t.integer  "net_price_correction_cents",              default: 0,     null: false
+    t.string   "net_price_correction_currency",           default: "EUR", null: false
+    t.integer  "net_price_difference_cents",              default: 0,     null: false
+    t.string   "net_price_difference_currency",           default: "EUR", null: false
+    t.integer  "total_selling_price_cents",               default: 0,     null: false
+    t.string   "total_selling_price_currency",            default: "EUR", null: false
+    t.integer  "total_selling_price_correction_cents",    default: 0,     null: false
+    t.string   "total_selling_price_correction_currency", default: "EUR", null: false
+    t.integer  "total_selling_price_difference_cents",    default: 0,     null: false
+    t.string   "total_selling_price_difference_currency", default: "EUR", null: false
+  end
+
+  add_index "invoice_item_corrections", ["invoice_id"], name: "index_invoice_item_corrections_on_invoice_id"
+  add_index "invoice_item_corrections", ["item_id"], name: "index_invoice_item_corrections_on_item_id"
+
   create_table "invoice_items", force: true do |t|
     t.integer  "invoice_id"
     t.integer  "item_id"
@@ -147,6 +187,8 @@ ActiveRecord::Schema.define(version: 20160816120750) do
     t.string   "invoice_language",             default: "PL"
     t.string   "client_nip"
     t.string   "kind"
+    t.integer  "invoice_to_correct_id"
+    t.text     "correction_cause"
   end
 
   add_index "invoices", ["kind"], name: "index_invoices_on_kind"

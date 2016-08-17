@@ -15,7 +15,7 @@ class InvoicesController < ApplicationController
     search_params = params
 
     @client = Client.new
-    @invoices = Invoice.joins(:invoice_name).joins(:client).joins(:invoice_items).search(search_params).order(sort_column + " " + sort_direction).paginate(:page => params[:page], :per_page => 30)
+    @invoices = Invoice.joins(:invoice_name).joins(:client).search(search_params).order(sort_column + " " + sort_direction).paginate(:page => params[:page], :per_page => 30)
   end
 
   # GET /invoices/1
@@ -40,13 +40,25 @@ class InvoicesController < ApplicationController
     @item = Item.new
 
     @invoice = Invoice.new
-    @invoice.invoice_items.build
     @invoice.build_invoice_name
     @invoice.invoice_name.month = Date.today.month
     @invoice.invoice_name.year = Date.today.year
     @invoice.invoice_name.number = InvoiceName.get_last_number_for_date(DateTime.now.strftime('%F'))
     # @item = @invoice_items.build_item
     # @item2 = @invoice_items.build_item
+
+    if params['kind'] == 'correction'
+      @invoice.invoice_item_corrections.build
+      @invoice.kind = 'correction'
+    else
+      @invoice.invoice_items.build
+      if params['kind'] == 'proforma'
+        @invoice.kind = 'proforma'
+      else
+        @invoice.kind = 'vat'
+      end
+    end
+
   end
 
   # GET /invoices/1/edit
@@ -158,6 +170,9 @@ class InvoicesController < ApplicationController
       :client_country,
       :client_email,
       :client_phone,
+      :client_nip,
+      :invoice_to_correct_id,
+      :correction_cause,
       :status,
       :invoice_language,
       :invoice_exchange_currency,
@@ -178,6 +193,21 @@ class InvoicesController < ApplicationController
         item_attributes:
         [:name, :unit, :id ]
         ],
+      invoice_item_corrections_attributes: [ :id, :item_id, :quantity, :quantity_correction,
+          :item_name, :item_name_correction,
+	        :unit_price, :unit_price_correction, :unit_price_difference,
+	        :unit_price_currency, :unit_price_correction_currency, :unit_price_difference_currency,
+	        :net_price, :net_price_correction, :net_price_difference,
+	        :net_price_currency, :net_price_correction_currency, :net_price_difference_currency,
+	        :value_added_tax, :value_added_tax_correction,:value_added_tax_difference,
+	        :value_added_tax_currency, :value_added_tax_correction_currency, :value_added_tax_difference_currency,
+	        :total_selling_price, :total_selling_price_correction, :total_selling_price_difference,
+	        :total_selling_price_currency, :total_selling_price_correction_currency, :total_selling_price_difference_currency,
+	        :tax_rate, :tax_rate_correction,
+	        :_destroy,
+          item_attributes:
+          [:name, :unit, :id ]
+          ],
       invoice_name_attributes: [:prefix, :number, :month, :year],
       )
     end

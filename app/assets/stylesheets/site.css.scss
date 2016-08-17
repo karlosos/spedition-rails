@@ -100,8 +100,10 @@ input {
   margin-top: 20px;
 }
 /* indexes */
-td {
-  vertical-align: middle !important;
+.index_table {
+  td {
+    vertical-align: middle !important;
+  }
 }
 
 /* invoices index */

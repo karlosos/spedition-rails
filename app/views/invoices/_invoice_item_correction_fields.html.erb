@@ -1,0 +1,55 @@
+<tr>
+  <td>
+    <%= f.collection_select :item_id, Item.all, :id, :name, prompt: 'Wybierz towar' %>
+    <%= f.text_field :item_name_correction %>
+  </td>
+  <td>
+    <%= f.number_field :quantity, { class: 'quantity editable_invoice_item_input' } %>
+    <%= f.number_field :quantity_correction, { class: 'quantity_correction editable_invoice_item_correction_input' } %>
+    <%= f.number_field :quantity_correction, { class: 'quantity_difference' } %>
+    <br>
+  </td>
+  <td>
+    <%= f.number_field :unit_price, { :step => 'any', :class => 'unit_price editable_invoice_item_input', :precision => 2} %>
+    <%= f.hidden_field :unit_price_currency, :readonly => true, :class => 'currency' %>
+    <%= f.number_field :unit_price_correction, { :step => 'any', :class => 'unit_price_correction editable_invoice_item_correction_input', :precision => 2} %>
+    <%= f.hidden_field :unit_price_correction_currency, :readonly => true, :class => 'currency' %>
+    <%= f.number_field :unit_price_difference, { :step => 'any', :class => 'unit_price_difference', :precision => 2} %>
+    <%= f.hidden_field :unit_price_difference_currency, :readonly => true, :class => 'currency' %>
+  </td>
+  <td>
+    <%= f.number_field :tax_rate, { :class => 'tax_rate editable_invoice_item_input' } %>
+    <%= f.number_field :tax_rate_correction, { :class => 'tax_rate_correction editable_invoice_item_correction_input' } %>
+  </td>
+  <td>
+    <%= f.number_field :net_price, { :readonly => true, class: 'net_price', :step => '0.01', :precision => 2} %>
+    <%= f.hidden_field :net_price_currency, :readonly => true, :class => 'currency'  %>
+    <%= f.number_field :net_price_correction, { :readonly => true, class: 'net_price_correction', :step => '0.01', :precision => 2} %>
+    <%= f.hidden_field :net_price_correction_currency, :readonly => true, :class => 'currency'  %>
+    <%= f.number_field :net_price_difference, { :readonly => true, class: 'net_price_difference', :step => '0.01', :precision => 2} %>
+    <%= f.hidden_field :net_price_difference_currency, :readonly => true, :class => 'currency'  %>
+
+  </td>
+  <td>
+    <%= f.number_field :value_added_tax, { :readonly => true, class: 'value_added_tax', :step => '0.01', :precision => 2}  %>
+    <%= f.hidden_field :value_added_tax_currency, :readonly => true, :class => 'currency'  %>
+    <%= f.number_field :value_added_tax_correction, { :readonly => true, class: 'value_added_tax_correction', :step => '0.01', :precision => 2}  %>
+    <%= f.hidden_field :value_added_tax_correction_currency, :readonly => true, :class => 'currency'  %>
+    <%= f.number_field :value_added_tax_difference, { :readonly => true, class: 'value_added_tax_difference', :step => '0.01', :precision => 2}  %>
+    <%= f.hidden_field :value_added_tax_difference_currency, :readonly => true, :class => 'currency'  %>
+
+  </td>
+  <td>
+    <%= f.number_field :total_selling_price, { :readonly => true, class: 'total_selling_price', :step => '0.01', :precision => 2} %>
+    <%= f.hidden_field :total_selling_price_currency, :readonly => true, :class => 'currency'  %>
+    <%= f.number_field :total_selling_price_correction, { :readonly => true, class: 'total_selling_price_correction', :step => '0.01', :precision => 2} %>
+    <%= f.hidden_field :total_selling_price_correction_currency, :readonly => true, :class => 'currency'  %>
+    <%= f.number_field :total_selling_price_difference, { :readonly => true, class: 'total_selling_price_difference', :step => '0.01', :precision => 2} %>
+    <%= f.hidden_field :total_selling_price_difference_currency, :readonly => true, :class => 'currency'  %>
+
+  </td>
+  <td>
+    <%= f.hidden_field :_destroy %>
+    <%= link_to "Usuń towar", "#", class: "remove_invoice_items" %>
+  </td>
+</tr>

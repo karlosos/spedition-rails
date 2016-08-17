@@ -8,6 +8,7 @@ pageLoad = () ->
   invoice_items_functions()
   invoice_name_get_on_date_change()
   invoice_name_get_on_kind_change()
+  invoice_get_name(true)
   invoice_client_info_get_on_client_change()
   date_picker_start()
   sidebar_functions()
@@ -73,16 +74,16 @@ invoice_items_price_update_on_item_change = () ->
         unit_price_input.val(unit_price)
         invoice_item_calculate(parent)
 
-invoice_item_calculate = (invoice_item_group) ->
+invoice_item_calculate = (invoice_item_group, class_suffix = '') ->
   parent = invoice_item_group
 
-  net_price_input = parent.find('.net_price')
-  value_added_tax_input = parent.find('.value_added_tax')
-  total_selling_price_input = parent.find('.total_selling_price')
+  net_price_input = parent.find('.net_price' + class_suffix)
+  value_added_tax_input = parent.find('.value_added_tax' + class_suffix)
+  total_selling_price_input = parent.find('.total_selling_price' + class_suffix)
 
-  quantity = parseInt(parent.find('.quantity').val())
-  unit_price = parseFloat(parent.find('.unit_price').val())
-  tax_rate = parseInt(parent.find('.tax_rate').val())
+  quantity = parseInt(parent.find('.quantity' + class_suffix).val())
+  unit_price = parseFloat(parent.find('.unit_price' + class_suffix).val())
+  tax_rate = parseInt(parent.find('.tax_rate' + class_suffix).val())
 
   net_price = quantity * unit_price
   net_price = parseFloat(net_price).toFixed(2)
@@ -95,11 +96,48 @@ invoice_item_calculate = (invoice_item_group) ->
   value_added_tax_input.val(parseFloat(value_added_tax).toFixed(2))
   total_selling_price_input.val(parseFloat(total_selling_price).toFixed(2))
 
-  invoice_calculate()
+  if $('#invoice_kind').val() == 'correction'
+    invoice_correction_calculate_difference(parent)
+    invoice_calculate('_difference')
+  else
+    invoice_calculate()
+
+invoice_correction_calculate_difference = (invoice_item_group) ->
+  parent = invoice_item_group
+
+  quantity_input = parent.find('.quantity')
+  quantity_correction_input = parent.find('.quantity_correction')
+  quantity_difference_input = parent.find('.quantity_difference')
+
+  unit_price_input = parent.find('.unit_price')
+  unit_price_correction_input = parent.find('.unit_price_correction')
+  unit_price_difference_input = parent.find('.unit_price_difference')
+
+  net_price_input = parent.find('.net_price')
+  net_price_correction_input = parent.find('.net_price_correction')
+  net_price_difference_input = parent.find('.net_price_difference')
+
+  value_added_tax_input = parent.find('.value_added_tax')
+  value_added_tax_correction_input = parent.find('.value_added_tax_correction')
+  value_added_tax_difference_input = parent.find('.value_added_tax_difference')
+
+  total_selling_price_input = parent.find('.total_selling_price')
+  total_selling_price_correction_input = parent.find('.total_selling_price_correction')
+  total_selling_price_difference_input = parent.find('.total_selling_price_difference')
+
+
+  unit_price_difference_input.val(parseFloat(unit_price_input.val()) - parseFloat(unit_price_correction_input.val()))
+  quantity_difference_input.val(parseFloat(quantity_input.val()) - parseFloat(quantity_correction_input.val()))
+  net_price_difference_input.val(parseFloat(net_price_input.val()) - parseFloat(net_price_correction_input.val()))
+  value_added_tax_difference_input.val(parseFloat(value_added_tax_input.val()) - parseFloat(value_added_tax_correction_input.val()))
+  total_selling_price_difference_input.val(parseFloat(total_selling_price_input.val()) - parseFloat(total_selling_price_correction_input.val()))
 
 invoice_item_calculate_on_change = () ->
   $('.invoice_items_form').find('.editable_invoice_item_input').change ->
     invoice_item_calculate($(this).parent().parent())
+  $('.invoice_items_form').find('.editable_invoice_item_correction_input').change ->
+    invoice_item_calculate($(this).parent().parent(), '_correction')
+
 
 invoice_item_remove_event = () ->
   $('form').on 'click', '.remove_invoice_items', (event) ->
@@ -108,10 +146,11 @@ invoice_item_remove_event = () ->
     event.preventDefault()
     invoice_calculate()
 
-invoice_calculate = () ->
-  net_price_inputs = $('.net_price')
-  value_added_tax_inputs = $('.value_added_tax')
-  total_selling_price_inputs = $('.total_selling_price')
+
+invoice_calculate = (class_suffix = '') ->
+  net_price_inputs = $('.net_price' + class_suffix)
+  value_added_tax_inputs = $('.value_added_tax' + class_suffix)
+  total_selling_price_inputs = $('.total_selling_price' + class_suffix)
 
   invoice_net_price = $('#invoice_net_price')
   invoice_value_added_tax = $('#invoice_value_added_tax')
@@ -254,6 +293,20 @@ startSelect = () ->
             text: client.client_info
           }
         )}
+
+    $('#invoice_invoice_to_correct_id').select2
+      theme: 'bootstrap'
+      ajax:
+        url: '/invoices.json'
+        dataType: 'json'
+        processResults: (data) ->
+          return {
+          results: $.map(data, (invoice, i) ->
+            {
+              id: invoice.id
+              text: invoice.name
+            }
+          )}
 
   $('.invoice_items_form').find('select').select2
     theme: 'bootstrap'

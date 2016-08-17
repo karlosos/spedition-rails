@@ -5,20 +5,20 @@ class Invoice < ActiveRecord::Base
   belongs_to :seller, class_name: "Client", foreign_key: "seller_id"
   belongs_to :client, class_name:  "Client", foreign_key: "client_id"
   has_many :invoice_items, inverse_of: :invoice
+  has_many :invoice_item_corrections, inverse_of: :invoice
   has_many :items, through: :invoice_items
 
-  monetize :value_added_tax_cents, :numericality => {
-    :greater_than_or_equal_to => 0
-  }
-  monetize :net_price_cents, :numericality => {
-    :greater_than_or_equal_to => 0
-  }
-  monetize :total_selling_price_cents, :numericality => {
-    :greater_than_or_equal_to => 0
-  }
+  # Invoice Correction relations
+  belongs_to :invoice_to_correct, :class_name => 'Invoice'
+  has_many :invoice_corrections, :class_name => 'Invoice', :foreign_key => 'invoice_to_correct_id'
+
+  monetize :value_added_tax_cents
+  monetize :net_price_cents
+  monetize :total_selling_price_cents
 
   accepts_nested_attributes_for :invoice_name
   accepts_nested_attributes_for :invoice_items, allow_destroy: true
+  accepts_nested_attributes_for :invoice_item_corrections, allow_destroy: true
 
   validates :kind, presence: true
   validates :client, presence: true
@@ -31,7 +31,7 @@ class Invoice < ActiveRecord::Base
   validates :client_zip, presence: true
   validates :client_city, presence: true
   validates :client_country, presence: true
-  validates :invoice_items, :length => { :minimum => 1 }
+  validates :invoice_items, :length => { :minimum => 1 }, if: '!is_correction?'
   validates :total_price_in_words, presence: true
   # validates :currency_rate_table_name, presence: true
   # validates :currency_rate, presence: true
@@ -68,7 +68,7 @@ class Invoice < ActiveRecord::Base
   end
 
   def get_name
-    return "#{invoice_name.number}/#{invoice_name.month}/#{invoice_name.year}"
+    return "#{invoice_name.prefix}#{invoice_name.number}/#{invoice_name.month}/#{invoice_name.year}"
   end
 
   def get_file_name
@@ -78,6 +78,10 @@ class Invoice < ActiveRecord::Base
   def overdue
     date_deadline = date + (deadline).days
     return (Time.now - date_deadline)/(60*60*24)*-1
+  end
+
+  def is_correction?
+    kind == "correction"
   end
 
   def proper_exchange_currency
