@@ -126,11 +126,11 @@ invoice_correction_calculate_difference = (invoice_item_group) ->
   total_selling_price_difference_input = parent.find('.total_selling_price_difference')
 
 
-  unit_price_difference_input.val(parseFloat(unit_price_input.val()) - parseFloat(unit_price_correction_input.val()))
-  quantity_difference_input.val(parseFloat(quantity_input.val()) - parseFloat(quantity_correction_input.val()))
-  net_price_difference_input.val(parseFloat(net_price_input.val()) - parseFloat(net_price_correction_input.val()))
-  value_added_tax_difference_input.val(parseFloat(value_added_tax_input.val()) - parseFloat(value_added_tax_correction_input.val()))
-  total_selling_price_difference_input.val(parseFloat(total_selling_price_input.val()) - parseFloat(total_selling_price_correction_input.val()))
+  unit_price_difference_input.val(parseFloat(unit_price_correction_input.val()) - parseFloat(unit_price_input.val()))
+  quantity_difference_input.val(parseFloat(quantity_correction_input.val()) - parseFloat(quantity_input.val()))
+  net_price_difference_input.val(parseFloat(net_price_correction_input.val()) - parseFloat(net_price_input.val()))
+  value_added_tax_difference_input.val(parseFloat(value_added_tax_correction_input.val()) - parseFloat(value_added_tax_input.val()))
+  total_selling_price_difference_input.val(parseFloat(total_selling_price_correction_input.val()) - parseFloat(total_selling_price_input.val()))
 
 invoice_item_calculate_on_change = () ->
   $('.invoice_items_form').find('.editable_invoice_item_input').change ->

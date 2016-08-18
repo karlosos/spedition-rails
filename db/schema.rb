@@ -90,6 +90,7 @@ ActiveRecord::Schema.define(version: 20160817132551) do
     t.string   "item_name_correction"
     t.integer  "quantity",                                default: 1
     t.integer  "quantity_correction",                     default: 1
+    t.integer  "quantity_difference",                     default: 1
     t.integer  "tax_rate",                                default: 23
     t.integer  "tax_rate_correction",                     default: 23
     t.datetime "created_at"

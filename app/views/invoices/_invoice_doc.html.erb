@@ -1,9 +1,17 @@
 <div id="invoice">
   <div class="row">
     <div class="col-xs-12">
-      <span class="invoice_bold">Faktura numer:</span>
-      <%= @invoice.invoice_name.get_name %>
-      <br><br>
+      <% if @invoice.kind == 'correction' %>
+        <span class="invoice_bold">Faktura korygująca numer:</span>
+        <%= @invoice.invoice_name.get_name %>
+        <br>
+        <span>Dokument korygowany:</span> Faktura <%= @invoice.invoice_to_correct.get_name %> z dnia <%= @invoice.invoice_to_correct.date.strftime('%F') %>
+        <br><br>
+      <% else %>
+        <span class="invoice_bold">Faktura numer:</span>
+        <%= @invoice.invoice_name.get_name %>
+        <br><br>
+      <% end %>
       <span class="invoice_bold">Data wystawienia:</span>
       <%= @invoice.place %>, <%= @invoice.date.strftime('%F') %>
       <br>
@@ -58,6 +66,9 @@
         <thead>
           <th>LP</th>
           <th>Nazwa towaru/usługi</th>
+          <% if @invoice.kind == 'correction' %>
+            <th></th>
+          <% end %>
           <th>Ilość</th>
           <th>Cena netto</th>
           <th>Wartość netto</th>
@@ -66,10 +77,18 @@
           <th>Wartość brutto</th>
         </thead>
         <tbody>
-          <% @invoice.invoice_items.each do |invoice_item| %>
+          <% if @invoice.kind == 'correction' %>
+            <% invoice_items = @invoice.invoice_item_corrections %>
+          <% else %>
+            <% invoice_items = @invoice.invoice_items %>
+          <% end %>
+          <% invoice_items.each do |invoice_item| %>
           <tr>
             <td></td>
             <td><%= invoice_item.item.name %></td>
+            <% if @invoice.kind == 'correction' %>
+              <td>Przed korektą</td>
+            <% end %>
             <td><%= invoice_item.quantity %>
               <%= invoice_item.item.unit %></td>
             <td><%= humanized_money_with_symbol invoice_item.unit_price %></td>
@@ -78,6 +97,31 @@
             <td><%= humanized_money_with_symbol invoice_item.value_added_tax %></td>
             <td><%= humanized_money_with_symbol invoice_item.total_selling_price %></td>
           </tr>
+          <% if @invoice.kind == 'correction' %>
+          <tr>
+            <td></td>
+            <td><%= invoice_item.item_name_correction %></td>
+            <td>Po korekcie</td>
+            <td><%= invoice_item.quantity_correction %>
+              <%= invoice_item.item.unit %></td>
+            <td><%= humanized_money_with_symbol invoice_item.unit_price_correction %></td>
+            <td><%= humanized_money_with_symbol invoice_item.net_price_correction %></td>
+            <td><%= invoice_item.tax_rate_correction %></td>
+            <td><%= humanized_money_with_symbol invoice_item.value_added_tax_correction %></td>
+            <td><%= humanized_money_with_symbol invoice_item.total_selling_price_correction %></td>
+          </tr>
+          <tr class="correction_difference_row">
+            <td></td>
+            <td><%= invoice_item.item_name_correction %></td>
+            <td>korekta</td>
+            <td><%= invoice_item.quantity_difference %></td>
+            <td><%= humanized_money_with_symbol invoice_item.unit_price_difference %></td>
+            <td><%= humanized_money_with_symbol invoice_item.net_price_difference %></td>
+            <td><%= invoice_item.tax_rate_correction %></td>
+            <td><%= humanized_money_with_symbol invoice_item.value_added_tax_difference %></td>
+            <td><%= humanized_money_with_symbol invoice_item.total_selling_price_difference %></td>
+          </tr>
+          <% end %>
           <% end %>
         </tbody>
       </table>
