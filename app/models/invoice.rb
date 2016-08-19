@@ -110,6 +110,9 @@ class Invoice < ActiveRecord::Base
     kinds = search_params[:kinds]
 
     @invoices = Invoice.all
+    if item_id.present?
+      @invoices = Invoice.all.joins(:invoice_items)
+    end
 
     if kind.present?
       @invoices = @invoices.where('lower(kind) LIKE ?', "%#{kind.downcase}%")
