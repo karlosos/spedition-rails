@@ -87,14 +87,16 @@
     </div>
   </div>
   <div class="col-sm-9">
-    <table class="table">
+    <table class="table index_table">
   <thead>
     <tr>
       <th>Nr zlecenia</th>
       <th>Wartość frachtu</th>
       <th>Cena z marżą</th>
       <th>Trasa</th>
-      <th colspan="3"></th>
+      <th colspan="2">Załadunek</th>
+      <th>Rozładunek</th>
+      <th></th>
     </tr>
   </thead>
 
@@ -103,24 +105,39 @@
       <tr>
         <td><%= link_to transport_order.transport_order_name.get_name, transport_order %></td>
         <td><%= link_to "#{humanized_money_with_symbol transport_order.freight_rate}", transport_order %></td>
-        <td><%= link_to "#{humanized_money_with_symbol (transport_order.freight_rate + transport_order.profit_margin)}", transport_order %>
-        <td><%= link_to transport_order.route, transport_order %><td>
+        <td><%= link_to "#{humanized_money_with_symbol (transport_order.freight_rate + transport_order.profit_margin)}", transport_order %></td>
+        <td><%= link_to transport_order.route, transport_order %></td>
+        <td>
+          <% loading_date = transport_order.loading_places.first.date %>
+          <%= loading_date.strftime('%F') if !loading_date.nil? %>
+        </td>
         <td>
           <div class="btn-group loading-status" transport-order-id="<%= transport_order.id %>">
             <% button_status_class = "btn-status-#{transport_order.loading_status}" %>
-            <button type="button" class="btn <%= button_status_class %> status dropdown-toggle" data-toggle="dropdown"><%= transport_order.loading_status_human %><span class="caret"></span></button>
+            <button type="button" class="btn <%= button_status_class %> status dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-envelope"></span></button>
             <ul class="dropdown-menu" role="menu" transport-order-id="<%= transport_order.id %>">
-              <li><a class="transport_option" href="#" value="false">Niewysłano info o załadunku</a></li>
-              <li><a class="transport_option" href="#" value="true">Wysłano info o załadunku</a></li>
+              <li><a class="loading_option" href="#" value="false">Niewysłano info o załadunku</a></li>
+              <li><a class="loading_option" href="#" value="true">Wysłano info o załadunku</a></li>
+            </ul>
+          </div>
+        </td>
+        <td>
+          <% unloading_date = transport_order.unloading_places.first.date %>
+          <%= unloading_date.strftime('%F') if !unloading_date.nil? %>
+        </td>
+        <td>
+          <div class="btn-group unloading-status" transport-order-id="<%= transport_order.id %>">
+            <% button_status_class = "btn-status-#{transport_order.unloading_status}" %>
+            <button type="button" class="btn <%= button_status_class %> status dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-envelope"></span></button>
+            <ul class="dropdown-menu" role="menu" transport-order-id="<%= transport_order.id %>">
+              <li><a class="unloading_option" href="#" value="false">Niewysłano info o załadunku</a></li>
+              <li><a class="unloading_option" href="#" value="true">Wysłano info o załadunku</a></li>
             </ul>
           </div>
         </td>
         <td>
           <div class="btn-group invoice-status" invoice-id="<%= transport_order.id %>">
-            <button type="button" class="btn btn-secondary" data-toggle="dropdown"><span class="glyphicon glyphicon-cog"></span></button>
-            <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown">
-              <span class="caret"></span>
-            </button>
+            <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-cog"></span></button>
             <ul class="dropdown-menu" role="menu">
               <li><%= link_to 'Show', transport_order %></li>
               <li><%= link_to 'Edit', edit_transport_order_path(transport_order) %></li>

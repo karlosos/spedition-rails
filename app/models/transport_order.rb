@@ -49,9 +49,18 @@ class TransportOrder < ActiveRecord::Base
   end
 
   before_save :update_loading_date, if: :loading_status_changed?
+  before_save :update_unloading_date, if: :unloading_status_changed?
 
   def loading_status_human
     if self.loading_status == true
+      return "Wysłano"
+    else
+      return "Nie wysłano"
+    end
+  end
+
+  def unloading_status_human
+    if self.unloading_status == true
       return "Wysłano"
     else
       return "Nie wysłano"
@@ -178,6 +187,13 @@ class TransportOrder < ActiveRecord::Base
     self.loading_places.each do |loading_place|
       loading_place.date = DateTime.now
       loading_place.save
+    end
+  end
+
+  def update_unloading_date
+    self.unloading_places.each do |unloading_place|
+      unloading_place.date = DateTime.now
+      unloading_place.save
     end
   end
 end
