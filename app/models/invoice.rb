@@ -107,6 +107,7 @@ class Invoice < ActiveRecord::Base
     invoice_name_month = search_params[:invoice_name_month]
     invoice_name_year = search_params[:invoice_name_year]
     statuses = search_params[:statuses]
+    kinds = search_params[:kinds]
 
     @invoices = Invoice.all
 
@@ -143,6 +144,10 @@ class Invoice < ActiveRecord::Base
 
     if statuses
       @invoices = @invoices.where('status IN (?)', statuses)
+    end
+
+    if kinds
+      @invoices = @invoices.where('kind IN (?)', kinds)
     end
 
     if client_name.present?

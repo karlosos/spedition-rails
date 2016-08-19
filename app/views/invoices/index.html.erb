@@ -18,16 +18,25 @@
       </div>
 
       <div id="advanced_search_form">
-        <%= label_tag :kind, "Typ faktury" %>
-        <%= select_tag :kind, options_from_collection_for_select(Invoice::KINDS, :to_s, :to_s), selected: params[:kind] %>
-
         <%= label_tag :invoice_name, "Numer faktury" %>
         <%= number_field_tag :invoice_name_number, params[:invoice_name_number] %>
         <%= number_field_tag :invoice_name_month, params[:invoice_name_month] %>
         <%= number_field_tag :invoice_name_year, params[:invoice_name_year] %>
 
-        <% label_tag :statuses, "Status faktury" %>
+        <%= label_tag :kind, "Typ faktury" %>
+        <div class="form_short">
+          <% kinds = params[:kinds] %>
+          <% if kinds.nil? %>
+            <% kinds = Array.new %>
+          <% end %>
+          <table>
+          <tr><td><%= check_box_tag "kinds[]", 'vat', kinds.include?('vat') %> Vat</tr></td>
+          <tr><td><%= check_box_tag "kinds[]", 'proforma', kinds.include?('proforma') %> Proforma</tr></td>
+          <tr><td><%= check_box_tag "kinds[]", 'correction', kinds.include?('correction') %> Korekcja</tr></td>
+          </table>
+        </div>
 
+        <%= label_tag :statuses, "Status faktury" %>
         <div class="form_short">
           <% statuses = params[:statuses] %>
           <% if statuses.nil? %>
