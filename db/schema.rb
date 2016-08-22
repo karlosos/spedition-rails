@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160817132551) do
+ActiveRecord::Schema.define(version: 20160822144918) do
 
   create_table "addresses", force: true do |t|
     t.string   "line1"
@@ -67,6 +67,15 @@ ActiveRecord::Schema.define(version: 20160817132551) do
   end
 
   add_index "contacts", ["contactable_type", "contactable_id"], name: "index_contacts_on_contactable_type_and_contactable_id", unique: true
+
+  create_table "emails", force: true do |t|
+    t.string   "address"
+    t.integer  "contact_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "emails", ["contact_id"], name: "index_emails_on_contact_id"
 
   create_table "freichtage_descriptions", force: true do |t|
     t.decimal  "weight"

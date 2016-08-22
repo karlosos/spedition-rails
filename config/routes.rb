@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   end
   resources :items
   get 'invoices/invoice_name/:kind/:date' => 'invoices#last_invoice_number_for_date'
+  get 'transport_orders/:speditor_id/:date' => 'transport_orders#speditor_view', :as => :speditor_view
 
 
   # The priority is based upon order of creation: first created -> highest priority.

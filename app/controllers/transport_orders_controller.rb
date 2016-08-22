@@ -28,7 +28,19 @@ class TransportOrdersController < ApplicationController
     @transport_orders = TransportOrder.joins(:transport_order_name).joins(:client).joins(:carrier).joins(:loading_places).joins(:unloading_places).search(search_params).order(sort_column + " " + sort_direction).paginate(:page => params[:page], :per_page => 30)
   end
 
-  # GET /transport_orders/1
+  def speditor_view
+    speditor_id = params[:speditor_id]
+    date = params[:date]
+    @carriers = Carrier.all.joins(:transport_orders).distinct
+    @transport_order = TransportOrder.new
+    @transport_order.build_transport_order_name
+    @transport_order.build_transport_order_name.year = Date.today.year
+    @transport_order.build_freichtage_description
+    @transport_order.loading_places.build
+    @transport_order.unloading_places.build
+  end
+
+  # GET /transport_orders/1.joins(:transport_order_name).joins(:client).joins(:carrier).joins(:loading_places).joins(:unloading_places)
   # GET /transport_orders/1.json
   def show
   end
@@ -95,7 +107,18 @@ class TransportOrdersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def transport_order_params
-      params.require(:transport_order).permit(:unloading_status, :loading_status, :client_id, :carrier_id, :seller_id, :distance_id, :freight_rate, :profit_margin, :loading_country, :loading_zip, :loading_city, :loading_date, :unloading_country, :unloading_zip, :distance, :unloading_city, :unloading_date, :route, transport_order_name_attributes: [:number, :year], loading_places_attributes: [ :id, :zip, :city, :country], unloading_places_attributes: [ :id, :zip, :city, :country], freichtage_description_attributes: [ :weight, :value, :length, :width, :height, :packages, :packages_type ])
+      params.require(:transport_order).permit(:unloading_status, :loading_status,
+      :client_id, :carrier_id, :seller_id, :distance_id, :freight_rate, :profit_margin,
+      :loading_country, :loading_zip, :loading_city, :loading_date, :unloading_country,
+      :unloading_zip, :distance, :unloading_city, :unloading_date, :route,
+      transport_order_name_attributes: [:number, :year],
+      loading_places_attributes: [ :id, :zip, :city, :country],
+      unloading_places_attributes: [ :id, :zip, :city, :country],
+      freichtage_description_attributes: [ :weight, :value, :length, :width, :height, :packages, :packages_type ],
+      transport_order_name: [:number, :year],
+      loading_places: [ :id, :zip, :city, :country],
+      unloading_places: [ :id, :zip, :city, :country],
+      freichtage_description: [ :weight, :value, :length, :width, :height, :packages, :packages_type ])
     end
 
     def sort_column

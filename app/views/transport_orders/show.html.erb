@@ -1,7 +1,9 @@
 <div class="row">
   <div class="col-md-3">
     <h3>Numer zlecenia:</h3>
-    <%= @transport_order.transport_order_name.get_name %>
+    <% if @transport_order.transport_order_name %>
+      <%= @transport_order.transport_order_name.get_name %>
+    <% end %>
   </div>
 </div>
 
@@ -51,6 +53,8 @@
   </div>
 </div>
 
+<% if @transport_order.freichtage_description %>
+
 <div class="row">
   <h3>Opis ładunku</h3>
   <div class="col-md-3">
@@ -87,9 +91,12 @@
     Typ palet/opakowań
     <%= @transport_order.freichtage_description.packages_type %>
   </div>
+
 </div>
 
-<hr> 
+<hr>
+
+<% end %>
 
 <div class="row">
   <div class="col-md-12">

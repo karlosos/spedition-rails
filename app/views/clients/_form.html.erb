@@ -22,7 +22,7 @@
   </p>
 
   <%= f.fields_for :address do |address| %>
-   <%= render :partial => 'shared/address', :locals => {:f => address} %>
+  <%= render :partial => 'shared/address', :locals => {:f => address} %>
   <% end %>
 
   <%= f.fields_for :contact do |contact| %>

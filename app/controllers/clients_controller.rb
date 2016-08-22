@@ -35,6 +35,7 @@ class ClientsController < ApplicationController
     @client = Client.new
     @client.build_address
     @client.build_contact
+    @client.contact.emails.build
   end
 
   # GET /clients/1/edit

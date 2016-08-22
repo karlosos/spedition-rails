@@ -31,3 +31,11 @@
 .btn-status-true {
   @extend .btn-success;
 }
+
+/* SPEDITOR VIEW */
+.place_form {
+  input {
+    width: auto;
+    display: inline;
+  }
+}

@@ -21,7 +21,7 @@ class TransportOrder < ActiveRecord::Base
   accepts_nested_attributes_for :loading_places
   accepts_nested_attributes_for :unloading_places
 
-  validates :transport_order_name, presence: true
+  #validates :transport_order_name, presence: true
   validates :carrier, presence: true
   validates :client, presence: true
   validates :route, presence: true

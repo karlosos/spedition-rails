@@ -16,9 +16,10 @@
 </div>
 
 <div class="form-group">
-  <%= f.label :email %><br />
-  <%= f.text_field :email %>
-  <span class="help-block"></span>
+  <%= f.fields_for :emails do |builder| %>
+    <%= render :partial => 'shared/email_fields', :locals => {:f => builder} %>
+  <% end %>
+  <%= link_to_add_email_address "Dodaj email", f, :emails %>
 </div>
 
 <div class="form-group optional">
