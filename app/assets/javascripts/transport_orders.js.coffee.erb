@@ -5,6 +5,7 @@ pageLoad = () ->
   invoice_item_add_event()
   loading_places_remove_event()
   loading_status_functions()
+  startSelect()
 
 invoice_item_add_event = () ->
   $('form').on 'click', '.add_loading_place', (event) ->
@@ -108,3 +109,27 @@ simple_search_clear = () ->
 advanced_search_clear = () ->
   $('#advanced_search_form').find('input').val("")
   $('#advanced_search_form').find('input[type=checkbox]').prop('checked', false);
+
+
+#
+# Start select
+#
+startSelect = () ->
+  $('#transport_order_client_id').select2
+    theme: 'bootstrap'
+    ajax:
+      url: '/clients.json'
+      dataType: 'json'
+      processResults: (data) ->
+        return {
+        results: $.map(data, (client, i) ->
+          {
+            id: client.id
+            text: client.client_info
+          }
+        )}
+    language:
+      noResults: ->
+        return "<a type=\"button\" class=\"btn btn-info btn-lg\" onclick='show_client_modal()'>Stwórz klienta</a>"
+    escapeMarkup: (markup) ->
+      return markup;

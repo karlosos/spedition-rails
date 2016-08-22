@@ -16,7 +16,7 @@ class ClientsController < ApplicationController
       else
         query = ""
       end
-      @clients = @clients.where("lower(name) like ? OR lower(addresses.street) like ? OR lower(nip) like ? OR lower(city) like ? OR lower(zip) like ?", "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%").limit(15)
+      @clients = @clients.where("lower(name) like ? OR lower(addresses.street) like ? OR lower(nip) like ? OR lower(city) like ? OR lower(zip) like ? OR lower(contact.emails.address) like ?", "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%").limit(15)
       format.json
     end
   end
@@ -92,7 +92,12 @@ class ClientsController < ApplicationController
     def client_params
       #params.fetch(:client, {})
       #params.require(:client).permit!
-      params.require(:client).permit(:name, :nip, address_attributes: [:street, :line1, :line2, :city, :state, :country, :zip], contact_attributes: [:phone1, :phone2, :fax, :email, :www])
+      params.require(:client).permit(:name, :nip, address_attributes:
+      [:street, :line1, :line2, :city, :state, :country, :zip],
+      contact_attributes: [:phone1, :phone2, :fax, :email, :www,
+        emails_attributes: [:address]
+      ],
+      )
     end
 
     def sort_column

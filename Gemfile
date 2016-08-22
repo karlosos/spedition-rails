@@ -34,6 +34,7 @@ gem 'bootstrap-datepicker-rails'
 gem 'wkhtmltopdf-binary'
 gem 'wicked_pdf'
 gem 'rubyzip'
+gem 'nested_form_fields'
 
 group :development, :test do
   gem 'sqlite3',     '1.3.9'

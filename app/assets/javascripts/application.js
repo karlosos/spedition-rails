@@ -21,7 +21,7 @@
 //= require bootstrap-datepicker/locales/bootstrap-datepicker.pl.js
 //= require select2_locale_pl
 //= require moment.min.js
-
+//= require nested_form_fields
 
 function show_client_modal() {
   $('#new_client_modal').modal('toggle')
