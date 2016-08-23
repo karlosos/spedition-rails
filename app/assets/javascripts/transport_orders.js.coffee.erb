@@ -2,14 +2,21 @@ jQuery ->
   pageLoad()
 
 pageLoad = () ->
-  invoice_item_add_event()
+  # Edit view
+  loading_places_add_event()
   loading_places_remove_event()
-  loading_status_functions()
-  findClientOnEmailChange()
+  loadings_status_functions()
+  sidebar_functions()
+
+  # Speditor view
   $('select').hide()
+  findClientOnEmailChange()
   modal_functions()
 
-invoice_item_add_event = () ->
+#
+# Loading places in edit form
+#
+loading_places_add_event = () ->
   $('form').on 'click', '.add_loading_place', (event) ->
     time = new Date().getTime()
     regexp = new RegExp($(this).data('id'), 'g')
@@ -21,22 +28,19 @@ loading_places_remove_event = () ->
     $(this).prev('input[type=hidden]').val('1')
     $(this).closest('div').hide()
     event.preventDefault()
-    invoice_calculate()
 
 #
 # Loading status
 #
-loading_status_functions = () ->
-  change_loading_status_on_select_change()
+loadings_status_functions = () ->
+  change_statuses_on_select_change()
 
-change_loading_status_on_select_change = () ->
+change_statuses_on_select_change = () ->
   $('.loading_option').click (e) ->
     status_index = $(this).attr("value")
     transport_order_id = $(this).parent().parent().attr("transport-order-id")
     main_button = $(this).parent().parent().parent().find('.status')
     toggle_button = $(this).parent().parent().parent().find('.dropdown-toggle')
-    console.log(transport_order_id)
-    console.log(status_index)
     url = '/transport_orders/' + transport_order_id
 
     $.ajax url,
@@ -45,9 +49,7 @@ change_loading_status_on_select_change = () ->
       data:
             transport_order : { loading_status: status_index }
       error: (jqXHR, textStatus, errorThrown) ->
-        console.log(textStatus)
       success: (data, textStatus, jqXHR) ->
-        console.log(data)
         button_classes = "btn status btn-status-"+status_index
         toggle_classes = "btn dropdown-toggle btn-status-"+status_index
         main_button.attr('class', button_classes)
@@ -58,8 +60,6 @@ change_loading_status_on_select_change = () ->
     transport_order_id = $(this).parent().parent().attr("transport-order-id")
     main_button = $(this).parent().parent().parent().find('.status')
     toggle_button = $(this).parent().parent().parent().find('.dropdown-toggle')
-    console.log(transport_order_id)
-    console.log(status_index)
     url = '/transport_orders/' + transport_order_id
 
     $.ajax url,
@@ -68,9 +68,7 @@ change_loading_status_on_select_change = () ->
       data:
             transport_order : { unloading_status: status_index }
       error: (jqXHR, textStatus, errorThrown) ->
-        console.log(textStatus)
       success: (data, textStatus, jqXHR) ->
-        console.log(data)
         button_classes = "btn status btn-status-"+status_index
         toggle_classes = "btn dropdown-toggle btn-status-"+status_index
         main_button.attr('class', button_classes)
@@ -185,8 +183,6 @@ modal_success_binds = () ->
 modal_error_binds = () ->
   $(document).bind("ajaxError", (event, jqxhr, settings, exception) ->
     $(event.data).render_form_errors($.parseJSON(jqxhr.responseText)))
-
-# functions
 
 modal_actions = () ->
   $.fn.modal_success = ->

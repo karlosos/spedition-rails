@@ -4,7 +4,6 @@ jQuery ->
   pageLoad()
 
 pageLoad = () ->
-  startSelect()
   invoice_items_functions()
   invoice_name_get_on_date_change()
   invoice_name_get_on_kind_change()
@@ -14,6 +13,7 @@ pageLoad = () ->
   sidebar_functions()
   currency_rate_functions()
   modal_functions()
+  startSelect()
   invoice_status_functions()
 
 #
@@ -205,8 +205,6 @@ modal_success_binds = () ->
 modal_error_binds = () ->
   $(document).bind("ajaxError", (event, jqxhr, settings, exception) ->
     $(event.data).render_form_errors($.parseJSON(jqxhr.responseText)))
-
-# functions
 
 modal_actions = () ->
   $.fn.modal_success = ->

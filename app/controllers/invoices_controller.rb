@@ -5,17 +5,13 @@ class InvoicesController < ApplicationController
   # GET /invoices
   # GET /invoices.json
   def index
-    # search_params = { :kind => params[:kind], :client_name => params[:client_name], :client_id => params[:client_id],
-    #   :item_id => params[:item_id],
-    #   :date => params[:date], :date_start => params[:date_start],
-    #   :date_stop => params[:date_stop], :invoice_name_number => params[:invoice_name_number],
-    #   :invoice_name_month => params[:invoice_name_month],
-    #   :invoice_name_year => params[:invoice_name_year], :statuses => params[:statuses]
-    # }
     search_params = params
 
     @client = Client.new
-    @invoices = Invoice.joins(:invoice_name).joins(:client).search(search_params).order(sort_column + " " + sort_direction).paginate(:page => params[:page], :per_page => 30)
+    @invoices = Invoice.joins(:invoice_name).joins(:client)
+    @invoices = @invoices.search(search_params).order(sort_column + " " + sort_direction)
+    @invoices = @invoices.paginate(:page => params[:page], :per_page => 30)
+
     respond_to do |format|
       format.html
       if params[:q].present?
@@ -51,8 +47,6 @@ class InvoicesController < ApplicationController
     @invoice.invoice_name.month = Date.today.month
     @invoice.invoice_name.year = Date.today.year
     @invoice.invoice_name.number = InvoiceName.get_last_number_for_date(DateTime.now.strftime('%F'))
-    # @item = @invoice_items.build_item
-    # @item2 = @invoice_items.build_item
 
     if params['kind'] == 'correction'
       @invoice.invoice_item_corrections.build
@@ -144,7 +138,9 @@ class InvoicesController < ApplicationController
       stringio = Zip::OutputStream.write_buffer do |zio|
         @invoices.each do |invoice|
           #create and add a pdf file for this record
-          dec_pdf = render_to_string :pdf => "#{invoice.get_file_name}.pdf", :template => '/invoices/show.pdf.erb', :locals => { :@invoice => invoice}, encoding: "UTF-8"
+          dec_pdf = render_to_string :pdf => "#{invoice.get_file_name}.pdf",
+          :template => '/invoices/show.pdf.erb',
+          :locals => { :@invoice => invoice}, encoding: "UTF-8"
 
           zio.put_next_entry("#{invoice.get_file_name}.pdf")
           zio << dec_pdf
@@ -196,10 +192,13 @@ class InvoicesController < ApplicationController
       :total_selling_price_currency,
       :total_price_in_words,
       :total_price_in_words_currency,
-      invoice_items_attributes: [ :id, :item_id, :quantity, :unit_price, :unit_price_currency, :net_price, :net_price_currency, :value_added_tax, :value_added_tax_currency, :total_selling_price, :total_selling_price_currency, :tax_rate, :_destroy,
+      invoice_items_attributes: [ :id, :item_id, :quantity, :unit_price,
+        :unit_price_currency, :net_price, :net_price_currency, :value_added_tax,
+        :value_added_tax_currency, :total_selling_price,
+        :total_selling_price_currency, :tax_rate, :_destroy,
         item_attributes:
-        [:name, :unit, :id ]
-        ],
+          [:name, :unit, :id ]
+      ],
       invoice_item_corrections_attributes: [ :id, :item_id, :quantity, :quantity_correction,
           :item_name, :item_name_correction,
 	        :unit_price, :unit_price_correction, :unit_price_difference,
@@ -213,8 +212,8 @@ class InvoicesController < ApplicationController
 	        :tax_rate, :tax_rate_correction,
 	        :_destroy,
           item_attributes:
-          [:name, :unit, :id ]
-          ],
+            [:name, :unit, :id ]
+            ],
       invoice_name_attributes: [:prefix, :number, :month, :year],
       )
     end

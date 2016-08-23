@@ -25,7 +25,11 @@ class TransportOrdersController < ApplicationController
       :loading_statuses => params[:loading_statuses]
     }
 
-    @transport_orders = TransportOrder.joins(:transport_order_name).joins(:client).joins(:carrier).joins(:loading_places).joins(:unloading_places).search(search_params).order(sort_column + " " + sort_direction).paginate(:page => params[:page], :per_page => 30)
+    @transport_orders = TransportOrder.joins(:transport_order_name)
+    @transport_orders = @transport_orders.joins(:client, :carrier, :loading_places, :unloading_places)
+    @transport_orders = @transport_orders.search(search_params)
+    @transport_orders = @transport_orders.order(sort_column + " " + sort_direction)
+    @transport_orders = @transport_orders.paginate(:page => params[:page], :per_page => 30)
   end
 
   def speditor_view
@@ -47,13 +51,6 @@ class TransportOrdersController < ApplicationController
       transport_order.unloading_places.build
       @transport_orders << transport_order
     end
-
-    # @transport_order = TransportOrder.new
-    # @transport_order.build_transport_order_name
-    # @transport_order.build_transport_order_name.year = Date.today.year
-    # @transport_order.build_freichtage_description
-    # @transport_order.loading_places.build
-    # @transport_order.unloading_places.build
   end
 
   # GET /transport_orders/1.joins(:transport_order_name).joins(:client).joins(:carrier).joins(:loading_places).joins(:unloading_places)

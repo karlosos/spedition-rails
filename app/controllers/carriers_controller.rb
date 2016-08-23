@@ -79,6 +79,9 @@ class CarriersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def carrier_params
-      params.require(:carrier).permit(:registration_number, :size, :driver_name, :driver_email, :carrier_name, :carrier_email, address_attributes: [:street, :line1, :line2, :city, :state, :country, :zip], contact_attributes: [:phone1, :phone2, :fax, :email, :www])
+      params.require(:carrier).permit(:registration_number, :size, :driver_name,
+      :driver_email, :carrier_name, :carrier_email,
+      address_attributes: [:street, :line1, :line2, :city, :state, :country,
+        :zip], contact_attributes: [:phone1, :phone2, :fax, :email, :www])
     end
 end
