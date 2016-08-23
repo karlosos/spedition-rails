@@ -28,6 +28,12 @@ function show_client_modal() {
   $('#invoice_client_id').select2("close")
 }
 
+function show_client_modal_transport_order() {
+  $('#new_client_modal').modal('toggle')
+  $('#transport_order_client_id').select2("close")
+  $('#new_client_modal').find(".email").find("input").first().val($("#transport_order_client_email").val())
+}
+
 function show_item_modal() {
   $('#new_item_modal').modal('toggle')
   $('.invoice_items_form').find('select').select2("close")

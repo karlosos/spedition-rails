@@ -1,22 +1,25 @@
-htop<h1>Listing transport_orders</h1>
+<%= render :partial => 'shared/create_client_modal' %>
+<h1>Listing transport_orders</h1>
 <div class="row">
     <div class="col-sm-12">
-        <% @carriers.each do |carrier| %>
+        <% @carriers.each_with_index do |carrier, i| %>
+        <%= form_for @transport_orders[i] do |f| %>
         <table class="table index_table">
             <thead>
                 <tr>
-                    <th><%= carrier.registration_number %> </th>
-                    <%
-                      freight_rate = carrier.transport_orders.sum(:freight_rate_cents)/100.0
-                      profit_margin = carrier.transport_orders.sum(:profit_margin_cents)/100.0
-                      distance = carrier.transport_orders.sum(:distance)
-                      price_per_km = (freight_rate.to_f - profit_margin.to_f)/distance.to_f
-                    %>
+                    <th><%= carrier.registration_number %>
+                    </th>
+                    <% freight_rate = carrier.transport_orders.sum(:freight_rate_cents)/100.0 profit_margin = carrier.transport_orders.sum(:profit_margin_cents)/100.0 distance = carrier.transport_orders.sum(:distance) price_per_km = (freight_rate.to_f -
+                    profit_margin.to_f)/distance.to_f %>
                     <th><%= "#{carrier.driver_name} - #{carrier.contact.phone1}" %></th>
-                    <th>Suma frachtu: <%= humanized_money_with_symbol freight_rate %></th>
-                    <th>Suma marż: <%= humanized_money_with_symbol profit_margin %></th>
-                    <th>Suma km: <%= distance %></th>
-                    <th>Cena za km: <%= humanized_money_with_symbol price_per_km %></th>
+                    <th>Suma frachtu:
+                        <%= humanized_money_with_symbol freight_rate %></th>
+                    <th>Suma marż:
+                        <%= humanized_money_with_symbol profit_margin %></th>
+                    <th>Suma km:
+                        <%= distance %></th>
+                    <th>Cena za km:
+                        <%= humanized_money_with_symbol price_per_km %></th>
                     <th colspan="4"></th>
                 </tr>
                 <tr>
@@ -78,7 +81,7 @@ htop<h1>Listing transport_orders</h1>
                         </div>
                     </td>
                     <td>
-                      <%= transport_order.client.contact.email %>
+                        <%= transport_order.client.contact.email %>
                     </td>
                     <td>
                         <div class="btn-group invoice-status" invoice-id="<%= transport_order.id %>">
@@ -90,39 +93,39 @@ htop<h1>Listing transport_orders</h1>
                                 <li><%= link_to 'Edit', edit_transport_order_path(transport_order) %></li>
                                 <li><%= link_to 'Destroy', transport_order, method: :delete, data: { confirm: 'Are you sure?' } %></li>
                             </ul>
-                        </td>
-                    </tr>
-                    <% end %>
-                    <tr>
-                      <%= form_for @transport_order do |f| %>
-                          <td><%= f.collection_select :client_id, Client.all, 'id', 'name', prompt: 'Wybierz klienta' %></td>
-                          <%= f.hidden_field :carrier_id, value: carrier.id %>
-                          <%= f.hidden_field :seller_id, value: Client.first.id %>
-                          <td><%= f.text_field :route %></td>
-                          <td><%= f.fields_for :loading_places do |builder| %>
-                            <div class="place_form">
-                              <%= builder.text_field :zip %>
-                              <%= builder.text_field :city %>
-                            </div>
-                          <% end %>
-                          </td>
-                          <td><%= f.fields_for :unloading_places do |builder| %>
-                            <div class="place_form">
-                              <%= builder.text_field :zip %>
-                              <%= builder.text_field :city %>
-                            </div>
-                          <% end %>
-                          </td>
-                          <td>
-                            <%= f.fields_for :freichtage_description do |freichtage_description_form| %>
-                            <% end %>
-                          </td>
-                          <td><%= f.number_field :distance %></td>
-                          <td><%= f.submit "Dodaj", :date => nil, :client_name => nil , :class => "btn btn-default"%></td>
-                      <% end %>
-                    </tr>
-                </tbody>
-            </table>
-            <% end %>
-        </div>
+                        </div>
+                    </td>
+                </tr>
+                <% end %>
+                <tr>
+                    <td><%= f.text_field :client_email, class: "email_input" %></td>
+                    <td>
+                        <%= f.collection_select :client_id, Client.all, 'id', 'name', prompt: 'Wybierz klienta' %>
+                        <%= f.hidden_field :carrier_id, value: carrier.id %>
+                        <%= f.hidden_field :seller_id, value: Client.first.id %>
+                    </td>
+                    <td><%= f.text_field :route %></td>
+                    <td><%= f.fields_for :loading_places do |builder| %>
+                        <div class="place_form">
+                            <%= builder.text_field :zip %>
+                            <%= builder.text_field :city %>
+                        </div>
+                        <% end %>
+                    </td>
+                    <td><%= f.fields_for :unloading_places do |builder| %>
+                        <div class="place_form">
+                            <%= builder.text_field :zip %>
+                            <%= builder.text_field :city %>
+                        </div>
+                        <% end %>
+                    </td>
+                    <td></td>
+                    <td><%= f.number_field :distance %></td>
+                    <td><%= f.submit "Dodaj", :date => nil, :client_name => nil , :class => "btn btn-default"%></td>
+                </tr>
+            </tbody>
+        </table>
+        <% end %>
+        <% end %>
     </div>
+</div>

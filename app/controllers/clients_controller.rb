@@ -8,7 +8,7 @@ class ClientsController < ApplicationController
       :nip => params[:nip]
     }
 
-    @clients = Client.joins(:address).search(search_params).order(sort_column + " " + sort_direction).paginate(:page => params[:page], :per_page => 30)
+    @clients = Client.joins(:address).joins(:contact).joins(:emails).search(search_params).order(sort_column + " " + sort_direction).paginate(:page => params[:page], :per_page => 30)
     respond_to do |format|
       format.html
       if params[:q].present?
@@ -16,7 +16,7 @@ class ClientsController < ApplicationController
       else
         query = ""
       end
-      @clients = @clients.where("lower(name) like ? OR lower(addresses.street) like ? OR lower(nip) like ? OR lower(city) like ? OR lower(zip) like ? OR lower(contact.emails.address) like ?", "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%").limit(15)
+      @clients = @clients.where("lower(name) like ? OR lower(addresses.street) like ? OR lower(nip) like ? OR lower(city) like ? OR lower(zip) like ? OR lower(emails.address) like ?", "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%").distinct.limit(15)
       format.json
     end
   end

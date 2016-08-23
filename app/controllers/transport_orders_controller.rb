@@ -29,15 +29,31 @@ class TransportOrdersController < ApplicationController
   end
 
   def speditor_view
+    @client = Client.new
+    @client.build_address
+    @client.build_contact
+    @client.contact.emails.build
+
     speditor_id = params[:speditor_id]
     date = params[:date]
     @carriers = Carrier.all.joins(:transport_orders).distinct
-    @transport_order = TransportOrder.new
-    @transport_order.build_transport_order_name
-    @transport_order.build_transport_order_name.year = Date.today.year
-    @transport_order.build_freichtage_description
-    @transport_order.loading_places.build
-    @transport_order.unloading_places.build
+    @transport_orders = Array.new
+    for i in 0..@carriers.count
+      transport_order = TransportOrder.new
+      transport_order.build_transport_order_name
+      transport_order.build_transport_order_name.year = Date.today.year
+      transport_order.build_freichtage_description
+      transport_order.loading_places.build
+      transport_order.unloading_places.build
+      @transport_orders << transport_order
+    end
+
+    # @transport_order = TransportOrder.new
+    # @transport_order.build_transport_order_name
+    # @transport_order.build_transport_order_name.year = Date.today.year
+    # @transport_order.build_freichtage_description
+    # @transport_order.loading_places.build
+    # @transport_order.unloading_places.build
   end
 
   # GET /transport_orders/1.joins(:transport_order_name).joins(:client).joins(:carrier).joins(:loading_places).joins(:unloading_places)
