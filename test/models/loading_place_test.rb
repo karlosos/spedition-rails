@@ -15,8 +15,8 @@ class LoadingPlaceTest < ActiveSupport::TestCase
     assert_not @loadingplace.valid?
   end
 
-  test "country should be present" do
-    @loadingplace.country = "      "
-    assert_not @loadingplace.valid?
-  end
+  # test "country should be present" do
+  #   @loadingplace.country = "      "
+  #   assert_not @loadingplace.valid?
+  # end
 end

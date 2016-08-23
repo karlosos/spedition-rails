@@ -4,8 +4,23 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
-one: {}
-# column: value
-#
-two: {}
-#  column: value
+
+invoice_item_correction_one:
+  item: item_two
+  invoice: invoice_two
+  unit_price_cents: 100
+  unit_price_correction_cents: 200
+  unit_price_difference_cents: 100
+  tax_rate: 23
+  quantity: 3
+  quantity_correction: 5
+  quantity_difference: 2
+  net_price_cents: 300
+  net_price_correction_cents: 1000
+  net_price_difference_cents: 700
+  value_added_tax_cents: 69
+  value_added_tax_correction_cents: 230
+  value_added_tax_difference_cents: 161
+  total_selling_price_cents: 369
+  total_selling_price_correction_cents: 1230
+  total_selling_price_difference_cents: 861

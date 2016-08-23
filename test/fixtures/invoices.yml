@@ -35,3 +35,31 @@ invoice_one:
   client_country: Polska
   client_email: test@email.com
   client_phone: 7230232
+
+invoice_two:
+  kind: correction
+  date: <%= DateTime.now %>
+  invoice_to_correct: invoice_one
+  correction_cause: This is explanation why we needed to correct invoice
+  place: Szczecin
+  seller: client_microsoft
+  client: client_google
+  net_price_cents: 700
+  value_added_tax_cents: 161
+  total_selling_price_cents: 861
+  total_price_in_words: "554 EURO 76/100"
+  client_street: "Cicha 12"
+  client_city: "Szczecin"
+  client_zip: "70-300"
+  currency_rate: "4.03"
+  currency_rate_name: "EUR"
+  currency_rate_table_name: "125/A/NBP/2016"
+  status: 2
+  deadline: 50
+  date_deadline: <%= DateTime.now + 50.days %>
+  client_name: Google
+  client_zip: 71-200
+  client_city: Szczecin
+  client_country: Polska
+  client_email: test@email.com
+  client_phone: 7230232

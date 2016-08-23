@@ -19,15 +19,11 @@ class TransportOrdersControllerTest < ActionController::TestCase
   test "should create transport_order" do
     assert_difference('TransportOrder.count') do
       post :create, transport_order: {
-        transport_order_name_attributes: {
-          "number" => "2",
-          "year" => "2016"
-          },
         client_id: clients(:client_google).id,
         carrier_id: carriers(:carrier_one).id,
         route: "Polska - Niemcy",
         distance: "213",
-        loading_places_attributes: 
+        loading_places_attributes:
         {
           "0" => {
             country: "Poland",
@@ -35,7 +31,7 @@ class TransportOrdersControllerTest < ActionController::TestCase
             zip: "71-800"
           }
         },
-        unloading_places_attributes: 
+        unloading_places_attributes:
         {
           "0" => {
             country: "DE",
@@ -62,23 +58,27 @@ class TransportOrdersControllerTest < ActionController::TestCase
 
   test "should update transport_order" do
     patch :update, id: @transport_order, transport_order: {
-      transport_order_name_attributes: {
-        "number" => "1",
-        "year" => "2016"
-        },
       client_id: clients(:client_google).id,
       carrier_id: carriers(:carrier_one).id,
       route: "Polska - Niemcy",
       distance: "213",
+      loading_places_attributes:
+      {
+        "0" => {
+          country: "Poland",
+          city: "Szczecin",
+          zip: "71-800"
+        }
+      },
+      unloading_places_attributes:
+      {
+        "0" => {
+          country: "DE",
+          city: "Munchen",
+          zip: "DE0232103"
+        }
+      },
       freight_rate: "210.30",
-      loading_country: "PL",
-      loading_zip: "71-800",
-      loading_city: "Szczecin",
-      loading_date: "2016-07-26",
-      unloading_country: "DE",
-      unloading_zip: "DE0232103",
-      unloading_city: "Munchen",
-      unloading_date: "2016-07-26"
     }
     assert_redirected_to transport_order_path(assigns(:transport_order))
   end

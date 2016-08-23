@@ -15,8 +15,8 @@ class UnloadingPlaceTest < ActiveSupport::TestCase
     assert_not @unloadingplace.valid?
   end
 
-  test "country should be present" do
-    @unloadingplace.country = "      "
-    assert_not @unloadingplace.valid?
-  end
+  # test "country should be present" do
+  #   @unloadingplace.country = "      "
+  #   assert_not @unloadingplace.valid?
+  # end
 end

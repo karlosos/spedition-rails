@@ -5,11 +5,11 @@ class TransportOrderTest < ActiveSupport::TestCase
     @transport_order = transport_orders(:transport_order_one)
   end
 
-  test "transport_order_name should be present" do
-    assert @transport_order.transport_order_name.get_name.present?
-    @transport_order.transport_order_name = nil
-    assert_not @transport_order.valid?
-  end
+  # test "transport_order_name should be present" do
+  #   assert @transport_order.transport_order_name.get_name.present?
+  #   @transport_order.transport_order_name = nil
+  #   assert_not @transport_order.valid?
+  # end
 
   test "carrier should be present" do
     assert @transport_order.carrier.present?
