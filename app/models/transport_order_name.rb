@@ -3,14 +3,14 @@ class TransportOrderName < ActiveRecord::Base
   validates :year, presence: true, numericality: { only_integer: true, greater_than: 0 }
   validates :number, uniqueness: { scope: [:year] }
   belongs_to :transport_order
-  #validates :transport_order, presence: true
+  # validates :transport_order, presence: true
 
   def get_name
-    return "ZL #{number}/#{year}"
+    "ZL #{number}/#{year}"
   end
 
   def self.get_last_number_for_year(year)
-    last_transport_order_name = InvoiceName.where('year = ?' , year).order("number DESC").limit(1).first
+    last_transport_order_name = InvoiceName.where('year = ?', year).order('number DESC').limit(1).first
     if last_transport_order_name
       last_transport_order_name.number + 1
     else

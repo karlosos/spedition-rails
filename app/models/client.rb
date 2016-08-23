@@ -1,11 +1,11 @@
 class Client < ActiveRecord::Base
-  has_one :address, :as => :addressable, :dependent => :destroy
-  has_one :contact, :as => :contactable, :dependent => :destroy
+  has_one :address, as: :addressable, dependent: :destroy
+  has_one :contact, as: :contactable, dependent: :destroy
   validates :address, presence: true
   validates :contact, presence: true
   validates :name, presence: true
 
-  has_many :invoices_as_seller,    class_name: 'Invoice', foreign_key: 'seller_id'
+  has_many :invoices_as_seller, class_name: 'Invoice', foreign_key: 'seller_id'
   has_many :invoices_as_client, class_name: 'Invoice', foreign_key: 'client_id'
   has_many :transport_orders, class_name: 'TransportOrder', foreign_key: 'client_id'
   has_many :emails, through: :contact
@@ -15,12 +15,10 @@ class Client < ActiveRecord::Base
 
   def debt
     debt = Money.new(0, 'EUR')
-    self.invoices_as_client.each do |invoice|
-      if invoice.status < 3
-        debt += invoice.total_selling_price
-      end
+    invoices_as_client.each do |invoice|
+      debt += invoice.total_selling_price if invoice.status < 3
     end
-    return debt
+    debt
   end
 
   def self.search(search_params)
@@ -51,7 +49,6 @@ class Client < ActiveRecord::Base
       @clients = @clients.where('lower(nip) LIKE ?', "%#{nip}%")
     end
 
-    return @clients
+    @clients
   end
-
 end

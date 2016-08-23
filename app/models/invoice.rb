@@ -1,16 +1,16 @@
 class Invoice < ActiveRecord::Base
-  #default_scope { order('invoice_names.year DESC, invoice_names.month DESC, invoice_names.number DESC') }
+  # default_scope { order('invoice_names.year DESC, invoice_names.month DESC, invoice_names.number DESC') }
 
-  has_one :invoice_name, :dependent => :destroy
-  belongs_to :seller, class_name: "Client", foreign_key: "seller_id"
-  belongs_to :client, class_name:  "Client", foreign_key: "client_id"
+  has_one :invoice_name, dependent: :destroy
+  belongs_to :seller, class_name: 'Client', foreign_key: 'seller_id'
+  belongs_to :client, class_name:  'Client', foreign_key: 'client_id'
   has_many :invoice_items, inverse_of: :invoice
   has_many :invoice_item_corrections, inverse_of: :invoice
   has_many :items, through: :invoice_items
 
   # Invoice Correction relations
-  belongs_to :invoice_to_correct, :class_name => 'Invoice'
-  has_many :invoice_corrections, :class_name => 'Invoice', :foreign_key => 'invoice_to_correct_id'
+  belongs_to :invoice_to_correct, class_name: 'Invoice'
+  has_many :invoice_corrections, class_name: 'Invoice', foreign_key: 'invoice_to_correct_id'
 
   monetize :value_added_tax_cents
   monetize :net_price_cents
@@ -31,7 +31,7 @@ class Invoice < ActiveRecord::Base
   validates :client_zip, presence: true
   validates :client_city, presence: true
   validates :client_country, presence: true
-  validates :invoice_items, :length => { :minimum => 1 }, if: '!is_correction?'
+  validates :invoice_items, length: { minimum: 1 }, if: '!is_correction?'
   validates :total_price_in_words, presence: true
   # validates :currency_rate_table_name, presence: true
   # validates :currency_rate, presence: true
@@ -41,7 +41,7 @@ class Invoice < ActiveRecord::Base
   validates_with InvoicePriceValidator
 
   before_save do
-    self.date_deadline = self.date + (self.deadline).days
+    self.date_deadline = date + deadline.days
     true
   end
 
@@ -49,43 +49,42 @@ class Invoice < ActiveRecord::Base
   SENT      = 2
   COMPLETED = 3
 
-
   STATUSES = {
-    ISSUED    => 'wystawiona',
-    SENT    => 'wysłana',
+    ISSUED => 'wystawiona',
+    SENT => 'wysłana',
     COMPLETED => 'zapłacona'
-  }
+  }.freeze
 
-  KINDS = ['vat', 'proforma', 'correction']
+  KINDS = %w(vat proforma correction).freeze
 
-  validates_inclusion_of :status, :in => STATUSES.keys,
-    :message => "{{value}} must be in #{STATUSES.values.join ','}"
+  validates_inclusion_of :status, in: STATUSES.keys,
+                                  message: "{{value}} must be in #{STATUSES.values.join ','}"
 
-  validates_inclusion_of :kind, :in => KINDS, :message => "{{value}} must be in #{KINDS.join ','}"
+  validates_inclusion_of :kind, in: KINDS, message: "{{value}} must be in #{KINDS.join ','}"
 
   def status_name
     STATUSES[status]
   end
 
   def get_name
-    return "#{invoice_name.prefix}#{invoice_name.number}/#{invoice_name.month}/#{invoice_name.year}"
+    "#{invoice_name.prefix}#{invoice_name.number}/#{invoice_name.month}/#{invoice_name.year}"
   end
 
   def get_file_name
-    return "#{invoice_name.number}-#{invoice_name.month}-#{invoice_name.year}"
+    "#{invoice_name.number}-#{invoice_name.month}-#{invoice_name.year}"
   end
 
   def overdue
-    date_deadline = date + (deadline).days
-    return (Time.now - date_deadline)/(60*60*24)*-1
+    date_deadline = date + deadline.days
+    (Time.now - date_deadline) / (60 * 60 * 24) * -1
   end
 
   def is_correction?
-    kind == "correction"
+    kind == 'correction'
   end
 
   def proper_exchange_currency
-    if !invoice_exchange_currency.present? || invoice_exchange_currency == "Nie przeliczaj"
+    if !invoice_exchange_currency.present? || invoice_exchange_currency == 'Nie przeliczaj'
       return currency_rate_name
     else
       return invoice_exchange_currency
@@ -98,9 +97,7 @@ class Invoice < ActiveRecord::Base
     client_name = search_params[:client_name]
     client_id = search_params[:client_id]
     item_id = search_params[:item_id]
-    if client_name
-      client_name = client_name.downcase
-    end
+    client_name = client_name.downcase if client_name
     date_start = search_params[:date_start]
     date_stop = search_params[:date_stop]
     invoice_name_number = search_params[:invoice_name_number]
@@ -110,9 +107,7 @@ class Invoice < ActiveRecord::Base
     kinds = search_params[:kinds]
 
     @invoices = Invoice.all
-    if item_id.present?
-      @invoices = Invoice.all.joins(:invoice_items)
-    end
+    @invoices = Invoice.all.joins(:invoice_items) if item_id.present?
 
     if kind.present?
       @invoices = @invoices.where('lower(kind) LIKE ?', "%#{kind.downcase}%")
@@ -141,17 +136,11 @@ class Invoice < ActiveRecord::Base
       @invoices = @invoices.where('date <= ?', date_stop.to_datetime)
     end
 
-    if date.present?
-      @invoices = @invoices.where('date = ?', date.to_datetime)
-    end
+    @invoices = @invoices.where('date = ?', date.to_datetime) if date.present?
 
-    if statuses
-      @invoices = @invoices.where('status IN (?)', statuses)
-    end
+    @invoices = @invoices.where('status IN (?)', statuses) if statuses
 
-    if kinds
-      @invoices = @invoices.where('kind IN (?)', kinds)
-    end
+    @invoices = @invoices.where('kind IN (?)', kinds) if kinds
 
     if client_name.present?
       @invoices = @invoices.where('lower(client_name) LIKE ?', "%#{client_name}%")
@@ -160,6 +149,6 @@ class Invoice < ActiveRecord::Base
     if item_id.present?
       @invoices = @invoices.where('invoice_items.item_id = ?', item_id)
     end
-    return @invoices.order('invoice_names.year DESC, invoice_names.month DESC, invoice_names.number DESC')
+    @invoices.order('invoice_names.year DESC, invoice_names.month DESC, invoice_names.number DESC')
   end
 end

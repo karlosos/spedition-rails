@@ -4,41 +4,42 @@
     <div class="search_invoice_form">
       <div id="short_search_invoice_form">
         <%= form_tag clients_path, :method => 'get' do %>
-          <%= hidden_field_tag :direction, params[:direction] %>
-          <%= hidden_field_tag :sort, params[:sort] %>
-          <p class="clients_search">
-            <%= label_tag :name, "Nazwa klienta" %>
-            <%= text_field_tag :name, params[:name] %>
-            <%= label_tag :street, "Adres" %>
-            <%= text_field_tag :street, params[:street] %>
-            <%= label_tag :city, "Miasto" %>
-            <%= text_field_tag :city, params[:city] %>
-            <%= label_tag :nip, "NIP" %>
-            <%= text_field_tag :nip, params[:nip] %>
-            <br> <br>
-            <%= submit_tag "Search", :name => nil %>
-          </p>
+        <%= hidden_field_tag :direction, params[:direction] %>
+        <%= hidden_field_tag :sort, params[:sort] %>
+        <p class="clients_search">
+          <%= label_tag :name, "Nazwa klienta" %>
+          <%= text_field_tag :name, params[:name] %>
+          <%= label_tag :street, "Adres" %>
+          <%= text_field_tag :street, params[:street] %>
+          <%= label_tag :city, "Miasto" %>
+          <%= text_field_tag :city, params[:city] %>
+          <%= label_tag :nip, "NIP" %>
+          <%= text_field_tag :nip, params[:nip] %>
+          <br>
+          <br>
+          <%= submit_tag "Search", :name => nil %>
+        </p>
         <% end %>
         <%= link_to 'New Client', new_client_path %>
       </div>
     </div>
   </div>
   <div class="col-sm-9">
-  <h1>Listing clients</h1>
-  <table class="table">
-    <thead>
-      <tr>
-        <th><%= sortable "name", "Nazwa" %></th>
-        <th><%= sortable "addresses.street", "Adres" %></th>
-        <th><%= sortable "addresses.city", "Miasto" %></th>
-        <th><%= sortable "addresses.nip", "NIP" %></th>
-        <th><%= sortable "addresses.country", "Kraj" %></th>
-        <th></th>
-      </tr>
-    </thead>
+    <h1>Listing clients</h1>
+    <table class="table">
+      <thead>
+        <tr>
+          <th><%= sortable "name", "Nazwa" %></th>
+          <th><%= sortable "addresses.street", "Adres" %></th>
+          <th><%= sortable "addresses.city", "Miasto" %></th>
+          <th><%= sortable "addresses.nip", "NIP" %></th>
+          <th><%= sortable "addresses.country", "Kraj" %></th>
+          <th></th>
+        </tr>
+      </thead>
 
-    <tbody>
-      <% @clients.each do |client| %>
+      <tbody>
+        <% @clients.each do |client| %>
         <tr>
           <td><%= link_to client.name, client %></td>
           <td><%= client.address.street %></td>
@@ -47,7 +48,9 @@
           <td><%= client.address.country %></td>
           <td>
             <div class="btn-group invoice-status">
-              <button type="button" class="btn btn-secondary" data-toggle="dropdown"><span class="glyphicon glyphicon-cog"></span></button>
+              <button type="button" class="btn btn-secondary" data-toggle="dropdown">
+                <span class="glyphicon glyphicon-cog"></span>
+              </button>
               <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown">
                 <span class="caret"></span>
               </button>
@@ -56,11 +59,11 @@
                 <li><%= link_to 'Edit', edit_client_path(client)  %></li>
                 <li><%= link_to 'Destroy', client, method: :delete, data: { confirm: 'Are you sure?' } %></li>
               </ul>
-          </td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-  <%= will_paginate @clients %>
-  <br>
-</div>
+            </td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <%= will_paginate @clients %>
+      <br>
+    </div>

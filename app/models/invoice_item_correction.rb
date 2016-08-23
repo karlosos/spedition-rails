@@ -28,5 +28,4 @@ class InvoiceItemCorrection < ActiveRecord::Base
   monetize :total_selling_price_cents
   monetize :total_selling_price_correction_cents
   monetize :total_selling_price_difference_cents
-
 end

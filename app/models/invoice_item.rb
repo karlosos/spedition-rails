@@ -18,17 +18,17 @@ class InvoiceItem < ActiveRecord::Base
 
   validates_with InvoiceItemPriceValidator
 
-  monetize :unit_price_cents, :numericality => {
-    :greater_than_or_equal_to => 0
+  monetize :unit_price_cents, numericality: {
+    greater_than_or_equal_to: 0
   }
-  monetize :value_added_tax_cents, :numericality => {
-    :greater_than_or_equal_to => 0
+  monetize :value_added_tax_cents, numericality: {
+    greater_than_or_equal_to: 0
   }
-  monetize :net_price_cents, :numericality => {
-    :greater_than_or_equal_to => 0
+  monetize :net_price_cents, numericality: {
+    greater_than_or_equal_to: 0
   }
-  monetize :total_selling_price_cents, :numericality => {
-    :greater_than_or_equal_to => 0
+  monetize :total_selling_price_cents, numericality: {
+    greater_than_or_equal_to: 0
   }
 
   accepts_nested_attributes_for :item

@@ -1,7 +1,6 @@
 class UnloadingPlace < ActiveRecord::Base
-    belongs_to :transport_order
+  belongs_to :transport_order
 
-    validates_presence_of :city
-    #validates_presence_of :country
-    validates_presence_of :zip
+  validates_presence_of :city
+  validates_presence_of :zip
 end

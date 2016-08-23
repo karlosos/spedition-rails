@@ -1,19 +1,19 @@
 class TransportOrder < ActiveRecord::Base
-  has_one :transport_order_name, :dependent => :destroy
-  has_one :freichtage_description, :dependent => :destroy
+  has_one :transport_order_name, dependent: :destroy
+  has_one :freichtage_description, dependent: :destroy
   has_many :loading_places, inverse_of: :transport_order
   has_many :unloading_places, inverse_of: :transport_order
 
-  belongs_to :carrier, class_name: "Carrier", foreign_key: "carrier_id"
-  belongs_to :client, class_name:  "Client", foreign_key: "client_id"
-  belongs_to :seller, class_name: "Client", foreign_key: "seller_id"
+  belongs_to :carrier, class_name: 'Carrier', foreign_key: 'carrier_id'
+  belongs_to :client, class_name:  'Client', foreign_key: 'client_id'
+  belongs_to :seller, class_name: 'Client', foreign_key: 'seller_id'
 
-  monetize :freight_rate_cents, :numericality => {
-    :greater_than_or_equal_to => 0
+  monetize :freight_rate_cents, numericality: {
+    greater_than_or_equal_to: 0
   }
 
-  monetize :profit_margin_cents, :numericality => {
-    :greater_than_or_equal_to => 0
+  monetize :profit_margin_cents, numericality: {
+    greater_than_or_equal_to: 0
   }
 
   accepts_nested_attributes_for :transport_order_name
@@ -21,30 +21,30 @@ class TransportOrder < ActiveRecord::Base
   accepts_nested_attributes_for :loading_places
   accepts_nested_attributes_for :unloading_places
 
-  #validates :transport_order_name, presence: true
+  # validates :transport_order_name, presence: true
   validates :carrier, presence: true
   validates :client, presence: true
   validates :route, presence: true
-  validates :loading_places, :length => { :minimum => 1 }
-  validates :unloading_places, :length => { :minimum => 1 }
+  validates :loading_places, length: { minimum: 1 }
+  validates :unloading_places, length: { minimum: 1 }
 
   before_save do
-    self.client_name = self.client.name
-    self.client_nip = self.client.nip
-    self.client_street = self.client.address.street
-    self.client_zip = self.client.address.zip
-    self.client_city = self.client.address.city
-    self.client_country = self.client.address.country
-    self.client_email = self.client.contact.email
-    self.client_phone = self.client.contact.phone1
+    self.client_name = client.name
+    self.client_nip = client.nip
+    self.client_street = client.address.street
+    self.client_zip = client.address.zip
+    self.client_city = client.address.city
+    self.client_country = client.address.country
+    self.client_email = client.contact.email
+    self.client_phone = client.contact.phone1
 
-    self.carrier_name = self.carrier.carrier_name
-    self.carrier_nip = self.carrier.nip
-    self.carrier_driver_name = self.carrier.driver_name
-    self.carrier_street = self.carrier.address.street
-    self.carrier_zip = self.carrier.address.zip
-    self.carrier_city = self.carrier.address.city
-    self.carrier_country = self.carrier.address.country
+    self.carrier_name = carrier.carrier_name
+    self.carrier_nip = carrier.nip
+    self.carrier_driver_name = carrier.driver_name
+    self.carrier_street = carrier.address.street
+    self.carrier_zip = carrier.address.zip
+    self.carrier_city = carrier.address.city
+    self.carrier_country = carrier.address.country
     true
   end
 
@@ -52,18 +52,18 @@ class TransportOrder < ActiveRecord::Base
   before_save :update_unloading_date, if: :unloading_status_changed?
 
   def loading_status_human
-    if self.loading_status == true
-      return "Wysłano"
+    if loading_status == true
+      return 'Wysłano'
     else
-      return "Nie wysłano"
+      return 'Nie wysłano'
     end
   end
 
   def unloading_status_human
-    if self.unloading_status == true
-      return "Wysłano"
+    if unloading_status == true
+      return 'Wysłano'
     else
-      return "Nie wysłano"
+      return 'Nie wysłano'
     end
   end
 
@@ -71,34 +71,20 @@ class TransportOrder < ActiveRecord::Base
     name_number = search_params[:transport_order_name_number]
     name_year = search_params[:transport_order_name_year]
     freichtage_rate = search_params[:freight_rate_cents]
-    if freichtage_rate.present?
-      freichtage_rate = freichtage_rate.to_f * 100
-    end
+    freichtage_rate = freichtage_rate.to_f * 100 if freichtage_rate.present?
     zip = search_params[:zip]
-    if zip
-      zip = zip.downcase
-    end
+    zip = zip.downcase if zip
     city = search_params[:city]
-    if city
-      city = city.downcase
-    end
+    city = city.downcase if city
     client_name = search_params[:client_name]
-    if client_name
-      client_name = client_name.downcase
-    end
+    client_name = client_name.downcase if client_name
     client_id = search_params[:client_id]
     carrier_name = search_params[:carrier_name]
-    if carrier_name
-      carrier_name = carrier_name.downcase
-    end
+    carrier_name = carrier_name.downcase if carrier_name
     driver_name = search_params[:driver_name]
-    if driver_name
-      driver_name = driver_name.downcase
-    end
+    driver_name = driver_name.downcase if driver_name
     registration_number = search_params[:registration_number]
-    if registration_number
-      registration_number = registration_number.downcase
-    end
+    registration_number = registration_number.downcase if registration_number
     loading_date = search_params[:loading_date]
     unloading_date = search_params[:unloading_date]
     loading_statuses = search_params[:loading_statuses]
@@ -178,20 +164,20 @@ class TransportOrder < ActiveRecord::Base
       @transport_orders = @transport_orders.where('loading_status = ?', loading_statuses)
     end
 
-    return @transport_orders.order('transport_order_names.year DESC, transport_order_names.number DESC')
+    @transport_orders.order('transport_order_names.year DESC, transport_order_names.number DESC')
   end
 
   private
 
   def update_loading_date
-    self.loading_places.each do |loading_place|
+    loading_places.each do |loading_place|
       loading_place.date = DateTime.now
       loading_place.save
     end
   end
 
   def update_unloading_date
-    self.unloading_places.each do |unloading_place|
+    unloading_places.each do |unloading_place|
       unloading_place.date = DateTime.now
       unloading_place.save
     end
