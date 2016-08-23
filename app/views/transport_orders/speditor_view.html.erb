@@ -7,10 +7,13 @@
         <table class="table index_table">
             <thead>
                 <tr>
-                    <th><%= carrier.registration_number %>
-                    </th>
-                    <% freight_rate = carrier.transport_orders.sum(:freight_rate_cents)/100.0 profit_margin = carrier.transport_orders.sum(:profit_margin_cents)/100.0 distance = carrier.transport_orders.sum(:distance) price_per_km = (freight_rate.to_f -
-                    profit_margin.to_f)/distance.to_f %>
+                    <th><%= carrier.registration_number %></th>
+                    <%
+                    freight_rate = carrier.transport_orders.sum(:freight_rate_cents)/100.0
+                    profit_margin = carrier.transport_orders.sum(:profit_margin_cents)/100.0
+                    distance = carrier.transport_orders.sum(:distance)
+                    price_per_km = (freight_rate.to_f - profit_margin.to_f)/distance.to_f
+                    %>
                     <th><%= "#{carrier.driver_name} - #{carrier.contact.phone1}" %></th>
                     <th>Suma frachtu:
                         <%= humanized_money_with_symbol freight_rate %></th>

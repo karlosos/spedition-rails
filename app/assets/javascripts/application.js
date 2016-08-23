@@ -15,8 +15,7 @@
 //= require jquery_ujs
 //= require select2-full
 //= require turbolinks
-//= require_tree .
-//= require bootstrap
+//= require bootstrap-sprockets
 //= require bootstrap-datepicker/core
 //= require bootstrap-datepicker/locales/bootstrap-datepicker.pl.js
 //= require select2_locale_pl
