@@ -59,7 +59,7 @@
           <%= f.fields_for :loading_places do |builder| %>
             <%= render 'loading_place_fields', f: builder %>
           <% end %>
-          <%= link_to_add_loading_place "Dodaj miejsce", f, :loading_places %>
+          <%= link_to_add_object "Dodaj miejsce", f, :loading_places, "add_loading_place" %>
         </div>
       </div>
       <div class="col-md-6">
@@ -77,7 +77,7 @@
           <%= f.fields_for :unloading_places do |builder| %>
             <%= render 'unloading_place_fields', f: builder %>
           <% end %>
-          <%= link_to_add_loading_place "Dodaj miejsce", f, :unloading_places %>
+          <%= link_to_add_object "Dodaj miejsce", f, :unloading_places, "add_loading_place" %>
         </div>
       </div>
     </div>

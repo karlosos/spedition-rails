@@ -19,7 +19,7 @@
   <%= f.fields_for :emails do |builder| %>
     <%= render :partial => 'shared/email_fields', :locals => {:f => builder} %>
   <% end %>
-  <%= link_to_add_email_address "Dodaj email", f, :emails %>
+  <%= link_to_add_object "Dodaj email", f, :emails, "add_email", "shared/" %>
 </div>
 
 <div class="form-group optional">

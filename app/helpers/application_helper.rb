@@ -32,33 +32,15 @@ module ApplicationHelper
    link_to title, params.merge(:sort => column, :direction => direction, :page => nil), { :class => css_class }
  end
 
- def link_to_add_invoice_item(name, f, association)
-   new_object = f.object.send(association).klass.new
-   id = new_object.object_id
-   fields = f.fields_for(association, new_object, child_index: id) do |builder|
-     render(association.to_s.singularize + "_fields", f: builder)
-   end
-   link_to(name, '#', class: "add_fields", data: {id: id, fields: fields.gsub("\n", "")})
- end
-
- def link_to_add_loading_place(name, f, association)
-   new_object = f.object.send(association).klass.new
-   id = new_object.object_id
-   fields = f.fields_for(association, new_object, child_index: id) do |builder|
-     render(association.to_s.singularize + "_fields", f: builder)
-   end
-   link_to(name, '#', class: "add_loading_place", data: {id: id, fields: fields.gsub("\n", "")})
- end
-
- def link_to_add_email_address(name, f, association)
-   new_object = f.object.send(association).klass.new
-   id = new_object.object_id
-   fields = f.fields_for(association, new_object, child_index: id) do |builder|
-     render("shared/" + association.to_s.singularize + "_fields", f: builder)
-   end
-   link_to(name, '#', class: "add_email", data: {id: id, fields: fields.gsub("\n", "")})
- end
-
+  def link_to_add_object(name, f, association, css_class, partial_prefix = "")
+    new_object = f.object.send(association).klass.new
+    id = new_object.object_id
+    fields = f.fields_for(association, new_object, child_index: id) do |builder|
+      render(partial_prefix + association.to_s.singularize + "_fields", f: builder)
+    end
+    link_to(name, '#', class: css_class, data: {id: id, fields: fields.gsub("\n", "")})
+  end
+  
  def overdue_class_for days
    if days >= 30
      return "btn-success"
