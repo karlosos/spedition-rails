@@ -1,0 +1,14 @@
+<div class="btn-group driver-documents-status" transport-order-id="<%= transport_order.id %>">
+  <% button_status_class = "btn-status-#{transport_order.driver_documents_status}" %>
+  <button type="button" class="btn <%= button_status_class %> status dropdown-toggle" data-toggle="dropdown">
+    <span class="glyphicon glyphicon-envelope"></span>
+  </button>
+  <ul class="dropdown-menu" role="menu" transport-order-id="<%= transport_order.id %>">
+    <li>
+      <a class="driver_documents_option" href="#" value="false">Niewysłano dokumentów od kierowcy</a>
+    </li>
+    <li>
+      <a class="driver_documents_option" href="#" value="true">Wysłano dokumenty od kierowcy</a>
+    </li>
+  </ul>
+</div>

@@ -62,6 +62,10 @@
             <%= transport_order.client_email %>
           </td>
           <td>
+            <%= render :partial => 'driver_documents_status_button',
+            :locals => {:transport_order => transport_order} %>
+          </td>
+          <td>
             <div class="btn-group invoice-status" invoice-id="<%= transport_order.id %>">
               <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown">
                 <span class="glyphicon glyphicon-cog"></span>

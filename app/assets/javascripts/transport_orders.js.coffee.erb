@@ -8,6 +8,7 @@ pageLoad = () ->
   loading_places_add_event()
   loading_places_remove_event()
   loadings_status_functions()
+  driver_documents_status_functions()
   sidebar_functions()
 
   # Speditor view
@@ -36,9 +37,6 @@ loading_places_remove_event = () ->
 # Loading status
 #
 loadings_status_functions = () ->
-  change_statuses_on_select_change()
-
-change_statuses_on_select_change = () ->
   $('.loading_option').click (e) ->
     status_index = $(this).attr("value")
     transport_order_id = $(this).parent().parent().attr("transport-order-id")
@@ -70,6 +68,29 @@ change_statuses_on_select_change = () ->
       dataType: 'json'
       data:
             transport_order : { unloading_status: status_index }
+      error: (jqXHR, textStatus, errorThrown) ->
+      success: (data, textStatus, jqXHR) ->
+        button_classes = "btn status btn-status-"+status_index
+        toggle_classes = "btn dropdown-toggle btn-status-"+status_index
+        main_button.attr('class', button_classes)
+        toggle_button.attr('class', toggle_classes)
+
+#
+# Drive documents status
+#
+driver_documents_status_functions = () ->
+  $('.driver_documents_option').click (e) ->
+    status_index = $(this).attr("value")
+    transport_order_id = $(this).parent().parent().attr("transport-order-id")
+    main_button = $(this).parent().parent().parent().find('.status')
+    toggle_button = $(this).parent().parent().parent().find('.dropdown-toggle')
+    url = '/transport_orders/' + transport_order_id
+
+    $.ajax url,
+      type: 'PUT'
+      dataType: 'json'
+      data:
+            transport_order : { driver_documents_status: status_index }
       error: (jqXHR, textStatus, errorThrown) ->
       success: (data, textStatus, jqXHR) ->
         button_classes = "btn status btn-status-"+status_index
