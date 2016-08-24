@@ -53,6 +53,18 @@ class TransportOrdersController < ApplicationController
     end
   end
 
+  def accounting_view
+    @client = Client.new
+    @client.build_address
+    @client.build_contact
+    @client.contact.emails.build
+    
+    @transport_orders = TransportOrder
+    @transport_orders = @transport_orders.joins(:client, :carrier, :loading_places, :unloading_places)
+    @transport_orders = @transport_orders.order(sort_column + " " + sort_direction)
+    @transport_orders = @transport_orders.paginate(:page => params[:page], :per_page => 30)
+  end
+
   # GET /transport_orders/1.joins(:transport_order_name).joins(:client).joins(:carrier).joins(:loading_places).joins(:unloading_places)
   # GET /transport_orders/1.json
   def show
