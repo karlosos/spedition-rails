@@ -1,0 +1,34 @@
+<table class="table fast_form">
+  <thead>
+    <tr>
+      <th colspan="2">Email</th>
+      <th>Kwota frachtu</th>
+      <th colspan="2">Załadunek</th>
+      <th colspan="2">Rozładunek</th>
+      <th>Dystans</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><%= f.text_field :client_email, class: "email_input", placeholder: "Email" %></td>
+      <td>
+        <%= f.collection_select :client_id, Client.all, 'id', 'name', prompt: 'Wybierz klienta' %>
+        <%= f.hidden_field :carrier_id, value: carrier.id %>
+        <%= f.hidden_field :seller_id, value: Client.first.id %>
+        <%= f.hidden_field :route %>
+      </td>
+      <td><%= f.number_field :freight_rate, placeholder: "Kwota frachtu" %></td>
+      <%= f.fields_for :loading_places do |builder| %>
+          <td><%= builder.text_field :zip, placeholder: "Kod pocztowy", class: "zip_input place_input" %></td>
+          <td><%= builder.text_field :city, placeholder: "Miasto", class: "city_input place_input" %></td>
+      <% end %>
+      <%= f.fields_for :unloading_places do |builder| %>
+          <td><%= builder.text_field :zip, placeholder: "Kod pocztowy", class: "zip_input place_input" %></td>
+          <td><%= builder.text_field :city, placeholder: "Miasto", class: "city_input place_input" %></td>
+      <% end %>
+      <td><%= f.number_field :distance, placeholder: "Dystans" %></td>
+      <td><%= f.submit "Dodaj", :date => nil, :client_name => nil , :class => "btn btn-default"%></td>
+    </tr>
+  </tbody>
+</table>

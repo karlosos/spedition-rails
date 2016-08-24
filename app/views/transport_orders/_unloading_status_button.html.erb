@@ -1,0 +1,14 @@
+<div class="btn-group unloading-status" transport-order-id="<%= transport_order.id %>">
+  <% button_status_class = "btn-status-#{transport_order.unloading_status}" %>
+  <button type="button" class="btn <%= button_status_class %> status dropdown-toggle" data-toggle="dropdown">
+    <span class="glyphicon glyphicon-envelope"></span>
+  </button>
+  <ul class="dropdown-menu" role="menu" transport-order-id="<%= transport_order.id %>">
+    <li>
+      <a class="unloading_option" href="#" value="false">Niewysłano info o załadunku</a>
+    </li>
+    <li>
+      <a class="unloading_option" href="#" value="true">Wysłano info o załadunku</a>
+    </li>
+  </ul>
+</div>

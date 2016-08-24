@@ -14,6 +14,7 @@ pageLoad = () ->
   $('select').hide()
   findClientOnEmailChange()
   modal_functions()
+  update_route_on_place_edit()
 
 #
 # Loading places in edit form
@@ -132,7 +133,7 @@ startClientSelect = (object) ->
         )}
     language:
       noResults: ->
-        return "<a type=\"button\" class=\"btn btn-info btn-lg\" onclick='show_client_modal_transport_order()'>Stwórz klienta</a>"
+        return "<a type=\"button\" class=\"btn btn-info\" onclick='show_client_modal_transport_order()'>Stwórz klienta</a>"
     escapeMarkup: (markup) ->
       return markup;
 
@@ -234,3 +235,13 @@ hide_optional_fields_in_modal = () ->
 toogle_optional_fields_in_modal_on_click = () ->
   $('#show_more_modal').click ->
     $('.optional').toggle()
+
+update_route_on_place_edit = () ->
+  $(".place_input").change ->
+    parent = $(this).parent().parent()
+    loading_zip = parent.find('#transport_order_loading_places_attributes_0_zip').val()
+    loading_city = parent.find('#transport_order_loading_places_attributes_0_city').val()
+    unloading_zip = parent.find('#transport_order_unloading_places_attributes_0_zip').val()
+    unloading_city = parent.find('#transport_order_unloading_places_attributes_0_city').val()
+    route = loading_zip + ", " + loading_city + " nach " + unloading_zip + ", " + unloading_city
+    parent.find('#transport_order_route').val(route)

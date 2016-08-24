@@ -39,3 +39,21 @@
     display: inline;
   }
 }
+
+.fast_form {
+  .email_input {
+    width: 200px;
+  }
+
+  .zip_input {
+    width: 130px;
+  }
+
+  .city_input {
+    width: 100px;
+  }
+
+  #transport_order_client_id {
+    width: 150px;
+  }
+}
