@@ -157,6 +157,8 @@ findClientOnEmailChange = () ->
         if data[0]
           console.log(data)
           client_select.val(data[0]["id"])
+          option = $('<option selected>' + data[0].client_info + '</option>').val("" + data[0].id);
+          client_select.append(option).trigger('change');
           alert("Znaleziono klienta: " + data[0]["client_info"])
         else
           client_select.show()

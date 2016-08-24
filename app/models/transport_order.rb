@@ -35,7 +35,7 @@ class TransportOrder < ActiveRecord::Base
     self.client_zip = client.address.zip
     self.client_city = client.address.city
     self.client_country = client.address.country
-    self.client_email = client.contact.email
+    #self.client_email = client.contact.email
     self.client_phone = client.contact.phone1
 
     self.carrier_name = carrier.carrier_name
@@ -50,6 +50,7 @@ class TransportOrder < ActiveRecord::Base
 
   before_save :update_loading_date, if: :loading_status_changed?
   before_save :update_unloading_date, if: :unloading_status_changed?
+  before_save :add_email_to_client
 
   def loading_status_human
     if loading_status == true
@@ -182,4 +183,25 @@ class TransportOrder < ActiveRecord::Base
       unloading_place.save
     end
   end
+
+  def add_email_to_client
+    if check_client_email == false
+      email = Email.new()
+      email.address = self.client_email
+      self.client.contact.emails << email
+      #client.save
+    end
+  end
+
+  # TODO zrefaktoryzować ta funkcje
+  def check_client_email
+    client_has_this_email = false
+    self.client.emails.each do |email|
+      if email.address.present? && email.address == self.client_email
+        client_has_this_email = true
+      end
+    end
+    return client_has_this_email
+  end
+
 end

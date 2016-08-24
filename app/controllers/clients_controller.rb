@@ -22,7 +22,7 @@ class ClientsController < ApplicationController
       lower(nip) like ? OR lower(city) like ? OR lower(zip) like ? OR
       lower(emails.address) like ?"
       @clients = @clients.where(query_sql, "%#{query}%", "%#{query}%", "%#{query}%",
-      "%#{query}%", "%#{query}%", "%#{query}%").distinct.limit(15)
+      "%#{query}%", "%#{query}%", "#{query}").distinct.limit(15)
       format.json
     end
   end
