@@ -40,7 +40,7 @@ class TransportOrdersController < ApplicationController
 
     speditor_id = params[:speditor_id]
     date = params[:date]
-    @carriers = Carrier.all.joins(:transport_orders).distinct
+    @carriers = Carrier.all
     @transport_orders = Array.new
     for i in 0..@carriers.count
       transport_order = TransportOrder.new
@@ -58,7 +58,7 @@ class TransportOrdersController < ApplicationController
     @client.build_address
     @client.build_contact
     @client.contact.emails.build
-    
+
     @transport_orders = TransportOrder
     @transport_orders = @transport_orders.joins(:client, :carrier, :loading_places, :unloading_places)
     @transport_orders = @transport_orders.order(sort_column + " " + sort_direction)

@@ -41,6 +41,14 @@
 }
 
 .fast_form {
+  th {
+    border-top: 2px solid #dddddd !important;
+  }
+
+  td {
+    vertical-align: middle !important;
+  }
+
   .email_input {
     width: 200px;
   }
@@ -56,4 +64,9 @@
   #transport_order_client_id {
     width: 150px;
   }
+}
+
+.speditor_view_head_row {
+  background-color: #337ab7;
+  color: white;
 }

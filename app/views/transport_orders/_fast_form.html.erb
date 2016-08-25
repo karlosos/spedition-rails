@@ -6,7 +6,7 @@
       <th colspan="2">Załadunek</th>
       <th colspan="2">Rozładunek</th>
       <th>Dystans</th>
-      <th></th>
+      <th colspan="2"></th>
     </tr>
   </thead>
   <tbody>
@@ -28,7 +28,14 @@
           <td><%= builder.text_field :city, placeholder: "Miasto", class: "city_input place_input" %></td>
       <% end %>
       <td><%= f.number_field :distance, placeholder: "Dystans" %></td>
-      <td><%= f.submit "Dodaj", :date => nil, :client_name => nil , :class => "btn btn-default"%></td>
+      <td>
+        <%= f.submit "Dodaj", :date => nil, :client_name => nil , :class => "btn btn-default"%>
+      </td>
+      <td>
+        <%= link_to '', new_transport_order_path, class: "glyphicon glyphicon-collapse-down" %>
+      </td>
+    </tr>
+    <tr>
     </tr>
   </tbody>
 </table>

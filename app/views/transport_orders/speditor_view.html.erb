@@ -1,17 +1,19 @@
 <%= render :partial => 'shared/create_client_modal' %>
-<h1>Listing transport_orders</h1>
 <div class="row">
   <div class="col-sm-12">
     <% @carriers.each_with_index do |carrier, i| %>
+    <div class="panel panel-primary">
     <table class="table index_table">
       <thead>
-        <tr>
+        <tr class="speditor_view_head_row">
           <th><%= carrier.registration_number %></th>
           <%
-          freight_rate = carrier.transport_orders.sum(:freight_rate_cents)/100.0
-          profit_margin = carrier.transport_orders.sum(:profit_margin_cents)/100.0
-          distance = carrier.transport_orders.sum(:distance)
-          price_per_km = (freight_rate.to_f - profit_margin.to_f)/distance.to_f
+          if carrier.transport_orders.count > 0
+            freight_rate = carrier.transport_orders.sum(:freight_rate_cents)/100.0
+            profit_margin = carrier.transport_orders.sum(:profit_margin_cents)/100.0
+            distance = carrier.transport_orders.sum(:distance)
+            price_per_km = (freight_rate.to_f - profit_margin.to_f)/distance.to_f
+          end
           %>
           <th><%= "#{carrier.driver_name} - #{carrier.contact.phone1}" %></th>
           <th>Suma frachtu:
@@ -22,18 +24,21 @@
             <%= distance %></th>
           <th>Cena za km:
             <%= humanized_money_with_symbol price_per_km %></th>
-          <th colspan="4"></th>
+          <th></th>
         </tr>
+      </thead>
+    </table>
+    <table class="table index_table">
+      <thead>
         <tr>
           <th>Cena frachtu</th>
           <th>Cena dla przewoźnika</th>
           <th>Trasa</th>
-          <th>Data załadunku</th>
-          <th>Data rozładunku</th>
+          <th colspan="2">Data załadunku</th>
+          <th colspan="2">Data rozładunku</th>
           <th>Email</th>
           <th>Uwagi</th>
-          <th>Waga ładunku</th>
-          <th>Opcje</th>
+          <th colspan="2">Opcje</th>
         </tr>
       </thead>
       <tbody>
@@ -62,11 +67,14 @@
             <%= transport_order.client_email %>
           </td>
           <td>
+            Uwagi
+          </td>
+          <td>
             <%= render :partial => 'driver_documents_status_button',
             :locals => {:transport_order => transport_order} %>
           </td>
           <td>
-            <div class="btn-group invoice-status" invoice-id="<%= transport_order.id %>">
+            <div class="btn-group" invoice-id="<%= transport_order.id %>">
               <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown">
                 <span class="glyphicon glyphicon-cog"></span>
               </button>
@@ -84,6 +92,7 @@
     <%= form_for @transport_orders[i] do |f| %>
       <%= render :partial => 'fast_form', :locals => {:f => f, :carrier => carrier} %>
     <% end %>
+  </div>
   <% end %>
   </div>
 </div>
