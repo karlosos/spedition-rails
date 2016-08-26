@@ -150,7 +150,7 @@
       </div>
     </div>
 
-    <% if @transport_order.carrier.is_third_party? %>
+    <% if @transport_order.carrier.present? && @transport_order.carrier.is_third_party? %>
       <div class="row">
         <h2>Ustalenia</h2>
         <div class="col-md-12">
