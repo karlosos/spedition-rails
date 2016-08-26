@@ -15,6 +15,7 @@ pageLoad = () ->
   findClientOnEmailChange()
   modal_functions()
   update_route_on_place_edit()
+  show_client_select_button()
 
 #
 # Loading places in edit form
@@ -171,8 +172,7 @@ findClientOnEmailChange = () ->
       dataType: 'json'
       error: (jqXHR, textStatus, errorThrown) ->
         console.log(textStatus)
-        client_select.show()
-        startClientSelect()
+        show_client_select(client_select)
       success: (data, textStatus, jqXHR) ->
         if data[0]
           console.log(data)
@@ -180,10 +180,21 @@ findClientOnEmailChange = () ->
           option = $('<option selected>' + data[0].client_info + '</option>').val("" + data[0].id);
           client_select.append(option).trigger('change');
           alert("Znaleziono klienta: " + data[0]["client_info"])
+          console.log($(this).parent().parent().find('.show_client_select'))
+          client_select.parent().find('.show_client_select').prop("title", data[0]["client_info"])
         else
           client_select.show()
           startClientSelect(client_select)
 
+show_client_select_button = () ->
+  $('.show_client_select').click ->
+    $(this).hide()
+    client_select = $(this).parent().parent().find('select')
+    show_client_select(client_select)
+
+show_client_select = (client_select) ->
+  client_select.show()
+  startClientSelect(client_select)
 #
 # Modal functions
 #

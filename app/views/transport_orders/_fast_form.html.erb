@@ -13,6 +13,7 @@
     <tr>
       <td><%= f.text_field :client_email, class: "email_input", placeholder: "Email" %></td>
       <td class="hidden_fields">
+        <span class="glyphicon glyphicon-info-sign show_client_select" data-toggle="tooltip" data-placement="top" title=""></span>
         <%= f.collection_select :client_id, Client.all, 'id', 'name', prompt: 'Wybierz klienta' %>
         <%= f.hidden_field :carrier_id, value: carrier.id %>
         <%= f.hidden_field :seller_id, value: Client.first.id %>
