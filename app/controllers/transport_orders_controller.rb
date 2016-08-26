@@ -96,6 +96,10 @@ class TransportOrdersController < ApplicationController
 
   # GET /transport_orders/1/edit
   def edit
+    @transport_order = TransportOrder.find(params[:id])
+    if @transport_order.freichtage_description.present? == false
+      @transport_order.build_freichtage_description
+    end
   end
 
   # POST /transport_orders
