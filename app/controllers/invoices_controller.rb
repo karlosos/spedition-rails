@@ -39,6 +39,7 @@ class InvoicesController < ApplicationController
     @client = Client.new
     @client.build_address
     @client.build_contact
+    @client.contact.emails.build
 
     @item = Item.new
 
