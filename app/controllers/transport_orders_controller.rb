@@ -133,7 +133,7 @@ class TransportOrdersController < ApplicationController
   def destroy
     @transport_order.destroy
     respond_to do |format|
-      format.html { redirect_to transport_orders_url, notice: 'Transport order was successfully destroyed.' }
+      format.html { redirect_to :back, notice: 'Transport order was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
