@@ -1,0 +1,157 @@
+.invoices {
+  /* invoice form */
+  .remove_invoice_items {
+    @extend .btn;
+    @extend .btn-danger;
+  }
+  .add_fields {
+    @extend .btn;
+    @extend .btn-success;
+  }
+  .invoice_name_form {
+    input {
+      width: 100px;
+      display: inline;
+    }
+  }
+  .invoice_items_form {
+    input[type="number"] {
+      width: 100px;
+    }
+    li {
+      list-style-type: none;
+    }
+  }
+  .currency_change_warning {
+    display: none;
+    margin-top: 20px;
+  }
+  /* invoices index */
+  .search_form {
+    margin-top: 30px;
+    input {
+      display: inline;
+    }
+    #advanced_search_form {
+      display: none;
+      .form_short {
+        input {
+          width: auto;
+        }
+      }
+    }
+    #client_name {
+      width: 236px;
+    }
+    input[type="submit"] {
+      width: 236px;
+    }
+  }
+  /* clients index */
+  .clients_search {
+    input[type="text"] {
+      width: 236px;
+    }
+    input[type="submit"] {
+      width: 236px;
+    }
+  }
+  .input-group-addon {
+    width: 0;
+  }
+  @mixin invoice-params {
+    font-size: 12px;
+    overflow: visible;
+    line-height: 1.428571429;
+    color: #333333;
+    .invoice_items {
+      th {
+        background-color: #f1f1f1;
+      }
+      .correction_difference_row {
+        background-color: #f1f1f1;
+      }
+    }
+    .invoice_summary {
+      float: right;
+      width: 99%;
+      th {
+        text-align: right;
+        padding: 5px;
+      }
+      td {
+        width: 17%;
+        padding: 5px;
+        text-align: right;
+      }
+    }
+    .invoice_price_in_words {
+      tr {
+        vertical-align: top;
+      }
+      th {
+        width: 25%;
+        padding-right: 15px;
+      }
+    }
+    .invoice_bold {
+      font-weight: bold;
+    }
+  }
+  #invoice_page {
+    background-color: white;
+    -webkit-box-shadow: 1px 3px 5px 0 rgba(0,0,0,0.75);
+    -moz-box-shadow: 1px 3px 5px 0 rgba(0,0,0,0.75);
+    box-shadow: 1px 3px 5px 0 rgba(0,0,0,0.75);
+    border: 1px solid #ddd;
+    width: 8.27in;
+    height: 11.7in;
+    margin: 0 auto 20px;
+    #invoice {
+      @include invoice-params;
+      padding: 1.0in 0.75in 0.75in;
+    }
+  }
+  #invoice {
+    @include invoice-params;
+  }
+  /* invoice index */
+  .invoice-status {
+    width: 100px;
+    height: 34px;
+    .status {
+      width: 70px;
+      height: 34px;
+    }
+    .btn-status-1 {
+      @extend .btn-danger;
+    }
+    .btn-status-2 {
+      @extend .btn-warning;
+    }
+    .btn-status-3 {
+      @extend .btn-success;
+    }
+  }
+  .invoices_table {
+    td {
+      vertical-align: middle !important;
+    }
+  }
+  .update_invoices {
+    display: none;
+    input {
+      width: auto;
+      display: inline;
+    }
+    select {
+      width: auto;
+      display: inline;
+    }
+  }
+  .overdue {
+    text-align: center;
+    width: 50px;
+    padding: 2px;
+  }
+}

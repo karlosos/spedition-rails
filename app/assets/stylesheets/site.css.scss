@@ -1,20 +1,18 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 @import "http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css";
-
 @import "bootstrap/variables";
 @import "bootstrap/mixins";
-
 @include make-grid(sm);
 @include make-grid(md);
 @include make-grid(lg);
-
+@import 'transport_orders.css.scss';
+@import 'invoices.css.scss';
 html {
   position: relative;
   min-height: 100%;
 }
 body {
-  /* Margin bottom by footer height */
   margin-bottom: 60px;
   padding-top: 50px;
 }
@@ -22,7 +20,6 @@ body {
   position: absolute;
   bottom: 0;
   width: 100%;
-  /* Set the fixed height of the footer here */
   height: 60px;
   background-color: #f5f5f5;
   .text-muted {
@@ -30,7 +27,16 @@ body {
     margin-bottom: 0;
   }
 }
-/* client sorts */
+.container {
+  padding-top: 20px;
+}
+/* indexes */
+.index_table {
+  td {
+    vertical-align: middle !important;
+  }
+}
+/* table sort */
 .pretty th .current {
   padding-right: 12px;
   background-repeat: no-repeat;
@@ -42,7 +48,6 @@ body {
 .pretty th .desc {
   background-image: url("/images/down_arrow.gif");
 }
-
 th .asc:after {
   width: 0;
   height: 0;
@@ -65,147 +70,6 @@ th .desc:after {
   margin-top: 7px;
   margin-left: 5px;
 }
-/* invoice form */
-select {
-  width: 300px;
-}
-input {
-  @extend .form-control;
-}
-.remove_invoice_items {
-  @extend .btn;
-  @extend .btn-danger;
-}
-.add_fields {
-  @extend .btn;
-  @extend .btn-success;
-}
-.invoice_name_form {
-  input {
-    width: 100px;
-    display: inline;
-  }
-}
-.invoice_items_form {
-  input[type="number"] {
-    width: 100px;
-  }
-  li {
-    list-style-type: none;
-  }
-}
-
-.currency_change_warning {
-  display: none;
-  margin-top: 20px;
-}
-/* indexes */
-.index_table {
-  td {
-    vertical-align: middle !important;
-  }
-}
-
-/* invoices index */
-.search_form {
-  margin-top: 30px;
-  input {
-    display: inline;
-  }
-  #advanced_search_form {
-    display: none;
-    .form_short {
-      input {
-        width: auto;
-      }
-    }
-  }
-  #client_name {
-    width: 236px;
-  }
-  input[type="submit"] {
-    width: 236px;
-  }
-}
-/* clients index */
-.clients_search {
-  input[type="text"] {
-    width: 236px;
-  }
-  input[type="submit"] {
-    width: 236px;
-  }
-}
-.input-group-addon {
-  width: 0;
-}
-/* invoice show */
-@mixin invoice-parameters {
-
-}
-
-@mixin invoice-params {
-  font-size: 12px;
-  overflow: visible;
-  line-height: 1.428571429;
-  color: #333333;
-  .invoice_items {
-    th {
-      background-color: #f1f1f1;
-    }
-
-    .correction_difference_row {
-      background-color: #f1f1f1;
-    }
-  }
-  .invoice_summary {
-    float: right;
-    width: 99%;
-    th {
-      text-align: right;
-      padding: 5px;
-    }
-    td {
-      width: 17%;
-      padding: 5px;
-      text-align: right;
-    }
-  }
-  .invoice_price_in_words {
-    tr {
-      vertical-align: top;
-    }
-    th {
-      width: 25%;
-      padding-right: 15px;
-    }
-  }
-  .invoice_bold {
-    font-weight: bold;
-  }
-
-}
-
-#invoice_page {
-  background-color: white;
-  -webkit-box-shadow: 1px 3px 5px 0 rgba(0,0,0,0.75);
-  -moz-box-shadow: 1px 3px 5px 0 rgba(0,0,0,0.75);
-  box-shadow: 1px 3px 5px 0 rgba(0,0,0,0.75);
-  border: 1px solid #ddd;
-  width: 8.27in;
-  height: 11.7in;
-  margin: 0px auto 20px;
-  #invoice {
-    @include invoice-params;
-    padding: 1.0in 0.75in 0.75in;
-  }
-}
-
-#invoice {
-  @include invoice-params;
-}
-
-
 /* menu bar */
 .menubar {
   min-height: 40px;
@@ -227,58 +91,7 @@ input {
     }
   }
 }
-
-/* invoice index */
-.invoice-status {
-  width: 100px;
-  height: 34px;
-
-  .status {
-    width: 70px;
-    height: 34px;
-  }
-
-  .btn-status-1 {
-    @extend .btn-danger;
-  }
-
-  .btn-status-2 {
-    @extend .btn-warning;
-  }
-
-  .btn-status-3 {
-    @extend .btn-success;
-  }
+/* forms */
+input {
+  @extend .form-control;
 }
-
-.invoices_table {
-  td {
-    vertical-align: middle !important;
-  }
-}
-
-
-.update_invoices {
-  display: none;
-  input {
-    width: auto;
-    display: inline;
-  }
-  select {
-    width: auto;
-    display: inline;
-  }
-}
-
-/* invoice index */
-.container {
-  padding-top: 20px;
-}
-
-.overdue {
-  text-align: center;
-  width: 50px;
-  padding: 2px;
-}
-
-@import 'transport_order.css.scss'

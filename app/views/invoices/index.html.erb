@@ -142,7 +142,7 @@
           <% overdue_class = overdue_class_for(invoice.overdue.round) %>
           <td><div class="btn <%= overdue_class %> overdue"><%= invoice.overdue.round %></div></td>
           <td>
-            <div class="btn-group invoice-status" invoice-id="<%= invoice.id %>">
+            <div class="btn-group" invoice-id="<%= invoice.id %>">
               <button type="button" class="btn btn-secondary" data-toggle="dropdown"><span class="glyphicon glyphicon-cog"></span></button>
               <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown">
                 <span class="caret"></span>

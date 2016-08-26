@@ -1,0 +1,64 @@
+.transport_orders {
+  .transport_order_name_form {
+    input {
+      width: 100px;
+      display: inline;
+    }
+  }
+  .remove_loading_places {
+    @extend .btn;
+    @extend .btn-danger;
+  }
+  .add_loading_place {
+    @extend .btn;
+    @extend .btn-success;
+  }
+  .transport_order_form {
+    .row {
+      margin-bottom: 20px;
+    }
+  }
+  /* INDEX PAGE */
+  .btn-status-false {
+    @extend .btn-danger;
+  }
+  .btn-status-true {
+    @extend .btn-success;
+  }
+  /* SPEDITOR VIEW */
+  .place_form {
+    input {
+      width: auto;
+      display: inline;
+    }
+  }
+  .fast_form {
+    th {
+      border-top: 2px solid #dddddd !important;
+    }
+    td {
+      vertical-align: middle !important;
+    }
+    .email_input {
+      width: 100%;
+    }
+    .zip_input {
+      width: 100%;
+    }
+    .city_input {
+      width: 100px;
+    }
+    #transport_order_client_id {
+      width: 150px;
+    }
+  }
+  .speditor_view_head_row {
+    background-color: #337ab7;
+    color: white;
+  }
+  .hidden_fields {
+    select {
+      display: none;
+    }
+  }
+}
