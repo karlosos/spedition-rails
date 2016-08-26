@@ -92,10 +92,15 @@ th .desc:after {
   }
 }
 /* forms */
-input {
+input[type="text"] {
   @extend .form-control;
 }
-
+input[type="number"] {
+  @extend .form-control;
+}
+input[type="submit"] {
+  @extend .form-control;
+}
 textarea {
   @extend .form-control;
 }

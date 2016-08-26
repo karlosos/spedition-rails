@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160826144358) do
+ActiveRecord::Schema.define(version: 20160826161834) do
 
   create_table "addresses", force: true do |t|
     t.string   "line1"
@@ -39,6 +39,7 @@ ActiveRecord::Schema.define(version: 20160826144358) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "nip"
+    t.boolean  "is_third_party"
   end
 
   create_table "clients", force: true do |t|

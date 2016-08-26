@@ -3,6 +3,10 @@
 
   <div class="form-inputs">
     <p>
+      <%= f.label :is_third_party, "Czy zewnętrzny zleceniobiorca?" %>
+      <%= f.check_box :is_third_party %>
+    </p>
+    <p>
       <%= f.label :registration_number %><br />
       <%= f.text_field :registration_number %>
     </p>
