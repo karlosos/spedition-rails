@@ -70,3 +70,9 @@
   background-color: #337ab7;
   color: white;
 }
+
+.hidden_fields {
+  select {
+    display: none;
+  }
+}
