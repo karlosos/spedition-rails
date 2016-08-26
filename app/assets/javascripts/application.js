@@ -15,12 +15,14 @@
 //= require jquery_ujs
 //= require select2-full
 //= require turbolinks
+//= require jquery-readyselector
 //= require bootstrap-sprockets
 //= require bootstrap-datepicker/core
 //= require bootstrap-datepicker/locales/bootstrap-datepicker.pl.js
 //= require select2_locale_pl
 //= require moment.min.js
 //= require nested_form_fields
+//= require_tree .
 
 function show_client_modal() {
   $('#new_client_modal').modal('toggle')
