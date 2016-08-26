@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160822144918) do
+ActiveRecord::Schema.define(version: 20160826144358) do
 
   create_table "addresses", force: true do |t|
     t.string   "line1"
@@ -242,20 +242,14 @@ ActiveRecord::Schema.define(version: 20160822144918) do
     t.string   "route"
     t.decimal  "distance"
     t.string   "loading_country"
-    t.string   "loading_zip"
-    t.string   "loading_city"
-    t.datetime "loading_date"
-    t.string   "unloading_country"
-    t.string   "unloading_zip"
-    t.string   "unloading_city"
     t.datetime "unloading_date"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "freight_rate_cents",      default: 0,     null: false
-    t.string   "freight_rate_currency",   default: "EUR", null: false
+    t.integer  "freight_rate_cents",             default: 0,     null: false
+    t.string   "freight_rate_currency",          default: "EUR", null: false
     t.integer  "seller_id"
-    t.integer  "profit_margin_cents",     default: 0,     null: false
-    t.string   "profit_margin_currency",  default: "EUR", null: false
+    t.integer  "profit_margin_cents",            default: 0,     null: false
+    t.string   "profit_margin_currency",         default: "EUR", null: false
     t.text     "client_street"
     t.string   "client_name"
     t.string   "client_zip"
@@ -269,11 +263,20 @@ ActiveRecord::Schema.define(version: 20160822144918) do
     t.string   "carrier_country"
     t.string   "carrier_city"
     t.string   "carrier_zip"
-    t.boolean  "loading_status",          default: false
-    t.boolean  "unloading_status",        default: false
-    t.boolean  "driver_documents_status", default: false
+    t.boolean  "loading_status",                 default: false
+    t.boolean  "unloading_status",               default: false
+    t.boolean  "driver_documents_status",        default: false
     t.string   "client_nip"
     t.string   "carrier_nip"
+    t.string   "speditor_name"
+    t.string   "speditor_email"
+    t.text     "vehicle_requirements"
+    t.text     "payment_type"
+    t.text     "additional_comments"
+    t.text     "arrangements"
+    t.string   "cmr_numer"
+    t.string   "reference_transport_order_name"
+    t.string   "car_registration_number"
   end
 
   create_table "unloading_places", force: true do |t|

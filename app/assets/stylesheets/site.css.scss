@@ -95,3 +95,7 @@ th .desc:after {
 input {
   @extend .form-control;
 }
+
+textarea {
+  @extend .form-control;
+}

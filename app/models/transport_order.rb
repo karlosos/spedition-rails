@@ -35,7 +35,6 @@ class TransportOrder < ActiveRecord::Base
     self.client_zip = client.address.zip
     self.client_city = client.address.city
     self.client_country = client.address.country
-    #self.client_email = client.contact.email
     self.client_phone = client.contact.phone1
 
     self.carrier_name = carrier.carrier_name
@@ -45,6 +44,7 @@ class TransportOrder < ActiveRecord::Base
     self.carrier_zip = carrier.address.zip
     self.carrier_city = carrier.address.city
     self.carrier_country = carrier.address.country
+    self.car_registration_number = carrier.registration_number
     true
   end
 
