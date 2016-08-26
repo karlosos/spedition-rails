@@ -21,7 +21,7 @@
         <% if transport_order.transport_order_name.present? %>
           <%= link_to transport_order.transport_order_name.get_name, transport_order %>
         <% else %>
-          Stwórz zlecenie
+          <%= link_to 'Stwórz zlecenie', transport_order_create_name_path(transport_order.id), method: :put %>
         <% end %>
         </td>
         <td><%= link_to "#{humanized_money_with_symbol transport_order.freight_rate}", transport_order %></td>

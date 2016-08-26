@@ -16,7 +16,7 @@ class TransportOrder < ActiveRecord::Base
     greater_than_or_equal_to: 0
   }
 
-  accepts_nested_attributes_for :transport_order_name
+  accepts_nested_attributes_for :transport_order_name, allow_destroy: true
   accepts_nested_attributes_for :freichtage_description
   accepts_nested_attributes_for :loading_places
   accepts_nested_attributes_for :unloading_places

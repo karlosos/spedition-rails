@@ -14,12 +14,19 @@
 
   <div class="form-inputs transport_order_form">
     <div class="row">
-      <div class="col-md-3">
-        <%= label_tag :transport_order_name, "Numer zlecenia" %>
-        <%= f.fields_for :transport_order_name do |transport_order_name_form| %>
-          <% render :partial => 'transport_order_name_form', :locals => {:f => transport_order_name_form} %>
-        <% end %>
-      </div>
+      <% if @transport_order.transport_order_name.present? %>
+        <div class="col-md-3">
+          <%= label_tag :transport_order_name, "Numer zlecenia" %>
+          <%= f.fields_for :transport_order_name do |transport_order_name_form| %>
+            <% render :partial => 'transport_order_name_form', :locals => {:f => transport_order_name_form} %>
+          <% end %>
+        </div>
+      <% elsif params["user"] == "accounting" %>
+        <div class="col-md-3">
+          <%= label_tag :transport_order_name, "Numer zlecenia" %>
+          <%= link_to 'Stwórz zlecenie', transport_order_create_name_path(@transport_order.id), method: :put %>
+        </div>
+      <% end %>
     </div>
 
     <div class="row">

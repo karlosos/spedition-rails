@@ -1,0 +1,15 @@
+jQuery ->
+  pageLoad()
+
+pageLoad = () ->
+  date_picker_start()
+  
+#
+# Datepicker
+#
+date_picker_start = () ->
+  $('#datetimepicker1').datepicker ->
+    locale: 'pl'
+
+  $('.date').datepicker ->
+    locale: 'pl'

@@ -10,7 +10,7 @@ class TransportOrderName < ActiveRecord::Base
   end
 
   def self.get_last_number_for_year(year)
-    last_transport_order_name = InvoiceName.where('year = ?', year).order('number DESC').limit(1).first
+    last_transport_order_name = TransportOrderName.where('year = ?', year).order('number DESC').limit(1).first
     if last_transport_order_name
       last_transport_order_name.number + 1
     else
