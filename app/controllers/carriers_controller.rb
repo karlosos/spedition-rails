@@ -17,6 +17,7 @@ class CarriersController < ApplicationController
     @carrier = Carrier.new
     @carrier.build_address
     @carrier.build_contact
+    @carrier.contact.emails.build
   end
 
   # GET /carriers/1/edit
