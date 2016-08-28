@@ -111,17 +111,6 @@ class TransportOrderTest < ActiveSupport::TestCase
     assert_not_equal @transport_order.client_country, @transport_order.client.address.country
   end
 
-  test "client email should be fixed" do
-    @client = clients(:client_microsoft)
-    @transport_order.client = @client
-    @transport_order.save
-    assert_equal @transport_order.client_email, @transport_order.client.contact.email
-
-    @client.contact.email = "New client email"
-    @client.save
-    assert_not_equal @transport_order.client_email, @transport_order.client.contact.email
-  end
-
   test "client phone should be fixed" do
     @client = clients(:client_microsoft)
     @transport_order.client = @client

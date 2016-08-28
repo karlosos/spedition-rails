@@ -63,6 +63,61 @@ class InvoicesController < ApplicationController
 
   end
 
+  def new_correction
+    @client = Client.new
+    @client.build_address
+    @client.build_contact
+    @client.contact.emails.build
+
+    @item = Item.new
+
+    @invoice_to_correct = Invoice.find(params[:id])
+
+    @invoice = Invoice.new
+    @invoice.build_invoice_name
+    @invoice.invoice_name.month = Date.today.month
+    @invoice.invoice_name.year = Date.today.year
+    @invoice.invoice_name.number = InvoiceName.get_last_number_for_date(DateTime.now.strftime('%F'), 'correction')
+    @invoice.kind = 'correction'
+    @invoice.invoice_to_correct = @invoice_to_correct
+    @invoice.client = @invoice_to_correct.client
+    @invoice.seller = @invoice_to_correct.seller
+    @invoice.client_name = @invoice_to_correct.client_name
+    @invoice.client_street = @invoice_to_correct.client_street
+    @invoice.client_zip = @invoice_to_correct.client_zip
+    @invoice.client_city = @invoice_to_correct.client_city
+    @invoice.client_country = @invoice_to_correct.client_country
+    @invoice.client_email = @invoice_to_correct.client_email
+    @invoice.client_phone = @invoice_to_correct.client_phone
+    @invoice.client_nip = @invoice_to_correct.client_nip
+
+    @invoice_to_correct.invoice_items.each do |invoice_item|
+      invoice_item_correction = InvoiceItemCorrection.new
+      invoice_item_correction.invoice = @invoice
+      invoice_item_correction.item = invoice_item.item
+      invoice_item_correction.item_name = invoice_item.item.name
+      invoice_item_correction.item_name_correction = invoice_item.item.name
+      invoice_item_correction.quantity = invoice_item.quantity
+      invoice_item_correction.quantity_correction = invoice_item.quantity
+      invoice_item_correction.quantity_difference = 0
+      invoice_item_correction.tax_rate = invoice_item.tax_rate
+      invoice_item_correction.tax_rate_correction = invoice_item.tax_rate
+      invoice_item_correction.unit_price = invoice_item.unit_price
+      invoice_item_correction.unit_price_correction = invoice_item.unit_price
+      invoice_item_correction.unit_price_difference = Money.new(0)
+      invoice_item_correction.value_added_tax = invoice_item.value_added_tax
+      invoice_item_correction.value_added_tax_correction = invoice_item.value_added_tax
+      invoice_item_correction.value_added_tax_difference = Money.new(0)
+      invoice_item_correction.net_price = invoice_item.net_price
+      invoice_item_correction.net_price_correction = invoice_item.net_price
+      invoice_item_correction.net_price_difference = Money.new(0)
+      invoice_item_correction.total_selling_price = invoice_item.total_selling_price
+      invoice_item_correction.total_selling_price_correction = invoice_item.total_selling_price
+      invoice_item_correction.total_selling_price_difference = Money.new(0)
+      @invoice.invoice_item_corrections << invoice_item_correction
+    end
+  end
+
   # GET /invoices/1/edit
   def edit
     @client = Client.new

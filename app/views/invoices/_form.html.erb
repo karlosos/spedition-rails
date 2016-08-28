@@ -46,7 +46,7 @@
    <div class="row">
     <div class="col-sm-5">
       <%= label_tag :invoice_to_correct_id, "Dokument do korekcji" %>
-      <%= invoice_form.collection_select :invoice_to_correct_id, Invoice.all, 'id', 'get_name', prompt: 'Wybierz fakture' %>
+      <%= invoice_form.collection_select :invoice_to_correct_id, Invoice.all.joins(:invoice_name), 'id', 'get_name', prompt: 'Wybierz fakture' %>
     </div>
     <div class="col-sm-6">
       <%= label_tag :correction_cause, "Przyczyna korekcji" %>

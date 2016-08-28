@@ -84,6 +84,7 @@ class TransportOrdersControllerTest < ActionController::TestCase
   end
 
   test "should destroy transport_order" do
+    @request.env['HTTP_REFERER'] = 'http://test.host/transport_orders'
     assert_difference('TransportOrder.count', -1) do
       delete :destroy, id: @transport_order
     end

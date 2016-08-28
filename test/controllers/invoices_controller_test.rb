@@ -58,6 +58,47 @@ class InvoicesControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  test "should get new_correction" do
+    get :new_correction, :id => invoices(:invoice_one)
+    assert_response :success
+    @invoice = assigns(:invoice)
+    assert_equal @invoice.kind, 'correction'
+    assert_equal @invoice.invoice_to_correct_id, invoices(:invoice_one).id
+    assert_equal @invoice.client, invoices(:invoice_one).client
+    assert_equal @invoice.seller, invoices(:invoice_one).seller
+    assert_equal @invoice.client_name, invoices(:invoice_one).client_name
+    assert_equal @invoice.client_street, invoices(:invoice_one).client_street
+    assert_equal @invoice.client_zip, invoices(:invoice_one).client_zip
+    assert_equal @invoice.client_city, invoices(:invoice_one).client_city
+    assert_equal @invoice.client_country, invoices(:invoice_one).client_country
+    assert_equal @invoice.client_email, invoices(:invoice_one).client_email
+    assert_equal @invoice.client_phone, invoices(:invoice_one).client_phone
+    assert_equal @invoice.client_nip, invoices(:invoice_one).client_nip
+
+    invoices(:invoice_one).invoice_items.each_with_index do |invoice_item, index|
+      assert_equal @invoice.invoice_item_corrections[index].item, invoice_item.item
+      assert_equal @invoice.invoice_item_corrections[index].item_name, invoice_item.item.name
+      assert_equal @invoice.invoice_item_corrections[index].item_name_correction, invoice_item.item.name
+      assert_equal @invoice.invoice_item_corrections[index].quantity, invoice_item.quantity
+      assert_equal @invoice.invoice_item_corrections[index].quantity_correction, invoice_item.quantity
+      assert_equal @invoice.invoice_item_corrections[index].quantity_difference, 0
+      assert_equal @invoice.invoice_item_corrections[index].tax_rate, invoice_item.tax_rate
+      assert_equal @invoice.invoice_item_corrections[index].tax_rate_correction, invoice_item.tax_rate
+      assert_equal @invoice.invoice_item_corrections[index].unit_price, invoice_item.unit_price
+      assert_equal @invoice.invoice_item_corrections[index].unit_price_correction, invoice_item.unit_price
+      assert_equal @invoice.invoice_item_corrections[index].unit_price_difference, Money.new(0)
+      assert_equal @invoice.invoice_item_corrections[index].value_added_tax, invoice_item.value_added_tax
+      assert_equal @invoice.invoice_item_corrections[index].value_added_tax_correction, invoice_item.value_added_tax
+      assert_equal @invoice.invoice_item_corrections[index].value_added_tax_difference, Money.new(0)
+      assert_equal @invoice.invoice_item_corrections[index].net_price, invoice_item.net_price
+      assert_equal @invoice.invoice_item_corrections[index].net_price_correction, invoice_item.net_price
+      assert_equal @invoice.invoice_item_corrections[index].net_price_difference, Money.new(0)
+      assert_equal @invoice.invoice_item_corrections[index].total_selling_price, invoice_item.total_selling_price
+      assert_equal @invoice.invoice_item_corrections[index].total_selling_price_correction, invoice_item.total_selling_price
+      assert_equal @invoice.invoice_item_corrections[index].total_selling_price_difference, Money.new(0)
+    end
+  end
+
   test "should create invoice" do
     assert_difference('Invoice.count') do
       post :create, invoice: @invoice_params
