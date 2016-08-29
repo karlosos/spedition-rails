@@ -121,6 +121,45 @@ class InvoicesController < ApplicationController
     end
   end
 
+  def new_invoice_from_transport_orders
+    @client = Client.new
+    @client.build_address
+    @client.build_contact
+    @client.contact.emails.build
+
+    @item = Item.new
+
+    @invoice = Invoice.new
+    @invoice.build_invoice_name
+    @invoice.invoice_name.month = Date.today.month
+    @invoice.invoice_name.year = Date.today.year
+    @invoice.invoice_name.number = InvoiceName.get_last_number_for_date(DateTime.now.strftime('%F'))
+    @invoice.kind = 'vat'
+
+    transport_order_ids = params[:transport_order_ids]
+    transport_order_ids.each do |transport_order_id|
+      transport_order = TransportOrder.find(transport_order_id)
+      if transport_order.item.present?
+        invoice_item = InvoiceItem.new()
+        invoice_item.item_id = transport_order.item.id
+        invoice_item.quantity = 1
+        invoice_item.unit_price = transport_order.item.unit_price
+        @invoice.invoice_items << invoice_item
+        @invoice.transport_orders << transport_order
+      end
+    end
+    transport_order = TransportOrder.find(params[:transport_order_ids][0])
+    @invoice.client = transport_order.client
+    @invoice.seller = transport_order.seller
+    @invoice.client_name = transport_order.client_name
+    @invoice.client_street = transport_order.client_street
+    @invoice.client_zip = transport_order.client_zip
+    @invoice.client_city = transport_order.client_city
+    @invoice.client_nip = transport_order.client_nip
+    @invoice.client_country = transport_order.client_country
+    @invoice.sell_date = transport_order.unloading_places.last.date
+  end
+
   # GET /invoices/1/edit
   def edit
     @client = Client.new

@@ -90,6 +90,13 @@ class TransportOrdersController < ApplicationController
     @transport_order.build_transport_order_name
     @transport_order.build_transport_order_name.year = Date.today.year
     @transport_order.transport_order_name.number = TransportOrderName.get_last_number_for_year(Date.today.year)
+    item = Item.new()
+    item.transport_order = @transport_order
+    item.name = "Transportauftrag (usluga transportowa) #{@transport_order.route}"
+    item.tax = 23
+    item.unit_price = @transport_order.freight_rate + @transport_order.profit_margin
+    item.unit = "fracht"
+    item.save
     @transport_order.save
     redirect_to(:back)
   end

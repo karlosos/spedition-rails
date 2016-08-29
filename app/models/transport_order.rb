@@ -1,4 +1,6 @@
 class TransportOrder < ActiveRecord::Base
+  belongs_to :invoice
+  has_one :item
   has_one :transport_order_name, dependent: :destroy
   has_one :freichtage_description, dependent: :destroy
   has_many :loading_places, inverse_of: :transport_order

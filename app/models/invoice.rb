@@ -4,6 +4,7 @@ class Invoice < ActiveRecord::Base
   has_one :invoice_name, dependent: :destroy
   belongs_to :seller, class_name: 'Client', foreign_key: 'seller_id'
   belongs_to :client, class_name:  'Client', foreign_key: 'client_id'
+  has_many :transport_orders
   has_many :invoice_items, inverse_of: :invoice
   has_many :invoice_item_corrections, inverse_of: :invoice
   has_many :items, through: :invoice_items

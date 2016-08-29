@@ -4,6 +4,12 @@
 $(".invoices").ready ->
   pageLoad()
 
+$(".invoices.new_invoice_from_transport_orders").ready ->
+  $('.invoice_item').each () ->
+    console.log($(this))
+    invoice_item_calculate($(this))
+
+
 pageLoad = () ->
   invoice_items_functions()
   invoice_name_get_on_date_change()

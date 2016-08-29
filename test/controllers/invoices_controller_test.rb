@@ -103,6 +103,23 @@ class InvoicesControllerTest < ActionController::TestCase
     end
   end
 
+  test "should get new_invoice_from_transport_orders" do
+    transport_order = transport_orders(:transport_order_one)
+    transport_order_ids = [transport_order,]
+    get :new_invoice_from_transport_orders, :transport_order_ids => transport_order_ids
+    assert_response :success
+    @invoice = assigns(:invoice)
+    assert_equal @invoice.kind, 'vat'
+    assert_equal @invoice.client_id, transport_order.client_id
+    assert_equal @invoice.seller_id, transport_order.seller_id
+    assert_equal @invoice.client_name, transport_order.client_name
+    assert_equal @invoice.client_street, transport_order.client_street
+    assert_equal @invoice.client_zip, transport_order.client_zip
+    assert_equal @invoice.client_nip, transport_order.client_nip
+    assert_equal @invoice.client_city, transport_order.client_city
+    assert_equal @invoice.sell_date, transport_order.unloading_places.last.date
+  end
+
   test "should create invoice" do
     assert_difference('Invoice.count') do
       post :create, invoice: @invoice_params

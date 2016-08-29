@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160828161644) do
+ActiveRecord::Schema.define(version: 20160829163729) do
 
   create_table "addresses", force: true do |t|
     t.string   "line1"
@@ -201,20 +201,24 @@ ActiveRecord::Schema.define(version: 20160828161644) do
     t.integer  "invoice_to_correct_id"
     t.text     "correction_cause"
     t.datetime "currency_rate_date"
+    t.datetime "sell_date"
   end
 
   add_index "invoices", ["kind"], name: "index_invoices_on_kind"
 
   create_table "items", force: true do |t|
-    t.string   "name"
+    t.text     "name",                limit: 255
     t.string   "pkwiu"
     t.string   "unit"
     t.integer  "tax"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "unit_price_cents",    default: 0,     null: false
-    t.string   "unit_price_currency", default: "EUR", null: false
+    t.integer  "unit_price_cents",                default: 0,     null: false
+    t.string   "unit_price_currency",             default: "EUR", null: false
+    t.integer  "transport_order_id"
   end
+
+  add_index "items", ["transport_order_id"], name: "index_items_on_transport_order_id"
 
   create_table "loading_places", force: true do |t|
     t.integer  "transport_order_id"
@@ -243,7 +247,6 @@ ActiveRecord::Schema.define(version: 20160828161644) do
     t.integer  "carrier_id"
     t.string   "route"
     t.decimal  "distance"
-    t.string   "loading_country"
     t.datetime "unloading_date"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -279,7 +282,10 @@ ActiveRecord::Schema.define(version: 20160828161644) do
     t.string   "cmr_numer"
     t.string   "reference_transport_order_name"
     t.string   "car_registration_number"
+    t.integer  "invoice_id"
   end
+
+  add_index "transport_orders", ["invoice_id"], name: "index_transport_orders_on_invoice_id"
 
   create_table "unloading_places", force: true do |t|
     t.integer  "transport_order_id"
