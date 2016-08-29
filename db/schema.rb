@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160826161834) do
+ActiveRecord::Schema.define(version: 20160828161644) do
 
   create_table "addresses", force: true do |t|
     t.string   "line1"
@@ -200,6 +200,7 @@ ActiveRecord::Schema.define(version: 20160826161834) do
     t.string   "kind"
     t.integer  "invoice_to_correct_id"
     t.text     "correction_cause"
+    t.datetime "currency_rate_date"
   end
 
   add_index "invoices", ["kind"], name: "index_invoices_on_kind"

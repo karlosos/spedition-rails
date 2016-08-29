@@ -75,6 +75,10 @@ class InvoicesControllerTest < ActionController::TestCase
     assert_equal @invoice.client_phone, invoices(:invoice_one).client_phone
     assert_equal @invoice.client_nip, invoices(:invoice_one).client_nip
 
+    assert_equal @invoice.currency_rate, invoices(:invoice_one).currency_rate
+    assert_equal @invoice.currency_rate_table_name, invoices(:invoice_one).currency_rate_table_name
+    assert_equal @invoice.currency_rate_date, invoices(:invoice_one).currency_rate_date
+
     invoices(:invoice_one).invoice_items.each_with_index do |invoice_item, index|
       assert_equal @invoice.invoice_item_corrections[index].item, invoice_item.item
       assert_equal @invoice.invoice_item_corrections[index].item_name, invoice_item.item.name

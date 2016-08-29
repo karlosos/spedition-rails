@@ -90,6 +90,9 @@ class InvoicesController < ApplicationController
     @invoice.client_email = @invoice_to_correct.client_email
     @invoice.client_phone = @invoice_to_correct.client_phone
     @invoice.client_nip = @invoice_to_correct.client_nip
+    @invoice.currency_rate = @invoice_to_correct.currency_rate
+    @invoice.currency_rate_table_name = @invoice_to_correct.currency_rate_table_name
+    @invoice.currency_rate_date = @invoice_to_correct.currency_rate_date
 
     @invoice_to_correct.invoice_items.each do |invoice_item|
       invoice_item_correction = InvoiceItemCorrection.new
@@ -237,6 +240,7 @@ class InvoicesController < ApplicationController
       :invoice_exchange_currency,
       :currency_rate_table_name,
       :currency_rate_name,
+      :currency_rate_date,
       :currency_rate,
       :client_zip,
       :client_city,

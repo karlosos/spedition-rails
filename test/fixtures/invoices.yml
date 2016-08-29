@@ -26,6 +26,7 @@ invoice_one:
   currency_rate: "4.03"
   currency_rate_name: "EUR"
   currency_rate_table_name: "125/A/NBP/2016"
+  currency_rate_date: <%= DateTime.now %>
   status: 2
   deadline: 50
   date_deadline: <%= DateTime.now + 50.days %>
@@ -54,6 +55,7 @@ invoice_two:
   currency_rate: "4.03"
   currency_rate_name: "EUR"
   currency_rate_table_name: "125/A/NBP/2016"
+  currency_rate_date: <%= DateTime.now %>
   status: 2
   deadline: 50
   date_deadline: <%= DateTime.now + 50.days %>

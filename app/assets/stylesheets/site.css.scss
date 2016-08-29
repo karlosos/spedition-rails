@@ -95,6 +95,9 @@ th .desc:after {
 input[type="text"] {
   @extend .form-control;
 }
+input[type="date"] {
+  @extend .form-control;
+}
 input[type="number"] {
   @extend .form-control;
 }

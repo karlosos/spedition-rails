@@ -154,7 +154,7 @@
   <div class="row">
     <div class="col-xs-12">
       <% if @invoice.currency_rate_table_name.present? %>
-        Kurs waluty <%= @invoice.currency_rate_name %>/<%= @invoice.proper_exchange_currency %> <%= @invoice.currency_rate.to_s.gsub(".", ",") %>, tabela kursów średnich NBP nr <%= @invoice.currency_rate_table_name %> z dnia <%= @invoice.date.strftime('%F') %> <br>
+        Kurs waluty <%= @invoice.currency_rate_name %>/<%= @invoice.proper_exchange_currency %> <%= @invoice.currency_rate.to_s.gsub(".", ",") %>, tabela kursów średnich NBP nr <%= @invoice.currency_rate_table_name %> z dnia <%= @invoice.currency_rate_date.strftime('%F') %> <br>
         <span class="invoice_bold">Przeliczona kwota VAT: <%= @invoice.value_added_tax.exchange_to(@invoice.proper_exchange_currency).to_s.gsub(".", ",")   %> <%= @invoice.proper_exchange_currency %></span>
         <hr>
       <% end %>
