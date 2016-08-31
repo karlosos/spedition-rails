@@ -82,6 +82,7 @@ class TransportOrder < ActiveRecord::Base
     client_name = search_params[:client_name]
     client_name = client_name.downcase if client_name
     client_id = search_params[:client_id]
+    carrier_id = search_params[:carrier_id]
     carrier_name = search_params[:carrier_name]
     carrier_name = carrier_name.downcase if carrier_name
     driver_name = search_params[:driver_name]
@@ -125,6 +126,10 @@ class TransportOrder < ActiveRecord::Base
 
     if client_id.present?
       @transport_orders = @transport_orders.where('clients.id = ?', client_id)
+    end
+
+    if carrier_id.present?
+      @transport_orders = @transport_orders.where('carriers.id = ?', carrier_id)
     end
 
     if carrier_name.present?

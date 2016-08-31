@@ -1,12 +1,10 @@
 jQuery ->
   pageLoad()
+  reset_search_button_event()
 
 pageLoad = () ->
   emails_add_event()
   emails_remove_event()
-
-$(".clients.index").ready ->
-  reset_search_button_event()
 
 emails_add_event = () ->
   $('form').on 'click', '.add_email', (event) ->

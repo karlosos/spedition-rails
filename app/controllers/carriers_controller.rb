@@ -4,7 +4,12 @@ class CarriersController < ApplicationController
   # GET /carriers
   # GET /carriers.json
   def index
-    @carriers = Carrier.all
+    search_params = { :registration_number => params[:registration_number], :carrier_name => params[:carrier_name],
+      :driver_name => params[:driver_name]
+    }
+    @carriers = Carrier.all.search(search_params)
+    @carriers = @carriers.order(sort_column + " " + sort_direction)
+    @carriers = @carriers.paginate(:page => params[:page], :per_page => 30)
   end
 
   # GET /carriers/1
@@ -84,5 +89,18 @@ class CarriersController < ApplicationController
       :is_third_party, :driver_email, :carrier_name, :carrier_email,
       address_attributes: [:street, :line1, :line2, :city, :state, :country,
         :zip], contact_attributes: [:phone1, :phone2, :fax, :email, :www])
+    end
+
+    def sort_column
+      # Client.joins(:address).joins(:contact).column_names.include?(params[:sort]) ? params[:sort] : "name"
+      if params[:sort].present?
+        params[:sort]
+      else
+        "carrier_name"
+      end
+    end
+
+    def sort_direction
+      %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
     end
 end

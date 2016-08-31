@@ -97,6 +97,7 @@ class Invoice < ActiveRecord::Base
     date = search_params[:date]
     client_name = search_params[:client_name]
     client_id = search_params[:client_id]
+    carrier_id = search_params[:carrier_id]
     item_id = search_params[:item_id]
     client_name = client_name.downcase if client_name
     date_start = search_params[:date_start]
@@ -109,6 +110,7 @@ class Invoice < ActiveRecord::Base
 
     @invoices = Invoice.all
     @invoices = Invoice.all.joins(:invoice_items) if item_id.present?
+    @invoices = Invoice.all.joins(:transport_orders) if carrier_id.present?
 
     if kind.present?
       @invoices = @invoices.where('lower(kind) LIKE ?', "%#{kind.downcase}%")
@@ -117,6 +119,11 @@ class Invoice < ActiveRecord::Base
     if client_id.present?
       @invoices = @invoices.where('clients.id = ?', client_id)
     end
+
+    if carrier_id.present?
+      @invoices = @invoices.where('transport_orders.carrier_id = ?', carrier_id)
+    end
+
     if invoice_name_number.present?
       @invoices = @invoices.where('invoice_names.number = ?', invoice_name_number)
     end

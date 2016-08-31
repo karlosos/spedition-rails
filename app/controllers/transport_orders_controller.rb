@@ -12,6 +12,7 @@ class TransportOrdersController < ApplicationController
       :city => params[:city],
       :client_name => params[:client_name],
       :client_id => params[:client_id],
+      :carrier_id => params[:carrier_id],
       :carrier_name => params[:carrier_name],
       :driver_name => params[:driver_name],
       :registration_number => params[:registration_number],

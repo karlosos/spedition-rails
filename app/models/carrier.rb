@@ -23,4 +23,29 @@ class Carrier < ActiveRecord::Base
       return false
     end
   end
+
+  def self.search(search_params)
+    registration_number = search_params[:registration_number]
+    carrier_name = search_params[:carrier_name]
+    driver_name = search_params[:driver_name]
+
+    @carriers = Carrier.all
+
+    if registration_number.present?
+      registration_number = registration_number.downcase
+      @carriers = @carriers.where('lower(registration_number) LIKE ?', "%#{registration_number}%")
+    end
+
+    if carrier_name.present?
+      carrier_name = carrier_name.downcase
+      @carriers = @carriers.where('lower(carrier_name) LIKE ?', "%#{carrier_name}%")
+    end
+
+    if driver_name.present?
+      driver_name = driver_name.downcase
+      @carriers = @carriers.where('lower(driver_name) LIKE ?', "%#{driver_name}%")
+    end
+
+    @carriers
+  end
 end
