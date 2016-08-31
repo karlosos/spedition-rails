@@ -1,11 +1,59 @@
 <p id="notice"><%= notice %></p>
 
-Numer rejestracyjny: <%= @carrier.registration_number %> <br>
-Wymiary: <%= @carrier.size %> <br>
-Imie i nazwisko kierowcy: <%= @carrier.driver_name %> <br>
-Email kierowcy: <%= @carrier.driver_email %> <br>
-Nazwa przewoźnika: <%= @carrier.carrier_name %> <br>
-Email przewoźnika: <%= @carrier.carrier_email %> <br>
+<nav class="navbar menubar">
+  <ul>
+    <li>
+      <%= link_to_menu("Zobacz faktury", "glyphicon-search", invoices_path(:carrier_id=>@carrier.id)) %>
+    </li>
 
-<%= link_to 'Edit', edit_carrier_path(@carrier) %> |
-<%= link_to 'Back', carriers_path %>
+    <li>
+      <%= link_to_menu("Zobacz zlecenia", "glyphicon-search", transport_orders_path(:carrier_id=>@carrier.id)) %>
+    </li>
+
+    <li>
+      <%= link_to_menu("Edytuj", "glyphicon-edit", edit_carrier_path(@carrier)) %>
+    </li>
+
+    <li>
+      <%= link_to_menu("Usuń", "glyphicon-trash", carrier_path(@carrier), 1) %>
+    </li>
+  </ul>
+</nav>
+
+<h3> <%= @carrier.registration_number %></h3>
+<hr>
+<div class="row">
+  <div class="col-md-6">
+    <strong>Numer rejestracyjny:</strong>  <%= @carrier.registration_number %><br>
+    <strong>Wymiary:</strong> <%= @carrier.size %> <br>
+    <strong>Imie i nazwisko kierowcy:</strong> <%= @carrier.driver_name %> <br>
+    <strong>Email kierowcy:</strong> <%= @carrier.driver_email %> <br>
+    <strong>Nazwa przewoźnika:</strong> <%= @carrier.carrier_name %> <br>
+  </div>
+  <div class="col-md-6">
+    <div class="col-md-6">
+      <h4>Adres:</h4>
+      <p>
+        <%= @carrier.address.street %><br>
+        <%= @carrier.address.zip %>,
+        <%= @carrier.address.city %><br>
+        <%= @carrier.address.state %><br>
+        <%= @carrier.address.country %><br>
+      </p>
+      <h4>Kontakt:</h4>
+      <p>
+        Telefon:
+        <%= @carrier.contact.phone1 %>
+        <%= @carrier.contact.phone2 %><br>
+        Fax:
+        <%= @carrier.contact.fax %><br>
+        Email:
+        <% @carrier.contact.emails.each do |email| %>
+        <%= email.address %>
+        <% end %> <br>
+        WWW:
+        <%= @carrier.contact.www %><br>
+      </p>
+    </div>
+  </div>
+</div>

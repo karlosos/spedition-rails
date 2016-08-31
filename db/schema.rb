@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160829163729) do
+ActiveRecord::Schema.define(version: 20160831165942) do
 
   create_table "addresses", force: true do |t|
     t.string   "line1"
@@ -33,7 +33,6 @@ ActiveRecord::Schema.define(version: 20160829163729) do
     t.string   "registration_number"
     t.string   "size"
     t.string   "carrier_name"
-    t.string   "carrier_email"
     t.string   "driver_name"
     t.string   "driver_email"
     t.datetime "created_at"

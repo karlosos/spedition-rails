@@ -2,47 +2,52 @@
   <%= f.error_notification %>
 
   <div class="form-inputs">
-    <p>
-      <%= f.label :is_third_party, "Czy zewnętrzny zleceniobiorca?" %>
-      <%= f.check_box :is_third_party %>
-    </p>
-    <p>
-      <%= f.label :registration_number %><br />
-      <%= f.text_field :registration_number %>
-    </p>
+    <div class="row">
+      <div class="col-md-6">
+        <p>
+          <%= f.label :is_third_party, "Czy zewnętrzny zleceniobiorca?" %>
+          <%= f.check_box :is_third_party %>
+        </p>
+        <p>
+          <%= f.label :registration_number %><br />
+          <%= f.text_field :registration_number %>
+          <%= f.error :registration_number, id: 'registration_number' %>
+        </p>
 
-    <p>
-      <%= f.label :size %><br />
-      <%= f.text_field :size %>
-    </p>
+        <p>
+          <%= f.label :size %><br />
+          <%= f.text_field :size %>
+          <%= f.error :size, id: 'size' %>
+        </p>
 
-    <p>
-      <%= f.label :driver_name %><br />
-      <%= f.text_field :driver_name %>
-    </p>
+        <p>
+          <%= f.label :driver_name %><br />
+          <%= f.text_field :driver_name %>
+          <%= f.error :driver_name, id: 'driver_name' %>
+        </p>
 
-    <p>
-      <%= f.label :driver_email %><br />
-      <%= f.text_field :driver_email %>
-    </p>
+        <p>
+          <%= f.label :driver_email %><br />
+          <%= f.text_field :driver_email %>
+          <%= f.error :driver_email, id: 'driver_email' %>
+        </p>
 
-    <p>
-      <%= f.label :carrier_name %><br />
-      <%= f.text_field :carrier_name %>
-    </p>
+        <p>
+          <%= f.label :carrier_name %><br />
+          <%= f.text_field :carrier_name %>
+          <%= f.error :carrier_name, id: 'carrier_name' %>
+        </p>
+      </div>
+      <div class="col-md-6">
+        <%= f.fields_for :address do |address| %>
+          <%= render :partial => 'shared/address', :locals => {:f => address} %>
+        <% end %>
 
-    <p>
-      <%= f.label :carrier_email %><br />
-      <%= f.text_field :carrier_email %>
-    </p>
-
-    <%= f.fields_for :address do |address| %>
-      <%= render :partial => 'shared/address', :locals => {:f => address} %>
-    <% end %>
-
-    <%= f.fields_for :contact do |contact| %>
-      <%= render :partial => 'shared/contact', :locals => {:f => contact} %>
-    <% end %>
+        <%= f.fields_for :contact do |contact| %>
+          <%= render :partial => 'shared/contact', :locals => {:f => contact} %>
+        <% end %>
+      </div>
+    </div>
 
     <div class="actions">
       <%= f.submit %>
