@@ -21,6 +21,7 @@ pageLoad = () ->
   modal_functions()
   startSelect()
   invoice_status_functions()
+  create_invoice_redirect_on_invoice_type_select()
 
 #
 # Invoice items
@@ -547,3 +548,9 @@ check_invoice_update_checkboxes = () ->
     else
       $('.update_invoices').hide()
       $('#invoices_to_update_count').hide()
+
+create_invoice_redirect_on_invoice_type_select = () ->
+  $('#invoice_kind').change ->
+    type = $('#invoice_kind').val()
+    link = "/invoices/new?kind="+type
+    location.href = link;

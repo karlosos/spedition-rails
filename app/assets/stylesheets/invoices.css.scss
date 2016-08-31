@@ -35,35 +35,9 @@
   /* invoices index */
   .search_form {
     margin-top: 30px;
-    input {
-      display: inline;
-    }
     #advanced_search_form {
       display: none;
-      .form_short {
-        input {
-          width: auto;
-        }
-      }
     }
-    #client_name {
-      width: 236px;
-    }
-    input[type="submit"] {
-      width: 236px;
-    }
-  }
-  /* clients index */
-  .clients_search {
-    input[type="text"] {
-      width: 236px;
-    }
-    input[type="submit"] {
-      width: 236px;
-    }
-  }
-  .input-group-addon {
-    width: 0;
   }
   @mixin invoice-params {
     font-size: 12px;
@@ -159,5 +133,11 @@
     text-align: center;
     width: 50px;
     padding: 2px;
+  }
+  #invoice_client_id {
+    width: 100%;
+  }
+  #invoice_seller_id {
+    width: 100%;
   }
 }

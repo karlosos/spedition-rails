@@ -10,7 +10,8 @@ require 'csv'
 
 csv_text = File.read(Rails.root.join('lib', 'seeds', 'clients.csv'))
 csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1')
-csv.each do |row|
+csv.each_with_index do |row, i|
+  break if i == 50
   t = Client.new
   t.build_address
   t.build_contact
@@ -29,11 +30,37 @@ csv.each do |row|
   t.contact.phone1 = row['phone1']
   t.contact.phone2 = row['phone2']
   t.contact.fax = row['fax']
-  t.contact.email = row['email']
+  email = Email.new
+  email.address = row['email']
+  t.contact.emails << email
   t.contact.www = row['www']
   t.invoice_language = row['invoice_language']
   t.save
   puts "#{t.name} saved"
 end
 
-puts "There are now #{Client.count} rows in the transactions table"
+carriers_text = File.read(Rails.root.join('lib', 'seeds', 'carriers.csv'))
+carriers_csv = CSV.parse(carriers_text, :headers => true, :encoding => 'ISO-8859-1')
+carriers_csv.each_with_index do |row, i|
+  break if i == 50
+  t = Carrier.new
+  t.build_address
+  t.build_contact
+  t.registration_number = row["registration_number"]
+  t.size = row["size"]
+  t.carrier_name = row["carrier_name"]
+  t.driver_email = row["driver_email"]
+  carrier_email = Email.new
+  carrier_email.address = row["carrier_email"]
+  t.contact.emails << carrier_email
+  t.driver_name = row["driver_name"]
+  t.address.city = "x"
+  t.address.street = "x"
+  t.address.zip = "x"
+  t.address.country = "PL"
+  if t.save
+    puts "#{t.registration_number} saved"
+  end
+end
+
+puts "There are now #{Carrier.count} rows in the carriers table"

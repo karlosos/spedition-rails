@@ -9,6 +9,12 @@ $(".transport_orders.accounting_view").ready ->
   $('#checked_transport_orders_count').hide()
   show_menu_on_transport_order_checkbox_ticked()
 
+$(".edit").ready ->
+  startSelect()
+
+$(".new").ready ->
+  startSelect()
+  
 pageLoad = () ->
   # Edit view
   loading_places_add_event()
@@ -23,7 +29,6 @@ pageLoad = () ->
   update_route_on_place_edit()
   show_client_select_button()
 
-  startSelect()
 
 
 #

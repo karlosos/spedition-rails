@@ -15,7 +15,10 @@
             price_per_km = (freight_rate.to_f - profit_margin.to_f)/distance.to_f
           end
           %>
-          <th><%= "#{carrier.driver_name} - #{carrier.contact.phone1}" %></th>
+          <th>
+            <%= "#{carrier.driver_name}" %>
+            <%=  "- #{carrier.contact.phone1}" if carrier.contact.phone1 .present? %>
+          </th>
           <th>Suma frachtu:
             <%= humanized_money_with_symbol freight_rate %></th>
           <th>Suma marż:
