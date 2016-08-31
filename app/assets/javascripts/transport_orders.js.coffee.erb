@@ -3,6 +3,11 @@
 $(".transport_orders").ready ->
   pageLoad()
 
+$(".transport_orders.accounting_view").ready ->
+  $('.menubar').hide()
+  $('#checked_transport_orders_count').hide()
+  show_menu_on_transport_order_checkbox_ticked()
+
 pageLoad = () ->
   # Edit view
   loading_places_add_event()
@@ -16,6 +21,7 @@ pageLoad = () ->
   modal_functions()
   update_route_on_place_edit()
   show_client_select_button()
+
 
 #
 # Loading places in edit form
@@ -278,3 +284,27 @@ update_route_on_place_edit = () ->
     unloading_city = parent.find('#transport_order_unloading_places_attributes_0_city').val()
     route = loading_zip + ", " + loading_city + " nach " + unloading_zip + ", " + unloading_city
     parent.find('#transport_order_route').val(route)
+
+show_menu_on_transport_order_checkbox_ticked = () ->
+  $('.transport_order_checkbox').change ->
+    check_transport_order_checkboxes()
+
+check_transport_order_checkboxes = () ->
+    checked_count = $('.index_table').find('input[type="checkbox"]:checked').length;
+    if checked_count > 0
+      $('.menubar').show()
+      $('#checked_transport_orders_count').show()
+      transport_ids = []
+      $('.index_table').find('input[type="checkbox"]:checked').each ->
+        transport_ids.push($(this).val())
+      console.log(transport_ids)
+      $('#checked_transport_orders_count').html(checked_count)
+      link = "/new_invoice_from_transport_orders?"
+      for i, id of transport_ids
+        link += "transport_order_ids[]=" + id + "&"
+      console.log(link)
+
+      $('#new_invoice_link').attr("href", link)
+    else
+      $('.menubar').hide()
+      $('#checked_transport_orders_count').hide()

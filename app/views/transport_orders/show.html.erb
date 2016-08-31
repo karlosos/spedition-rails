@@ -1,3 +1,28 @@
+<nav class="navbar menubar">
+  <ul>
+    <li>
+    <%= link_to_menu("Drukuj", "glyphicon-print", transport_order_path(@transport_order, :format => :pdf)) %>
+    </li>
+
+    <li>
+    <%= link_to_menu("Pobierz PDF", "glyphicon-cloud-download", transport_order_path(@transport_order, :format => :pdf)) %>
+    </li>
+
+    <li>
+    <%= link_to_menu("Edytuj", "glyphicon-edit", edit_transport_order_path(@transport_order)) %>
+    </li>
+
+    <li>
+    <%= link_to_menu("Usuń", "glyphicon-trash", transport_order_path(@transport_order), 1) %>
+    </li>
+    <% if @transport_order.invoice.present? %>
+    <li>
+    <%= link_to_menu("Zobacz fakturę", "glyphicon-file", invoice_path(@transport_order.invoice)) %>
+    </li>
+    <% end %>
+  </ul>
+</nav>
+
 <div class="row">
   <div class="col-md-3">
     <h3>Numer zlecenia:</h3>

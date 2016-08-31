@@ -3,7 +3,10 @@ jQuery ->
 
 pageLoad = () ->
   date_picker_start()
-  
+  $('.hidden_menubar').hide()
+  $('#show_hidden_menubar').click ->
+    $('.hidden_menubar').toggle()
+
 #
 # Datepicker
 #

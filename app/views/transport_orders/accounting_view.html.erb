@@ -1,15 +1,28 @@
 <h1>Listing transport_orders</h1>
 <div class="row">
+  <nav class="navbar menubar">
+    <ul>
+      <li>
+        <span id="checked_transport_orders_count"></span> zlecenia do edycji
+      </li>
+      <li>
+        <a id="new_invoice_link" href="">Stwórz zbiorczą fakturę</a>
+      </li>
+    </ul>
+  </nav>
+
   <div class="col-sm-12">
     <table class="table index_table">
   <thead>
     <tr>
+      <th></th>
+      <th>Faktura</th>
       <th>Nr zlecenia</th>
       <th>Wartość frachtu</th>
       <th>Cena z marżą</th>
       <th>Trasa</th>
       <th colspan="2">Załadunek</th>
-      <th>Rozładunek</th>
+      <th colspan="2">Rozładunek</th>
       <th></th>
     </tr>
   </thead>
@@ -17,6 +30,15 @@
   <tbody>
     <% @transport_orders.each do |transport_order| %>
       <tr>
+        <td>
+          <%= check_box_tag 'transport_order_ids[]', transport_order.id, false, class: "transport_order_checkbox" %></td>
+        <td>
+          <% if transport_order.invoice.present? %>
+            <%= link_to transport_order.invoice.get_name, invoice_path(transport_order.invoice) %>
+          <% elsif transport_order.transport_order_name.present? %>
+            <%= link_to "Stworz fakture", new_invoice_from_transport_orders_path(transport_order_ids: [transport_order.id,]) %>
+          <% end %>
+        </td>
         <td>
         <% if transport_order.transport_order_name.present? %>
           <%= link_to transport_order.transport_order_name.get_name, transport_order %>

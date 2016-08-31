@@ -145,7 +145,6 @@ class InvoicesController < ApplicationController
         invoice_item.quantity = 1
         invoice_item.unit_price = transport_order.item.unit_price
         @invoice.invoice_items << invoice_item
-        @invoice.transport_orders << transport_order
       end
     end
     transport_order = TransportOrder.find(params[:transport_order_ids][0])
@@ -177,6 +176,14 @@ class InvoicesController < ApplicationController
     respond_to do |format|
       if @invoice.save
         update_client_info(@invoice, invoice_params)
+        # update transport_order info
+        @invoice.items.each do |item|
+          if item.transport_order.present?
+            transport_order = item.transport_order
+            transport_order.invoice_id = @invoice.id
+            transport_order.save
+          end
+        end
         format.html { redirect_to @invoice, notice: 'Invoice was successfully created.' }
         format.json { render :show, status: :created, location: @invoice }
       else
@@ -291,6 +298,7 @@ class InvoicesController < ApplicationController
       :total_selling_price_currency,
       :total_price_in_words,
       :total_price_in_words_currency,
+      :transport_order_ids,
       invoice_items_attributes: [ :id, :item_id, :quantity, :unit_price,
         :unit_price_currency, :net_price, :net_price_currency, :value_added_tax,
         :value_added_tax_currency, :total_selling_price,

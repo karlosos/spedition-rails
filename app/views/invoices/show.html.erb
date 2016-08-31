@@ -1,5 +1,5 @@
 <nav class="navbar menubar">
-  <ul>
+  <ul class="left">
     <li>
     <%= link_to_menu("Drukuj", "glyphicon-print", invoice_path(@invoice, :format => :pdf)) %>
     </li>
@@ -16,6 +16,22 @@
     <%= link_to_menu("Usuń", "glyphicon-trash", invoice_path(@invoice), 1) %>
     </li>
   </ul>
+
+  <ul class="right">
+    <li>
+      <span class="glyphicon glyphicon-collapse-down" id="show_hidden_menubar"></span>
+    </li>
+  </ul>
+
+  <div style="clear: both"></div>
+
+  <div class="row hidden_menubar">
+    <div class="col-sm-12">
+      <% @invoice.transport_orders.each do |transport_order| %>
+      <%= link_to transport_order.transport_order_name.get_name, transport_order_path(transport_order) %>
+      <% end %>
+    </div>
+  </div>
 </nav>
 
 <div id="invoice_page">

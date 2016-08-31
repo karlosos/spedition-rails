@@ -73,7 +73,6 @@ th .desc:after {
 /* menu bar */
 .menubar {
   min-height: 40px;
-  height: 40px;
   line-height: 40px;
   font-size: 15px;
   background-color: rgb(247, 247, 247);
@@ -82,6 +81,12 @@ th .desc:after {
   padding-left: 15px;
   padding-right: 15px;
   color: rgb(79, 79, 79);
+  .left {
+    float: left;
+  }
+  .right {
+    float: right;
+  }
   ul {
     margin: 0;
     padding: 0;
