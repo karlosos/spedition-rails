@@ -112,3 +112,9 @@ input[type="submit"] {
 textarea {
   @extend .form-control;
 }
+
+.linkt_to_create {
+  @extend .btn;
+  @extend .btn-success;
+  width: 100%;
+}

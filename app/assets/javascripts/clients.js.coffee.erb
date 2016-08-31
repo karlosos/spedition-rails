@@ -5,11 +5,14 @@ pageLoad = () ->
   emails_add_event()
   emails_remove_event()
 
+$(".clients.index").ready ->
+  reset_search_button_event()
+
 emails_add_event = () ->
   $('form').on 'click', '.add_email', (event) ->
     time = new Date().getTime()
     regexp = new RegExp($(this).data('id'), 'g')
-    $(this).parent().before($(this).data('fields').replace(regexp, time))
+    $(this).before($(this).data('fields').replace(regexp, time))
     event.preventDefault()
 
 emails_remove_event = () ->
@@ -18,3 +21,19 @@ emails_remove_event = () ->
     $(this).closest('div').hide()
     event.preventDefault()
     invoice_calculate()
+
+reset_search_button_event = () ->
+  $('#reset_search_button').click (e) ->
+    invoice_search_clear()
+    e.preventDefault()
+
+invoice_search_clear = () ->
+  simple_search_clear()
+  advanced_search_clear()
+
+simple_search_clear = () ->
+  $('#short_search_form').find('input').val("")
+
+advanced_search_clear = () ->
+  $('#advanced_search_form').find('input').val("")
+  $('#advanced_search_form').find('input[type=checkbox]').prop('checked', false);

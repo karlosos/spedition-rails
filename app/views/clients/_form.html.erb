@@ -11,24 +11,28 @@
     </div>
   <% end %>
 
-  <p>
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
-  </p>
+  <div class="row">
+    <div class="col-md-6">
+      <p>
+        <%= f.label :name %><br />
+        <%= f.text_field :name, :required => true %>
+      </p>
 
-  <p>
-    <%= f.label :nip %><br />
-    <%= f.text_field :nip %>
-  </p>
+      <p>
+        <%= f.label :nip %><br />
+        <%= f.text_field :nip, :required => true %>
+      </p>
+      <%= f.fields_for :address do |address| %>
+      <%= render :partial => 'shared/address', :locals => {:f => address} %>
+      <% end %>
+    </div>
+    <div class="col-md-6">
 
-  <%= f.fields_for :address do |address| %>
-  <%= render :partial => 'shared/address', :locals => {:f => address} %>
-  <% end %>
-
-  <%= f.fields_for :contact do |contact| %>
-   <%= render :partial => 'shared/contact', :locals => {:f => contact} %>
-  <% end %>
-
+      <%= f.fields_for :contact do |contact| %>
+       <%= render :partial => 'shared/contact', :locals => {:f => contact} %>
+      <% end %>
+    </div>
+  </div>
   <div class="actions">
     <%= f.submit %>
   </div>

@@ -1,15 +1,19 @@
 <nav class="navbar menubar">
   <ul>
     <li>
+      <%= link_to_menu("Zobacz faktury", "glyphicon-search", invoices_path(:client_id=>@client.id)) %>
+    </li>
+
+    <li>
+      <%= link_to_menu("Zobacz zlecenia", "glyphicon-search", transport_orders_path(:client_id=>@client.id)) %>
+    </li>
+
+    <li>
       <%= link_to_menu("Edytuj", "glyphicon-edit", edit_client_path(@client)) %>
     </li>
 
     <li>
       <%= link_to_menu("Usuń", "glyphicon-trash", client_path(@client), 1) %>
-    </li>
-
-    <li>
-      <%= link_to_menu("Zobacz faktury", "glyphicon-search", invoices_path(:client_id=>@client.id)) %>
     </li>
   </ul>
 </nav>
@@ -27,25 +31,34 @@
       <%= @client.nip %>
     </p>
     <p>
-      <strong>Adres:</strong><br>
+      <strong>Email:</strong>
+      <% @client.contact.emails.each do |email| %>
+      <%= email.address %>
+      <% end %>
+    </p>
+  </div>
+  <div class="col-md-6">
+    <h4>Adres:</h4>
+    <p>
       <%= @client.address.street %><br>
       <%= @client.address.zip %>,
       <%= @client.address.city %><br>
       <%= @client.address.state %><br>
       <%= @client.address.country %><br>
     </p>
+    <h4>Kontakt:</h4>
     <p>
-      <strong>Kontakt:</strong><br>
-      <strong>Telefon:</strong>
+      Telefon:
       <%= @client.contact.phone1 %>
       <%= @client.contact.phone2 %><br>
-      <strong>Fax:</strong>
+      Fax:
       <%= @client.contact.fax %><br>
-      <strong>Email:</strong>
-      <%= @client.contact.email %><br>
-      <strong>WWW:</strong>
+      Email:
+      <% @client.contact.emails.each do |email| %>
+      <%= email.address %>
+      <% end %> <br>
+      WWW:
       <%= @client.contact.www %><br>
     </p>
   </div>
-  <div class="col-md-6"></div>
 </div>
