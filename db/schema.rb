@@ -246,6 +246,7 @@ ActiveRecord::Schema.define(version: 20160831165942) do
     t.integer  "carrier_id"
     t.string   "route"
     t.decimal  "distance"
+    t.datetime "loading_date"
     t.datetime "unloading_date"
     t.datetime "created_at"
     t.datetime "updated_at"

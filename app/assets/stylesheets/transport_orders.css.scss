@@ -61,4 +61,26 @@
       display: none;
     }
   }
+
+  .transport_order_name_search {
+    #transport_order_name_number {
+      width: 100px;
+      display: inline;
+    }
+
+    #transport_order_name_year {
+      width: 150px;
+      display: inline;
+    }
+  }
+
+  #transport_order_client_id {
+    width: 100%;
+  }
+  #transport_order_seller_id {
+    width: 100%;
+  }
+  #transport_order_carrier_id {
+    width: 100%;
+  }
 }

@@ -1,4 +1,13 @@
 <div class="loading_place">
+  <p>
+    <%= label_tag :date, "Data załadunku" %>
+    <div class='input-group date' id='datetimepicker2' data-date-format="yyyy-mm-dd" locale="pl">
+      <%= f.text_field :date, { class: "form-control", value: '', :readonly => true } %>
+      <span class="input-group-addon">
+        <span class="glyphicon glyphicon-calendar"></span>
+      </span>
+    </div>
+  </p>
   <%= f.label :zip, "Loading ZIP" %>
   <%= f.text_field :zip %>
   <%= f.label :zip, "Loading city" %>
