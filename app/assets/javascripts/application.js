@@ -25,19 +25,19 @@
 //= require_tree .
 
 function show_client_modal() {
-  $('#new_client_modal').modal('toggle')
-  $('#invoice_client_id').select2("close")
+  $('#new_client_modal').modal('toggle');
+  $('#invoice_client_id').select2("close");
 }
 
 function show_client_modal_transport_order() {
-  $('#new_client_modal').modal('toggle')
-  $('#transport_order_client_id').select2("close")
-  mail = $("#transport_order_client_email").val()
-  modal_mail_input = $('#new_client_modal').find(".email").find("input").first()
-  modal_mail_input.val(mail)
+  $("#new_client_modal").modal("toggle");
+  $("#transport_order_client_id").select2("close");
+  mail = $("#transport_order_client_email").val();
+  modal_mail_input = $("#new_client_modal").find(".email").find("input").first();
+  modal_mail_input.val(mail);
 }
 
 function show_item_modal() {
-  $('#new_item_modal').modal('toggle')
-  $('.invoice_items_form').find('select').select2("close")
+  $("#new_item_modal").modal("toggle");
+  $(".invoice_items_form").find("select").select2("close");
 }

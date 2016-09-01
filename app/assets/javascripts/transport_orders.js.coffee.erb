@@ -14,7 +14,7 @@ $(".edit").ready ->
 
 $(".new").ready ->
   startSelect()
-  
+
 pageLoad = () ->
   # Edit view
   loading_places_add_event()
@@ -197,6 +197,7 @@ findClientOnEmailChange = () ->
           console.log($(this).parent().parent().find('.show_client_select'))
           client_select.parent().find('.show_client_select').prop("title", data[0]["client_info"])
         else
+          $('.show_client_select').hide()
           client_select.show()
           startClientSelect(client_select)
 

@@ -41,7 +41,7 @@ class TransportOrdersController < ApplicationController
 
     speditor_id = params[:speditor_id]
     date = params[:date]
-    @carriers = Carrier.all
+    @carriers = Carrier.all.limit(5)
     @transport_orders = Array.new
     for i in 0..@carriers.count
       transport_order = TransportOrder.new
