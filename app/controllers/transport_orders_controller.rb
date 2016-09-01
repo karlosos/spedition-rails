@@ -88,18 +88,22 @@ class TransportOrdersController < ApplicationController
 
   def create_name
     @transport_order = TransportOrder.find(params[:id])
-    @transport_order.build_transport_order_name
-    @transport_order.build_transport_order_name.year = Date.today.year
-    @transport_order.transport_order_name.number = TransportOrderName.get_last_number_for_year(Date.today.year)
-    item = Item.new()
-    item.transport_order = @transport_order
-    item.name = "Transportauftrag (usluga transportowa) #{@transport_order.route}"
-    item.tax = 23
-    item.unit_price = @transport_order.freight_rate + @transport_order.profit_margin
-    item.unit = "fracht"
-    item.save
-    @transport_order.save
-    redirect_to(:back)
+    can_create_name = @transport_order.can_create_name
+    if can_create_name.size == 0
+      @transport_order.build_transport_order_name
+      @transport_order.build_transport_order_name.year = Date.today.year
+      @transport_order.transport_order_name.number = TransportOrderName.get_last_number_for_year(Date.today.year)
+      item = Item.new()
+      item.transport_order = @transport_order
+      item.name = "Transportauftrag (usluga transportowa) #{@transport_order.route}"
+      item.tax = 23
+      item.unit_price = @transport_order.freight_rate + @transport_order.profit_margin
+      item.unit = "fracht"
+      item.save
+      @transport_order.save
+    end
+
+    redirect_to :back, :flash => { :notice =>  can_create_name}
   end
 
   # GET /transport_orders/1/edit
@@ -163,6 +167,7 @@ class TransportOrdersController < ApplicationController
       :distance_id, :freight_rate, :profit_margin,
       :loading_country, :loading_zip, :loading_city, :loading_date, :unloading_country,
       :unloading_zip, :distance, :unloading_city, :unloading_date, :route, :client_email,
+      :car_registration_number, :carrier_driver_name,
       transport_order_name_attributes: [:number, :year],
       loading_places_attributes: [ :id, :zip, :city, :country, :date],
       unloading_places_attributes: [ :id, :zip, :city, :country, :date],

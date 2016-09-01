@@ -70,6 +70,27 @@ class TransportOrder < ActiveRecord::Base
     end
   end
 
+  def can_create_name
+    errors = Array.new
+    if !loading_status
+      errors << "Zlecenie nie zostało załadowane"
+    end
+
+    if !unloading_status
+      errors << "Zlecenie nie zostało rozładowane"
+    end
+
+    if !cmr_numer.present?
+      errors << "Brak numeru CMR"
+    end
+
+    if !route.present?
+      errors << "Pusta trasa"
+    end
+
+    return errors
+  end
+
   def self.search(search_params)
     name_number = search_params[:transport_order_name_number]
     name_year = search_params[:transport_order_name_year]

@@ -18,6 +18,8 @@
         <%= f.hidden_field :carrier_id, value: carrier.id %>
         <%= f.hidden_field :seller_id, value: Client.first.id %>
         <%= f.hidden_field :route %>
+        <%= f.hidden_field :carrier_driver_name, value: carrier.driver_name %>
+        <%= f.hidden_field :car_registration_number, value: carrier.registration_number %>
       </td>
       <td><%= f.number_field :freight_rate, placeholder: "Kwota frachtu" %></td>
       <%= f.fields_for :loading_places do |builder| %>
