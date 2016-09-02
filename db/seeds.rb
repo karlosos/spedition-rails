@@ -42,7 +42,6 @@ end
 carriers_text = File.read(Rails.root.join('lib', 'seeds', 'carriers.csv'))
 carriers_csv = CSV.parse(carriers_text, :headers => true, :encoding => 'ISO-8859-1')
 carriers_csv.each_with_index do |row, i|
-  break if i == 50
   t = Carrier.new
   t.build_address
   t.build_contact
@@ -50,14 +49,22 @@ carriers_csv.each_with_index do |row, i|
   t.size = row["size"]
   t.carrier_name = row["carrier_name"]
   t.driver_email = row["driver_email"]
+  if !t.driver_email.present?
+    t.driver_email = "driver_email@gmail.com"
+  end
   carrier_email = Email.new
   carrier_email.address = row["carrier_email"]
+  if !carrier_email.address.present?
+    carrier_email.address = "carrier_email@example.com"
+  end
   t.contact.emails << carrier_email
   t.driver_name = row["driver_name"]
   t.address.city = "x"
   t.address.street = "x"
   t.address.zip = "x"
   t.address.country = "PL"
+  t.valid?
+  puts t.errors.full_messages
   if t.save
     puts "#{t.registration_number} saved"
   end

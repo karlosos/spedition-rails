@@ -6,7 +6,7 @@ class AddTransportOrderAdditionalFields < ActiveRecord::Migration
     add_column :transport_orders, :payment_type, :text
     add_column :transport_orders, :additional_comments, :text
     add_column :transport_orders, :arrangements, :text
-    add_column :transport_orders, :cmr_numer, :string
+    add_column :transport_orders, :cmr_number, :string
     add_column :transport_orders, :reference_transport_order_name, :string
   end
 end

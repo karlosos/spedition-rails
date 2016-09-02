@@ -80,7 +80,7 @@ class TransportOrder < ActiveRecord::Base
       errors << "Zlecenie nie zostało rozładowane"
     end
 
-    if !cmr_numer.present?
+    if !cmr_number.present?
       errors << "Brak numeru CMR"
     end
 

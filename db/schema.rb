@@ -279,7 +279,7 @@ ActiveRecord::Schema.define(version: 20160831165942) do
     t.text     "payment_type"
     t.text     "additional_comments"
     t.text     "arrangements"
-    t.string   "cmr_numer"
+    t.string   "cmr_number"
     t.string   "reference_transport_order_name"
     t.string   "car_registration_number"
     t.integer  "invoice_id"

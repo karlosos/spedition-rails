@@ -89,7 +89,7 @@ class TransportOrdersController < ApplicationController
   def create_name
     @transport_order = TransportOrder.find(params[:id])
     can_create_name = @transport_order.can_create_name
-    if can_create_name.size == 0
+    if can_create_name.size == 0 && !@transport_order.transport_order_name.present?
       @transport_order.build_transport_order_name
       @transport_order.build_transport_order_name.year = Date.today.year
       @transport_order.transport_order_name.number = TransportOrderName.get_last_number_for_year(Date.today.year)
@@ -167,7 +167,7 @@ class TransportOrdersController < ApplicationController
       :distance_id, :freight_rate, :profit_margin,
       :loading_country, :loading_zip, :loading_city, :loading_date, :unloading_country,
       :unloading_zip, :distance, :unloading_city, :unloading_date, :route, :client_email,
-      :car_registration_number, :carrier_driver_name,
+      :car_registration_number, :carrier_driver_name, :cmr_number,
       transport_order_name_attributes: [:number, :year],
       loading_places_attributes: [ :id, :zip, :city, :country, :date],
       unloading_places_attributes: [ :id, :zip, :city, :country, :date],
