@@ -1,6 +1,10 @@
 <nav class="navbar menubar">
   <ul class="left">
     <li>
+      <%= link_to_menu("Utwórz korektę", "glyphicon-file", new_correction_invoice_path(@invoice)) %>
+    </li>
+
+    <li>
     <%= link_to_menu("Drukuj", "glyphicon-print", invoice_path(@invoice, :format => :pdf)) %>
     </li>
 
