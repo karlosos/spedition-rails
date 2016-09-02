@@ -30,6 +30,16 @@
     </div>
 
     <div class="col-sm-2">
+      <%= label_tag :sell_date, "Data sprzedaży" %>
+      <div class='input-group date' id='datetimepicker2' data-date-format="yyyy-mm-dd" locale="pl">
+        <%= invoice_form.text_field :sell_date, { class: "form-control", value: Date.today, :readonly => true } %>
+        <span class="input-group-addon">
+          <span class="glyphicon glyphicon-calendar"></span>
+        </span>
+      </div>
+    </div>
+
+    <div class="col-sm-2">
       <%= label_tag :invoice_name_form, "Numer faktury" %>
       <%= invoice_form.fields_for :invoice_name do |invoice_name_form| %>
       <% render :partial => 'invoice_name_form', :locals => {:f => invoice_name_form} %>

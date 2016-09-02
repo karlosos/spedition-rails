@@ -270,6 +270,7 @@ class InvoicesController < ApplicationController
       params.require(:invoice).permit(
       :kind,
       :date,
+      :sell_date,
       :place,
       :seller_id,
       :client_id,
