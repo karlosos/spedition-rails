@@ -312,6 +312,10 @@ startSelect = () ->
               text: invoice.name
             }
           )}
+    .change ->
+      invoice_to_correct_id = this.value
+      link = "/invoices/new_correction/"+invoice_to_correct_id
+      location.href = link
 
   $('.invoice_items_form').find('select').select2
     theme: 'bootstrap'
@@ -560,4 +564,4 @@ create_invoice_redirect_on_invoice_type_select = () ->
   $('#invoice_kind').change ->
     type = $('#invoice_kind').val()
     link = "/invoices/new?kind="+type
-    location.href = link;
+    location.href = link
