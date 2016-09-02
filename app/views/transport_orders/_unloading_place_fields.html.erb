@@ -2,7 +2,7 @@
   <p>
     <%= label_tag :date, "Data rozładunku" %>
     <div class='input-group date' id='datetimepicker2' data-date-format="yyyy-mm-dd" locale="pl">
-      <%= f.text_field :date, { class: "form-control", value: '', :readonly => true } %>
+      <%= f.text_field :date, { class: "form-control", :readonly => true } %>
       <span class="input-group-addon">
         <span class="glyphicon glyphicon-calendar"></span>
       </span>
