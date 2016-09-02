@@ -3,6 +3,9 @@
     <tr>
       <th colspan="2">Email</th>
       <th>Kwota frachtu</th>
+      <% if carrier.is_third_party %>
+      <th>Marża</th>
+      <% end %>
       <th colspan="2">Załadunek</th>
       <th colspan="2">Rozładunek</th>
       <th>Dystans</th>
@@ -22,6 +25,9 @@
         <%= f.hidden_field :car_registration_number, value: carrier.registration_number %>
       </td>
       <td><%= f.number_field :freight_rate, placeholder: "Kwota frachtu" %></td>
+      <% if carrier.is_third_party %>
+        <td><%= f.number_field :profit_margin, placeholder: "Marża" %></td>
+      <% end %>
       <%= f.fields_for :loading_places do |builder| %>
           <td><%= builder.text_field :zip, placeholder: "Kod pocztowy", class: "zip_input place_input" %></td>
           <td><%= builder.text_field :city, placeholder: "Miasto", class: "city_input place_input" %></td>
