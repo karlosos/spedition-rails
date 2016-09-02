@@ -72,6 +72,11 @@ class TransportOrder < ActiveRecord::Base
 
   def can_create_name
     errors = Array.new
+
+    if transport_order_name.present?
+      errors << "Zlecenie ma już numer"
+    end
+
     if !loading_status
       errors << "Zlecenie nie zostało załadowane"
     end
