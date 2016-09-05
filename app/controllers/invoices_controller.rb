@@ -101,7 +101,7 @@ class InvoicesController < ApplicationController
       invoice_item_correction.item_name = invoice_item.item.name
       invoice_item_correction.item_name_correction = invoice_item.item.name
       invoice_item_correction.quantity = invoice_item.quantity
-      invoice_item_correction.quantity_correction = invoice_item.quantity
+      invoice_item_correction.quantity_correction = invoice_item_correction.quantity
       invoice_item_correction.quantity_difference = 0
       invoice_item_correction.tax_rate = invoice_item.tax_rate
       invoice_item_correction.tax_rate_correction = invoice_item.tax_rate
