@@ -71,3 +71,23 @@ carriers_csv.each_with_index do |row, i|
 end
 
 puts "There are now #{Carrier.count} rows in the carriers table"
+
+TAX_TYPES = [*0..100, "zw", "nw"].freeze
+
+[*0..100].each do |tax|
+  t = TaxRate.new
+  t.value = tax
+  t.name = tax.to_s
+  if t.save
+    puts "TaxRate #{tax} saved"
+  end
+end
+
+["zw", "nw"].each do |tax|
+  t = TaxRate.new
+  t.value = 0
+  t.name = tax
+  if t.save
+    puts "TaxRate #{tax} saved"
+  end
+end

@@ -1,2 +1,2 @@
-class TaxRate < ActiveRecord::
+class TaxRate < ActiveRecord::Base
 end
