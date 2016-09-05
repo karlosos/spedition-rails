@@ -4,7 +4,6 @@ class CreateItems < ActiveRecord::Migration
       t.string :name
       t.string :pkwiu
       t.string :unit
-      t.integer :tax
       t.timestamps
     end
   end

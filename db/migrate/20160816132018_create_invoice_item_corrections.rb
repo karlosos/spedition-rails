@@ -8,8 +8,6 @@ class CreateInvoiceItemCorrections < ActiveRecord::Migration
       t.integer :quantity, :default => 1
       t.integer :quantity_correction, :default => 1
       t.integer :quantity_difference, :default => 1
-      t.integer :tax_rate, :default => 23
-      t.integer :tax_rate_correction, :default => 23
       t.timestamps
     end
     add_money :invoice_item_corrections, :unit_price

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160831165942) do
+ActiveRecord::Schema.define(version: 20160905141736) do
 
   create_table "addresses", force: true do |t|
     t.string   "line1"
@@ -100,8 +100,6 @@ ActiveRecord::Schema.define(version: 20160831165942) do
     t.integer  "quantity",                                default: 1
     t.integer  "quantity_correction",                     default: 1
     t.integer  "quantity_difference",                     default: 1
-    t.integer  "tax_rate",                                default: 23
-    t.integer  "tax_rate_correction",                     default: 23
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "unit_price_cents",                        default: 0,     null: false
@@ -128,10 +126,14 @@ ActiveRecord::Schema.define(version: 20160831165942) do
     t.string   "total_selling_price_correction_currency", default: "EUR", null: false
     t.integer  "total_selling_price_difference_cents",    default: 0,     null: false
     t.string   "total_selling_price_difference_currency", default: "EUR", null: false
+    t.integer  "tax_rate_id"
+    t.integer  "tax_rate_correction_id"
   end
 
   add_index "invoice_item_corrections", ["invoice_id"], name: "index_invoice_item_corrections_on_invoice_id"
   add_index "invoice_item_corrections", ["item_id"], name: "index_invoice_item_corrections_on_item_id"
+  add_index "invoice_item_corrections", ["tax_rate_correction_id"], name: "index_invoice_item_corrections_on_tax_rate_correction_id"
+  add_index "invoice_item_corrections", ["tax_rate_id"], name: "index_invoice_item_corrections_on_tax_rate_id"
 
   create_table "invoice_items", force: true do |t|
     t.integer  "invoice_id"
@@ -141,17 +143,18 @@ ActiveRecord::Schema.define(version: 20160831165942) do
     t.datetime "updated_at"
     t.integer  "unit_price_cents",             default: 0,     null: false
     t.string   "unit_price_currency",          default: "EUR", null: false
-    t.integer  "tax_rate",                     default: 23
     t.integer  "value_added_tax_cents",        default: 0,     null: false
     t.string   "value_added_tax_currency",     default: "EUR", null: false
     t.integer  "net_price_cents",              default: 0,     null: false
     t.string   "net_price_currency",           default: "EUR", null: false
     t.integer  "total_selling_price_cents",    default: 0,     null: false
     t.string   "total_selling_price_currency", default: "EUR", null: false
+    t.integer  "tax_rate_id"
   end
 
   add_index "invoice_items", ["invoice_id"], name: "index_invoice_items_on_invoice_id"
   add_index "invoice_items", ["item_id"], name: "index_invoice_items_on_item_id"
+  add_index "invoice_items", ["tax_rate_id"], name: "index_invoice_items_on_tax_rate_id"
 
   create_table "invoice_names", force: true do |t|
     t.integer  "number"
@@ -209,14 +212,15 @@ ActiveRecord::Schema.define(version: 20160831165942) do
     t.text     "name",                limit: 255
     t.string   "pkwiu"
     t.string   "unit"
-    t.integer  "tax"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "unit_price_cents",                default: 0,     null: false
     t.string   "unit_price_currency",             default: "EUR", null: false
     t.integer  "transport_order_id"
+    t.integer  "tax_rate_id"
   end
 
+  add_index "items", ["tax_rate_id"], name: "index_items_on_tax_rate_id"
   add_index "items", ["transport_order_id"], name: "index_items_on_transport_order_id"
 
   create_table "loading_places", force: true do |t|
@@ -230,6 +234,13 @@ ActiveRecord::Schema.define(version: 20160831165942) do
   end
 
   add_index "loading_places", ["transport_order_id"], name: "index_loading_places_on_transport_order_id"
+
+  create_table "tax_rates", force: true do |t|
+    t.string   "name"
+    t.integer  "value"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "transport_order_names", force: true do |t|
     t.integer  "number"
