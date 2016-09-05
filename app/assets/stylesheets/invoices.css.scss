@@ -27,10 +27,13 @@
     margin-top: 20px;
   }
 
-  .invoice_items_form {
+  .item_select {
     select {
       width: 300px;
     }
+  }
+  .tax_rate {
+    width: 75px;
   }
   /* invoices index */
   .search_form {

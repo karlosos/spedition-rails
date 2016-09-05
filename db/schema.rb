@@ -100,6 +100,8 @@ ActiveRecord::Schema.define(version: 20160905141736) do
     t.integer  "quantity",                                default: 1
     t.integer  "quantity_correction",                     default: 1
     t.integer  "quantity_difference",                     default: 1
+    t.integer  "tax_rate",                                default: 23
+    t.integer  "tax_rate_correction",                     default: 23
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "unit_price_cents",                        default: 0,     null: false
@@ -143,6 +145,7 @@ ActiveRecord::Schema.define(version: 20160905141736) do
     t.datetime "updated_at"
     t.integer  "unit_price_cents",             default: 0,     null: false
     t.string   "unit_price_currency",          default: "EUR", null: false
+    t.integer  "tax_rate",                     default: 23
     t.integer  "value_added_tax_cents",        default: 0,     null: false
     t.string   "value_added_tax_currency",     default: "EUR", null: false
     t.integer  "net_price_cents",              default: 0,     null: false
@@ -212,6 +215,7 @@ ActiveRecord::Schema.define(version: 20160905141736) do
     t.text     "name",                limit: 255
     t.string   "pkwiu"
     t.string   "unit"
+    t.integer  "tax"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "unit_price_cents",                default: 0,     null: false

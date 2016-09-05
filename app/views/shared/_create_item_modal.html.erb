@@ -44,7 +44,7 @@
 
         <div class="form-group">
           <%= f.label :tax_rate_id, "Wartość VAT [%]", :step => 'any'  %>
-          <%= f.collection_select :tax_rate_id, TaxRate.all, :id, :name %>
+          <%= f.collection_select :tax_rate_id, TaxRate.important_only, :id, :name, {}, { :class => "tax_rate"} %>
           <span class="help-block"></span>
         </div>
 

@@ -39,19 +39,7 @@ invoice_item_add_event = () ->
     regexp = new RegExp($(this).data('id'), 'g')
     $(this).parent().parent().before($(this).data('fields').replace(regexp, time))
     event.preventDefault()
-    $('.invoice_items_form').find('select').select2
-      theme: 'bootstrap'
-      ajax:
-        url: '/items.json'
-        dataType: 'json'
-        processResults: (data) ->
-          return {
-          results: $.map(data, (item, i) ->
-            {
-              id: item.id
-              text: item.name
-            }
-          )}
+    startSelect()
 
     create_object_links()
     invoice_items_price_update_on_item_change()
@@ -320,6 +308,9 @@ startSelect = () ->
       invoice_to_correct_id = this.value
       link = "/invoices/new_correction/"+invoice_to_correct_id
       location.href = link
+
+    $('.tax_rate').select2
+      theme: 'bootstrap'
 
   $('.invoice_items_form').find('.item_select').find('select').select2
     theme: 'bootstrap'

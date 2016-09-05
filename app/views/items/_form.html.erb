@@ -14,7 +14,7 @@
     <%= f.number_field :unit_price, :step => 'any' %>
     <%= f.error :unit_price %>  <br>
     <%= f.label :tax_rate_id, "Wartość VAT [%]", :step => 'any'  %>
-    <%= f.collection_select :tax_rate_id, TaxRate.all, :id, :name %>
+    <%= f.collection_select :tax_rate_id, TaxRate.important_only, :id, :name %>
     <%= f.error :tax_rate %>  <br>
     <%= f.label :pkwiu, "pkwiu" %>
     <%= f.text_field :pkwiu %>
