@@ -10,8 +10,8 @@
 
     <%= f.label :unit_price_cents, "Cena za jm #{@item.unit}" %>
     <%= f.number_field :unit_price, :step => 'any' %> <br>
-    <%= f.label :tax, "Tax?!", :step => 'any'  %>
-    <%= f.number_field :tax, :step => 'any' %> <br>
+    <%= f.label :tax, "Wartość VAT [%]", :step => 'any'  %>
+    <%= f.text_field :tax %> <br>
     <%= f.label :pkwiu, "pkwiu" %>
     <%= f.text_field :pkwiu %> <br>
   </div>

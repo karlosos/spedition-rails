@@ -24,7 +24,6 @@ class CarriersControllerTest < ActionController::TestCase
         driver_name: "Karol Cichy",
         driver_email: "cichy@email.com",
         carrier_name: "Trans",
-        carrier_email: "trans@super.pl"
       }
     end
 
@@ -48,7 +47,6 @@ class CarriersControllerTest < ActionController::TestCase
       driver_name: "Karol Cichy",
       driver_email: "cichy@email.com",
       carrier_name: "Trans",
-      carrier_email: "trans@super.pl"
     }
     assert_redirected_to carrier_path(assigns(:carrier))
   end

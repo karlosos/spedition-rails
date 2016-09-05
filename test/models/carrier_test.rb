@@ -23,11 +23,11 @@ class CarrierTest < ActiveSupport::TestCase
     assert_not @carrier.valid?
   end
 
-  test "carrier email should be present" do
-    assert @carrier.carrier_email.present?
-    @carrier.carrier_email = nil
-    assert_not @carrier.valid?
-  end
+  # test "carrier email should be present" do
+  #   assert @carrier.carrier_email.present?
+  #   @carrier.carrier_email = nil
+  #   assert_not @carrier.valid?
+  # end
 
   test "driver name should be present" do
     assert @carrier.driver_name.present?
