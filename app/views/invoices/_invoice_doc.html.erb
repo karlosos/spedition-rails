@@ -93,7 +93,7 @@
               <%= invoice_item.item.unit %></td>
             <td><%= humanized_money_with_symbol invoice_item.unit_price %></td>
             <td><%= humanized_money_with_symbol invoice_item.net_price %></td>
-            <td><%= invoice_item.tax_rate %></td>
+            <td><%= invoice_item.tax_rate.name %></td>
             <td><%= humanized_money_with_symbol invoice_item.value_added_tax %></td>
             <td><%= humanized_money_with_symbol invoice_item.total_selling_price %></td>
           </tr>
@@ -106,7 +106,7 @@
               <%= invoice_item.item.unit %></td>
             <td><%= humanized_money_with_symbol invoice_item.unit_price_correction %></td>
             <td><%= humanized_money_with_symbol invoice_item.net_price_correction %></td>
-            <td><%= invoice_item.tax_rate_correction %></td>
+            <td><%= invoice_item.tax_rate_correction.name %></td>
             <td><%= humanized_money_with_symbol invoice_item.value_added_tax_correction %></td>
             <td><%= humanized_money_with_symbol invoice_item.total_selling_price_correction %></td>
           </tr>
@@ -117,7 +117,7 @@
             <td><%= invoice_item.quantity_difference %></td>
             <td><%= humanized_money_with_symbol invoice_item.unit_price_difference %></td>
             <td><%= humanized_money_with_symbol invoice_item.net_price_difference %></td>
-            <td><%= invoice_item.tax_rate_correction %></td>
+            <td><%= invoice_item.tax_rate_correction.name %></td>
             <td><%= humanized_money_with_symbol invoice_item.value_added_tax_difference %></td>
             <td><%= humanized_money_with_symbol invoice_item.total_selling_price_difference %></td>
           </tr>

@@ -96,7 +96,7 @@ class TransportOrdersController < ApplicationController
       item = Item.new()
       item.transport_order = @transport_order
       item.name = "Transportauftrag (usluga transportowa) #{@transport_order.route}"
-      item.tax = 23
+      item.tax_rate_id = 23
       item.unit_price = @transport_order.freight_rate + @transport_order.profit_margin
       item.unit = "fracht"
       item.save

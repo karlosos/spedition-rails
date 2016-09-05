@@ -11,8 +11,4 @@ class Item < ActiveRecord::Base
   validates_presence_of :tax_rate
   validates :name, presence: true
   validates :unit, presence: true
-  TAX_TYPES = [*0..100, "zw", "nw"].freeze
-
-  validates_inclusion_of :tax, in: TAX_TYPES,
-                                  message: "{{value}} must be in #{TAX_TYPES.join ','}"
 end

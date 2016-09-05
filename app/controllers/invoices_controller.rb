@@ -303,11 +303,11 @@ class InvoicesController < ApplicationController
       invoice_items_attributes: [ :id, :item_id, :quantity, :unit_price,
         :unit_price_currency, :net_price, :net_price_currency, :value_added_tax,
         :value_added_tax_currency, :total_selling_price,
-        :total_selling_price_currency, :tax_rate, :_destroy,
+        :total_selling_price_currency, :tax_rate_id, :_destroy,
         item_attributes:
           [:name, :unit, :id ]
       ],
-      invoice_item_corrections_attributes: [ :id, :item_id, :quantity, :quantity_correction,
+      invoice_item_corrections_attributes: [ :id, :item_id, :quantity, :quantity_correction, :quantity_difference,
           :item_name, :item_name_correction,
 	        :unit_price, :unit_price_correction, :unit_price_difference,
 	        :unit_price_currency, :unit_price_correction_currency, :unit_price_difference_currency,
@@ -317,7 +317,7 @@ class InvoicesController < ApplicationController
 	        :value_added_tax_currency, :value_added_tax_correction_currency, :value_added_tax_difference_currency,
 	        :total_selling_price, :total_selling_price_correction, :total_selling_price_difference,
 	        :total_selling_price_currency, :total_selling_price_correction_currency, :total_selling_price_difference_currency,
-	        :tax_rate, :tax_rate_correction,
+	        :tax_rate_id, :tax_rate_correction_id,
 	        :_destroy,
           item_attributes:
             [:name, :unit, :id ]

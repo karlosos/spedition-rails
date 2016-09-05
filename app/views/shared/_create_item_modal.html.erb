@@ -43,8 +43,8 @@
         </div>
 
         <div class="form-group">
-          <%= f.label :tax, "Tax?!", :step => 'any'  %>
-          <%= f.number_field :tax, :step => 'any' %>
+          <%= f.label :tax_rate_id, "Wartość VAT [%]", :step => 'any'  %>
+          <%= f.collection_select :tax_rate_id, TaxRate.all, :id, :name %>
           <span class="help-block"></span>
         </div>
 

@@ -1,5 +1,5 @@
 <tr>
-  <td>
+  <td class="item_select">
     <%= f.collection_select :item_id, Item.all, :id, :name, prompt: 'Wybierz towar' %>
     <%= f.text_field :item_name_correction %>
   </td>
@@ -18,8 +18,9 @@
     <%= f.hidden_field :unit_price_difference_currency, :readonly => true, :class => 'currency' %>
   </td>
   <td>
-    <%= f.number_field :tax_rate, { :class => 'tax_rate editable_invoice_item_input' } %>
-    <%= f.number_field :tax_rate_correction, { :class => 'tax_rate_correction editable_invoice_item_correction_input' } %>
+    <%= f.collection_select :tax_rate_id, TaxRate.all, :id, :name, {}, { :class => 'tax_rate editable_invoice_item_input' } %>
+
+    <%= f.collection_select :tax_rate_correction_id, TaxRate.all, :id, :name, {}, { :class => 'tax_rate_correction editable_invoice_item_correction_input' } %>
   </td>
   <td>
     <%= f.number_field :net_price, { :readonly => true, class: 'net_price', :step => '0.01', :precision => 2} %>

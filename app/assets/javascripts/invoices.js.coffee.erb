@@ -90,8 +90,10 @@ invoice_item_calculate = (invoice_item_group, class_suffix = '') ->
 
   quantity = parseInt(parent.find('.quantity' + class_suffix).val())
   unit_price = parseFloat(parent.find('.unit_price' + class_suffix).val())
-  tax_rate = parseInt(parent.find('.tax_rate' + class_suffix).val())
-
+  tax_rate_name = parent.find('.tax_rate' + class_suffix + " option:selected").text()
+  tax_rate = parseInt(tax_rate_name)
+  if tax_rate_name == "zw" || tax_rate_name == "nw"
+    tax_rate = 0
   net_price = quantity * unit_price
   net_price = parseFloat(net_price).toFixed(2)
   value_added_tax = net_price * (tax_rate/100)
@@ -319,7 +321,7 @@ startSelect = () ->
       link = "/invoices/new_correction/"+invoice_to_correct_id
       location.href = link
 
-  $('.invoice_items_form').find('select').select2
+  $('.invoice_items_form').find('.item_select').find('select').select2
     theme: 'bootstrap'
     placeholder:
       id: "-1",
