@@ -3,7 +3,9 @@ class InvoiceItem < ActiveRecord::Base
 
   belongs_to :invoice
   belongs_to :item
+  belongs_to :tax_rate
 
+  validates_presence_of :tax_rate
   validates_presence_of :invoice
   validates_presence_of :item
   validates_presence_of :quantity

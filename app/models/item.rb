@@ -1,5 +1,6 @@
 class Item < ActiveRecord::Base
   belongs_to :transport_order
+  belongs_to :tax_rate
   has_many :invoice_items
   has_many :invoices, through: :invoice_items
 
@@ -7,6 +8,7 @@ class Item < ActiveRecord::Base
     greater_than_or_equal_to: 0
   }
 
+  validates_presence_of :tax_rate
   validates :name, presence: true
   validates :unit, presence: true
   TAX_TYPES = [*0..100, "zw", "nw"].freeze

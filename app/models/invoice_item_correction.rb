@@ -1,7 +1,11 @@
 class InvoiceItemCorrection < ActiveRecord::Base
   belongs_to :invoice
   belongs_to :item
+  belongs_to :tax_rate, class_name: 'TaxRate', foreign_key: 'tax_rate_id'
+  belongs_to :tax_rate_correction, class_name:  'TaxRate', foreign_key: 'tax_rate_correction_id'
 
+  validates_presence_of :tax_rate
+  validates_presence_of :tax_rate_correction
   validates_presence_of :invoice
   validates_presence_of :item
   validates_presence_of :quantity

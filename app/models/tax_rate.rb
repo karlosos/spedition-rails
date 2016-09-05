@@ -1,0 +1,2 @@
+class TaxRate < ActiveRecord::
+end
