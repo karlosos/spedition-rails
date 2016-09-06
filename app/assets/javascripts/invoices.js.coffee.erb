@@ -198,7 +198,7 @@ modal_success_binds = () ->
     else if (event.target.id == "new_item")
       $('#new_item_modal').modal_success();
       option = $('<option selected>' + data.name + '</option>').val("" + data.id);
-      $('.invoice_items_form').find('select').append(option).trigger('change');
+      $('.item_select').find('select').append(option).trigger('change');
       console.log("item"))
 
 modal_error_binds = () ->
