@@ -13,35 +13,36 @@ gem 'coffee-rails', '~> 4.0.0'
 # gem 'therubyracer',  platforms: :ruby
 
 # Use jquery as the JavaScript library
-gem 'jquery-rails'
+gem 'jquery-rails', '3.1.4'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
-gem 'turbolinks'
+gem 'turbolinks', '2.5.3'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0',          group: :doc
 
 # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-gem 'bootstrap-sass'
-gem 'will_paginate'
-gem 'money-rails'
-gem 'simple_form'
-gem 'country_select'
-gem 'jquery-turbolinks'
-gem "select2-rails"
-gem 'bootstrap-datepicker-rails'
+gem 'bootstrap-sass', '3.3.5'
+gem 'devise', '4.2.0'
+gem 'will_paginate', '3.1.0'
+gem 'money-rails', '1.6.1'
+gem 'simple_form', '3.2.1'
+gem 'country_select', '2.5.2'
+gem 'jquery-turbolinks', '2.1.0'
+gem "select2-rails", '4.0.3'
+gem 'bootstrap-datepicker-rails', '1.6.1.1'
 #gem 'chosen-rails'
-gem 'wkhtmltopdf-binary'
-gem 'wicked_pdf'
-gem 'rubyzip'
-gem 'nested_form_fields'
+gem 'wkhtmltopdf-binary', '0.9.9.3'
+gem 'wicked_pdf', '1.0.6'
+gem 'rubyzip', '1.2.0'
+gem 'nested_form_fields', '0.7.8'
 
 group :development, :test do
   gem 'sqlite3',     '1.3.9'
   gem 'byebug',      '3.4.0'
   gem 'web-console', '2.0.0.beta3'
   gem 'spring',      '1.1.3'
-  gem 'quiet_assets'
+  gem 'quiet_assets', '1.1.0'
 end
 
 group :production do
