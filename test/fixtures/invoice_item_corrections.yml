@@ -11,7 +11,8 @@ invoice_item_correction_one:
   unit_price_cents: 100
   unit_price_correction_cents: 200
   unit_price_difference_cents: 100
-  tax_rate: 23
+  tax_rate: tax_rate_one
+  tax_rate_correction: tax_rate_one
   quantity: 3
   quantity_correction: 5
   quantity_difference: 2

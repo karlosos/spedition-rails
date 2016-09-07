@@ -224,6 +224,7 @@ class TransportOrder < ActiveRecord::Base
       self.client.contact.emails << email
       #client.save
     end
+    true
   end
 
   # TODO zrefaktoryzować ta funkcje

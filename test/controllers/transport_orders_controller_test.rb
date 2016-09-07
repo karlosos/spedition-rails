@@ -21,8 +21,10 @@ class TransportOrdersControllerTest < ActionController::TestCase
       post :create, transport_order: {
         client_id: clients(:client_google).id,
         carrier_id: carriers(:carrier_one).id,
+        seller_id: clients(:client_microsoft).id,
         route: "Polska - Niemcy",
         distance: "213",
+        client_email: "karlososhd@gmail.com",
         loading_places_attributes:
         {
           "0" => {
@@ -62,6 +64,7 @@ class TransportOrdersControllerTest < ActionController::TestCase
       carrier_id: carriers(:carrier_one).id,
       route: "Polska - Niemcy",
       distance: "213",
+      client_email: "karlososhd@gmail.com",
       loading_places_attributes:
       {
         "0" => {

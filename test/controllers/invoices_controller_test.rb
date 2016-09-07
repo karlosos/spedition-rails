@@ -28,7 +28,7 @@ class InvoicesControllerTest < ActionController::TestCase
             item_id: items(:item_one).id,
             quantity: "1",
             unit_price: "1.30",
-            tax_rate: "23",
+            tax_rate_id: tax_rates(:tax_rate_one).id,
             net_price: "1.30",
             value_added_tax: "0.30",
             total_selling_price: "1.60",

@@ -9,7 +9,7 @@ invoice_items_one:
   item: item_one
   invoice: invoice_one
   unit_price_cents: 10000
-  tax_rate: 23
+  tax_rate: tax_rate_one
   quantity: 2
   net_price_cents: 20000
   value_added_tax_cents: 4600
@@ -20,7 +20,7 @@ invoice_items_two:
   item: item_two
   invoice: invoice_one
   unit_price_cents: 8300
-  tax_rate: 23
+  tax_rate: tax_rate_one
   quantity: 3
   net_price_cents: 24900
   value_added_tax_cents: 5976

@@ -1,9 +1,9 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  name: MyString
-  value: 1
+tax_rate_one:
+  name: 23
+  value: 23
 
-two:
-  name: MyString
-  value: 1
+tax_rate_two:
+  name: 5
+  value: 5
