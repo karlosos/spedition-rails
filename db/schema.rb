@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160907132657) do
+ActiveRecord::Schema.define(version: 20160907142237) do
 
   create_table "addresses", force: true do |t|
     t.string   "line1"
@@ -91,6 +91,25 @@ ActiveRecord::Schema.define(version: 20160907132657) do
   end
 
   add_index "freichtage_descriptions", ["transport_order_id"], name: "index_freichtage_descriptions_on_transport_order_id"
+
+  create_table "group_memberships", force: true do |t|
+    t.integer  "member_id",       null: false
+    t.string   "member_type",     null: false
+    t.integer  "group_id"
+    t.string   "group_type"
+    t.string   "group_name"
+    t.string   "membership_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "group_memberships", ["group_id", "group_type"], name: "index_group_memberships_on_group_id_and_group_type"
+  add_index "group_memberships", ["member_id", "member_type"], name: "index_group_memberships_on_member_id_and_member_type"
+
+  create_table "groups", force: true do |t|
+    t.string "type"
+    t.string "name"
+  end
 
   create_table "invoice_item_corrections", force: true do |t|
     t.integer  "invoice_id"

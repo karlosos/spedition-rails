@@ -36,6 +36,7 @@ gem 'wkhtmltopdf-binary', '0.9.9.3'
 gem 'wicked_pdf', '1.0.6'
 gem 'rubyzip', '1.2.0'
 gem 'nested_form_fields', '0.7.8'
+gem 'groupify', '0.8.0'
 
 group :development, :test do
   gem 'sqlite3',     '1.3.9'

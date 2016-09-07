@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   resources :clients
   resources :carriers
   resources :transport_orders
+  resources :groups
   resources :invoices do
     collection do
       put 'update_multiple'
