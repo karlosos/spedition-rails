@@ -9,10 +9,10 @@ module ApplicationHelper
   end
 
   def get_site_name()
-    base_title = request.subdomain
-
     if !request.subdomain.present?
       base_title = 'Faktury'
+    else
+      base_title = request.subdomain
     end
   end
 
