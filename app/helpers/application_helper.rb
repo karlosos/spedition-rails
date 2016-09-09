@@ -1,10 +1,18 @@
 module ApplicationHelper
   def full_title(page_title)
-    base_title = 'Faktury'
+    base_title = get_site_name()
     if page_title.empty?
       base_title
     else
       "#{page_title} | #{base_title}"
+    end
+  end
+
+  def get_site_name()
+    base_title = request.subdomain
+
+    if !request.subdomain.present?
+      base_title = 'Faktury'
     end
   end
 

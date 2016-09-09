@@ -1,22 +1,25 @@
 Rails.application.routes.draw do
   devise_for :users
-  resources :clients
-  resources :carriers
-  resources :transport_orders
   resources :groups
-  resources :invoices do
-    collection do
-      put 'update_multiple'
-      get 'zip_multiple'
+
+  constraints(Subdomain) do
+    resources :clients
+    resources :carriers
+    resources :transport_orders
+    resources :invoices do
+      collection do
+        put 'update_multiple'
+        get 'zip_multiple'
+      end
     end
+    resources :items
+    get 'invoices/invoice_name/:kind/:date' => 'invoices#last_invoice_number_for_date'
+    get 'spedition/transport_orders/:speditor_id/:date' => 'transport_orders#speditor_view', :as => :speditor_view
+    get 'accounting/transport_orders/' => 'transport_orders#accounting_view', :as => :accounting_view
+    put 'accounting/transport_orders/:id/create_name' => 'transport_orders#create_name', :as => :transport_order_create_name
+    get 'invoices/new_correction/:id/' => 'invoices#new_correction', :as => :new_correction_invoice
+    get 'new_invoice_from_transport_orders/' => 'invoices#new_invoice_from_transport_orders', :as => :new_invoice_from_transport_orders
   end
-  resources :items
-  get 'invoices/invoice_name/:kind/:date' => 'invoices#last_invoice_number_for_date'
-  get 'spedition/transport_orders/:speditor_id/:date' => 'transport_orders#speditor_view', :as => :speditor_view
-  get 'accounting/transport_orders/' => 'transport_orders#accounting_view', :as => :accounting_view
-  put 'accounting/transport_orders/:id/create_name' => 'transport_orders#create_name', :as => :transport_order_create_name
-  get 'invoices/new_correction/:id/' => 'invoices#new_correction', :as => :new_correction_invoice
-  get 'new_invoice_from_transport_orders/' => 'invoices#new_invoice_from_transport_orders', :as => :new_invoice_from_transport_orders
 
   root 'pages#home'
 
