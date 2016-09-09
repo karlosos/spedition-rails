@@ -109,6 +109,7 @@ ActiveRecord::Schema.define(version: 20160907142237) do
   create_table "groups", force: true do |t|
     t.string "type"
     t.string "name"
+    t.string "subdomain"
   end
 
   create_table "invoice_item_corrections", force: true do |t|
