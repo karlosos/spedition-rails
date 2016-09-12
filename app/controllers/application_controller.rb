@@ -9,10 +9,12 @@ class ApplicationController < ActionController::Base
     if request.subdomain.present?
       group = Group.find_by_subdomain(request.subdomain)
       if group
-        if current_user.in_group?(group)
-          @group = group
-        else
-          redirect_to root_url(subdomain: false)
+        if current_user
+          if current_user.in_group?(group)
+            @group = group
+          else
+            redirect_to root_url(subdomain: false)
+          end
         end
       else
         redirect_to root_url(subdomain: false)

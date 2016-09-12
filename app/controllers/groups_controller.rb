@@ -61,6 +61,26 @@ class GroupsController < ApplicationController
     end
   end
 
+  def add_users_to_group
+    group = Group.find(params[:id])
+    emails = params["user_emails"]
+    password = params["default_password"]
+    emails.each do |email|
+      user = User.find_by_email(email)
+      if user
+        group.add(user)
+      else
+        user = User.new
+        user.email = email
+        user.password = password
+        user.save
+        group.add(user)
+      end
+    end
+
+    redirect_to :back
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_group

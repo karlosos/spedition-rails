@@ -1,5 +1,26 @@
 <p id="notice"><%= notice %></p>
-<%= @group.name %>
+<h2> <%= @group.name %> </h2>
 <%= @group.subdomain %>
+
+<h3>Użytkownicy</h3>
+<table class="table">
+  <% @group.users.each do |user| %>
+    <tr>
+      <td><%= user.email %></td>
+      <td></td>
+      <td>Usuń</td>
+    </tr>
+  <% end %>
+</table>
+
+<h3>Dodaj użytkowników</h3>
+<%= form_tag add_users_to_group_path(:id => @group.id), :method => 'post' do %>
+  <%= label_tag "Emaile" %>
+  <%= select_tag "user_emails[]", options_from_collection_for_select(User.all, :email, :email), { multiple: "multiple" } %>
+  <%= label_tag "Domyślne hasło" %>
+  <%= text_field_tag "default_password" %>
+  <br>
+  <%= submit_tag "Dodaj", :name => nil %>
+<% end %>
 <%= link_to 'Edit', edit_group_path(@group) %> |
 <%= link_to 'Back', groups_path %>
