@@ -2,6 +2,8 @@ Rails.application.routes.draw do
   devise_for :users
   resources :groups
   post 'groups/add_users/:id' => 'groups#add_users_to_group', :as => :add_users_to_group
+  post 'groups/remove_user/:id' => 'groups#remove_user_from_group', :as => :remove_user_from_group
+  post 'groups/remove_user_role/:id'=> 'groups#remove_user_role_from_group', :as => :remove_user_role_from_group
 
   constraints(Subdomain) do
     resources :clients

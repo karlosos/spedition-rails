@@ -65,18 +65,36 @@ class GroupsController < ApplicationController
     group = Group.find(params[:id])
     emails = params["user_emails"]
     password = params["default_password"]
+    role = params["membership_type"]
     emails.each do |email|
       user = User.find_by_email(email)
       if user
-        group.add(user)
+        group.add(user, as: role)
       else
         user = User.new
         user.email = email
         user.password = password
         user.save
-        group.add(user)
+        group.add(user, as: role)
       end
     end
+
+    redirect_to :back
+  end
+
+  def remove_user_from_group
+    group = Group.find(params[:id])
+    user = User.find_by_email(params[:user_email])
+    group.users.delete(user)
+
+    redirect_to :back
+  end
+
+  def remove_user_role_from_group
+    group = Group.find(params[:id])
+    user = User.find_by_email(params[:user_email])
+    role = params["membership_type"]
+    group.users.delete(user, as: role)
 
     redirect_to :back
   end

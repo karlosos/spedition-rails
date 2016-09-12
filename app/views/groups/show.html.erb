@@ -7,8 +7,25 @@
   <% @group.users.each do |user| %>
     <tr>
       <td><%= user.email %></td>
-      <td></td>
-      <td>Usuń</td>
+      <td>
+        <% memberships = user.group_memberships_as_member.where("group_id = ?", 1)%>
+        <% memberships.each do |membership| %>
+          <% if membership.membership_type.present? %>
+            <%= form_tag remove_user_role_from_group_path(:id => @group.id), :methos => 'post' do %>
+              <%= membership.membership_type %>
+              <%= hidden_field_tag 'user_email', user.email %>
+              <%= hidden_field_tag 'membership_type', membership.membership_type %>
+              <span class="glyphicon glyphicon-trash remove_role"></span>
+            <% end %>
+          <% end %>
+        <% end %>
+      </td>
+      <td>
+        <%= form_tag remove_user_from_group_path(:id => @group.id), :method => 'post' do %>
+          <%= hidden_field_tag 'user_email', user.email %>
+          <%= submit_tag "Usuń" %>
+        <% end %>
+      </td>
     </tr>
   <% end %>
 </table>
@@ -19,6 +36,9 @@
   <%= select_tag "user_emails[]", options_from_collection_for_select(User.all, :email, :email), { multiple: "multiple" } %>
   <%= label_tag "Domyślne hasło" %>
   <%= text_field_tag "default_password" %>
+  <%= label_tag "Role" %>
+  <%= select_tag "membership_type", options_for_select(Group::ROLES) %>
+  <br>
   <br>
   <%= submit_tag "Dodaj", :name => nil %>
 <% end %>

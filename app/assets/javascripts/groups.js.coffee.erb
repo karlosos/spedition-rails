@@ -2,5 +2,8 @@ $(".groups").ready ->
   pageLoad()
 
 pageLoad = () ->
-  $('select').select2
+  $('#user_emails_').select2
     tags: true
+  $('#membership_type').select2
+  $('.remove_role').click ->
+    $(this).parent().submit()
