@@ -20,7 +20,7 @@
           <%= f.fields_for :transport_order_name do |transport_order_name_form| %>
             <% render :partial => 'transport_order_name_form', :locals => {:f => transport_order_name_form} %>
           <% end %>
-        <% elsif params["user"] == "accounting" %>
+        <% elsif current_user.in_group?(@group, as: 'accounting') %>
           <%= label_tag :transport_order_name, "Numer zlecenia" %>
           <%= link_to 'Stwórz zlecenie', transport_order_create_name_path(@transport_order.id), method: :put %>
         <% end %>
