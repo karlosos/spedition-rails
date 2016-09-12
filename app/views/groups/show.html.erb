@@ -8,7 +8,7 @@
     <tr>
       <td><%= user.email %></td>
       <td>
-        <% memberships = user.group_memberships_as_member.where("group_id = ?", 1)%>
+        <% memberships = user.group_memberships_as_member.where("group_id = ?", @group.id)%>
         <% memberships.each do |membership| %>
           <% if membership.membership_type.present? %>
             <%= form_tag remove_user_role_from_group_path(:id => @group.id), :methos => 'post' do %>

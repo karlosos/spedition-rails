@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160907142237) do
+ActiveRecord::Schema.define(version: 20160912142917) do
 
   create_table "addresses", force: true do |t|
     t.string   "line1"
@@ -67,6 +67,15 @@ ActiveRecord::Schema.define(version: 20160907142237) do
   end
 
   add_index "contacts", ["contactable_type", "contactable_id"], name: "index_contacts_on_contactable_type_and_contactable_id", unique: true
+
+  create_table "default_values", force: true do |t|
+    t.integer  "group_id"
+    t.string   "invoice_place"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "default_values", ["group_id"], name: "index_default_values_on_group_id"
 
   create_table "emails", force: true do |t|
     t.string   "address"
