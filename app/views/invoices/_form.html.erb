@@ -48,7 +48,12 @@
 
     <div class="col-sm-3">
       <%= label_tag :place, "Miejsce wystawienia" %>
-      <%= invoice_form.text_field :place %>
+      <% if @invoice.place.present? %>
+        <% place = @invoice.place %>
+      <% else %>
+        <% place = @group.default_value.invoice_place %>
+      <% end %>
+      <%= invoice_form.text_field :place, value: place %>
     </div>
   </div>
 

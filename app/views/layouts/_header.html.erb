@@ -55,7 +55,7 @@
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Ustawienia <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><%= link_to "Użytkownicy grupy", @group %></li>
-            <li><%= link_to "Wartości domyślne", @group %></li>
+            <li><%= link_to "Wartości domyślne", edit_default_value_path(@group.default_value) %></li>
           </ul>
         </li>
         <% end %>
