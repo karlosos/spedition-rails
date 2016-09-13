@@ -1,4 +1,4 @@
 # Be sure to restart your server when you modify this file.
 
 #Rails.application.config.session_store :cookie_store, key: '_Thunder_session'
-Rails.application.config.session_store :cookie_store, :key => '_domain_session', :domain => '.obsidianthunder.herokuapp.com'
+Rails.application.config.session_store :cookie_store, :key => '_domain_session', :domain => :all
