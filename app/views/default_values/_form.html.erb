@@ -2,11 +2,11 @@
   <%= f.error_notification %>
 
   <div class="form-inputs">
-    <%= f.label :invoice_place, :invoice_place %>
+    <%= f.label "Miejsce wystawienia faktur", :invoice_place %>
     <%= f.text_field :invoice_place %>
   </div>
-
+  <br>
   <div class="form-actions">
-    <%= f.button :submit %>
+    <%= f.button :submit, "Aktualizuj" %>
   </div>
 <% end %>

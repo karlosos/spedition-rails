@@ -67,20 +67,26 @@ class GroupsController < ApplicationController
     emails = params["user_emails"]
     password = params["default_password"]
     role = params["membership_type"]
+    error = ""
     emails.each do |email|
       user = User.find_by_email(email)
       if user
         group.add(user, as: role)
+        error += "Dodano #{email} do grupy. "
       else
         user = User.new
         user.email = email
         user.password = password
         user.save
-        group.add(user, as: role)
+        if password.length < 6
+          error = "Nie dodano #{email} do grupy, hasło za krótkie (min 6 znaków)."
+        else
+          group.add(user, as: role)
+        end
       end
     end
 
-    redirect_to :back
+    redirect_to :back, :notice => error
   end
 
   def remove_user_from_group

@@ -35,7 +35,7 @@
   <%= label_tag "Emaile" %>
   <%= select_tag "user_emails[]", options_from_collection_for_select(User.all, :email, :email), { multiple: "multiple" } %>
   <%= label_tag "Domyślne hasło" %>
-  <%= text_field_tag "default_password" %>
+  <%= text_field_tag "default_password", nil, :minlength => 6 %>
   <%= label_tag "Role" %>
   <%= select_tag "membership_type", options_for_select(Group::ROLES) %>
   <br>
