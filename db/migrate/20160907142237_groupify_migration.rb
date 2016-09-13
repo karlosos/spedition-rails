@@ -3,7 +3,7 @@ class GroupifyMigration < ActiveRecord::Migration
     create_table :groups do |t|
       t.string     :type
       t.string     :name
-      t.string     :subdomain
+      t.string     :subdomain, index: true, unique: true
     end
 
     create_table :group_memberships do |t|

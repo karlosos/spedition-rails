@@ -172,7 +172,7 @@
       </div>
     </div>
   </div>
-
+  <br>
   <div class="row">
     <div class="col-sm-3">
       <% currencies = ["EUR", "USD", "PLN"] %>
@@ -193,6 +193,12 @@
         <% exchange_currencies = ["PLN", "Nie przeliczaj"] %>
         <%= invoice_form.label :invoice_exchange_currency, "Przeliczanie na walutę" %>
         <%= invoice_form.collection_select :invoice_exchange_currency, exchange_currencies, :to_s, :to_s, { include_blank: false }, { class: "form-control" } %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="form-group">
+        <%= invoice_form.label :deadline, "Termin płatności w dniach" %>
+        <%= invoice_form.number_field :deadline %>
       </div>
     </div>
   </div>

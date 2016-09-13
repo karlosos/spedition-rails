@@ -90,6 +90,9 @@ class InvoicesController < ApplicationController
     @invoice.client_email = @invoice_to_correct.client_email
     @invoice.client_phone = @invoice_to_correct.client_phone
     @invoice.client_nip = @invoice_to_correct.client_nip
+    @invoice.invoice_language = @invoice_to_correct.invoice_language
+    @invoice.deadline = @invoice_to_correct.deadline
+    @invoice.currency_rate_name = @invoice_to_correct.currency_rate_name
     @invoice.currency_rate = @invoice_to_correct.currency_rate
     @invoice.currency_rate_table_name = @invoice_to_correct.currency_rate_table_name
     @invoice.currency_rate_date = @invoice_to_correct.currency_rate_date
@@ -144,6 +147,7 @@ class InvoicesController < ApplicationController
         invoice_item.item_id = transport_order.item.id
         invoice_item.quantity = 1
         invoice_item.unit_price = transport_order.item.unit_price
+        invoice_item.tax_rate = transport_order.client.tax_rate
         @invoice.invoice_items << invoice_item
       end
     end
@@ -157,6 +161,9 @@ class InvoicesController < ApplicationController
     @invoice.client_nip = transport_order.client_nip
     @invoice.client_country = transport_order.client_country
     @invoice.sell_date = transport_order.unloading_places.last.date
+    @invoice.invoice_language = transport_order.client.invoice_language
+    @invoice.deadline = transport_order.client.payment_term
+    @invoice.currency_rate_name = transport_order.client.invoice_currency
   end
 
   # GET /invoices/1/edit
@@ -271,6 +278,7 @@ class InvoicesController < ApplicationController
       :kind,
       :date,
       :sell_date,
+      :deadline,
       :place,
       :seller_id,
       :client_id,

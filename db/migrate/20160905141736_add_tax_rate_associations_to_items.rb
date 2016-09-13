@@ -6,5 +6,6 @@ class AddTaxRateAssociationsToItems < ActiveRecord::Migration
     add_index :invoice_item_corrections, :tax_rate_id
     add_column :invoice_item_corrections, :tax_rate_correction_id, :integer
     add_index :invoice_item_corrections, :tax_rate_correction_id
+    add_reference :clients, :tax_rate, index: true
   end
 end

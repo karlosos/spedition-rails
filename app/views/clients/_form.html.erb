@@ -33,6 +33,30 @@
       <% end %>
     </div>
   </div>
+
+  <div class="row">
+    <h3> Domyślne wartości </h3>
+    <div class="col-md-6">
+      <p>
+        <%= f.label :invoice_currency %><br />
+        <%= f.text_field :invoice_currency %>
+      </p>
+      <p>
+        <%= f.label :tax_rate_id %><br />
+        <%= f.collection_select :tax_rate_id, TaxRate.important_only, :id, :name, {}, {} %>
+      </p>
+      <p>
+        <%= f.label :invoice_language %><br />
+        <%= f.text_field :invoice_language %>
+      </p>
+      <p>
+        <%= f.label :payment_term %><br />
+        <%= f.text_field :payment_term %>
+      </p>
+    </div>
+    <div class="col-md-6">
+    </div>
+  </div>
   <div class="actions">
     <%= f.submit %>
   </div>

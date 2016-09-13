@@ -1,4 +1,5 @@
 class Client < ActiveRecord::Base
+  belongs_to :tax_rate
   has_one :address, as: :addressable, dependent: :destroy
   has_one :contact, as: :contactable, dependent: :destroy
   validates :address, presence: true

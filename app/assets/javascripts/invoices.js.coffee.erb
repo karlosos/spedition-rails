@@ -377,6 +377,10 @@ invoice_client_info_get_on_client_change = () ->
     client_phone = $('#invoice_client_phone')
     client_nip = $('#invoice_client_nip')
     client_id = $(this).val()
+    invoice_currency = $('#invoice_currency_rate_name')
+    invoice_language = $('#invoice_invoice_language')
+    deadline = $('#invoice_deadline')
+    tax_rate = $('#tax_rate')
     $.ajax "/clients/#{client_id}.json",
       type: 'GET'
       dataType: 'json'
@@ -392,6 +396,10 @@ invoice_client_info_get_on_client_change = () ->
         client_email.val(data['client_email'])
         client_phone.val(data['client_phone'])
         client_nip.val(data['client_nip'])
+        invoice_currency.val(data['invoice_currency']).change()
+        invoice_language.val(data['invoice_language']).change()
+        deadline.val(data['payment_term']).change()
+        tax_rate.val(data['tax_rate']).change()
 
 #
 # Sidebar
