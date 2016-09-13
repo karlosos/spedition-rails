@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160912142917) do
+ActiveRecord::Schema.define(version: 20160913143849) do
 
   create_table "addresses", force: true do |t|
     t.string   "line1"
@@ -53,6 +53,7 @@ ActiveRecord::Schema.define(version: 20160912142917) do
     t.integer  "payment_term"
     t.string   "invoice_language"
     t.integer  "tax_rate_id"
+    t.string   "accounting_email"
   end
 
   add_index "clients", ["tax_rate_id"], name: "index_clients_on_tax_rate_id"

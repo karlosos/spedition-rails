@@ -98,7 +98,7 @@ class ClientsController < ApplicationController
     def client_params
       #params.fetch(:client, {})
       #params.require(:client).permit!
-      params.require(:client).permit(:name, :nip, :invoice_currency, :tax_rate_id, :invoice_language, :payment_term, address_attributes:
+      params.require(:client).permit(:name, :nip, :invoice_currency, :tax_rate_id, :invoice_language, :payment_term, :accounting_email, address_attributes:
       [:street, :line1, :line2, :city, :state, :country, :zip],
       contact_attributes: [:phone1, :phone2, :fax, :email, :www,
         emails_attributes: [:address]

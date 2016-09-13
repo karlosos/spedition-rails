@@ -31,6 +31,9 @@
       <%= f.fields_for :contact do |contact| %>
        <%= render :partial => 'shared/contact', :locals => {:f => contact} %>
       <% end %>
+
+      <%= f.label :accounting_email %><br />
+      <%= f.text_field :accounting_email %>
     </div>
   </div>
 
