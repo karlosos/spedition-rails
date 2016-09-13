@@ -1,6 +1,7 @@
 class Group < ActiveRecord::Base
   groupify :group, members: [:users], default_members: :users
   has_one :default_value
+  validates_uniqueness_of :subdomain
   ROLES = [
     'admin',
     'spedition',

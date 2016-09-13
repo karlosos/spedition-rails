@@ -124,6 +124,8 @@ ActiveRecord::Schema.define(version: 20160912142917) do
     t.string "subdomain"
   end
 
+  add_index "groups", ["subdomain"], name: "index_groups_on_subdomain", unique: true
+
   create_table "invoice_item_corrections", force: true do |t|
     t.integer  "invoice_id"
     t.integer  "item_id"
