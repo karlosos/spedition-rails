@@ -1,9 +1,5 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  group_id: 
-  invoice_place: MyString
-
-two:
-  group_id: 
-  invoice_place: MyString
+default_value_one:
+  group: group_one
+  invoice_place: Szczecin

@@ -1,6 +1,7 @@
 require 'test_helper'
 
 class CarriersControllerTest < ActionController::TestCase
+  include Devise::Test::ControllerHelpers
   setup do
     @carrier = carriers(:carrier_one)
   end

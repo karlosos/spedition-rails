@@ -1,11 +1,13 @@
 require 'test_helper'
 
 class ClientsControllerTest < ActionController::TestCase
+  include Devise::Test::ControllerHelpers
   setup do
     @client = clients(:client_google)
   end
 
   test "should get index" do
+    @request.host = "groupone.lvh.me:3000"
     get :index
     assert_response :success
     assert_not_nil assigns(:clients)

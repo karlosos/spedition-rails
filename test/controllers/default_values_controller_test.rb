@@ -1,8 +1,9 @@
 require 'test_helper'
 
 class DefaultValuesControllerTest < ActionController::TestCase
+  include Devise::Test::ControllerHelpers
   setup do
-    @default_value = default_values(:one)
+    @default_value = default_values(:default_value_one)
   end
 
   test "should get index" do
@@ -18,7 +19,10 @@ class DefaultValuesControllerTest < ActionController::TestCase
 
   test "should create default_value" do
     assert_difference('DefaultValue.count') do
-      post :create, default_value: {  }
+      post :create, default_value: {
+        "group_id" => groups(:group_one).id,
+        "place" => "Szczecin"
+       }
     end
 
     assert_redirected_to default_value_path(assigns(:default_value))
@@ -35,7 +39,10 @@ class DefaultValuesControllerTest < ActionController::TestCase
   end
 
   test "should update default_value" do
-    patch :update, id: @default_value, default_value: {  }
+    patch :update, id: @default_value, default_value: {
+      "group_id" => groups(:group_one).id,
+      "place" => "Szczecin"
+     }
     assert_redirected_to default_value_path(assigns(:default_value))
   end
 

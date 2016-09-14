@@ -1,6 +1,7 @@
 require 'test_helper'
 
 class InvoicesControllerTest < ActionController::TestCase
+  include Devise::Test::ControllerHelpers
   setup do
     @invoice = invoices(:invoice_one)
 
@@ -54,11 +55,15 @@ class InvoicesControllerTest < ActionController::TestCase
   end
 
   test "should get new" do
+    sign_in users(:user_one)
+    @request.host = "groupone.lvh.me:3000"
     get :new
     assert_response :success
   end
 
   test "should get new_correction" do
+    sign_in users(:user_one)
+    @request.host = "groupone.lvh.me:3000"
     get :new_correction, :id => invoices(:invoice_one)
     assert_response :success
     @invoice = assigns(:invoice)
@@ -104,6 +109,8 @@ class InvoicesControllerTest < ActionController::TestCase
   end
 
   test "should get new_invoice_from_transport_orders" do
+    sign_in users(:user_one)
+    @request.host = "groupone.lvh.me:3000"
     transport_order = transport_orders(:transport_order_one)
     transport_order_ids = [transport_order,]
     get :new_invoice_from_transport_orders, :transport_order_ids => transport_order_ids

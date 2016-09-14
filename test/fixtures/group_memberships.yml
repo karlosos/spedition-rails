@@ -1,0 +1,5 @@
+group_membership_one:
+  member: user_one
+  member_type: User
+  group: group_one
+  group_type: Group

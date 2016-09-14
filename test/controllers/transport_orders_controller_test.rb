@@ -1,22 +1,29 @@
 require 'test_helper'
 
 class TransportOrdersControllerTest < ActionController::TestCase
+  include Devise::Test::ControllerHelpers
   setup do
     @transport_order = transport_orders(:transport_order_one)
   end
 
   test "should get index" do
+    sign_in users(:user_one)
+    @request.host = "groupone.lvh.me:3000"
     get :index
     assert_response :success
     assert_not_nil assigns(:transport_orders)
   end
 
   test "should get new" do
+    sign_in users(:user_one)
+    @request.host = "groupone.lvh.me:3000"
     get :new
     assert_response :success
   end
 
   test "should create transport_order" do
+    sign_in users(:user_one)
+    @request.host = "groupone.lvh.me:3000"
     assert_difference('TransportOrder.count') do
       post :create, transport_order: {
         client_id: clients(:client_google).id,
@@ -49,16 +56,22 @@ class TransportOrdersControllerTest < ActionController::TestCase
   end
 
   test "should show transport_order" do
+    sign_in users(:user_one)
+    @request.host = "groupone.lvh.me:3000"
     get :show, id: @transport_order
     assert_response :success
   end
 
   test "should get edit" do
+    sign_in users(:user_one)
+    @request.host = "groupone.lvh.me:3000"
     get :edit, id: @transport_order
     assert_response :success
   end
 
   test "should update transport_order" do
+    sign_in users(:user_one)
+    @request.host = "groupone.lvh.me:3000"
     patch :update, id: @transport_order, transport_order: {
       client_id: clients(:client_google).id,
       carrier_id: carriers(:carrier_one).id,
@@ -87,7 +100,9 @@ class TransportOrdersControllerTest < ActionController::TestCase
   end
 
   test "should destroy transport_order" do
-    @request.env['HTTP_REFERER'] = 'http://test.host/transport_orders'
+    sign_in users(:user_one)
+    @request.host = "groupone.lvh.me:3000"
+    @request.env['HTTP_REFERER'] = 'http://groupone.lvh.me:3000/transport_orders'
     assert_difference('TransportOrder.count', -1) do
       delete :destroy, id: @transport_order
     end
