@@ -2,7 +2,12 @@ class InvoiceItemPriceValidator < ActiveModel::Validator
   def validate(record)
     unit_price = record.unit_price_cents / 100.to_f
     quantity = record.quantity
-    tax_rate = record.tax_rate.value
+    tax_rate = 0
+    if !record.tax_rate.present?
+      record.errors[:tax_rate] << "Tax rate value is not specified"
+    else
+      tax_rate = record.tax_rate.value
+    end
 
     net_price = record.net_price_cents / 100.to_f
     value_added_tax = record.value_added_tax_cents / 100.to_f

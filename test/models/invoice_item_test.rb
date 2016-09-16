@@ -11,4 +11,10 @@ class InvoiceItemTest < ActiveSupport::TestCase
     @invoice_item.item = nil
     assert_not @invoice_item.valid?
   end
+
+  test "tax_rate should be present" do
+    assert @invoice_item.tax_rate.present?
+    @invoice_item.tax_rate = nil
+    assert_not @invoice_item.valid?
+  end
 end

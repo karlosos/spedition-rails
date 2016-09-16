@@ -8,6 +8,7 @@ class GroupsControllerTest < ActionController::TestCase
 
   test "should get index" do
     sign_in users(:user_one)
+    @request.host = "groupone.lvh.me:3000"
     get :index
     assert_response :success
     assert_not_nil assigns(:groups)
@@ -15,12 +16,14 @@ class GroupsControllerTest < ActionController::TestCase
 
   test "should get new" do
     sign_in users(:user_one)
+    @request.host = "groupone.lvh.me:3000"
     get :new
     assert_response :success
   end
 
   test "should create group" do
     sign_in users(:user_one)
+    @request.host = "groupone.lvh.me:3000"
     assert_difference('Group.count') do
       post :create, group: {
         "name" => "New group",
@@ -41,18 +44,21 @@ class GroupsControllerTest < ActionController::TestCase
   end
 
   test "should show group" do
+    @request.host = "groupone.lvh.me:3000"
     sign_in users(:user_one)
     get :show, id: @group
     assert_response :success
   end
 
   test "should get edit" do
+    @request.host = "groupone.lvh.me:3000"
     sign_in users(:user_one)
     get :edit, id: @group
     assert_response :success
   end
 
   test "should update group" do
+    @request.host = "groupone.lvh.me:3000"
     sign_in users(:user_one)
     patch :update, id: @group, group: {
       "name" => "New group",
@@ -62,6 +68,7 @@ class GroupsControllerTest < ActionController::TestCase
   end
 
   test "should destroy group" do
+    @request.host = "groupone.lvh.me:3000"
     sign_in users(:user_one)
     assert_difference('Group.count', -1) do
       delete :destroy, id: @group
