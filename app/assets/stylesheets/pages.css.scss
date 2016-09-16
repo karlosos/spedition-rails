@@ -1,0 +1,23 @@
+.pages {
+  .tile {
+    background-color: #337ab7;
+    height: 100px;
+    border: 10px solid white;
+    line-height: 80px;
+    text-align: center;
+    color: white;
+    font-size: 21px;
+  }
+
+  .tile:hover {
+    color: white;
+    background-color: #10528a;
+  }
+
+  .inactive {
+    &:hover {
+      background-color: gray;
+    }
+    background-color: gray;
+  }
+}

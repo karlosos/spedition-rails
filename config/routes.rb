@@ -23,10 +23,10 @@ Rails.application.routes.draw do
     put 'accounting/transport_orders/:id/create_name' => 'transport_orders#create_name', :as => :transport_order_create_name
     get 'invoices/new_correction/:id/' => 'invoices#new_correction', :as => :new_correction_invoice
     get 'new_invoice_from_transport_orders/' => 'invoices#new_invoice_from_transport_orders', :as => :new_invoice_from_transport_orders
-
+    root 'pages#group_home', as: :group_root
   end
 
-  root 'pages#home'
+  root 'pages#root_home'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

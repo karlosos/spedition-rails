@@ -75,12 +75,6 @@ class TransportOrdersController < ApplicationController
   def new
     @transport_order = TransportOrder.new
 
-    if params["user"] == "accounting"
-      @transport_order.build_transport_order_name
-      @transport_order.build_transport_order_name.year = Date.today.year
-      @transport_order.transport_order_name.number = TransportOrderName.get_last_number_for_year(Date.today.year)
-    end
-
     @transport_order.build_freichtage_description
     @transport_order.loading_places.build
     @transport_order.unloading_places.build

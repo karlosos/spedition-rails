@@ -1,0 +1,6 @@
+<div class="row">
+  <% current_user.groups.each do |group| %>
+      <%= link_to raw(tile(group.name)), root_url(subdomain: group.subdomain) %>
+  <% end %>
+  <%= link_to raw(tile('Nowa grupa')), new_group_path %>
+</div>

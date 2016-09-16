@@ -1,0 +1,31 @@
+<h3>Spedycja</h3>
+<div class="row">
+  <%= link_to raw(tile("Zlecenia")), speditor_view_path(:date => 'test', :speditor_id => 'test') %>
+  <%= link_to raw(tile("Nowe zlecenie")), new_transport_order_path %>
+  <%= link_to raw(tile("Twoje samochody", "inactive")), root_url %>
+</div>
+
+<h3>Księgowość</h3>
+<div class="row">
+  <%= link_to raw(tile("Faktury VAT")), invoices_path(:kind => 'vat') %>
+  <%= link_to raw(tile("Zlecenia")), accounting_view_path %>
+  <%= link_to raw(tile("Nowa faktura")), new_invoice_path %>
+  <%= link_to raw(tile("Faktury proforma")), invoices_path(:kind => 'proforma') %>
+  <%= link_to raw(tile("Faktury korekta")), invoices_path(:kind => 'correction')%>
+</div>
+
+<h3>Słowniki</h3>
+<div class="row">
+  <%= link_to raw(tile("Klienci")), clients_path %>
+  <%= link_to raw(tile("Przewoźnicy")), carriers_path %>
+  <%= link_to raw(tile("Towary")), items_path %>
+
+</div>
+
+<h3>Administrator</h3>
+<div class="row">
+  <%= link_to raw(tile("Użytkownicy grupy")), @group %>
+  <%= link_to raw(tile("Wartości domyślne")), edit_default_value_path(@group.default_value) %>
+  <%= link_to raw(tile("Wszystkie zlecenia")), transport_orders_path %>
+  <%= link_to raw(tile("Wszystkie faktury")), invoices_path %>
+</div>

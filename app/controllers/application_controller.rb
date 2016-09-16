@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   include Pundit
+  before_action :authenticate_user!
   before_action :check_subdomain
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
   # Prevent CSRF attacks by raising an exception.
