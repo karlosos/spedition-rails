@@ -3,3 +3,9 @@ group_membership_one:
   member_type: User
   group: group_one
   group_type: Group
+  membership_type: admin
+
+admin_membership:
+  member: user_one
+  member_type: User
+  group_name: admin

@@ -23,5 +23,6 @@ module Thunder
     # add custom validators path
     config.autoload_paths += %W["#{config.root}/app/validators/]
     config.autoload_paths << Rails.root.join('lib')
+    config.action_dispatch.rescue_responses["Pundit::NotAuthorizedError"] = :forbidden
   end
 end

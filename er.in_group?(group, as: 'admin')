@@ -1,0 +1,123 @@
+[1mdiff --git a/app/controllers/groups_controller.rb b/app/controllers/groups_controller.rb[m
+[1mindex 0582678..0dec22d 100644[m
+[1m--- a/app/controllers/groups_controller.rb[m
+[1m+++ b/app/controllers/groups_controller.rb[m
+[36m@@ -5,27 +5,31 @@[m [mclass GroupsController < ApplicationController[m
+   # GET /groups.json[m
+   def index[m
+     @groups = Group.all[m
+[32m+[m[32m    authorize @groups[m
+   end[m
+ [m
+   # GET /groups/1[m
+   # GET /groups/1.json[m
+   def show[m
+[32m+[m[32m    authorize @group[m
+   end[m
+ [m
+   # GET /groups/new[m
+   def new[m
+     @group = Group.new[m
+[32m+[m[32m    authorize @group[m
+   end[m
+ [m
+   # GET /groups/1/edit[m
+   def edit[m
+[32m+[m[32m    authorize @group[m
+   end[m
+ [m
+   # POST /groups[m
+   # POST /groups.json[m
+   def create[m
+     @group = Group.new(group_params)[m
+[31m-[m
+[32m+[m[32m    authorize @group[m
+     respond_to do |format|[m
+       if @group.save[m
+         @group.add(current_user, as: 'admin')[m
+[36m@@ -41,6 +45,7 @@[m [mclass GroupsController < ApplicationController[m
+   # PATCH/PUT /groups/1[m
+   # PATCH/PUT /groups/1.json[m
+   def update[m
+[32m+[m[32m    authorize @group[m
+     respond_to do |format|[m
+       if @group.update(group_params)[m
+         format.html { redirect_to @group, notice: 'Group was successfully updated.' }[m
+[36m@@ -55,6 +60,7 @@[m [mclass GroupsController < ApplicationController[m
+   # DELETE /groups/1[m
+   # DELETE /groups/1.json[m
+   def destroy[m
+[32m+[m[32m    authorize @group[m
+     @group.destroy[m
+     respond_to do |format|[m
+       format.html { redirect_to groups_url, notice: 'Group was successfully destroyed.' }[m
+[1mdiff --git a/app/views/layouts/application.html.erb b/app/views/layouts/application.html.erb[m
+[1mindex f3f57de..405a232 100644[m
+[1m--- a/app/views/layouts/application.html.erb[m
+[1m+++ b/app/views/layouts/application.html.erb[m
+[36m@@ -11,9 +11,11 @@[m
+ <body class="<%= controller_name %> <%= action_name %>">[m
+   <%= render 'layouts/header' %>[m
+   <div class="container">[m
+[31m-    <% flash.each do |name, msg| -%>[m
+[31m-      <%= content_tag :div, msg, class: [ "alert", bootstrap_class_for(name) ] %>[m
+[31m-    <% end -%>[m
+[32m+[m[32m    <div id="flash">[m
+[32m+[m[32m      <% flash.each do |key, value| %>[m
+[32m+[m[32m        <div class="alert alert-<%= key %>"><%= value %></div>[m
+[32m+[m[32m      <% end %>[m
+[32m+[m[32m    </div>[m
+     <%= yield %>[m
+   </div>[m
+   <!-- <%= render 'layouts/footer' %> -->[m
+[1mdiff --git a/config/application.rb b/config/application.rb[m
+[1mindex 398c5fb..f61313d 100644[m
+[1m--- a/config/application.rb[m
+[1m+++ b/config/application.rb[m
+[36m@@ -23,5 +23,6 @@[m [mmodule Thunder[m
+     # add custom validators path[m
+     config.autoload_paths += %W["#{config.root}/app/validators/][m
+     config.autoload_paths << Rails.root.join('lib')[m
+[32m+[m[32m    config.action_dispatch.rescue_responses["Pundit::NotAuthorizedError"] = :forbidden[m
+   end[m
+ end[m
+[1mdiff --git a/config/initializers/session_store.rb b/config/initializers/session_store.rb[m
+[1mindex 35aebd4..2eb8459 100644[m
+[1m--- a/config/initializers/session_store.rb[m
+[1m+++ b/config/initializers/session_store.rb[m
+[36m@@ -1,4 +1,4 @@[m
+ # Be sure to restart your server when you modify this file.[m
+ [m
+ #Rails.application.config.session_store :cookie_store, key: '_Thunder_session'[m
+[31m-Rails.application.config.session_store :cookie_store, :key => '_domain_session', :domain => ".obsidianthunder.pl"[m
+[32m+[m[32mRails.application.config.session_store :cookie_store, :key => '_domain_session', :domain => ".lvh.me"[m
+[1mdiff --git a/test/controllers/groups_controller_test.rb b/test/controllers/groups_controller_test.rb[m
+[1mindex 2efd554..a7a4dfb 100644[m
+[1m--- a/test/controllers/groups_controller_test.rb[m
+[1m+++ b/test/controllers/groups_controller_test.rb[m
+[36m@@ -13,6 +13,7 @@[m [mclass GroupsControllerTest < ActionController::TestCase[m
+   end[m
+ [m
+   test "should get new" do[m
+[32m+[m[32m    sign_in users(:user_one)[m
+     get :new[m
+     assert_response :success[m
+   end[m
+[36m@@ -29,6 +30,17 @@[m [mclass GroupsControllerTest < ActionController::TestCase[m
+     assert_redirected_to group_path(assigns(:group))[m
+   end[m
+ [m
+[32m+[m[32m  test "should not create group if not logged in" do[m
+[32m+[m[32m    assert_no_difference('Group.count') do[m
+[32m+[m[32m      post :create, group: {[m
+[32m+[m[32m        "name" => "New group",[m
+[32m+[m[32m        "domain" => "new_group"[m
+[32m+[m[32m      }[m
+[32m+[m[32m    end[m
+[32m+[m
+[32m+[m[32m    assert_redirected_to group_path(assigns(:group))[m
+[32m+[m[32m  end[m
+[32m+[m
+   test "should show group" do[m
+     get :show, id: @group[m
+     assert_response :success[m
