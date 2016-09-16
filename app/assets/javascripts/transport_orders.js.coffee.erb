@@ -11,9 +11,11 @@ $(".transport_orders.accounting_view").ready ->
 
 $(".edit").ready ->
   startSelect()
+  findClientOnEmailChangeForm()
 
 $(".new").ready ->
   startSelect()
+  findClientOnEmailChangeForm()
 
 pageLoad = () ->
   # Edit view
@@ -28,6 +30,7 @@ pageLoad = () ->
   modal_functions()
   update_route_on_place_edit()
   show_client_select_button()
+
 
 
 
@@ -200,6 +203,31 @@ findClientOnEmailChange = () ->
           $('.show_client_select').hide()
           client_select.show()
           startClientSelect(client_select)
+
+#
+# Finding client by email
+#
+findClientOnEmailChangeForm = () ->
+  $('#transport_order_client_email').change ->
+    console.log('test')
+    client_select = $('#transport_order_client_id')
+    $.ajax "/clients.json",
+      type: 'GET'
+      data:
+        q: $(this).val()
+      dataType: 'json'
+      error: (jqXHR, textStatus, errorThrown) ->
+        console.log(textStatus)
+        show_client_select(client_select)
+      success: (data, textStatus, jqXHR) ->
+        if data[0]
+          console.log(data)
+          client_select.val(data[0]["id"])
+          option = $('<option selected>' + data[0].client_info + '</option>').val("" + data[0].id);
+          client_select.append(option).trigger('change');
+          alert("Znaleziono klienta: " + data[0]["client_info"])
+          console.log($(this).parent().parent().find('.show_client_select'))
+          client_select.parent().find('.show_client_select').prop("title", data[0]["client_info"])
 
 show_client_select_button = () ->
   $('.show_client_select').click ->
