@@ -85,7 +85,7 @@ end
 end
 
 admin = User.new()
-admin.email = "artur@mtransport.pl"
+admin.email = "admin@mtransport.pl"
 admin.password = '123456'
 admin.encrypted_password = User.new.send(:password_digest, '123456')
 admin.save
