@@ -1,4 +1,4 @@
-<% if current_user.in_group?(@group, as: 'spedition') %>
+<% if current_user.in_group?(@group, as: 'spedition') || current_user.in_group?(@group, as: 'admin') %>
 <h3>Spedycja</h3>
 <div class="row">
   <%= link_to raw(tile("Zlecenia")), speditor_view_path(:date => 'test', :speditor_id => 'test') %>
@@ -7,7 +7,7 @@
 </div>
 <% end %>
 
-<% if current_user.in_group?(@group, as: 'accounting') %>
+<% if current_user.in_group?(@group, as: 'accounting') || current_user.in_group?(@group, as: 'admin')%>
 <h3>Księgowość</h3>
 <div class="row">
   <%= link_to raw(tile("Faktury VAT")), invoices_path(:kind => 'vat') %>

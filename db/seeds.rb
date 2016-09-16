@@ -36,7 +36,6 @@ csv.each_with_index do |row, i|
   t.contact.www = row['www']
   t.invoice_language = row['invoice_language']
   t.save
-  puts "#{t.name} saved"
 end
 
 carriers_text = File.read(Rails.root.join('lib', 'seeds', 'carriers.csv'))
@@ -64,10 +63,7 @@ carriers_csv.each_with_index do |row, i|
   t.address.zip = "x"
   t.address.country = "PL"
   t.valid?
-  puts t.errors.full_messages
-  if t.save
-    puts "#{t.registration_number} saved"
-  end
+  t.save
 end
 
 puts "There are now #{Carrier.count} rows in the carriers table"
@@ -78,16 +74,39 @@ TAX_TYPES = [*0..100, "zw", "nw"].freeze
   t = TaxRate.new
   t.value = tax
   t.name = tax.to_s
-  if t.save
-    puts "TaxRate #{tax} saved"
-  end
+  t.save
 end
 
 ["zw", "nw"].each do |tax|
   t = TaxRate.new
   t.value = 0
   t.name = tax
-  if t.save
-    puts "TaxRate #{tax} saved"
-  end
+  t.save
 end
+
+admin = User.new()
+admin.email = "artur@mtransport.pl"
+admin.password = '123456'
+admin.encrypted_password = User.new.send(:password_digest, '123456')
+admin.save
+
+speditor = User.new()
+speditor.email = "speditor@mtransport.pl"
+speditor.password = '123456'
+speditor.encrypted_password = User.new.send(:password_digest, '123456')
+speditor.save
+
+accountant = User.new()
+accountant.email = "accountant@mtransport.pl"
+accountant.password = '123456'
+accountant.encrypted_password = User.new.send(:password_digest, '123456')
+accountant.save
+
+group = Group.new()
+group.subdomain = "mtransport"
+group.name = "MTransport"
+group.save
+
+group.add(admin, as: "admin")
+group.add(speditor, as: "speditor")
+group.add(accountant, as: "accountant ")
