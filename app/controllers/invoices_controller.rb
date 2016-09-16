@@ -110,13 +110,13 @@ class InvoicesController < ApplicationController
       invoice_item_correction.tax_rate_correction = invoice_item.tax_rate
       invoice_item_correction.unit_price = invoice_item.unit_price
       invoice_item_correction.unit_price_correction = invoice_item.unit_price
-      invoice_item_correction.unit_price_difference = Money.new(0)
+      invoice_item_correction.unit_price_difference = Money.new(0, @invoice.net_price_currency )
       invoice_item_correction.value_added_tax = invoice_item.value_added_tax
       invoice_item_correction.value_added_tax_correction = invoice_item.value_added_tax
-      invoice_item_correction.value_added_tax_difference = Money.new(0)
+      invoice_item_correction.value_added_tax_difference = Money.new(0, @invoice.net_price_currency )
       invoice_item_correction.net_price = invoice_item.net_price
       invoice_item_correction.net_price_correction = invoice_item.net_price
-      invoice_item_correction.net_price_difference = Money.new(0)
+      invoice_item_correction.net_price_difference = Money.new(0, @invoice.net_price_currency )
       invoice_item_correction.total_selling_price = invoice_item.total_selling_price
       invoice_item_correction.total_selling_price_correction = invoice_item.total_selling_price
       invoice_item_correction.total_selling_price_difference = Money.new(0)
@@ -163,7 +163,7 @@ class InvoicesController < ApplicationController
     @invoice.sell_date = transport_order.unloading_places.last.date
     @invoice.invoice_language = transport_order.client.invoice_language
     @invoice.deadline = transport_order.client.payment_term
-    @invoice.currency_rate_name = transport_order.client.invoice_currency
+    @invoice.invoice_exchange_currency = transport_order.client.invoice_currency
   end
 
   # GET /invoices/1/edit

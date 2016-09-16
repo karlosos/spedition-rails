@@ -41,8 +41,9 @@
     <h3> Domyślne wartości </h3>
     <div class="col-md-6">
       <p>
+        <% currencies = ["EUR", "USD", "PLN"] %>
         <%= f.label :invoice_currency %><br />
-        <%= f.text_field :invoice_currency %>
+        <%= f.collection_select :invoice_currency, currencies, :to_s, :to_s, { include_blank: false }, { class: "form-control" } %>
       </p>
       <p>
         <%= f.label :tax_rate_id %><br />

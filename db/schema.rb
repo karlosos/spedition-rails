@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160913143849) do
+ActiveRecord::Schema.define(version: 20160916213807) do
 
   create_table "addresses", force: true do |t|
     t.string   "line1"
@@ -48,7 +48,7 @@ ActiveRecord::Schema.define(version: 20160913143849) do
     t.string   "regon"
     t.string   "pesel"
     t.string   "nip"
-    t.string   "invoice_currency"
+    t.string   "invoice_currency", default: "EUR"
     t.string   "freight_currency"
     t.integer  "payment_term"
     t.string   "invoice_language"
