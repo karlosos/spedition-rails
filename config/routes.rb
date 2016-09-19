@@ -19,7 +19,7 @@ Rails.application.routes.draw do
     end
     resources :items
     get 'invoices/invoice_name/:kind/:date' => 'invoices#last_invoice_number_for_date'
-    get 'spedition/transport_orders/:speditor_id/:date' => 'transport_orders#speditor_view', :as => :speditor_view
+    get 'spedition/transport_orders/:year/:month/:speditor_id/' => 'transport_orders#speditor_view', :as => :speditor_view
     get 'accounting/transport_orders/' => 'transport_orders#accounting_view', :as => :accounting_view
     put 'accounting/transport_orders/:id/create_name' => 'transport_orders#create_name', :as => :transport_order_create_name
     get 'invoices/new_correction/:id/' => 'invoices#new_correction', :as => :new_correction_invoice

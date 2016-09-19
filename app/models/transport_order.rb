@@ -30,6 +30,11 @@ class TransportOrder < ActiveRecord::Base
   validates :loading_places, length: { minimum: 1 }
   validates :unloading_places, length: { minimum: 1 }
 
+  scope :from_date, ->(year, month) {
+    #where("extract(year from created_at) = ? and extract(month from created_at) = ?", year, month)
+    where("strftime('%Y/%m', created_at) = ?", "#{year}/#{month.to_i > 9 ? month : '0' + month}")
+  }
+
   before_save do
     self.client_name = client.name
     self.client_nip = client.nip

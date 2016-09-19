@@ -41,7 +41,8 @@ class TransportOrdersController < ApplicationController
 
     speditor_id = params[:speditor_id]
     speditor = User.find(speditor_id)
-    date = params[:date]
+    year = params[:year]
+    month = params[:month]
     @carriers = speditor.carriers
     @transport_orders = Array.new
     for i in 0..@carriers.count

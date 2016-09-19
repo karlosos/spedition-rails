@@ -1,5 +1,12 @@
 <%= render :partial => 'shared/create_client_modal' %>
 <div class="row">
+  <div class="col-md-12 speditor_view_navigation">
+    <span class="prev_date"><%= prev_month_link(params[:year], params[:month], params[:speditor_id]) %></span>
+    <span class="current_date"><%= "#{params[:month]}/#{params[:year]}" %></span>
+    <span class="next_date"><%= next_month_link(params[:year], params[:month], params[:speditor_id]) %></span>
+  </div>
+</div>
+<div class="row">
   <div class="col-sm-12">
     <% @carriers.each_with_index do |carrier, i| %>
     <div class="panel panel-primary">
@@ -8,10 +15,10 @@
         <tr class="speditor_view_head_row">
           <th><%= carrier.registration_number %></th>
           <%
-          if carrier.transport_orders.count > 0
-            freight_rate = carrier.transport_orders.sum(:freight_rate_cents)/100.0
-            profit_margin = carrier.transport_orders.sum(:profit_margin_cents)/100.0
-            distance = carrier.transport_orders.sum(:distance)
+          if carrier.transport_orders.from_date(params[:year], params[:month]).count > 0
+            freight_rate = carrier.transport_orders.from_date(params[:year], params[:month]).sum(:freight_rate_cents)/100.0
+            profit_margin = carrier.transport_orders.from_date(params[:year], params[:month]).sum(:profit_margin_cents)/100.0
+            distance = carrier.transport_orders.from_date(params[:year], params[:month]).sum(:distance)
             price_per_km = (freight_rate.to_f - profit_margin.to_f)/distance.to_f
           end
           %>
@@ -45,7 +52,7 @@
         </tr>
       </thead>
       <tbody>
-        <% carrier.transport_orders.each do |transport_order| %>
+        <% carrier.transport_orders.from_date(params[:year], params[:month]).each do |transport_order| %>
         <tr>
           <td><%= link_to "#{humanized_money_with_symbol transport_order.freight_rate}", transport_order %></td>
           <td><%= link_to "#{humanized_money_with_symbol (transport_order.freight_rate + transport_order.profit_margin)}", transport_order %></td>

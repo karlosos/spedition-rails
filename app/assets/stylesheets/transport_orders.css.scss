@@ -26,6 +26,13 @@
     @extend .btn-success;
   }
   /* SPEDITOR VIEW */
+  .speditor_view_navigation {
+    text-align: center;
+    margin-bottom: 20px;
+    .current_date {
+      font-size: 35px;
+    }
+  }
   .place_form {
     input {
       width: auto;

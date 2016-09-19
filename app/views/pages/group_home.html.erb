@@ -1,7 +1,7 @@
 <% if current_user.in_group?(@group, as: 'spedition') || current_user.in_group?(@group, as: 'admin') %>
 <h3>Spedycja</h3>
 <div class="row">
-  <%= link_to raw(tile("Zlecenia")), speditor_view_path(:date => 'test', :speditor_id => current_user.id) %>
+  <%= link_to raw(tile("Zlecenia")), speditor_view_path(:year => Date.today.year, :month => Date.today.month, :speditor_id => current_user.id) %>
   <%= link_to raw(tile("Nowe zlecenie")), new_transport_order_path %>
   <%= link_to raw(tile("Twoje samochody")), carrier_memberships_path %>
 </div>
