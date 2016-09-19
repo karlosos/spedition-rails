@@ -1,0 +1,5 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+carrier_membership_one:
+  user: user_one
+  carrier: carrier_one

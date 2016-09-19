@@ -3,6 +3,9 @@ class Carrier < ActiveRecord::Base
   has_one :address, as: :addressable, dependent: :destroy
   has_one :contact, as: :contactable, dependent: :destroy
 
+  has_many :users, :through => :carrier_memberships
+  has_many :carrier_memberships
+
   accepts_nested_attributes_for :address
   accepts_nested_attributes_for :contact
 

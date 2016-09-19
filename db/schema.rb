@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160916213807) do
+ActiveRecord::Schema.define(version: 20160919131720) do
 
   create_table "addresses", force: true do |t|
     t.string   "line1"
@@ -28,6 +28,16 @@ ActiveRecord::Schema.define(version: 20160916213807) do
   end
 
   add_index "addresses", ["addressable_type", "addressable_id"], name: "index_addresses_on_addressable_type_and_addressable_id", unique: true
+
+  create_table "carrier_memberships", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "carrier_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "carrier_memberships", ["carrier_id"], name: "index_carrier_memberships_on_carrier_id"
+  add_index "carrier_memberships", ["user_id"], name: "index_carrier_memberships_on_user_id"
 
   create_table "carriers", force: true do |t|
     t.string   "registration_number"

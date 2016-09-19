@@ -40,8 +40,9 @@ class TransportOrdersController < ApplicationController
     @client.contact.emails.build
 
     speditor_id = params[:speditor_id]
+    speditor = User.find(speditor_id)
     date = params[:date]
-    @carriers = Carrier.all.limit(5)
+    @carriers = speditor.carriers
     @transport_orders = Array.new
     for i in 0..@carriers.count
       transport_order = TransportOrder.new

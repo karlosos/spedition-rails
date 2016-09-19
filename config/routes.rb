@@ -10,6 +10,7 @@ Rails.application.routes.draw do
     resources :carriers
     resources :transport_orders
     resources :default_values
+    resources :carrier_memberships
     resources :invoices do
       collection do
         put 'update_multiple'
