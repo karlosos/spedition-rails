@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  devise_for :users
+  devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
   resources :groups
   post 'groups/add_users/:id' => 'groups#add_users_to_group', :as => :add_users_to_group
   post 'groups/remove_user/:id' => 'groups#remove_user_from_group', :as => :remove_user_from_group
