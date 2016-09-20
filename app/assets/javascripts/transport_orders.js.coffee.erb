@@ -31,8 +31,8 @@ pageLoad = () ->
   update_route_on_place_edit()
   show_client_select_button()
 
-
-
+  $('.tableContainer').ready ->
+    $(this).scrollTop($(this)[0].scrollHeight)
 
 #
 # Loading places in edit form
