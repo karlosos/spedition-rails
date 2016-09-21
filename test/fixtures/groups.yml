@@ -1,3 +1,8 @@
 group_one:
   name: GroupOne
   subdomain: groupone
+
+
+group_two:
+  name: GroupTwo
+  subdomain: grouptwo

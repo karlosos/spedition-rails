@@ -5,7 +5,27 @@ group_membership_one:
   group_type: Group
   membership_type: admin
 
+group_membership_two:
+  member: user_speditor
+  member_type: User
+  group: group_one
+  group_type: Group
+  membership_type: spedition
+
+group_membership_three:
+  member: user_accountant
+  member_type: User
+  group: group_one
+  group_type: Group
+  membership_type: accounting
+
 admin_membership:
   member: user_one
   member_type: User
   group_name: admin
+
+google_membership:
+  member: client_google
+  member_type: Client
+  group: group_one
+  group_type: Group

@@ -25,7 +25,7 @@ class CarrierMembershipsControllerTest < ActionController::TestCase
     sign_in users(:user_one)
     @request.host = "groupone.lvh.me:3000"
     assert_difference('CarrierMembership.count') do
-      post :create, carrier_membership: { "carrier_id" => carriers(:carrier_one).id, "user_id" => users(:user_two).id }
+      post :create, carrier_membership: { "carrier_id" => carriers(:carrier_one).id, "user_id" => users(:user_speditor).id }
     end
 
     assert_redirected_to carrier_memberships_path
@@ -48,7 +48,7 @@ class CarrierMembershipsControllerTest < ActionController::TestCase
   test "should update carrier_membership" do
     sign_in users(:user_one)
     @request.host = "groupone.lvh.me:3000"
-    patch :update, id: @carrier_membership, carrier_membership: { "carrier_id" => carriers(:carrier_one).id, "user_id" => users(:user_two).id }
+    patch :update, id: @carrier_membership, carrier_membership: { "carrier_id" => carriers(:carrier_one).id, "user_id" => users(:user_speditor).id }
     assert_redirected_to carrier_memberships_path
   end
 
