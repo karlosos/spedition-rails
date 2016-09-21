@@ -8,10 +8,10 @@ class InvoicesController < ApplicationController
     search_params = params
 
     @client = Client.new
-    @invoices = Invoice.joins(:invoice_name).joins(:client)
+    @invoices = Invoice.joins(:invoice_name).joins(:client).in_any_group(@group)
     @invoices = @invoices.search(search_params).order(sort_column + " " + sort_direction)
     @invoices = @invoices.paginate(:page => params[:page], :per_page => 30)
-
+    authorize @invoices
     respond_to do |format|
       format.html
       if params[:q].present?
@@ -24,6 +24,7 @@ class InvoicesController < ApplicationController
   # GET /invoices/1
   # GET /invoices/1.json
   def show
+    authorize @invoice
     respond_to do |format|
       format.html
       format.pdf do
@@ -47,7 +48,7 @@ class InvoicesController < ApplicationController
     @invoice.build_invoice_name
     @invoice.invoice_name.month = Date.today.month
     @invoice.invoice_name.year = Date.today.year
-    @invoice.invoice_name.number = InvoiceName.get_last_number_for_date(DateTime.now.strftime('%F'))
+    @invoice.invoice_name.number = InvoiceName.get_last_number_for_date(DateTime.now.strftime('%F'), @group.id)
 
     if params['kind'] == 'correction'
       @invoice.invoice_item_corrections.build
@@ -61,6 +62,7 @@ class InvoicesController < ApplicationController
       end
     end
 
+    authorize @invoice
   end
 
   def new_correction
@@ -75,9 +77,10 @@ class InvoicesController < ApplicationController
 
     @invoice = Invoice.new
     @invoice.build_invoice_name
+    @invoice.invoice_name.group = @group
     @invoice.invoice_name.month = Date.today.month
     @invoice.invoice_name.year = Date.today.year
-    @invoice.invoice_name.number = InvoiceName.get_last_number_for_date(DateTime.now.strftime('%F'), 'correction')
+    @invoice.invoice_name.number = InvoiceName.get_last_number_for_date(DateTime.now.strftime('%F'), @group.id, 'correction')
     @invoice.kind = 'correction'
     @invoice.invoice_to_correct = @invoice_to_correct
     @invoice.client = @invoice_to_correct.client
@@ -122,6 +125,8 @@ class InvoicesController < ApplicationController
       invoice_item_correction.total_selling_price_difference = Money.new(0)
       @invoice.invoice_item_corrections << invoice_item_correction
     end
+
+    authorize @invoice
   end
 
   def new_invoice_from_transport_orders
@@ -134,9 +139,10 @@ class InvoicesController < ApplicationController
 
     @invoice = Invoice.new
     @invoice.build_invoice_name
+    @invoice.invoice_name.group = @group
     @invoice.invoice_name.month = Date.today.month
     @invoice.invoice_name.year = Date.today.year
-    @invoice.invoice_name.number = InvoiceName.get_last_number_for_date(DateTime.now.strftime('%F'))
+    @invoice.invoice_name.number = InvoiceName.get_last_number_for_date(DateTime.now.strftime('%F'), @group.id)
     @invoice.kind = 'vat'
 
     transport_order_ids = params[:transport_order_ids]
@@ -164,6 +170,7 @@ class InvoicesController < ApplicationController
     @invoice.invoice_language = transport_order.client.invoice_language
     @invoice.deadline = transport_order.client.payment_term
     @invoice.invoice_exchange_currency = transport_order.client.invoice_currency
+    authorize @invoice
   end
 
   # GET /invoices/1/edit
@@ -173,15 +180,19 @@ class InvoicesController < ApplicationController
     @client.build_contact
 
     @item = Item.new
+    authorize @invoice
   end
 
   # POST /invoices
   # POST /invoices.json
   def create
     @invoice = Invoice.new(invoice_params)
+    authorize @invoice
     #@invoice.items << Item.new(params[:item])
     respond_to do |format|
       if @invoice.save
+        @group.add(@invoice)
+        @group.add(@invoice.invoice_name)
         update_client_info(@invoice, invoice_params)
         # update transport_order info
         @invoice.items.each do |item|
@@ -208,6 +219,7 @@ class InvoicesController < ApplicationController
   # PATCH/PUT /invoices/1
   # PATCH/PUT /invoices/1.json
   def update
+    authorize @invoice
     respond_to do |format|
       if @invoice.update(invoice_params)
         format.html { redirect_to @invoice, notice: 'Invoice was successfully updated.' }
@@ -227,6 +239,7 @@ class InvoicesController < ApplicationController
   # DELETE /invoices/1
   # DELETE /invoices/1.json
   def destroy
+    authorize @invoice
     @invoice.destroy
     respond_to do |format|
       format.html { redirect_to invoices_url, notice: 'Invoice was successfully destroyed.' }
@@ -236,11 +249,12 @@ class InvoicesController < ApplicationController
 
   # GET /invoices/invoice_name/1.json
   def last_invoice_number_for_date
-    @invoice_number = InvoiceName.get_last_number_for_date(params[:date], params[:kind])
+    @invoice_number = InvoiceName.get_last_number_for_date(params[:date], @group.id, params[:kind])
     @invoice_prefix = InvoiceName.get_prefix_for_kind(params[:kind])
   end
 
   def update_multiple
+    authorize @invoice
     if params[:commit] == 'Aktualizuj status'
       Invoice.where(id: params[:invoice_ids]).update_all(["status=?", params[:status]])
       redirect_to invoices_path
@@ -330,7 +344,7 @@ class InvoicesController < ApplicationController
           item_attributes:
             [:name, :unit, :id ]
             ],
-      invoice_name_attributes: [:prefix, :number, :month, :year],
+      invoice_name_attributes: [:prefix, :number, :month, :year, :group_id],
       )
     end
 

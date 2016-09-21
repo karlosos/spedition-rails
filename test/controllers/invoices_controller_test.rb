@@ -49,7 +49,7 @@ class InvoicesControllerTest < ActionController::TestCase
   end
 
   test "should get index" do
-    sign_in users(:user_one)
+    sign_in users(:user_accountant)
     @request.host = "groupone.lvh.me:3000"
     get :index
     assert_response :success
@@ -57,14 +57,14 @@ class InvoicesControllerTest < ActionController::TestCase
   end
 
   test "should get new" do
-    sign_in users(:user_one)
+    sign_in users(:user_accountant)
     @request.host = "groupone.lvh.me:3000"
     get :new
     assert_response :success
   end
 
   test "should get new_correction" do
-    sign_in users(:user_one)
+    sign_in users(:user_accountant)
     @request.host = "groupone.lvh.me:3000"
     get :new_correction, :id => invoices(:invoice_one)
     assert_response :success
@@ -111,7 +111,7 @@ class InvoicesControllerTest < ActionController::TestCase
   end
 
   test "should get new_invoice_from_transport_orders" do
-    sign_in users(:user_one)
+    sign_in users(:user_accountant)
     @request.host = "groupone.lvh.me:3000"
     transport_order = transport_orders(:transport_order_one)
     transport_order_ids = [transport_order,]
@@ -130,7 +130,7 @@ class InvoicesControllerTest < ActionController::TestCase
   end
 
   test "should create invoice" do
-    sign_in users(:user_one)
+    sign_in users(:user_accountant)
     @request.host = "groupone.lvh.me:3000"
     assert_difference('Invoice.count') do
       post :create, invoice: @invoice_params
@@ -140,7 +140,7 @@ class InvoicesControllerTest < ActionController::TestCase
   end
 
   test "should update client on invoice client params change" do
-    sign_in users(:user_one)
+    sign_in users(:user_accountant)
     @request.host = "groupone.lvh.me:3000"
     @invoice_params[:client_name] = "New name"
     @invoice_params[:client_street] = "New street"
@@ -164,7 +164,7 @@ class InvoicesControllerTest < ActionController::TestCase
   end
 
   test "should show invoice" do
-    sign_in users(:user_one)
+    sign_in users(:user_accountant)
     @request.host = "groupone.lvh.me:3000"
     Money.add_rate("EUR", "PLN", @invoice.currency_rate)
     get :show, id: @invoice
@@ -172,7 +172,7 @@ class InvoicesControllerTest < ActionController::TestCase
   end
 
   test "should get edit" do
-    sign_in users(:user_one)
+    sign_in users(:user_accountant)
     @request.host = "groupone.lvh.me:3000"
     get :edit, id: @invoice
     assert_response :success
@@ -185,7 +185,7 @@ class InvoicesControllerTest < ActionController::TestCase
   # end
 
   test "should destroy invoice" do
-    sign_in users(:user_one)
+    sign_in users(:user_accountant)
     @request.host = "groupone.lvh.me:3000"
     assert_difference('Invoice.count', -1) do
       delete :destroy, id: @invoice

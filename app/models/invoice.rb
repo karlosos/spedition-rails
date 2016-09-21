@@ -1,5 +1,7 @@
 class Invoice < ActiveRecord::Base
   # default_scope { order('invoice_names.year DESC, invoice_names.month DESC, invoice_names.number DESC') }
+  groupify :group_member
+  groupify :named_group_member
 
   has_one :invoice_name, dependent: :destroy
   belongs_to :seller, class_name: 'Client', foreign_key: 'seller_id'

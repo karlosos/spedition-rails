@@ -29,3 +29,15 @@ google_membership:
   member_type: Client
   group: group_one
   group_type: Group
+
+invoice_one_membership:
+  member: invoice_one
+  member_type: Invoice
+  group: group_one
+  group_type: Group
+
+invoice_two_membership:
+  member: invoice_two
+  member_type: Invoice
+  group: group_one
+  group_type: Group
