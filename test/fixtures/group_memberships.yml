@@ -41,3 +41,9 @@ invoice_two_membership:
   member_type: Invoice
   group: group_one
   group_type: Group
+
+item_one_membership:
+  member: item_one
+  member_type: Item
+  group: group_one
+  group_type: Group

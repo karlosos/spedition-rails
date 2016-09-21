@@ -96,6 +96,7 @@ class TransportOrdersController < ApplicationController
       item.unit_price = @transport_order.freight_rate + @transport_order.profit_margin
       item.unit = "fracht"
       item.save
+      @group.add(item)
       @transport_order.save
     end
 

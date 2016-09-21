@@ -1,4 +1,7 @@
 class Item < ActiveRecord::Base
+  groupify :group_member
+  groupify :named_group_member
+  
   belongs_to :transport_order
   belongs_to :tax_rate
   has_many :invoice_items

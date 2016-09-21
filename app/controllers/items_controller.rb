@@ -5,7 +5,8 @@ class ItemsController < ApplicationController
   # GET /items
   # GET /items.json
   def index
-    @items = Item.all.order(sort_column + " " + sort_direction).paginate(:page => params[:page], :per_page => 30)
+    @items = Item.all.in_any_group(@group).order(sort_column + " " + sort_direction).paginate(:page => params[:page], :per_page => 30)
+    authorize @items
     respond_to do |format|
       format.html
       if params[:q].present?
@@ -20,24 +21,28 @@ class ItemsController < ApplicationController
   # GET /items/1
   # GET /items/1.json
   def show
+    authorize @item
   end
 
   # GET /items/new
   def new
     @item = Item.new
+    authorize @item
   end
 
   # GET /items/1/edit
   def edit
+    authorize @item
   end
 
   # POST /items
   # POST /items.json
   def create
     @item = Item.new(item_params)
-
+    authorize @item
     respond_to do |format|
       if @item.save
+        @group.add(@item)
         format.html { redirect_to @item, notice: 'Item was successfully created.' }
         format.json { render :show, status: :created, location: @item }
       else
@@ -50,6 +55,7 @@ class ItemsController < ApplicationController
   # PATCH/PUT /items/1
   # PATCH/PUT /items/1.json
   def update
+    authorize @item
     respond_to do |format|
       if @item.update(item_params)
         format.html { redirect_to @item, notice: 'Item was successfully updated.' }
@@ -64,6 +70,7 @@ class ItemsController < ApplicationController
   # DELETE /items/1
   # DELETE /items/1.json
   def destroy
+    authorize @item
     @item.destroy
     respond_to do |format|
       format.html { redirect_to items_url, notice: 'Item was successfully destroyed.' }
