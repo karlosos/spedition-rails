@@ -37,19 +37,19 @@
       <div class="col-md-4">
         <p>
           <%= f.label :client, "Klient" %><br />
-          <%= f.collection_select :client_id, Client.all, 'id', 'name', prompt: 'Wybierz klienta' %>
+          <%= f.collection_select :client_id, Client.all.in_any_group(@group), 'id', 'name', prompt: 'Wybierz klienta' %>
         </p>
       </div>
       <div class="col-md-4">
         <p>
           <%= f.label :carrier, "Zleceniobiorca" %><br />
-          <%= f.collection_select :carrier_id, Carrier.all, 'id', 'registration_number', prompt: 'Wybierz klienta' %>
+          <%= f.collection_select :carrier_id, Carrier.all.in_any_group(@group), 'id', 'registration_number', prompt: 'Wybierz klienta' %>
         </p>
       </div>
       <div class="col-md-4">
         <p>
           <%= f.label :seller_id, "Zleceniodawca" %><br />
-          <%= f.collection_select :seller_id, Client.all, 'id', 'name', prompt: 'Wybierz zleceniodawca' %>
+          <%= f.collection_select :seller_id, Client.all.in_any_group(@group), 'id', 'name', prompt: 'Wybierz zleceniodawca' %>
         </p>
       </div>
     </div>

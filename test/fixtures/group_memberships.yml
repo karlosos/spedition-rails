@@ -47,3 +47,9 @@ item_one_membership:
   member_type: Item
   group: group_one
   group_type: Group
+
+carrier_one_membership:
+  member: carrier_one
+  member_type: Carrier
+  group: group_one
+  group_type: Group

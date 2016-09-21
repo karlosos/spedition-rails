@@ -1,4 +1,7 @@
 class Carrier < ActiveRecord::Base
+  groupify :group_member
+  groupify :named_group_member
+  
   has_many :transport_orders, class_name: 'TransportOrder', foreign_key: 'carrier_id'
   has_one :address, as: :addressable, dependent: :destroy
   has_one :contact, as: :contactable, dependent: :destroy

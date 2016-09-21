@@ -74,8 +74,8 @@
   <div class="row">
     <div class="col-sm-6">
       <% if @invoice.client.nil? || @invoice.seller.nil? %>
-      <% clients = Client.all.limit(1) %>
-      <% sellers = Client.all.limit(1) %>
+      <% clients = Client.all.in_any_group(@group).limit(1) %>
+      <% sellers = Client.all.in_any_group(@group).limit(1) %>
     <% else %>
       <% clients = [@invoice.client, ] %>
       <% sellers = [@invoice.seller, ] %>

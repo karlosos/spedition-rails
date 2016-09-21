@@ -7,14 +7,16 @@ class CarriersController < ApplicationController
     search_params = { :registration_number => params[:registration_number], :carrier_name => params[:carrier_name],
       :driver_name => params[:driver_name]
     }
-    @carriers = Carrier.all.search(search_params)
+    @carriers = Carrier.all.search(search_params).in_any_group(@group)
     @carriers = @carriers.order(sort_column + " " + sort_direction)
     @carriers = @carriers.paginate(:page => params[:page], :per_page => 30)
+    authorize @carriers
   end
 
   # GET /carriers/1
   # GET /carriers/1.json
   def show
+    authorize @carrier
   end
 
   # GET /carriers/new
@@ -23,19 +25,22 @@ class CarriersController < ApplicationController
     @carrier.build_address
     @carrier.build_contact
     @carrier.contact.emails.build
+    authorize @carrier
   end
 
   # GET /carriers/1/edit
   def edit
+    authorize @carrier
   end
 
   # POST /carriers
   # POST /carriers.json
   def create
     @carrier = Carrier.new(carrier_params)
-
+    authorize @carrier
     respond_to do |format|
       if @carrier.save
+        @group.add(@carrier)
         format.html { redirect_to @carrier, notice: 'Carrier was successfully created.' }
         format.json { render :show, status: :created, location: @carrier }
       else
@@ -48,6 +53,7 @@ class CarriersController < ApplicationController
   # PATCH/PUT /carriers/1
   # PATCH/PUT /carriers/1.json
   def update
+    authorize @carrier
     respond_to do |format|
       if @carrier.update(carrier_params)
         format.html { redirect_to @carrier, notice: 'Carrier was successfully updated.' }
@@ -62,6 +68,7 @@ class CarriersController < ApplicationController
   # DELETE /carriers/1
   # DELETE /carriers/1.json
   def destroy
+    authorize @carrier
     @carrier.destroy
     respond_to do |format|
       if @carrier.errors.messages.any?
