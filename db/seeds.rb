@@ -6,6 +6,11 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
+group = Group.new()
+group.subdomain = "mtransport"
+group.name = "MTransport"
+group.save
+
 require 'csv'
 
 csv_text = File.read(Rails.root.join('lib', 'seeds', 'clients.csv'))
@@ -36,6 +41,7 @@ csv.each_with_index do |row, i|
   t.contact.www = row['www']
   t.invoice_language = row['invoice_language']
   t.save
+  group.add(t)
 end
 
 carriers_text = File.read(Rails.root.join('lib', 'seeds', 'carriers.csv'))
@@ -101,11 +107,6 @@ accountant.email = "accountant@mtransport.pl"
 accountant.password = '123456'
 accountant.encrypted_password = User.new.send(:password_digest, '123456')
 accountant.save
-
-group = Group.new()
-group.subdomain = "mtransport"
-group.name = "MTransport"
-group.save
 
 group.add(admin, as: "admin")
 group.add(speditor, as: "speditor")
