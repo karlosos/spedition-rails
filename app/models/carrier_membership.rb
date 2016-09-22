@@ -1,4 +1,6 @@
 class CarrierMembership < ActiveRecord::Base
+  groupify :group_member
+  groupify :named_group_member
   belongs_to :user
   belongs_to :carrier
 

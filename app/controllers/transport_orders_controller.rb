@@ -44,7 +44,7 @@ class TransportOrdersController < ApplicationController
     speditor = User.find(speditor_id)
     year = params[:year]
     month = params[:month]
-    @carriers = speditor.carriers
+    @carriers = speditor.carriers.in_any_group(@group)
     @transport_orders = Array.new
     for i in 0..@carriers.count
       transport_order = TransportOrder.new
@@ -55,7 +55,7 @@ class TransportOrdersController < ApplicationController
       transport_order.unloading_places.build
       @transport_orders << transport_order
     end
-    authorize @transport_orders
+    authorize @transport_orders[0]
   end
 
   def accounting_view

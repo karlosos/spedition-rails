@@ -4,7 +4,7 @@ class CarrierMembershipsController < ApplicationController
   # GET /carrier_memberships
   # GET /carrier_memberships.json
   def index
-    @carrier_memberships = current_user.carrier_memberships
+    @carrier_memberships = current_user.carrier_memberships.in_any_group(@group)
     authorize @carrier_memberships
   end
 
@@ -33,6 +33,7 @@ class CarrierMembershipsController < ApplicationController
     authorize @carrier_membership
     respond_to do |format|
       if @carrier_membership.save
+        @group.add(@carrier_membership)
         format.html { redirect_to carrier_memberships_path, notice: 'Carrier membership was successfully created.' }
         format.json { render :show, status: :created, location: @carrier_membership }
       else

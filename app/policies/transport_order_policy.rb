@@ -39,6 +39,14 @@ class TransportOrderPolicy < ApplicationPolicy
     is_in_same_group? || is_site_admin?
   end
 
+  def speditor_view?
+    is_logged_in?
+  end
+
+  def accounting_view?
+    is_logged_in?
+  end
+
   private
 
   def is_site_admin?
