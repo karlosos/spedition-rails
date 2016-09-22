@@ -7,7 +7,7 @@ class TransportOrdersControllerTest < ActionController::TestCase
   end
 
   test "should get index" do
-    sign_in users(:user_one)
+    sign_in users(:user_speditor)
     @request.host = "groupone.lvh.me:3000"
     get :index
     assert_response :success
@@ -15,14 +15,14 @@ class TransportOrdersControllerTest < ActionController::TestCase
   end
 
   test "should get new" do
-    sign_in users(:user_one)
+    sign_in users(:user_speditor)
     @request.host = "groupone.lvh.me:3000"
     get :new
     assert_response :success
   end
 
   test "should create transport_order" do
-    sign_in users(:user_one)
+    sign_in users(:user_speditor)
     @request.host = "groupone.lvh.me:3000"
     assert_difference('TransportOrder.count') do
       post :create, transport_order: {
@@ -55,22 +55,31 @@ class TransportOrdersControllerTest < ActionController::TestCase
     assert_redirected_to transport_order_path(assigns(:transport_order))
   end
 
+  test "should create transport_order_name" do
+    sign_in users(:user_speditor)
+    @request.env['HTTP_REFERER'] = 'http://groupone.lvh.me:3000/transport_orders'
+    @request.host = "groupone.lvh.me:3000"
+    transport_order = transport_orders(:transport_order_without_name)
+    put :create_name, id: transport_order
+    assert transport_order.transport_order_name.present?
+  end
+
   test "should show transport_order" do
-    sign_in users(:user_one)
+    sign_in users(:user_speditor)
     @request.host = "groupone.lvh.me:3000"
     get :show, id: @transport_order
     assert_response :success
   end
 
   test "should get edit" do
-    sign_in users(:user_one)
+    sign_in users(:user_speditor)
     @request.host = "groupone.lvh.me:3000"
     get :edit, id: @transport_order
     assert_response :success
   end
 
   test "should update transport_order" do
-    sign_in users(:user_one)
+    sign_in users(:user_speditor)
     @request.host = "groupone.lvh.me:3000"
     patch :update, id: @transport_order, transport_order: {
       client_id: clients(:client_google).id,
@@ -100,7 +109,7 @@ class TransportOrdersControllerTest < ActionController::TestCase
   end
 
   test "should destroy transport_order" do
-    sign_in users(:user_one)
+    sign_in users(:user_speditor)
     @request.host = "groupone.lvh.me:3000"
     @request.env['HTTP_REFERER'] = 'http://groupone.lvh.me:3000/transport_orders'
     assert_difference('TransportOrder.count', -1) do

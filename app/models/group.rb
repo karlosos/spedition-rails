@@ -1,5 +1,5 @@
 class Group < ActiveRecord::Base
-  groupify :group, members: [:users, :clients, :invoices, :invoice_names, :items, :carriers], default_members: :users
+  groupify :group, members: [:users, :clients, :invoices, :invoice_names, :items, :carriers, :transport_orders, :transport_order_name], default_members: :users
   has_one :default_value
   validates_uniqueness_of :subdomain
   ROLES = [

@@ -53,3 +53,15 @@ carrier_one_membership:
   member_type: Carrier
   group: group_one
   group_type: Group
+
+transport_order_one_membership:
+  member: transport_order_one
+  member_type: TransportOrder
+  group: group_one
+  group_type: Group
+
+transport_order_without_name_membership:
+  member: transport_order_without_name
+  member_type: TransportOrder
+  group: group_one
+  group_type: Group

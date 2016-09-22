@@ -28,9 +28,10 @@ class TransportOrdersController < ApplicationController
 
     @transport_orders = TransportOrder.joins(:transport_order_name)
     @transport_orders = @transport_orders.joins(:client, :carrier, :loading_places, :unloading_places)
-    @transport_orders = @transport_orders.search(search_params)
+    @transport_orders = @transport_orders.search(search_params).in_any_group(@group)
     @transport_orders = @transport_orders.order(sort_column + " " + sort_direction)
     @transport_orders = @transport_orders.paginate(:page => params[:page], :per_page => 30)
+    authorize @transport_orders
   end
 
   def speditor_view
@@ -54,6 +55,7 @@ class TransportOrdersController < ApplicationController
       transport_order.unloading_places.build
       @transport_orders << transport_order
     end
+    authorize @transport_orders
   end
 
   def accounting_view
@@ -63,19 +65,22 @@ class TransportOrdersController < ApplicationController
     @client.contact.emails.build
 
     @transport_orders = TransportOrder
-    @transport_orders = @transport_orders.joins(:client, :carrier, :loading_places, :unloading_places)
+    @transport_orders = @transport_orders.joins(:client, :carrier, :loading_places, :unloading_places).in_any_group(@group)
     @transport_orders = @transport_orders.order(sort_column + " " + sort_direction)
     @transport_orders = @transport_orders.paginate(:page => params[:page], :per_page => 30)
+    authorize @transport_orders
   end
 
   # GET /transport_orders/1.joins(:transport_order_name).joins(:client).joins(:carrier).joins(:loading_places).joins(:unloading_places)
   # GET /transport_orders/1.json
   def show
+    authorize @transport_order
   end
 
   # GET /transport_orders/new
   def new
     @transport_order = TransportOrder.new
+    authorize @transport_order
 
     @transport_order.build_freichtage_description
     @transport_order.loading_places.build
@@ -84,20 +89,24 @@ class TransportOrdersController < ApplicationController
 
   def create_name
     @transport_order = TransportOrder.find(params[:id])
+    authorize @transport_order
     can_create_name = @transport_order.can_create_name
     if can_create_name.size == 0 && !@transport_order.transport_order_name.present?
       @transport_order.build_transport_order_name
       @transport_order.build_transport_order_name.year = Date.today.year
-      @transport_order.transport_order_name.number = TransportOrderName.get_last_number_for_year(Date.today.year)
-      item = Item.new()
-      item.transport_order = @transport_order
-      item.name = "Transportauftrag (usluga transportowa) #{@transport_order.route}"
-      item.tax_rate_id = 23
-      item.unit_price = @transport_order.freight_rate + @transport_order.profit_margin
-      item.unit = "fracht"
-      item.save
-      @group.add(item)
-      @transport_order.save
+      @transport_order.transport_order_name.group = @group
+      @transport_order.transport_order_name.number = TransportOrderName.get_last_number_for_year(Date.today.year, @group.id)
+      if @transport_order.valid?
+        item = Item.new()
+        item.transport_order = @transport_order
+        item.name = "Transportauftrag (usluga transportowa) #{@transport_order.route}"
+        item.tax_rate_id = 23
+        item.unit_price = @transport_order.freight_rate + @transport_order.profit_margin
+        item.unit = "fracht"
+        item.save
+        @group.add(item)
+        @transport_order.save
+      end
     end
 
     redirect_to :back, :flash => { :notice =>  can_create_name}
@@ -106,6 +115,7 @@ class TransportOrdersController < ApplicationController
   # GET /transport_orders/1/edit
   def edit
     @transport_order = TransportOrder.find(params[:id])
+    authorize @transport_order
     if @transport_order.freichtage_description.present? == false
       @transport_order.build_freichtage_description
     end
@@ -115,9 +125,10 @@ class TransportOrdersController < ApplicationController
   # POST /transport_orders.json
   def create
     @transport_order = TransportOrder.new(transport_order_params)
-
+    authorize @transport_order
     respond_to do |format|
       if @transport_order.save
+        @group.add(@transport_order)
         format.html { redirect_to @transport_order, notice: 'Transport order was successfully created.' }
         format.json { render :show, status: :created, location: @transport_order }
       else
@@ -130,6 +141,7 @@ class TransportOrdersController < ApplicationController
   # PATCH/PUT /transport_orders/1
   # PATCH/PUT /transport_orders/1.json
   def update
+    authorize @transport_order
     respond_to do |format|
       if @transport_order.update(transport_order_params)
         format.html { redirect_to @transport_order, notice: 'Transport order was successfully updated.' }
@@ -144,6 +156,7 @@ class TransportOrdersController < ApplicationController
   # DELETE /transport_orders/1
   # DELETE /transport_orders/1.json
   def destroy
+    authorize @transport_order
     @transport_order.destroy
     respond_to do |format|
       format.html { redirect_to :back, notice: 'Transport order was successfully destroyed.' }

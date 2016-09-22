@@ -12,3 +12,15 @@ transport_order_one:
   distance: 213.3
   freight_rate_cents: 55476
   profit_margin_cents: 423
+
+transport_order_without_name:
+  client: client_google
+  carrier: carrier_one
+  seller: client_microsoft
+  route: 95111 Rehau nach 52074 Aachen
+  distance: 213.3
+  freight_rate_cents: 55476
+  profit_margin_cents: 423
+  cmr_number: 2132X
+  loading_status: true
+  unloading_status: true

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160921144346) do
+ActiveRecord::Schema.define(version: 20160921180554) do
 
   create_table "addresses", force: true do |t|
     t.string   "line1"
@@ -295,8 +295,10 @@ ActiveRecord::Schema.define(version: 20160921144346) do
     t.integer  "transport_order_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "group_id"
   end
 
+  add_index "transport_order_names", ["group_id"], name: "index_transport_order_names_on_group_id"
   add_index "transport_order_names", ["transport_order_id"], name: "index_transport_order_names_on_transport_order_id"
 
   create_table "transport_orders", force: true do |t|

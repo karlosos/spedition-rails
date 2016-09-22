@@ -1,4 +1,7 @@
 class TransportOrder < ActiveRecord::Base
+  groupify :group_member
+  groupify :named_group_member
+  
   belongs_to :invoice
   has_one :item
   has_one :transport_order_name, dependent: :destroy

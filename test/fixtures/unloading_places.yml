@@ -11,3 +11,10 @@ unloading_place_one:
   zip: 01-300
   country: Poland
   date: <%= DateTime.now + 10.days %>
+
+unloading_place_two:
+  transport_order: transport_order_without_name
+  city: Warszawa
+  zip: 01-300
+  country: Poland
+  date: <%= DateTime.now + 10.days %>
