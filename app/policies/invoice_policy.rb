@@ -40,14 +40,14 @@ class InvoicePolicy < ApplicationPolicy
   end
 
   def new_invoice_from_transport_orders?
-    # has_acces_to_parent_transport_order = true
-    # @invoice.items.each do |item|
-    #   if item.transport_order.present?
-    #     item.transport_order.shares_any_group?(user)
-    #   end
-    # end
-    # is_logged_in? && has_acces_to_parent_transport_order
-    is_logged_in?
+    has_acces_to_parent_transport_order = true
+    @invoice.items.each do |item|
+      if item.transport_order.present?
+        item.transport_order.shares_any_group?(user)
+      end
+    end
+    is_logged_in? && has_acces_to_parent_transport_order
+    #is_logged_in?
   end
 
   def last_invoice_number_for_date?
