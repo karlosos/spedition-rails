@@ -30,6 +30,7 @@
       <div class="col-md-3">
         <%= f.label :client_email, "Email spedytora" %>
         <%= f.text_field :client_email  %>
+        <%= f.error :client_email %>
       </div>
     </div>
 
@@ -38,18 +39,21 @@
         <p>
           <%= f.label :client, "Klient" %><br />
           <%= f.collection_select :client_id, Client.all.in_any_group(@group), 'id', 'name', prompt: 'Wybierz klienta' %>
+          <%= f.error :client_id %>
         </p>
       </div>
       <div class="col-md-4">
         <p>
           <%= f.label :carrier, "Zleceniobiorca" %><br />
           <%= f.collection_select :carrier_id, Carrier.all.in_any_group(@group), 'id', 'registration_number', prompt: 'Wybierz klienta' %>
+          <%= f.error :carrier_id %>
         </p>
       </div>
       <div class="col-md-4">
         <p>
           <%= f.label :seller_id, "Zleceniodawca" %><br />
           <%= f.collection_select :seller_id, Client.all.in_any_group(@group), 'id', 'name', prompt: 'Wybierz zleceniodawca' %>
+          <%= f.error :seller_id %>
         </p>
       </div>
     </div>
@@ -91,6 +95,7 @@
         <p>
           <%= f.label :route, "Trasa" %><br />
           <%= f.text_field :route %>
+          <%= f.error :route %>
         </p>
       </div>
     </div>
@@ -100,6 +105,7 @@
         <p>
           <%= f.label :distance, "Dystans" %><br />
           <%= f.number_field :distance %>
+          <%= f.error :distance %>
         </p>
       </div>
 
@@ -107,6 +113,7 @@
         <p>
           <%= f.label :freight_rate, "Wartość frachtu" %><br />
           <%= f.number_field :freight_rate %>
+          <%= f.error :freight_rate %>
         </p>
       </div>
 
@@ -114,6 +121,7 @@
         <p>
           <%= f.label :profit_margin, "Marża" %><br />
           <%= f.number_field :profit_margin %>
+          <%= f.error :profit_margin %>
         </p>
       </div>
     </div>
@@ -122,14 +130,18 @@
       <h2>Wymogi co do taboru</h2>
       <div class="col-md-8">
         <%= f.text_area :vehicle_requirements %>
+        <%= f.error :vehicle_requirements %>
       </div>
       <div class="col-md-4">
         <%= f.label :cmr_number, "Numer CMR" %><br />
         <%= f.text_field :cmr_number %>
+        <%= f.error :cmr_number %>
         <%= f.label :car_registration_number, "Samochód" %><br />
         <%= f.text_field :car_registration_number %>
+        <%= f.error :car_registration_number %>
         <%= f.label :carrier_driver_name, "Kierowca" %><br />
         <%= f.text_field :carrier_driver_name %>
+        <%= f.error :carrier_driver_name %>
       </div>
     </div>
 
@@ -137,6 +149,7 @@
       <h2>Uwagi dodatkowe</h2>
       <div class="col-md-12">
         <%= f.text_area :additional_comments %>
+        <%= f.error :additional_comments %>
       </div>
     </div>
 
@@ -145,6 +158,7 @@
         <h2>Ustalenia</h2>
         <div class="col-md-12">
           <%= f.text_area :arrangements %>
+          <%= f.error :arrangements %>
         </div>
       </div>
     <% end %>

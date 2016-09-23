@@ -1,4 +1,4 @@
-<%= form_for(@client) do |f| %>
+<%= simple_form_for(@client) do |f| %>
   <% if @client.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@client.errors.count, "error") %> prohibited this client from being saved:</h2>
@@ -16,11 +16,13 @@
       <p>
         <%= f.label :name %><br />
         <%= f.text_field :name, :required => true %>
+        <%= f.error :name %>
       </p>
 
       <p>
         <%= f.label :nip %><br />
         <%= f.text_field :nip, :required => true %>
+        <%= f.error :nip %>
       </p>
       <%= f.fields_for :address do |address| %>
       <%= render :partial => 'shared/address', :locals => {:f => address} %>
@@ -34,6 +36,7 @@
 
       <%= f.label :accounting_email %><br />
       <%= f.text_field :accounting_email %>
+      <%= f.error :accounting_email %>
     </div>
   </div>
 
@@ -44,18 +47,22 @@
         <% currencies = ["EUR", "USD", "PLN"] %>
         <%= f.label :invoice_currency %><br />
         <%= f.collection_select :invoice_currency, currencies, :to_s, :to_s, { include_blank: false }, { class: "form-control" } %>
+        <%= f.error :invoice_currency %>
       </p>
       <p>
         <%= f.label :tax_rate_id %><br />
         <%= f.collection_select :tax_rate_id, TaxRate.important_only, :id, :name, {}, {} %>
+        <%= f.error :tax_rate_id %>
       </p>
       <p>
         <%= f.label :invoice_language %><br />
         <%= f.text_field :invoice_language %>
+        <%= f.error :invoice_language %>
       </p>
       <p>
         <%= f.label :payment_term %><br />
         <%= f.text_field :payment_term %>
+        <%= f.error :payment_term %>
       </p>
     </div>
     <div class="col-md-6">

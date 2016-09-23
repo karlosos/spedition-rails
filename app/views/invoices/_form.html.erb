@@ -1,6 +1,6 @@
 <%= render :partial => 'shared/create_client_modal' %>
 <%= render :partial => 'shared/create_item_modal' %>
-<%= form_for(@invoice) do |invoice_form| %>
+<%= simple_form_for(@invoice) do |invoice_form| %>
 <% if @invoice.errors.any? %>
 <div id="error_explanation">
   <h2><%= pluralize(@invoice.errors.count, "error") %>
@@ -18,6 +18,7 @@
     <div class="col-sm-2">
       <%= label_tag :kind, "Faktura" %>
       <%= invoice_form.collection_select :kind, Invoice::KINDS, :to_s, :to_s, { include_blank: false }, { class: "form-control" } %>
+      <%= invoice_form.error :kind %>
     </div>
     <div class="col-sm-3">
       <%= label_tag :date, "Data wystawienia faktury" %>
@@ -27,6 +28,7 @@
           <span class="glyphicon glyphicon-calendar"></span>
         </span>
       </div>
+      <%= invoice_form.error :date %>
     </div>
 
     <div class="col-sm-2">
@@ -37,6 +39,7 @@
           <span class="glyphicon glyphicon-calendar"></span>
         </span>
       </div>
+      <%= invoice_form.error :sell_date %>
     </div>
 
     <div class="col-sm-2">
@@ -54,6 +57,7 @@
         <% place = @group.default_value.invoice_place %>
       <% end %>
       <%= invoice_form.text_field :place, value: place %>
+      <%= invoice_form.error :place %>
     </div>
   </div>
 
@@ -62,10 +66,12 @@
     <div class="col-sm-5">
       <%= label_tag :invoice_to_correct_id, "Dokument do korekcji" %>
       <%= invoice_form.collection_select :invoice_to_correct_id, Invoice.all.joins(:invoice_name), 'id', 'get_name', prompt: 'Wybierz fakture' %>
+      <%= invoice_form.error :invoice_to_correct_id %>
     </div>
     <div class="col-sm-6">
       <%= label_tag :correction_cause, "Przyczyna korekcji" %>
       <%= invoice_form.text_field :correction_cause %>
+      <%= invoice_form.error :correction_cause %>
     </div>
    </div>
  <% end %>
@@ -84,6 +90,7 @@
         My
       </h3>
       <%= invoice_form.collection_select :seller_id, sellers, 'id', 'name', prompt: 'Wybierz sprzedawce' %>
+      <%= invoice_form.error :seller_id %>
     </div>
 
     <div class="col-sm-6">
@@ -91,22 +98,31 @@
         Nabywca
       </h3>
       <%= invoice_form.collection_select :client_id, clients, 'id', 'name', prompt: 'Wybierz klienta' %>
+      <%= invoice_form.error :client_id %>
       <%= label_tag :client_name, "Nazwa klienta" %>
       <%= invoice_form.text_field :client_name %>
+      <%= invoice_form.error :client_id %>
       <%= label_tag :client_nip, "NIP klienta" %>
       <%= invoice_form.text_field :client_nip %>
+      <%= invoice_form.error :client_nip %>
       <%= label_tag :client_street, "Ulica i numer" %>
       <%= invoice_form.text_field :client_street %>
+      <%= invoice_form.error :client_street %>
       <%= label_tag :client_zip, "Kod pocztowy" %>
       <%= invoice_form.text_field :client_zip %>
+      <%= invoice_form.error :client_zip %>
       <%= label_tag :client_city, "Miasto" %>
       <%= invoice_form.text_field :client_city %>
+      <%= invoice_form.error :client_city %>
       <%= label_tag :client_country, "Kraj" %>
       <%= invoice_form.text_field :client_country %>
+      <%= invoice_form.error :client_country %>
       <%= label_tag :client_email, "Email" %>
       <%= invoice_form.text_field :client_email %>
+      <%= invoice_form.error :client_email %>
       <%= label_tag :client_phone, "Telefon" %>
       <%= invoice_form.text_field :client_phone %>
+      <%= invoice_form.error :client_phone %>
     </div>
   </div>
 
@@ -155,12 +171,15 @@
       <%= invoice_form.label :net_price_cents, "Netto" %>
       <%= invoice_form.number_field :net_price, :readonly => true, :step => '0.01'  %>
       <%= invoice_form.hidden_field :net_price_currency, :readonly => true, :class => 'currency' %>
+      <%= invoice_form.error :net_price %>
       <%= invoice_form.label :value_added_tax_cents, "VAT" %>
       <%= invoice_form.number_field :value_added_tax, :readonly => true, :step => '0.01' %>
       <%= invoice_form.hidden_field :value_added_tax_currency, :readonly => true, :class => 'currency'  %>
+      <%= invoice_form.error :value_added_tax %>
       <%= invoice_form.label :total_selling_price_cents, "Brutto" %>
       <%= invoice_form.number_field :total_selling_price, :readonly => true, :step => '0.01' %>
       <%= invoice_form.hidden_field :total_selling_price_currency, :readonly => true, :class => 'currency' %>
+      <%= invoice_form.error :total_selling_price_cents %>
     </div>
   </div>
 
@@ -179,6 +198,7 @@
       <div class="form-group">
         <%= invoice_form.label :currency_rate_name, "Waluta" %>
         <%= invoice_form.collection_select :currency_rate_name, currencies, :to_s, :to_s, { include_blank: false }, { class: "form-control" } %>
+        <%= invoice_form.error :currency_rate_name %>
       </div>
     </div>
     <div class="col-sm-3">
@@ -186,6 +206,7 @@
       <div class="form-group">
         <%= invoice_form.label :invoice_language, "Język" %>
         <%= invoice_form.collection_select :invoice_language, languages, :to_s, :to_s, { include_blank: false }, { class: "form-control" } %>
+        <%= invoice_form.error :invoice_language %>
       </div>
     </div>
     <div class="col-sm-3">
@@ -193,12 +214,14 @@
         <% exchange_currencies = ["PLN", "Nie przeliczaj"] %>
         <%= invoice_form.label :invoice_exchange_currency, "Przeliczanie na walutę" %>
         <%= invoice_form.collection_select :invoice_exchange_currency, exchange_currencies, :to_s, :to_s, { include_blank: false }, { class: "form-control" } %>
+        <%= invoice_form.error :invoice_exchange_currency %>
       </div>
     </div>
     <div class="col-sm-3">
       <div class="form-group">
         <%= invoice_form.label :deadline, "Termin płatności w dniach" %>
         <%= invoice_form.number_field :deadline %>
+        <%= invoice_form.error :deadline %>
       </div>
     </div>
   </div>
@@ -207,6 +230,7 @@
     <div class="col-sm-12">
       <%= invoice_form.label :total_price_in_words, "Kwota słownie" %>
       <%= invoice_form.text_field :total_price_in_words %>
+      <%= invoice_form.error :total_price_in_words %>
     </div>
   </div>
 
@@ -214,12 +238,15 @@
     <div class="col-sm-12">
       <%= label_tag :currency_rate_table_name, "Tabela kursu" %>
       <%= invoice_form.text_field :currency_rate_table_name, :readonly => true %>
+      <%= invoice_form.error :currency_rate_table_name %>
 
       <%= label_tag :currency_rate_date, "Z dnia" %>
       <%= invoice_form.date_field :currency_rate_date, :readonly => true %>
+      <%= invoice_form.error :currency_rate_date %>
 
       <%= label_tag :currency_rate, "Kurs" %>
       <%= invoice_form.text_field :currency_rate, :readonly => true %>
+      <%= invoice_form.error :currency_rate %>
     </div>
   </div>
 
