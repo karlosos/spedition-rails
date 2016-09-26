@@ -76,6 +76,7 @@ loadings_status_functions = () ->
   $('.unloading_option').click (e) ->
     status_index = $(this).attr("value")
     transport_order_id = $(this).parent().parent().attr("transport-order-id")
+    transport_order_email = $(this).parent().parent().attr("transport-order-email")
     main_button = $(this).parent().parent().parent().find('.status')
     toggle_button = $(this).parent().parent().parent().find('.dropdown-toggle')
     url = '/transport_orders/' + transport_order_id
@@ -91,6 +92,20 @@ loadings_status_functions = () ->
         toggle_classes = "btn dropdown-toggle btn-status-"+status_index
         main_button.attr('class', button_classes)
         toggle_button.attr('class', toggle_classes)
+        if status_index == "true"
+          $.ajax '/gmail/send_email',
+          type: 'GET'
+          dataType: 'json'
+          data:
+            email: transport_order_id
+            type: "unloading"
+            error: (jqXHR, textStatus, errorThrown) ->
+              success: (data, textStatus, jqXHR) ->
+                button_classes = "btn status btn-status-"+status_index
+                toggle_classes = "btn dropdown-toggle btn-status-"+status_index
+                main_button.attr('class', button_classes)
+                toggle_button.attr('class', toggle_classes)
+
 
 #
 # Drive documents status

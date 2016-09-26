@@ -19,9 +19,14 @@ class User < ActiveRecord::Base
     unless user
         user = User.create(
            email: data["email"],
-           password: Devise.friendly_token[0,20]
+           password: Devise.friendly_token[0,20],
+           uid: access_token.uid,
+           provider: access_token.provider
         )
     end
-    user
+    user.access_token = access_token.credentials.token
+    user.refresh_token = access_token.credentials.refresh_token
+    user.save
+    return user
   end
 end

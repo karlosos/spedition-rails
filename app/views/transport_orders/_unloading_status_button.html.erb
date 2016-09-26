@@ -1,4 +1,4 @@
-<div class="btn-group unloading-status" transport-order-id="<%= transport_order.id %>">
+<div class="btn-group unloading-status" transport-order-id="<%= transport_order.id %>" transport-order-email="<%= transport_order.client_email %>">
   <% button_status_class = "btn-status-#{transport_order.unloading_status}" %>
   <button type="button" class="btn <%= button_status_class %> status dropdown-toggle" data-toggle="dropdown">
     <span class="glyphicon glyphicon-envelope"></span>

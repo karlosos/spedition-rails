@@ -136,6 +136,7 @@
               <ul class="dropdown-menu" role="menu" invoice-id="<%= invoice.id %>">
                 <li><a class="invoice_option" href="#" value="1">wystawiona</a></li>
                 <li><a class="invoice_option" href="#" value="2">wysłana</a></li>
+                <li><%= link_to "Wyślij fakture", invoice_email_path(:id => invoice.id) %></li>
                 <li><a class="invoice_option" href="#" value="3">zapłacona</a></li>
               </ul>
           </div>

@@ -25,6 +25,10 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'bootstrap-sass', '3.3.5'
 gem 'devise', '4.2.0'
 gem 'omniauth-google-oauth2'
+gem "figaro"
+gem "httparty"
+gem 'google-api-client', '~> 0.9', require: 'google/apis/gmail_v1'
+gem 'rmail', '~> 1.1', '>= 1.1.2'
 gem 'will_paginate', '3.1.0'
 gem 'money-rails', '1.6.1'
 gem 'simple_form', '3.2.1'

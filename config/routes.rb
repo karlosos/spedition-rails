@@ -25,6 +25,9 @@ Rails.application.routes.draw do
     get 'invoices/new_correction/:id/' => 'invoices#new_correction', :as => :new_correction_invoice
     get 'new_invoice_from_transport_orders/' => 'invoices#new_invoice_from_transport_orders', :as => :new_invoice_from_transport_orders
     root 'pages#group_home', as: :group_root
+    get 'mail/loading_transport_order/:id' => 'gmail#loading_transport_order_email', :as => :loading_transport_order_email
+    get 'mail/unloading_transport_order/:id' => 'gmail#unloading_transport_order_email', :as => :unloading_transport_order_email
+    get 'mail/invoice_email/:id' => 'gmail#invoice_email', :as => :invoice_email
   end
 
   root 'pages#root_home'
