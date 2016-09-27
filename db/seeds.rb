@@ -181,6 +181,7 @@ carriers_csv.each_with_index do |row, i|
   t.address.country = "PL"
   t.valid?
   t.save
+  group.add(t)
 end
 
 puts "There are now #{Carrier.count} rows in the carriers table"
