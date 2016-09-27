@@ -6,7 +6,7 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-group = Group.new()
+group = Group.create()
 group.subdomain = "mtransport"
 group.name = "MTransport"
 group.save
@@ -39,12 +39,12 @@ Zawiszy Czarnego 2B
 E-Mail: info@mtransport.pl
 Internet: www.mtransport.pl"
 
-mail_template.save
-group.default_value.mail_templates << mail_template
+mail_template_loading.save
+group.default_value.mail_templates << mail_template_loading
 
-mail_template_loading = MailTemplate.new
-mail_template_loading.subject = "Ladung von {0} ist bereits zugestellt worden."
-mail_template_loading.content = "Guten Tag!
+mail_template_unloading = MailTemplate.new
+mail_template_unloading.subject = "Ladung von {0} ist bereits zugestellt worden."
+mail_template_unloading.content = "Guten Tag!
 
 Wir informieren, Ihre Ladung von {0} wurde zugestellt.
 Wir freuen uns auch zukunftig auf eine vertrauensvolle Zusammenarbeit.
@@ -78,12 +78,12 @@ Zawiszy Czarnego 2B
 E-Mail: info@mtransport.pl
 Internet: www.mtransport.pl"
 
-mail_template.save
-group.default_value.mail_templates << mail_template
+mail_template_unloading.save
+group.default_value.mail_templates << mail_template_unloading
 
-mail_template_loading = MailTemplate.new
-mail_template_loading.subject = "Ladung von {0} - Dokumente und Abmessungen des Wagens"
-mail_template_loading.content = "Sehr geehrte Damen und Herren
+mail_template_documents = MailTemplate.new
+mail_template_documents.subject = "Ladung von {0} - Dokumente und Abmessungen des Wagens"
+mail_template_documents.content = "Sehr geehrte Damen und Herren
 
 Wir senden Ihnen unsere Firmendokumente , Versicherung und Briefkopf.
 
@@ -119,8 +119,8 @@ Zawiszy Czarnego 2B
 E-Mail: info@mtransport.pl
 Internet: www.mtransport.pl"
 
-mail_template.save
-group.default_value.mail_templates << mail_template
+mail_template_documents.save
+group.default_value.mail_templates << mail_template_documents
 
 require 'csv'
 
