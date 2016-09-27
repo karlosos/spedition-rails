@@ -15,6 +15,7 @@ class DefaultValuesController < ApplicationController
   # GET /default_values/new
   def new
     @default_value = DefaultValue.new
+    @default_value.mail_templates.build
   end
 
   # GET /default_values/1/edit
@@ -69,6 +70,6 @@ class DefaultValuesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def default_value_params
-      params.require(:default_value).permit(:invoice_place)
+      params.require(:default_value).permit(:invoice_place, mail_templates_attributes: [:id, :subject, :content, :_destroy,])
     end
 end

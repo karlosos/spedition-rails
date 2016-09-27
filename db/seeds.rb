@@ -11,6 +11,117 @@ group.subdomain = "mtransport"
 group.name = "MTransport"
 group.save
 
+mail_template_loading = MailTemplate.new
+mail_template_loading.subject = "Ladung von {0} ist bereits geladen worden."
+mail_template_loading.content = "Sehr geehrte Damen und Herren,
+
+Ihre Ladung von {0} wurde beladen. nach der Entladung werden wir Sie informieren.
+Die aktuelle Position des LKW's koennen sie jederzeit Dank unserem GPS System  sehen unter:
+https://business.tomtom.com/de_de/products/login/
+Accountname: mtransport
+Benutzername: {1}
+Passwort: {1}
+
+
+--
+Mit freundlichen Grüßen / Best regards
+
+Chris Sośnicki
+Tel +48 888195113
+Fax +48 68320690
+
+.....................................................................
+
+Mtransport
+Zawiszy Czarnego 2B
+65-387 Zielona Gora
+
+E-Mail: info@mtransport.pl
+Internet: www.mtransport.pl"
+
+mail_template.save
+group.default_value.mail_templates << mail_template
+
+mail_template_loading = MailTemplate.new
+mail_template_loading.subject = "Ladung von {0} ist bereits zugestellt worden."
+mail_template_loading.content = "Guten Tag!
+
+Wir informieren, Ihre Ladung von {0} wurde zugestellt.
+Wir freuen uns auch zukunftig auf eine vertrauensvolle Zusammenarbeit.
+Info über eventuelle Ladungen und Angebote von Ihnen bitte an info@mtransport.pl.
+
+... mit uns fährt Ihre Sendung 1. Klasse!
+
+
+
+
+https://business.tomtom.com/de_de/products/login/
+Accountname: mtransport
+Benutzername: {1}
+Passwort: {1}
+
+
+--
+Mit freundlichen Grüßen / Best regards
+
+
+Chris Sośnicki
+Tel +48 888195113
+Fax +48 683200690
+
+.....................................................................
+
+Mtransport
+Zawiszy Czarnego 2B
+65-387 Zielona Gora
+
+E-Mail: info@mtransport.pl
+Internet: www.mtransport.pl"
+
+mail_template.save
+group.default_value.mail_templates << mail_template
+
+mail_template_loading = MailTemplate.new
+mail_template_loading.subject = "Ladung von {0} - Dokumente und Abmessungen des Wagens"
+mail_template_loading.content = "Sehr geehrte Damen und Herren
+
+Wir senden Ihnen unsere Firmendokumente , Versicherung und Briefkopf.
+
+Kennzeichen:
+{1}
+LKW Abmessungen:
+{2}
+
+Den Auftrag senden Sie bitte per Mail oder fax unter die Nummer +48 683200690
+
+
+Die aktuelle Position des LKW's koennen sie jederzeit Dank unserem GPS System  sehen unter:
+https://business.tomtom.com/de_de/products/login/
+Accountname: mtransport
+Benutzername: {1}
+Passwort: {1}
+
+
+--
+Mit freundlichen Grüßen / Best regards
+
+
+Chris Sośnicki
+Tel +48 888195113
+Fax +48 683200690
+
+.....................................................................
+
+Mtransport
+Zawiszy Czarnego 2B
+65-387 Zielona Gora
+
+E-Mail: info@mtransport.pl
+Internet: www.mtransport.pl"
+
+mail_template.save
+group.default_value.mail_templates << mail_template
+
 require 'csv'
 
 csv_text = File.read(Rails.root.join('lib', 'seeds', 'clients.csv'))

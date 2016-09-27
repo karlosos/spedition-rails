@@ -14,6 +14,11 @@ class Group < ActiveRecord::Base
   def create_default_values
     default_value = DefaultValue.new
     default_value.group = self
+    mail_template = MailTemplate.new
+    mail_template.subject = "Domyślny mail"
+    mail_template.content = "Domyślna treść maila"
+    mail_template.save
+    default_value.mail_templates << mail_template
     default_value.save
   end
 end

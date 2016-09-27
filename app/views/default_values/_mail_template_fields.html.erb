@@ -1,0 +1,9 @@
+<div class="email">
+  <%= f.label :subject, "Temat" %>
+  <%= f.text_field :subject %>
+
+  <%= f.label :content, "Treść" %>
+  <%= f.text_area :content %>
+  <%= f.hidden_field :_destroy %>
+  <a href="" class="remove_mail_template">Usuń schemat maila</a>
+</div>

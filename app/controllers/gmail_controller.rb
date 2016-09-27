@@ -5,14 +5,22 @@ class GmailController < ApplicationController
 
   def loading_transport_order_email
     transport_order = TransportOrder.find(params[:id])
-    send_email(transport_order.client_email + "test", "subject", "content")
+    mail_template = @group.default_value.mail_templates.first
+    subject = replace_transport_order_message(mail_template.subject, transport_order)
+    content = replace_transport_order_message(mail_template.content, transport_order)
+
+    send_email(transport_order.client_email + "test", subject, content)
     transport_order.loading_status = true
     transport_order.save
   end
 
   def unloading_transport_order_email
     transport_order = TransportOrder.find(params[:id])
-    send_email(transport_order.client_email + "test", "subject", "content")
+    mail_template = @group.default_value.mail_templates.second
+    subject = replace_transport_order_message(mail_template.subject, transport_order)
+    content = replace_transport_order_message(mail_template.content, transport_order)
+
+    send_email(transport_order.client_email + "test", subject, content)
     transport_order.unloading_status = true
     transport_order.save
   end
@@ -67,5 +75,13 @@ class GmailController < ApplicationController
       current_user.access_token = refresh.parsed_response['access_token']
       current_user.save
     end
+  end
+
+  def replace_transport_order_message(message, transport_order)
+    message = message.gsub("{0}", transport_order.route)
+    message = message.gsub("{1}", transport_order.carrier.registration_number)
+    message = message.gsub("{2}", transport_order.carrier.size)
+    message = message.gsub("{3}", transport_order.carrier.driver_name)
+    return message
   end
 end

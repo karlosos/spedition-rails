@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160926171633) do
+ActiveRecord::Schema.define(version: 20160927113403) do
 
   create_table "addresses", force: true do |t|
     t.string   "line1"
@@ -281,6 +281,16 @@ ActiveRecord::Schema.define(version: 20160926171633) do
   end
 
   add_index "loading_places", ["transport_order_id"], name: "index_loading_places_on_transport_order_id"
+
+  create_table "mail_templates", force: true do |t|
+    t.text     "subject"
+    t.text     "content"
+    t.integer  "default_value_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "mail_templates", ["default_value_id"], name: "index_mail_templates_on_default_value_id"
 
   create_table "tax_rates", force: true do |t|
     t.string   "name"

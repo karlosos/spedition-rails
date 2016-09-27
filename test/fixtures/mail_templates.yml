@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+mail_template_one:
+  subject: MyText
+  content: MyText
+  default_value: default_value_one
+
+mail_template_one:
+  subject: MyText
+  content: MyText
+  default_value: default_value_one
