@@ -28,7 +28,7 @@ class TransportOrdersController < ApplicationController
 
     @transport_orders = TransportOrder.joins(:transport_order_name)
     @transport_orders = @transport_orders.joins(:client, :carrier, :loading_places, :unloading_places)
-    @transport_orders = @transport_orders.search(search_params).in_any_group(@group)
+    @transport_orders = @transport_orders.search(search_params).joins(:groups).where('groups.id = ?', @group.id)
     @transport_orders = @transport_orders.order(sort_column + " " + sort_direction)
     @transport_orders = @transport_orders.paginate(:page => params[:page], :per_page => 30)
     authorize @transport_orders
@@ -65,7 +65,7 @@ class TransportOrdersController < ApplicationController
     @client.contact.emails.build
 
     @transport_orders = TransportOrder
-    @transport_orders = @transport_orders.joins(:client, :carrier, :loading_places, :unloading_places).in_any_group(@group)
+    @transport_orders = @transport_orders.joins(:client, :carrier, :loading_places, :unloading_places, :groups).where('groups.id = ?', @group.id)
     @transport_orders = @transport_orders.order(sort_column + " " + sort_direction)
     @transport_orders = @transport_orders.paginate(:page => params[:page], :per_page => 30)
     authorize @transport_orders

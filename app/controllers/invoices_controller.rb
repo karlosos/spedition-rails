@@ -8,7 +8,7 @@ class InvoicesController < ApplicationController
     search_params = params
 
     @client = Client.new
-    @invoices = Invoice.joins(:invoice_name).joins(:client).in_any_group(@group)
+    @invoices = Invoice.joins(:invoice_name).joins(:client).joins(:groups).where('groups.id = ?', @group.id)
     @invoices = @invoices.search(search_params).order(sort_column + " " + sort_direction)
     @invoices = @invoices.paginate(:page => params[:page], :per_page => 30)
     authorize @invoices
