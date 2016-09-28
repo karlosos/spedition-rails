@@ -10,5 +10,8 @@
     <li>
       <a class="unloading_option" href="#" value="true">Wysłano info o załadunku</a>
     </li>
+    <li>
+      <%= link_to "Wyślij info o załadunku", loading_transport_order_email_path(:id => transport_order.id) %>
+    </li>
   </ul>
 </div>

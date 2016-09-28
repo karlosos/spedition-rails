@@ -51,10 +51,7 @@
           <th colspan="2">Opcje</th>
         </tr>
       </thead>
-    </table>
-    <div id="tableContainer" class="tableContainer">
-      <table  border="0" cellpadding="0" cellspacing="0" width="100%" class="scrollTable table index_table">
-        <tbody class="scrollContent">
+        <tbody>
           <% carrier.transport_orders.from_date(params[:year], params[:month]).each do |transport_order| %>
           <tr>
             <td><%= link_to "#{humanized_money_with_symbol transport_order.freight_rate}", transport_order %></td>
@@ -102,7 +99,6 @@
           <% end %>
         </tbody>
       </table>
-    </div>
     <%= form_for @transport_orders[i] do |f| %>
       <%= render :partial => 'fast_form', :locals => {:f => f, :carrier => carrier} %>
     <% end %>
