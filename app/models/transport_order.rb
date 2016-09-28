@@ -1,7 +1,7 @@
 class TransportOrder < ActiveRecord::Base
   groupify :group_member
   groupify :named_group_member
-  
+
   belongs_to :invoice
   has_one :item
   has_one :transport_order_name, dependent: :destroy
@@ -34,8 +34,9 @@ class TransportOrder < ActiveRecord::Base
   validates :unloading_places, length: { minimum: 1 }
 
   scope :from_date, ->(year, month) {
-    #where("extract(year from created_at) = ? and extract(month from created_at) = ?", year, month)
-    where("strftime('%Y/%m', created_at) = ?", "#{year}/#{month.to_i > 9 ? month : '0' + month}")
+    # TODO postgres/sqlite
+    where("extract(year from created_at) = ? and extract(month from created_at) = ?", year, month)
+    #where("strftime('%Y/%m', created_at) = ?", "#{year}/#{month.to_i > 9 ? month : '0' + month}")
   }
 
   before_save do
