@@ -1,4 +1,4 @@
-<tr>
+<tr class="invoice_item_correction">
   <td class="item_select">
     <%= f.collection_select :item_id, Item.all.in_any_group(@group), :id, :name, prompt: 'Wybierz towar' %>
     <%= f.text_field :item_name_correction %>

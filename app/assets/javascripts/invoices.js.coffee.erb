@@ -9,6 +9,11 @@ $(".invoices.new_invoice_from_transport_orders").ready ->
     console.log($(this))
     invoice_item_calculate($(this))
 
+$(".invoices.new_correction").ready ->
+  $('.invoice_item_correction').each () ->
+    console.log($(this))
+    invoice_item_calculate($(this))
+
 
 pageLoad = () ->
   startSelect()

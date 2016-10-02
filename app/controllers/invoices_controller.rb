@@ -99,7 +99,9 @@ class InvoicesController < ApplicationController
     @invoice.currency_rate = @invoice_to_correct.currency_rate
     @invoice.currency_rate_table_name = @invoice_to_correct.currency_rate_table_name
     @invoice.currency_rate_date = @invoice_to_correct.currency_rate_date
-
+    @invoice.net_price = Money.new(0, @invoice_to_correct.net_price_currency)
+    @invoice.value_added_tax = Money.new(0, @invoice_to_correct.net_price_currency)
+    @invoice.total_selling_price = Money.new(0, @invoice_to_correct.net_price_currency)
     @invoice_to_correct.invoice_items.each do |invoice_item|
       invoice_item_correction = InvoiceItemCorrection.new
       invoice_item_correction.invoice = @invoice
@@ -122,7 +124,7 @@ class InvoicesController < ApplicationController
       invoice_item_correction.net_price_difference = Money.new(0, @invoice.net_price_currency )
       invoice_item_correction.total_selling_price = invoice_item.total_selling_price
       invoice_item_correction.total_selling_price_correction = invoice_item.total_selling_price
-      invoice_item_correction.total_selling_price_difference = Money.new(0)
+      invoice_item_correction.total_selling_price_difference = Money.new(0, @invoice.net_price_currency )
       @invoice.invoice_item_corrections << invoice_item_correction
     end
 
