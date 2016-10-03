@@ -55,4 +55,9 @@ module ApplicationHelper
       link_to(raw(html), link)
     end
   end
+
+  def link_to_dropdown_nav(text, link)
+    #class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
+    link_to(raw(text + "<span class=\"caret\">"), link, :class => "dropdown-toggle disabled", :data => {:toggle=>"dropdown"}, :role => "button", "aria-haspopup" => "true", "aria-expanded" => "false")
+  end
 end

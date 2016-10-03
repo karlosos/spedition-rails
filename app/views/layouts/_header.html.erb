@@ -14,6 +14,65 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
+        <li class=""><a data-toggle="tab" href="#spedition">Spedycja<span class="caret"></span></a></li>
+        <li class=""><a data-toggle="tab" href="#accounting">Księgowość<span class="caret"></span></a></li>
+        <li class=""><a data-toggle="tab" href="#settings">Ustawienia<span class="caret"></span></a></li>
+        <li class=""><a data-toggle="tab" href="#community">Społeczność<span class="caret"></span></a></li>
+        <li>
+          <form class="navbar-form" role="search">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search" name="q">
+                <div class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                </div>
+            </div>
+          </form>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <% if user_signed_in? %>
+        <% if @group.present? %>
+        <% if current_user.in_group?(@group, as: 'admin') %>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Ustawienia <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><%= link_to "Użytkownicy grupy", @group %></li>
+            <li><%= link_to "Wartości domyślne", edit_default_value_path(@group.default_value) %></li>
+          </ul>
+        </li>
+        <% end %>
+        <% end %>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Zmień grupę <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <% current_user.groups.each do |group| %>
+              <li><%= link_to group.name, root_url(subdomain: group.subdomain) %></li>
+            <% end %>
+            <li class="divider"></li>
+            <li><%= link_to 'Nowa grupa', new_group_path, class: "button-success" %></li>
+          </ul>
+        </li>
+        <% end %>
+        <% if user_signed_in? %>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Konto <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><%= link_to "Zmień hasło", edit_user_registration_path %></li>
+              <li class="divider"></li>
+              <li><%= link_to "Wyloguj", destroy_user_session_path, method: :delete %></li>
+            </ul>
+          </li>
+        <% else %>
+        <li>
+          <%= link_to "Zaloguj", new_user_session_path %>
+        </li>
+        <% end %>
+      </ul>
+
+
+      <!-- <ul class="nav navbar-nav">
+        <li class="active"><a href="#Tab1" data-toggle="tab">Tab1</a></li>
+        <li class="active"><a href="#Tab2" data-toggle="tab">Tab1</a></li>
         <li><%= link_to "Home", root_path %></li>
         <% if @group.present? %>
         <% if user_signed_in? %>
@@ -83,7 +142,157 @@
           <%= link_to "Zaloguj", new_user_session_path %>
         </li>
         <% end %>
-      </ul>
+      </ul> -->
     </div><!-- /.navbar-collapse -->
+    <div class="tab-content">
+      <div id="spedition" class="tab-pane">
+        <ul class="nav navbar-nav submenu-nav">
+          <li class="dropdown">
+            <%= link_to_dropdown_nav("Zlecenia", speditor_view_path(:year => Date.today.year, :month => Date.today.month, :speditor_id => current_user.id)) %>
+            <ul class="dropdown-menu">
+              <li><%= link_to "Zlecenia Transportowe", transport_orders_path %></li>
+              <li><%= link_to "Zlecenia Spedycyjne", transport_orders_path %></li>
+              <li><%= link_to "Nowe Zlecenie", new_transport_order_path %></li>
+              <li class="divider"></li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <%= link_to_dropdown_nav("Klienci", clients_path) %>
+            <ul class="dropdown-menu">
+              <li><%= link_to "Nowy klient", new_client_path %></li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Raporty <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">Rentowność</a></li>
+              <li><a href="#">Obroty</a></li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Ustawienia <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">Widok</a></li>
+              <li><a href="#">Dokumenty</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <div id="accounting" class="tab-pane ">
+        <ul class="nav navbar-nav submenu-nav">
+          <li class="dropdown">
+            <%= link_to_dropdown_nav "Faktury VAT", invoices_path(:kind => 'vat')  %>
+            <ul class="dropdown-menu">
+              <li><%= link_to "Nowa faktura", new_invoice_path%></li>
+              <li><a href="#">Ustawienia faktur</a></li>
+              <li class="divider"></li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <%= link_to_dropdown_nav "Korekty", invoices_path(:kind => 'correction') %>
+            <ul class="dropdown-menu">
+              <li><%= link_to "Nowa korekta", new_invoice_path(:kind => 'correction') %></li>
+            </ul>
+          </li>
+
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Noty obciążeniowe <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">Wyświetl noty</a></li>
+              <li><a href="#">Wystaw notę</a></li>
+            </ul>
+          </li>
+
+          <li class="dropdown">
+            <%= link_to_dropdown_nav "Zlecenia", accounting_view_path %>
+            <ul class="dropdown-menu">
+              <li><%= link_to "Nowe zlecenie", new_transport_order_path %></li>
+              <li class="divider"></li>
+            </ul>
+          </li>
+
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Płatności <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">Rozlicz płatności</a></li>
+            </ul>
+          </li>
+
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Windykacja <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">Wyślij zeznania</a></li>
+            </ul>
+          </li>
+
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Raporty <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">Zestawienia sprzedaży</a></li>
+              <li><a href="#">Zestawienia VAT</a></li>
+            </ul>
+          </li>
+
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Noty obciążeniowe <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">Wyświetl noty</a></li>
+              <li><a href="#">Wystaw notę</a></li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Raporty <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">Rentowność</a></li>
+              <li><a href="#">Obroty</a></li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Ustawienia <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">Widok</a></li>
+              <li><a href="#">Dokumenty</a></li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <%= link_to_dropdown_nav("Klienci", clients_path) %>
+            <ul class="dropdown-menu">
+              <li><%= link_to "Nowy klient", new_client_path %></li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Ustawienia <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">Dokumenty</a></li>
+              <li><a href="#">Terminy</a></li>
+              <li><a href="#">Przypomnienia</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <div id="settings" class="tab-pane ">
+        <ul class="nav navbar-nav submenu-nav">
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Słowniki <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><%= link_to "Klienci", clients_path %></li>
+              <li><%= link_to "Towary", items_path %></li>
+              <li><%= link_to "Samochody", carriers_path %></li>
+            </ul>
+          </li>
+          <li><%= link_to "Samochody", carriers_path %></li>
+          <li><%= link_to "Użytkownicy grupy", @group %></li>
+          <li><a class="nav-link" href="#">Powiadomienia</a></li>
+          <li><a class="nav-link" href="#">Flota</a></li>
+        </ul>
+      </div>
+      <div id="community" class="tab-pane ">
+        <ul class="nav navbar-nav submenu-nav">
+          <li><a class="nav-link" href="#">Opinie</a></li>
+          <li><a class="nav-link" href="#">Forum</a></li>
+          <li><a class="nav-link" href="#">Blog</a></li>
+        </ul>
+      </div>
+    </div>
   </div><!-- /.container-fluid -->
 </nav>
