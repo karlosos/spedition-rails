@@ -14,21 +14,23 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li class=""><a data-toggle="tab" href="#spedition">Spedycja<span class="caret"></span></a></li>
-        <li class=""><a data-toggle="tab" href="#accounting">Księgowość<span class="caret"></span></a></li>
-        <li class=""><a data-toggle="tab" href="#settings">Ustawienia<span class="caret"></span></a></li>
-        <li class=""><a data-toggle="tab" href="#community">Społeczność<span class="caret"></span></a></li>
-        <li>
-          <form class="navbar-form" role="search">
-            <div class="input-group">
-                <input type="text" class="form-control" placeholder="Search" name="q">
-                <div class="input-group-btn">
-                    <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
-                </div>
-            </div>
-          </form>
-        </li>
-      </ul>
+        <% if user_signed_in? && @group %>
+          <li class=""><a data-toggle="tab" href="#spedition">Spedycja<span class="caret"></span></a></li>
+          <li class=""><a data-toggle="tab" href="#accounting">Księgowość<span class="caret"></span></a></li>
+          <li class=""><a data-toggle="tab" href="#settings">Ustawienia<span class="caret"></span></a></li>
+          <li class=""><a data-toggle="tab" href="#community">Społeczność<span class="caret"></span></a></li>
+          <li>
+            <form class="navbar-form" role="search">
+              <div class="input-group">
+                  <input type="text" class="form-control" placeholder="Search" name="q">
+                  <div class="input-group-btn">
+                      <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                  </div>
+              </div>
+            </form>
+          </li>
+          <% end %>
+        </ul>
       <ul class="nav navbar-nav navbar-right">
         <% if user_signed_in? %>
         <% if @group.present? %>
@@ -143,7 +145,8 @@
         </li>
         <% end %>
       </ul> -->
-    </div><!-- /.navbar-collapse -->
+    </div>
+    <% if user_signed_in? && @group %>
     <div class="tab-content">
       <div id="spedition" class="tab-pane">
         <ul class="nav navbar-nav submenu-nav">
@@ -294,5 +297,6 @@
         </ul>
       </div>
     </div>
+    <% end %>
   </div><!-- /.container-fluid -->
 </nav>
