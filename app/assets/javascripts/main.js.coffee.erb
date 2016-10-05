@@ -3,9 +3,8 @@ jQuery ->
 
 pageLoad = () ->
   date_picker_start()
-  $('.hidden_menubar').hide()
-  $('#show_hidden_menubar').click ->
-    $('.hidden_menubar').toggle()
+  calculate_body_margin_on_submenu_shown()
+  menubar_functions()
 
 #
 # Datepicker
@@ -16,3 +15,19 @@ date_picker_start = () ->
 
   $('.date').datepicker ->
     locale: 'pl'
+#
+# Change body margin when submenu activate
+#
+calculate_body_margin_on_submenu_shown = () ->
+  $('a[data-toggle="tab"]').on 'shown.bs.tab', (e) ->
+    height = $('.tab-pane.active').find('ul').height()
+    console.log($('.tab-pane.active').find('ul'))
+    $('.container').css("margin-top", height)
+
+#
+# Menu bar functions
+#
+menubar_functions = () ->
+  $('.hidden_menubar').hide()
+  $('#show_hidden_menubar').click ->
+    $('.hidden_menubar').toggle()

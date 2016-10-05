@@ -13,7 +13,7 @@
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
+      <ul class="nav navbar-nav navbar-tab">
         <% if user_signed_in? && @group %>
           <li class=""><a data-toggle="tab" href="#spedition">Spedycja<span class="caret"></span></a></li>
           <li class=""><a data-toggle="tab" href="#accounting">Księgowość<span class="caret"></span></a></li>
@@ -70,81 +70,6 @@
         </li>
         <% end %>
       </ul>
-
-
-      <!-- <ul class="nav navbar-nav">
-        <li class="active"><a href="#Tab1" data-toggle="tab">Tab1</a></li>
-        <li class="active"><a href="#Tab2" data-toggle="tab">Tab1</a></li>
-        <li><%= link_to "Home", root_path %></li>
-        <% if @group.present? %>
-        <% if user_signed_in? %>
-        <% if current_user.in_group?(@group, as: 'accounting') %>
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Faktury <span class="caret"></span></a>
-            <ul class="dropdown-menu">
-              <li><%= link_to "Faktury vat", invoices_path(:kind => 'vat') %></li>
-              <li><%= link_to "Faktury proforma", invoices_path(:kind => 'proforma') %></li>
-              <li><%= link_to "Faktury korekta", invoices_path(:kind => 'correction') %></li>
-              <li class="divider"></li>
-              <li><%= link_to 'Nowa faktura', new_invoice_path, class: "button-success" %></li>
-            </ul>
-          </li>
-          <li><%= link_to "Zlecenia", accounting_view_path %></li>
-        <% end %>
-
-        <% if current_user.in_group?(@group, as: 'spedition') %>
-          <li><%= link_to "Zlecenia", speditor_view_path(:year => Date.today.year, :month => Date.today.month, :speditor_id => current_user.id) %></li>
-        <% end %>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Słowniki <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><%= link_to "Klienci", clients_path %></li>
-            <li><%= link_to "Towary", items_path %></li>
-            <li><%= link_to "Samochody", carriers_path %></li>
-          </ul>
-        </li>
-        <% end %>
-        <% end %>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <% if user_signed_in? %>
-        <% if @group.present? %>
-        <% if current_user.in_group?(@group, as: 'admin') %>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Ustawienia <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><%= link_to "Użytkownicy grupy", @group %></li>
-            <li><%= link_to "Wartości domyślne", edit_default_value_path(@group.default_value) %></li>
-          </ul>
-        </li>
-        <% end %>
-        <% end %>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Zmień grupę <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <% current_user.groups.each do |group| %>
-              <li><%= link_to group.name, root_url(subdomain: group.subdomain) %></li>
-            <% end %>
-            <li class="divider"></li>
-            <li><%= link_to 'Nowa grupa', new_group_path, class: "button-success" %></li>
-          </ul>
-        </li>
-        <% end %>
-        <% if user_signed_in? %>
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Konto <span class="caret"></span></a>
-            <ul class="dropdown-menu">
-              <li><%= link_to "Zmień hasło", edit_user_registration_path %></li>
-              <li class="divider"></li>
-              <li><%= link_to "Wyloguj", destroy_user_session_path, method: :delete %></li>
-            </ul>
-          </li>
-        <% else %>
-        <li>
-          <%= link_to "Zaloguj", new_user_session_path %>
-        </li>
-        <% end %>
-      </ul> -->
     </div>
     <% if user_signed_in? && @group %>
     <div class="tab-content">
