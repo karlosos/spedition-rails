@@ -1,4 +1,25 @@
 <%= render :partial => 'shared/create_client_modal' %>
+<nav class="navbar menubar">
+  <ul class="left">
+    <li>
+      <%= link_to_menu("Dodaj auto", "glyphicon-plus-sign", carrier_memberships_path) %>
+    </li>
+
+    <li>
+    <%= link_to_menu("Filtry", "glyphicon-eye-open", "") %>
+    </li>
+
+    <li>
+    <%= link_to_menu("Szukaj", "glyphicon-search", "") %>
+    </li>
+
+    <li>
+    <%= link_to_menu("Ustawienia", "glyphicon-cog", carrier_memberships_path) %>
+    </li>
+  </ul>
+  <div style="clear: both"></div>
+</nav>
+
 <div class="row">
   <div class="col-md-12 speditor_view_navigation">
     <span class="prev_date"><%= prev_month_link(params[:year], params[:month], params[:speditor_id]) %></span>

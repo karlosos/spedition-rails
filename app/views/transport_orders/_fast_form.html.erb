@@ -2,6 +2,7 @@
   <thead>
     <tr>
       <th colspan="2">Email</th>
+      <th>Nr. ref.</th>
       <th>Kw. frachtu</th>
       <% if carrier.is_third_party %>
       <th>Marża</th>
@@ -23,6 +24,9 @@
         <%= f.hidden_field :route %>
         <%= f.hidden_field :carrier_driver_name, value: carrier.driver_name %>
         <%= f.hidden_field :car_registration_number, value: carrier.registration_number %>
+      </td>
+      <td>
+        <%= f.text_field :reference_transport_order_name, placeholder: "Nr. ref." %>
       </td>
       <td><%= f.number_field :freight_rate, placeholder: "Kwota frachtu", class: "freight_rate_input" %></td>
       <% if carrier.is_third_party %>

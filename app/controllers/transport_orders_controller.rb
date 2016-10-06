@@ -174,7 +174,7 @@ class TransportOrdersController < ApplicationController
     def transport_order_params
       params.require(:transport_order).permit(:unloading_status, :loading_status,
       :driver_documents_status, :client_id, :carrier_id, :seller_id,
-      :distance_id, :freight_rate, :profit_margin,
+      :distance_id, :freight_rate, :profit_margin, :reference_transport_order_name,
       :loading_country, :loading_zip, :loading_city, :loading_date, :unloading_country,
       :unloading_zip, :distance, :unloading_city, :unloading_date, :route, :client_email,
       :car_registration_number, :carrier_driver_name, :cmr_number,

@@ -26,7 +26,7 @@ submenu_shown = () ->
 
 calculate_body_margin_on_submenu_shown = () ->
     height = $('.tab-pane.active').find('ul').height()
-    $('.container').css("margin-top", height)
+    $('.content-container').css("margin-top", height)
 
 change_current_submenu_in_storage = (e) ->
     current_submenu = $(e.target).attr('href').replace(/^.*?(#|$)/,'');
