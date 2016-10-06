@@ -16,8 +16,12 @@
       <ul class="nav navbar-nav navbar-tab">
         <% if user_signed_in? && @group %>
           <li class=""><a id="spedition_link" data-toggle="tab" href="#spedition">Spedycja<span class="caret"></span></a></li>
-          <li class=""><a id="accounting_link" data-toggle="tab" href="#accounting">Księgowość<span class="caret"></span></a></li>
-          <li class=""><a id="settings_link" data-toggle="tab" href="#settings">Ustawienia<span class="caret"></span></a></li>
+          <% if current_user.in_group?(@group, as: 'accounting') || current_user.in_group?(@group, as: 'admin') %>
+            <li class=""><a id="accounting_link" data-toggle="tab" href="#accounting">Księgowość<span class="caret"></span></a></li>
+          <% end %>
+          <% if current_user.in_group?(@group, as: 'admin')  %>
+            <li class=""><a id="settings_link" data-toggle="tab" href="#settings">Ustawienia<span class="caret"></span></a></li>
+          <% end %>
           <li class=""><a id="community_link" data-toggle="tab" href="#community">Społeczność<span class="caret"></span></a></li>
           <li>
             <form class="navbar-form" role="search">
@@ -106,6 +110,7 @@
           </li>
         </ul>
       </div>
+      <% if current_user.in_group?(@group, as: 'accounting') || current_user.in_group?(@group, as: 'admin') %>
       <div id="accounting" class="tab-pane ">
         <ul class="nav navbar-nav submenu-nav">
           <li class="dropdown">
@@ -146,12 +151,14 @@
             </ul>
           </li>
 
+          <% if current_user.in_group?(@group, as: 'debt_collector') ||  current_user.in_group?(@group, as: 'admin') %>
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Windykacja <span class="caret"></span></a>
             <ul class="dropdown-menu">
               <li><a href="#">Wyślij zeznania</a></li>
             </ul>
           </li>
+          <% end %>
 
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Raporty <span class="caret"></span></a>
@@ -198,6 +205,8 @@
           </li>
         </ul>
       </div>
+      <% end %>
+      <% if current_user.in_group?(@group, as: 'admin') %>
       <div id="settings" class="tab-pane ">
         <ul class="nav navbar-nav submenu-nav">
           <li class="dropdown">
@@ -214,6 +223,7 @@
           <li><a class="nav-link" href="#">Flota</a></li>
         </ul>
       </div>
+      <% end %>
       <div id="community" class="tab-pane ">
         <ul class="nav navbar-nav submenu-nav">
           <li><a class="nav-link" href="#">Opinie</a></li>

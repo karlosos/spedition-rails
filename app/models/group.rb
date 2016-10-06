@@ -5,7 +5,8 @@ class Group < ActiveRecord::Base
   ROLES = [
     'admin',
     'spedition',
-    'accounting'
+    'accounting',
+    'debt_collector'
   ].freeze
 
   after_create :create_default_values
