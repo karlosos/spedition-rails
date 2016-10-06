@@ -3,8 +3,9 @@ jQuery ->
 
 pageLoad = () ->
   date_picker_start()
-  calculate_body_margin_on_submenu_shown()
+  submenu_shown()
   menubar_functions()
+  activate_current_submenu()
 
 #
 # Datepicker
@@ -18,12 +19,23 @@ date_picker_start = () ->
 #
 # Change body margin when submenu activate
 #
-calculate_body_margin_on_submenu_shown = () ->
+submenu_shown = () ->
   $('a[data-toggle="tab"]').on 'shown.bs.tab', (e) ->
+    change_current_submenu_in_storage(e)
+    calculate_body_margin_on_submenu_shown()
+
+calculate_body_margin_on_submenu_shown = () ->
     height = $('.tab-pane.active').find('ul').height()
-    console.log($('.tab-pane.active').find('ul'))
     $('.container').css("margin-top", height)
 
+change_current_submenu_in_storage = (e) ->
+    current_submenu = $(e.target).attr('href').replace(/^.*?(#|$)/,'');
+    sessionStorage.setItem('current_submenu',  current_submenu);
+
+activate_current_submenu = () ->
+  current_submenu = sessionStorage.getItem('current_submenu')
+  console.log(current_submenu)
+  $("##{current_submenu}_link").click()
 #
 # Menu bar functions
 #

@@ -15,10 +15,10 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-tab">
         <% if user_signed_in? && @group %>
-          <li class=""><a data-toggle="tab" href="#spedition">Spedycja<span class="caret"></span></a></li>
-          <li class=""><a data-toggle="tab" href="#accounting">Księgowość<span class="caret"></span></a></li>
-          <li class=""><a data-toggle="tab" href="#settings">Ustawienia<span class="caret"></span></a></li>
-          <li class=""><a data-toggle="tab" href="#community">Społeczność<span class="caret"></span></a></li>
+          <li class=""><a id="spedition_link" data-toggle="tab" href="#spedition">Spedycja<span class="caret"></span></a></li>
+          <li class=""><a id="accounting_link" data-toggle="tab" href="#accounting">Księgowość<span class="caret"></span></a></li>
+          <li class=""><a id="settings_link" data-toggle="tab" href="#settings">Ustawienia<span class="caret"></span></a></li>
+          <li class=""><a id="community_link" data-toggle="tab" href="#community">Społeczność<span class="caret"></span></a></li>
           <li>
             <form class="navbar-form" role="search">
               <div class="input-group">
