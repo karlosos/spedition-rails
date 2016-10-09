@@ -1,0 +1,23 @@
+<%= simple_form_for(@default_value) do |f| %>
+  <%= f.error_notification %>
+  <div class="form-inputs">
+    <p>
+      <%= f.label "Wymogi co do taboru", :vehicle_requirements %>
+      <%= f.text_area :vehicle_requirements %>
+      <%= f.error :vehicle_requirements %>
+    </p>
+    <p>
+      <%= f.label "Uwagi dodatkowe", :additional_comments %>
+      <%= f.text_area :additional_comments %>
+      <%= f.error :additional_comments %>
+    </p>
+    <p>
+      <%= f.label "Ustalenia", :arrangments %>
+      <%= f.text_area :arrangements %>
+      <%= f.error :arrangements %>
+    </p>
+  </div>
+  <div class="form-actions">
+    <%= f.button :submit, "Aktualizuj" %>
+  </div>
+<% end %>

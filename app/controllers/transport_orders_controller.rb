@@ -85,6 +85,10 @@ class TransportOrdersController < ApplicationController
     @transport_order.build_freichtage_description
     @transport_order.loading_places.build
     @transport_order.unloading_places.build
+
+    @transport_order.arrangements = @group.default_value.arrangements
+    @transport_order.vehicle_requirements = @group.default_value.vehicle_requirements
+    @transport_order.additional_comments = @group.default_value.additional_comments
   end
 
   def create_name

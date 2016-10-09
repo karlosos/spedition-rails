@@ -31,6 +31,7 @@ Rails.application.routes.draw do
     get 'default_values/:id/edit_mail_templates' => 'default_values#edit_mail_templates', :as => :edit_default_values_mail_templates
     get 'default_values/:id/edit_invoices' => 'default_values#edit_invoices', :as => :edit_default_values_invoices
     get 'default_values/:id/edit_clients' => 'default_values#edit_clients', :as => :edit_default_values_clients
+    get 'default_values/:id/edit_transport_orders' => 'default_values#edit_transport_orders', :as => :edit_default_values_transport_orders
   end
 
   root 'pages#root_home'
