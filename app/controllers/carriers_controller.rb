@@ -95,7 +95,8 @@ class CarriersController < ApplicationController
       params.require(:carrier).permit(:registration_number, :size, :driver_name,
       :is_third_party, :driver_email, :carrier_name, :carrier_email,
       address_attributes: [:street, :line1, :line2, :city, :state, :country,
-        :zip], contact_attributes: [:phone1, :phone2, :fax, :email, :www])
+        :zip], contact_attributes: [:phone1, :phone2, :fax, :email, :www,
+          emails_attributes: [:id, :address]])
     end
 
     def sort_column

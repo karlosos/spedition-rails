@@ -46,6 +46,8 @@
           <th>
             <%= "#{carrier.driver_name}" %>
             <%=  "- #{carrier.contact.phone1}" if carrier.contact.phone1 .present? %>
+            <%=  "- #{carrier.contact.emails.first.address}" if carrier.contact.emails.first.present? %>
+            <%=  "- #{carrier.carrier_name}" if carrier.carrier_name.present? %>
           </th>
           <th>Suma frachtu:
             <%= humanized_money_with_symbol freight_rate %></th>
