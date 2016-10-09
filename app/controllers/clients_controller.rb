@@ -45,6 +45,10 @@ class ClientsController < ApplicationController
     @client.build_address
     @client.build_contact
     @client.contact.emails.build
+    @client.invoice_currency = @group.default_value.invoice_currency
+    @client.tax_rate_id = @group.default_value.tax_rate_id
+    @client.invoice_language = @group.default_value.invoice_language
+    @client.payment_term = @group.default_value.payment_term
     authorize @client
   end
 

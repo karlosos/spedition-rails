@@ -1,0 +1,12 @@
+<%= simple_form_for(@default_value) do |f| %>
+  <%= f.error_notification %>
+  <div class="form-group">
+    <%= f.fields_for :mail_templates do |builder| %>
+      <%= render :partial => 'mail_template_fields', :locals => {:f => builder} %>
+    <% end %>
+    <%= link_to_add_object "Dodaj schemat maila", f, :mail_templates, "add_mail_template" %>
+  </div>
+  <div class="form-actions">
+    <%= f.button :submit, "Aktualizuj" %>
+  </div>
+<% end %>

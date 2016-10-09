@@ -22,6 +22,21 @@ class DefaultValuesController < ApplicationController
   def edit
   end
 
+  # GET /default_values/1/edit_invoice
+  def edit_invoices
+    @default_value = DefaultValue.find(params[:id])
+  end
+
+  # GET /default_values/1/edit_mail_template
+  def edit_mail_templates
+    @default_value = DefaultValue.find(params[:id])
+  end
+
+  # GET /default_values/1/edit_mail_template
+  def edit_clients
+    @default_value = DefaultValue.find(params[:id])
+  end
+
   # POST /default_values
   # POST /default_values.json
   def create
@@ -70,6 +85,6 @@ class DefaultValuesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def default_value_params
-      params.require(:default_value).permit(:invoice_place, mail_templates_attributes: [:id, :subject, :content, :_destroy,])
+      params.require(:default_value).permit(:invoice_place, :invoice_currency, :tax_rate_id, :invoice_language, :payment_term, mail_templates_attributes: [:id, :subject, :content, :_destroy,])
     end
 end

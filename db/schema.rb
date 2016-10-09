@@ -11,7 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160927113403) do
+ActiveRecord::Schema.define(version: 20161009163514) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "addresses", force: true do |t|
     t.string   "line1"
@@ -27,7 +30,7 @@ ActiveRecord::Schema.define(version: 20160927113403) do
     t.text     "street"
   end
 
-  add_index "addresses", ["addressable_type", "addressable_id"], name: "index_addresses_on_addressable_type_and_addressable_id", unique: true
+  add_index "addresses", ["addressable_type", "addressable_id"], name: "index_addresses_on_addressable_type_and_addressable_id", unique: true, using: :btree
 
   create_table "carrier_memberships", force: true do |t|
     t.integer  "user_id"
@@ -36,8 +39,8 @@ ActiveRecord::Schema.define(version: 20160927113403) do
     t.datetime "updated_at"
   end
 
-  add_index "carrier_memberships", ["carrier_id"], name: "index_carrier_memberships_on_carrier_id"
-  add_index "carrier_memberships", ["user_id"], name: "index_carrier_memberships_on_user_id"
+  add_index "carrier_memberships", ["carrier_id"], name: "index_carrier_memberships_on_carrier_id", using: :btree
+  add_index "carrier_memberships", ["user_id"], name: "index_carrier_memberships_on_user_id", using: :btree
 
   create_table "carriers", force: true do |t|
     t.string   "registration_number"
@@ -66,7 +69,7 @@ ActiveRecord::Schema.define(version: 20160927113403) do
     t.string   "accounting_email"
   end
 
-  add_index "clients", ["tax_rate_id"], name: "index_clients_on_tax_rate_id"
+  add_index "clients", ["tax_rate_id"], name: "index_clients_on_tax_rate_id", using: :btree
 
   create_table "contacts", force: true do |t|
     t.string   "phone1"
@@ -80,16 +83,21 @@ ActiveRecord::Schema.define(version: 20160927113403) do
     t.datetime "updated_at"
   end
 
-  add_index "contacts", ["contactable_type", "contactable_id"], name: "index_contacts_on_contactable_type_and_contactable_id", unique: true
+  add_index "contacts", ["contactable_type", "contactable_id"], name: "index_contacts_on_contactable_type_and_contactable_id", unique: true, using: :btree
 
   create_table "default_values", force: true do |t|
     t.integer  "group_id"
     t.string   "invoice_place"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "invoice_currency"
+    t.integer  "tax_rate_id"
+    t.string   "invoice_language"
+    t.integer  "payment_term"
   end
 
-  add_index "default_values", ["group_id"], name: "index_default_values_on_group_id"
+  add_index "default_values", ["group_id"], name: "index_default_values_on_group_id", using: :btree
+  add_index "default_values", ["tax_rate_id"], name: "index_default_values_on_tax_rate_id", using: :btree
 
   create_table "emails", force: true do |t|
     t.string   "address"
@@ -98,7 +106,7 @@ ActiveRecord::Schema.define(version: 20160927113403) do
     t.datetime "updated_at"
   end
 
-  add_index "emails", ["contact_id"], name: "index_emails_on_contact_id"
+  add_index "emails", ["contact_id"], name: "index_emails_on_contact_id", using: :btree
 
   create_table "freichtage_descriptions", force: true do |t|
     t.decimal  "weight"
@@ -113,7 +121,7 @@ ActiveRecord::Schema.define(version: 20160927113403) do
     t.datetime "updated_at"
   end
 
-  add_index "freichtage_descriptions", ["transport_order_id"], name: "index_freichtage_descriptions_on_transport_order_id"
+  add_index "freichtage_descriptions", ["transport_order_id"], name: "index_freichtage_descriptions_on_transport_order_id", using: :btree
 
   create_table "group_memberships", force: true do |t|
     t.integer  "member_id",       null: false
@@ -126,8 +134,8 @@ ActiveRecord::Schema.define(version: 20160927113403) do
     t.datetime "updated_at"
   end
 
-  add_index "group_memberships", ["group_id", "group_type"], name: "index_group_memberships_on_group_id_and_group_type"
-  add_index "group_memberships", ["member_id", "member_type"], name: "index_group_memberships_on_member_id_and_member_type"
+  add_index "group_memberships", ["group_id", "group_type"], name: "index_group_memberships_on_group_id_and_group_type", using: :btree
+  add_index "group_memberships", ["member_id", "member_type"], name: "index_group_memberships_on_member_id_and_member_type", using: :btree
 
   create_table "groups", force: true do |t|
     t.string "type"
@@ -135,7 +143,7 @@ ActiveRecord::Schema.define(version: 20160927113403) do
     t.string "subdomain"
   end
 
-  add_index "groups", ["subdomain"], name: "index_groups_on_subdomain", unique: true
+  add_index "groups", ["subdomain"], name: "index_groups_on_subdomain", unique: true, using: :btree
 
   create_table "invoice_item_corrections", force: true do |t|
     t.integer  "invoice_id"
@@ -175,10 +183,10 @@ ActiveRecord::Schema.define(version: 20160927113403) do
     t.integer  "tax_rate_correction_id"
   end
 
-  add_index "invoice_item_corrections", ["invoice_id"], name: "index_invoice_item_corrections_on_invoice_id"
-  add_index "invoice_item_corrections", ["item_id"], name: "index_invoice_item_corrections_on_item_id"
-  add_index "invoice_item_corrections", ["tax_rate_correction_id"], name: "index_invoice_item_corrections_on_tax_rate_correction_id"
-  add_index "invoice_item_corrections", ["tax_rate_id"], name: "index_invoice_item_corrections_on_tax_rate_id"
+  add_index "invoice_item_corrections", ["invoice_id"], name: "index_invoice_item_corrections_on_invoice_id", using: :btree
+  add_index "invoice_item_corrections", ["item_id"], name: "index_invoice_item_corrections_on_item_id", using: :btree
+  add_index "invoice_item_corrections", ["tax_rate_correction_id"], name: "index_invoice_item_corrections_on_tax_rate_correction_id", using: :btree
+  add_index "invoice_item_corrections", ["tax_rate_id"], name: "index_invoice_item_corrections_on_tax_rate_id", using: :btree
 
   create_table "invoice_items", force: true do |t|
     t.integer  "invoice_id"
@@ -197,9 +205,9 @@ ActiveRecord::Schema.define(version: 20160927113403) do
     t.integer  "tax_rate_id"
   end
 
-  add_index "invoice_items", ["invoice_id"], name: "index_invoice_items_on_invoice_id"
-  add_index "invoice_items", ["item_id"], name: "index_invoice_items_on_item_id"
-  add_index "invoice_items", ["tax_rate_id"], name: "index_invoice_items_on_tax_rate_id"
+  add_index "invoice_items", ["invoice_id"], name: "index_invoice_items_on_invoice_id", using: :btree
+  add_index "invoice_items", ["item_id"], name: "index_invoice_items_on_item_id", using: :btree
+  add_index "invoice_items", ["tax_rate_id"], name: "index_invoice_items_on_tax_rate_id", using: :btree
 
   create_table "invoice_names", force: true do |t|
     t.integer  "number"
@@ -212,8 +220,8 @@ ActiveRecord::Schema.define(version: 20160927113403) do
     t.integer  "group_id"
   end
 
-  add_index "invoice_names", ["group_id"], name: "index_invoice_names_on_group_id"
-  add_index "invoice_names", ["invoice_id"], name: "index_invoice_names_on_invoice_id"
+  add_index "invoice_names", ["group_id"], name: "index_invoice_names_on_group_id", using: :btree
+  add_index "invoice_names", ["invoice_id"], name: "index_invoice_names_on_invoice_id", using: :btree
 
   create_table "invoices", force: true do |t|
     t.datetime "date"
@@ -253,22 +261,22 @@ ActiveRecord::Schema.define(version: 20160927113403) do
     t.datetime "sell_date"
   end
 
-  add_index "invoices", ["kind"], name: "index_invoices_on_kind"
+  add_index "invoices", ["kind"], name: "index_invoices_on_kind", using: :btree
 
   create_table "items", force: true do |t|
-    t.text     "name",                limit: 255
+    t.text     "name"
     t.string   "pkwiu"
     t.string   "unit"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "unit_price_cents",                default: 0,     null: false
-    t.string   "unit_price_currency",             default: "EUR", null: false
+    t.integer  "unit_price_cents",    default: 0,     null: false
+    t.string   "unit_price_currency", default: "EUR", null: false
     t.integer  "transport_order_id"
     t.integer  "tax_rate_id"
   end
 
-  add_index "items", ["tax_rate_id"], name: "index_items_on_tax_rate_id"
-  add_index "items", ["transport_order_id"], name: "index_items_on_transport_order_id"
+  add_index "items", ["tax_rate_id"], name: "index_items_on_tax_rate_id", using: :btree
+  add_index "items", ["transport_order_id"], name: "index_items_on_transport_order_id", using: :btree
 
   create_table "loading_places", force: true do |t|
     t.integer  "transport_order_id"
@@ -280,7 +288,7 @@ ActiveRecord::Schema.define(version: 20160927113403) do
     t.datetime "updated_at"
   end
 
-  add_index "loading_places", ["transport_order_id"], name: "index_loading_places_on_transport_order_id"
+  add_index "loading_places", ["transport_order_id"], name: "index_loading_places_on_transport_order_id", using: :btree
 
   create_table "mail_templates", force: true do |t|
     t.text     "subject"
@@ -290,7 +298,7 @@ ActiveRecord::Schema.define(version: 20160927113403) do
     t.datetime "updated_at"
   end
 
-  add_index "mail_templates", ["default_value_id"], name: "index_mail_templates_on_default_value_id"
+  add_index "mail_templates", ["default_value_id"], name: "index_mail_templates_on_default_value_id", using: :btree
 
   create_table "tax_rates", force: true do |t|
     t.string   "name"
@@ -308,8 +316,8 @@ ActiveRecord::Schema.define(version: 20160927113403) do
     t.integer  "group_id"
   end
 
-  add_index "transport_order_names", ["group_id"], name: "index_transport_order_names_on_group_id"
-  add_index "transport_order_names", ["transport_order_id"], name: "index_transport_order_names_on_transport_order_id"
+  add_index "transport_order_names", ["group_id"], name: "index_transport_order_names_on_group_id", using: :btree
+  add_index "transport_order_names", ["transport_order_id"], name: "index_transport_order_names_on_transport_order_id", using: :btree
 
   create_table "transport_orders", force: true do |t|
     t.integer  "client_id"
@@ -355,7 +363,7 @@ ActiveRecord::Schema.define(version: 20160927113403) do
     t.integer  "invoice_id"
   end
 
-  add_index "transport_orders", ["invoice_id"], name: "index_transport_orders_on_invoice_id"
+  add_index "transport_orders", ["invoice_id"], name: "index_transport_orders_on_invoice_id", using: :btree
 
   create_table "unloading_places", force: true do |t|
     t.integer  "transport_order_id"
@@ -367,7 +375,7 @@ ActiveRecord::Schema.define(version: 20160927113403) do
     t.datetime "updated_at"
   end
 
-  add_index "unloading_places", ["transport_order_id"], name: "index_unloading_places_on_transport_order_id"
+  add_index "unloading_places", ["transport_order_id"], name: "index_unloading_places_on_transport_order_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "email",                   default: "", null: false
@@ -389,7 +397,7 @@ ActiveRecord::Schema.define(version: 20160927113403) do
     t.time     "access_token_expires_at"
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", unique: true
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
 end

@@ -1,0 +1,11 @@
+<%= simple_form_for(@default_value) do |f| %>
+  <%= f.error_notification %>
+  <div class="form-inputs">
+    <%= f.label "Miejsce wystawienia faktur", :invoice_place %>
+    <%= f.text_field :invoice_place %>
+    <%= f.error :invoice_place %>
+  </div>
+  <div class="form-actions">
+    <%= f.button :submit, "Aktualizuj" %>
+  </div>
+<% end %>

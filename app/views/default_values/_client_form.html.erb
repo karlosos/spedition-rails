@@ -1,0 +1,29 @@
+<%= simple_form_for(@default_value) do |f| %>
+  <%= f.error_notification %>
+  <div class="form-inputs">
+    <p>
+      <% currencies = ["EUR", "USD", "PLN"] %>
+      <%= f.label :invoice_currency %><br />
+      <%= f.collection_select :invoice_currency, currencies, :to_s, :to_s, { include_blank: false }, { class: "form-control" } %>
+      <%= f.error :invoice_currency %>
+    </p>
+    <p>
+      <%= f.label :tax_rate_id %><br />
+      <%= f.collection_select :tax_rate_id, TaxRate.important_only, :id, :name, {}, {} %>
+      <%= f.error :tax_rate_id %>
+    </p>
+    <p>
+      <%= f.label :invoice_language %><br />
+      <%= f.text_field :invoice_language %>
+      <%= f.error :invoice_language %>
+    </p>
+    <p>
+      <%= f.label :payment_term %><br />
+      <%= f.number_field :payment_term %>
+      <%= f.error :payment_term %>
+    </p>
+  </div>
+  <div class="form-actions">
+    <%= f.button :submit, "Aktualizuj" %>
+  </div>
+<% end %>
