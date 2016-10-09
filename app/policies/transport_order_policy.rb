@@ -35,8 +35,7 @@ class TransportOrderPolicy < ApplicationPolicy
   end
 
   def create_name?
-    # TO DO IS AN ACCOUNTANT
-    is_in_same_group? || is_site_admin?
+    is_in_same_group_as_an_accountant? || is_site_admin?
   end
 
   def speditor_view?
@@ -55,6 +54,10 @@ class TransportOrderPolicy < ApplicationPolicy
 
   def is_in_same_group?
     !user.nil? && transport_order.shares_any_group?(user)
+  end
+
+  def is_in_same_group_as_an_accountant?
+    (!user.nil? && user.in_group?(transport_order.groups.first, as: 'accountant')) || user.in_group?(transport_order.groups.first, as: 'admin')
   end
 
   def is_logged_in?

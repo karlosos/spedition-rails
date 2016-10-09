@@ -23,15 +23,15 @@ class InvoicePolicy < ApplicationPolicy
   end
 
   def edit?
-    is_in_same_group? || is_site_admin?
+    is_in_same_group_as_an_accountant? || is_site_admin?
   end
 
   def update?
-    is_in_same_group? || is_site_admin?
+    is_in_same_group_as_an_accountant? || is_site_admin?
   end
 
   def destroy?
-    is_in_same_group? || is_site_admin?
+    is_in_same_group_as_an_accountant? || is_site_admin?
   end
 
   def new_correction?
@@ -66,5 +66,9 @@ class InvoicePolicy < ApplicationPolicy
 
   def is_logged_in?
     !user.nil?
+  end
+
+  def is_in_same_group_as_an_accountant?
+    (!user.nil? && user.in_group?(invoice.groups.first, as: 'accountant')) || user.in_group?(invoice.groups.first, as: 'admin')
   end
 end
