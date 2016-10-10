@@ -30,6 +30,9 @@ pageLoad = () ->
   modal_functions()
   update_route_on_place_edit()
   show_client_select_button()
+  advanced_form_button()
+  advanced_form_button_collapse()
+  advanced_form_disable()
 
 #
 # Loading places in edit form
@@ -397,3 +400,109 @@ startSelect = () ->
 
   $('#transport_order_carrier_id').select2
     theme: 'bootstrap'
+
+advanced_form_button = () ->
+  $('.advanced_form_button').click (event) ->
+    $(this).parent().parent().parent().find('.advanced_form').show("fast")
+    tr = $(this).parent().parent()
+    tbody = tr.parent()
+    event.preventDefault()
+    copy_fast_form_to_advanced(tr)
+    tr.parent().parent().find('thead').hide()
+    tr.hide()
+    tbody.find('.input_row').find('input').prop("disabled", true)
+    tbody.find('.input_row').find('select').prop("disabled", true)
+    tbody.find('.advanced_form').find('input').prop("disabled", false)
+    tbody.find('.advanced_form').find('select').prop("disabled", false)
+
+advanced_form_button_collapse = () ->
+  $('.advanced_form_button_collapse').click (event) ->
+    table = $(this).parent().parent().parent().parent().parent().parent().parent()
+    table.find('.input_row').show("fast")
+    table.find('.input_row').find('input').prop("disabled", false)
+    table.find('.input_row').find('select').prop("disabled", false)
+    table.find('.advanced_form').find('input').prop("disabled", true)
+    table.find('.advanced_form').find('select').prop("disabled", true)
+    table.find('thead').show("fast")
+    advanced_form = table.find('.advanced_form')
+    advanced_form.hide()
+    event.preventDefault()
+    copy_advanced_to_fast_form(table.find('.input_row'))
+
+advanced_form_disable = () ->
+  $('.advanced_form').find('input').prop("disabled", true)
+  $('.advanced_form').find('select').prop("disabled", true)
+
+copy_fast_form_to_advanced = (tr) ->
+  email = tr.find(".email_input").val()
+  client = tr.find("#transport_order_client_id").val()
+  carrier = tr.find("#transport_order_carrier_id").val()
+  seller = tr.find("#transport_order_seller_id").val()
+  route = tr.find("#transport_order_route").val()
+  carrier_driver_name = tr.find("#transport_order_carrier_driver_name").val()
+  car_registration_number = tr.find("#transport_order_car_registration_number").val()
+  reference_transport_order_name = tr.find("#transport_order_reference_transport_order_name").val()
+  freight_rate = tr.find("#transport_order_freight_rate").val()
+  profit_margin = tr.find("#transport_order_profit_margin").val()
+  distance = tr.find("#transport_order_distance").val()
+  loading_zip = tr.find('#transport_order_loading_places_attributes_0_zip').val()
+  loading_city = tr.find('#transport_order_loading_places_attributes_0_city').val()
+  unloading_zip = tr.find('#transport_order_unloading_places_attributes_0_zip').val()
+  unloading_city = tr.find('#transport_order_unloading_places_attributes_0_city').val()
+
+  advanced_form = tr.parent().find('.advanced_form')
+  advanced_form.find('#transport_order_client_email').val(email)
+  advanced_form.find("#transport_order_client_id").val(client)
+  advanced_form.find("#transport_order_carrier_id").val(carrier)
+  advanced_form.find("#transport_order_seller_id").val(seller)
+  advanced_form.find("#transport_order_route").val(route)
+  advanced_form.find("#transport_order_carrier_driver_name").val(carrier_driver_name)
+  advanced_form.find("#transport_order_car_registration_number").val(car_registration_number)
+  advanced_form.find('#transport_order_loading_places_attributes_1_zip').val(loading_zip)
+  advanced_form.find('#transport_order_loading_places_attributes_1_city').val(loading_city)
+  advanced_form.find('#transport_order_unloading_places_attributes_1_zip').val(unloading_zip)
+  advanced_form.find('#transport_order_unloading_places_attributes_1_city').val(unloading_city)
+  advanced_form.find("#transport_order_car_registration_number").val(car_registration_number)
+  advanced_form.find("#transport_order_reference_transport_order_name").val(reference_transport_order_name)
+  advanced_form.find("#transport_order_freight_rate").val(freight_rate)
+  advanced_form.find("#transport_order_profit_margin").val(profit_margin)
+  if !profit_margin
+    advanced_form.find("#transport_order_profit_margin").val(0)
+  advanced_form.find("#transport_order_distance").val(distance)
+
+copy_advanced_to_fast_form = (tr) ->
+  advanced_form = tr.parent().find('.advanced_form')
+  email = advanced_form.find("#transport_order_client_email").val()
+  client = advanced_form.find("#transport_order_client_id").val()
+  carrier = advanced_form.find("#transport_order_carrier_id").val()
+  seller = advanced_form.find("#transport_order_seller_id").val()
+  route = advanced_form.find("#transport_order_route").val()
+  carrier_driver_name = advanced_form.find("#transport_order_carrier_driver_name").val()
+  car_registration_number = advanced_form.find("#transport_order_car_registration_number").val()
+  reference_transport_order_name = advanced_form.find("#transport_order_reference_transport_order_name").val()
+  freight_rate = advanced_form.find("#transport_order_freight_rate").val()
+  profit_margin = advanced_form.find("#transport_order_profit_margin").val()
+  distance = advanced_form.find("#transport_order_distance").val()
+  loading_zip = advanced_form.find('#transport_order_loading_places_attributes_1_zip').val()
+  loading_city = advanced_form.find('#transport_order_loading_places_attributes_1_city').val()
+  unloading_zip = advanced_form.find('#transport_order_unloading_places_attributes_1_zip').val()
+  unloading_city = advanced_form.find('#transport_order_unloading_places_attributes_1_city').val()
+
+  tr.find('email_input').val(email)
+  tr.find("#transport_order_client_id").val(client)
+  tr.find("#transport_order_carrier_id").val(carrier)
+  tr.find("#transport_order_seller_id").val(seller)
+  tr.find("#transport_order_route").val(route)
+  tr.find("#transport_order_carrier_driver_name").val(carrier_driver_name)
+  tr.find("#transport_order_car_registration_number").val(car_registration_number)
+  tr.find('#transport_order_loading_places_attributes_0_zip').val(loading_zip)
+  tr.find('#transport_order_loading_places_attributes_0_city').val(loading_city)
+  tr.find('#transport_order_unloading_places_attributes_0_zip').val(unloading_zip)
+  tr.find('#transport_order_unloading_places_attributes_0_city').val(unloading_city)
+  tr.find("#transport_order_car_registration_number").val(car_registration_number)
+  tr.find("#transport_order_reference_transport_order_name").val(reference_transport_order_name)
+  tr.find("#transport_order_freight_rate").val(freight_rate)
+  tr.find("#transport_order_profit_margin").val(profit_margin)
+  if !profit_margin
+    tr.find("#transport_order_profit_margin").val(0)
+  tr.find("#transport_order_distance").val(distance)

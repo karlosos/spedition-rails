@@ -14,7 +14,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr>
+    <tr class="input_row">
       <td><%= f.text_field :client_email, class: "email_input", placeholder: "Email" %></td>
       <td class="hidden_fields">
         <span class="glyphicon glyphicon-info-sign show_client_select" data-toggle="tooltip" data-placement="top" title=""></span>
@@ -45,10 +45,146 @@
         <%= f.submit "Dodaj", :date => nil, :client_name => nil , :class => "btn btn-default"%>
       </td>
       <td>
-        <%= link_to '', new_transport_order_path, class: "glyphicon glyphicon-collapse-down" %>
+        <%= link_to '', new_transport_order_path, class: "glyphicon glyphicon-collapse-down advanced_form_button" %>
       </td>
     </tr>
     <tr>
+      <td colspan="12" class="advanced_form" style="display: none">
+
+        <div class="form-inputs transport_order_form">
+            <div class="row">
+              <div class="col-md-3">
+                <%= f.label :client_email, "Email klienta (spedytora)" %>
+                <%= f.text_field :client_email  %>
+              </div>
+              <div class="col-md-9 advanced_form_collapse_button">
+                  <%= link_to '', new_transport_order_path, class: "glyphicon glyphicon-collapse-up advanced_form_button_collapse" %>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-4">
+                <p>
+                  <%= f.label :client, "Klient" %><br />
+                  <%= f.collection_select :client_id, Client.all.in_any_group(@group), 'id', 'name', prompt: 'Wybierz klienta' %>
+                </p>
+              </div>
+              <div class="col-md-4">
+                <p>
+                  <%= f.label :carrier, "Zleceniobiorca" %><br />
+                  <%= f.collection_select :carrier_id, Carrier.all.in_any_group(@group), 'id', 'registration_number', prompt: 'Wybierz klienta' %>
+                </p>
+              </div>
+              <div class="col-md-4">
+                <p>
+                  <%= f.label :seller_id, "Zleceniodawca" %><br />
+                  <%= f.collection_select :seller_id, Client.all.in_any_group(@group), 'id', 'name', prompt: 'Wybierz zleceniodawca' %>
+                </p>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <h2> Załadunek </h2>
+                <%= f.hidden_field :loading_date %>
+                <div>
+                  <%= f.fields_for :loading_places do |builder| %>
+                    <%= render 'loading_place_fields', f: builder %>
+                  <% end %>
+                  <%= link_to_add_object "Dodaj miejsce", f, :loading_places, "add_loading_place" %>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <h2> Załadunek </h2>
+                <%= f.hidden_field :unloading_date %>
+                <div>
+                  <%= f.fields_for :unloading_places do |builder| %>
+                    <%= render 'unloading_place_fields', f: builder %>
+                  <% end %>
+                  <%= link_to_add_object "Dodaj miejsce", f, :unloading_places, "add_loading_place" %>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <h2> Opis ładunku </h2>
+                <%= f.fields_for :freichtage_description do |freichtage_description_form| %>
+                  <% render :partial => 'freichtage_description_form', :locals => {:f => freichtage_description_form} %>
+                <% end %>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <p>
+                  <%= f.label :route, "Trasa" %><br />
+                  <%= f.text_field :route %>
+                </p>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-4">
+                <p>
+                  <%= f.label :distance, "Dystans" %><br />
+                  <%= f.number_field :distance %>
+                </p>
+              </div>
+
+              <div class="col-md-4">
+                <p>
+                  <%= f.label :freight_rate, "Wartość frachtu" %><br />
+                  <%= f.number_field :freight_rate %>
+                </p>
+              </div>
+
+              <div class="col-md-4">
+                <p>
+                  <%= f.label :profit_margin, "Marża" %><br />
+                  <%= f.number_field :profit_margin %>
+                </p>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-8">
+                <h2>Wymogi co do taboru</h2>
+                <%= f.text_area :vehicle_requirements %>
+              </div>
+              <div class="col-md-4">
+                <%= f.label :cmr_number, "Numer CMR" %><br />
+                <%= f.text_field :cmr_number %>
+                <%= f.label :car_registration_number, "Samochód" %><br />
+                <%= f.text_field :car_registration_number %>
+                <%= f.label :carrier_driver_name, "Kierowca" %><br />
+                <%= f.text_field :carrier_driver_name %>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <h2>Uwagi dodatkowe</h2>
+                <%= f.text_area :additional_comments %>
+              </div>
+            </div>
+
+            <% if !carrier.present? || carrier.is_third_party? %>
+              <div class="row">
+                <div class="col-md-12">
+                  <h2>Ustalenia</h2>
+                  <%= f.text_area :arrangements %>
+                </div>
+              </div>
+            <% end %>
+
+            <div class="actions">
+              <%= f.submit :class => 'link_to_create' %>
+            </div>
+          </div>
+
+
+      </td>
     </tr>
   </tbody>
 </table>
