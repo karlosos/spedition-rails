@@ -150,7 +150,7 @@
             <div class="row">
               <div class="col-md-8">
                 <h2>Wymogi co do taboru</h2>
-                <%= f.text_area :vehicle_requirements %>
+                <%= f.text_area :vehicle_requirements, :value => @group.default_value.vehicle_requirements %>
               </div>
               <div class="col-md-4">
                 <%= f.label :cmr_number, "Numer CMR" %><br />
@@ -165,7 +165,7 @@
             <div class="row">
               <div class="col-md-12">
                 <h2>Uwagi dodatkowe</h2>
-                <%= f.text_area :additional_comments %>
+                <%= f.text_area :additional_comments, :value => @group.default_value.additional_comments %>
               </div>
             </div>
 
@@ -173,7 +173,7 @@
               <div class="row">
                 <div class="col-md-12">
                   <h2>Ustalenia</h2>
-                  <%= f.text_area :arrangements %>
+                  <%= f.text_area :arrangements, :value => @group.default_value.arrangements %>
                 </div>
               </div>
             <% end %>

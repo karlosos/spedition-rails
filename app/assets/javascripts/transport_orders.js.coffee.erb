@@ -414,6 +414,8 @@ advanced_form_button = () ->
     tbody.find('.input_row').find('select').prop("disabled", true)
     tbody.find('.advanced_form').find('input').prop("disabled", false)
     tbody.find('.advanced_form').find('select').prop("disabled", false)
+    advanced_form = tbody.find('.advanced_form')
+    start_select_advanced(advanced_form)
 
 advanced_form_button_collapse = () ->
   $('.advanced_form_button_collapse').click (event) ->
@@ -428,6 +430,43 @@ advanced_form_button_collapse = () ->
     advanced_form.hide()
     event.preventDefault()
     copy_advanced_to_fast_form(table.find('.input_row'))
+
+start_select_advanced = (advanced_form) ->
+    advanced_form.find('#transport_order_client_id').select2
+      theme: 'bootstrap'
+      ajax:
+        url: '/clients.json'
+        dataType: 'json'
+        processResults: (data) ->
+          return {
+          results: $.map(data, (client, i) ->
+            {
+              id: client.id
+              text: client.client_info
+            }
+          )}
+      language:
+        noResults: ->
+          return "<a type=\"button\" class=\"btn btn-info\" onclick='show_client_modal()'>Stwórz klienta</a>"
+      escapeMarkup: (markup) ->
+        return markup;
+
+    advanced_form.find('#transport_order_seller_id').select2
+      theme: 'bootstrap'
+      ajax:
+        url: '/clients.json'
+        dataType: 'json'
+        processResults: (data) ->
+          return {
+          results: $.map(data, (client, i) ->
+            {
+              id: client.id
+              text: client.client_info
+            }
+          )}
+
+    advanced_form.find('#transport_order_carrier_id').select2
+      theme: 'bootstrap'
 
 advanced_form_disable = () ->
   $('.advanced_form').find('input').prop("disabled", true)
