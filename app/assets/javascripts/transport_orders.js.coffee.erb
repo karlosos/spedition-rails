@@ -33,6 +33,7 @@ pageLoad = () ->
   advanced_form_button()
   advanced_form_button_collapse()
   advanced_form_disable()
+  create_speditor_view_redirect_on_speditor_select()
 
 #
 # Loading places in edit form
@@ -545,3 +546,12 @@ copy_advanced_to_fast_form = (tr) ->
   if !profit_margin
     tr.find("#transport_order_profit_margin").val(0)
   tr.find("#transport_order_distance").val(distance)
+
+create_speditor_view_redirect_on_speditor_select = () ->
+  $('#speditor_view_change').change ->
+    speditor_id = $('#speditor_view_change').val()
+    d = new Date()
+    year = d.getFullYear()
+    month = d.getMonth()
+    link = "/spedition/transport_orders/" + year + "/" + month + "/" + speditor_id
+    location.href = link

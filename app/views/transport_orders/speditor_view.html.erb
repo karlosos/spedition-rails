@@ -1,9 +1,12 @@
 <%= render :partial => 'shared/create_client_modal' %>
 <nav class="navbar menubar">
   <ul class="left">
+
+    <% if current_user.id.to_s == params[:speditor_id]%>
     <li>
       <%= link_to_menu("Dodaj auto", "glyphicon-plus-sign", carrier_memberships_path) %>
     </li>
+    <% end %>
 
     <li>
     <%= link_to_menu("Filtry", "glyphicon-eye-open", "") %>
@@ -16,6 +19,18 @@
     <li>
     <%= link_to_menu("Ustawienia", "glyphicon-cog", carrier_memberships_path) %>
     </li>
+
+    <% if current_user.in_group?(@group, as: 'accounting') || current_user.in_group?(@group, as: 'admin') %>
+    <select id="speditor_view_change">
+      <% User.in_group(@group).as(:spedition).each do |user| %>
+        <% selected = "" %>
+        <% if params[:speditor_id] == user.id.to_s %>
+          <% selected = "selected" %>
+        <% end %>
+        <%= raw "<option value=\"#{user.id}\" #{selected}> #{user.email} </option>" %>
+      <% end %>
+    </select>
+    <% end %>
   </ul>
   <div style="clear: both"></div>
 </nav>
