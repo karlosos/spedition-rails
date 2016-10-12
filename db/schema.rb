@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161009193319) do
+ActiveRecord::Schema.define(version: 20161012193014) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -97,8 +97,10 @@ ActiveRecord::Schema.define(version: 20161009193319) do
     t.text     "vehicle_requirements"
     t.text     "additional_comments"
     t.text     "arrangements"
+    t.integer  "client_id"
   end
 
+  add_index "default_values", ["client_id"], name: "index_default_values_on_client_id", using: :btree
   add_index "default_values", ["group_id"], name: "index_default_values_on_group_id", using: :btree
   add_index "default_values", ["tax_rate_id"], name: "index_default_values_on_tax_rate_id", using: :btree
 

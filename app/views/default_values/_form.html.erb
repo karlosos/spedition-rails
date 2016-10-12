@@ -2,17 +2,16 @@
   <%= f.error_notification %>
 
   <div class="form-inputs">
-    <%= f.label "Miejsce wystawienia faktur", :invoice_place %>
-    <%= f.text_field :invoice_place %>
-    <%= f.error :invoice_place %>
+    <%= f.label "Dane firmy", :client_id %>
+    <%= f.collection_select :client_id, Client.in_any_group(@group), 'id', 'name', prompt: 'Wybierz sprzedawce' %>
+    <%= f.error :client_id %>
   </div>
+
   <br>
-  <div class="form-group">
-    <%= f.fields_for :mail_templates do |builder| %>
-      <%= render :partial => 'mail_template_fields', :locals => {:f => builder} %>
-    <% end %>
-    <%= link_to_add_object "Dodaj schemat maila", f, :mail_templates, "add_mail_template" %>
+
+  <div class="info">
   </div>
+  
   <div class="form-actions">
     <%= f.button :submit, "Aktualizuj" %>
   </div>

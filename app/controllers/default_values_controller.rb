@@ -90,6 +90,6 @@ class DefaultValuesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def default_value_params
-      params.require(:default_value).permit(:invoice_place, :invoice_currency, :tax_rate_id, :invoice_language, :payment_term, :vehicle_requirements, :additional_comments, :arrangements, mail_templates_attributes: [:id, :subject, :content, :_destroy,])
+      params.require(:default_value).permit(:invoice_place, :invoice_currency, :tax_rate_id, :invoice_language, :payment_term, :vehicle_requirements, :additional_comments, :arrangements, :client_id, mail_templates_attributes: [:id, :subject, :content, :_destroy,])
     end
 end

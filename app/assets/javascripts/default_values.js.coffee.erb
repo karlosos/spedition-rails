@@ -1,6 +1,7 @@
 $(".default_values").ready ->
   mail_template_add_event()
   mail_template_remove_event()
+  startSelect()
 
 mail_template_add_event = () ->
   $('form').on 'click', '.add_mail_template', (event) ->
@@ -14,3 +15,26 @@ mail_template_remove_event = () ->
     $(this).prev('input[type=hidden]').val('1')
     $(this).closest('div').hide()
     event.preventDefault()
+
+#
+# Select 2 opions
+#
+startSelect = () ->
+  $('#default_value_client_id').select2
+    theme: 'bootstrap'
+    ajax:
+      url: '/clients.json'
+      dataType: 'json'
+      processResults: (data) ->
+        return {
+        results: $.map(data, (client, i) ->
+          {
+            id: client.id
+            text: client.client_info
+          }
+        )}
+    language:
+      noResults: ->
+        return "<a type=\"button\" class=\"btn btn-info\" onclick='show_client_modal()'>Stwórz klienta</a>"
+    escapeMarkup: (markup) ->
+      return markup;
