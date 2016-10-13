@@ -49,6 +49,7 @@ class InvoicesController < ApplicationController
     @invoice.invoice_name.month = Date.today.month
     @invoice.invoice_name.year = Date.today.year
     @invoice.invoice_name.number = InvoiceName.get_last_number_for_date(DateTime.now.strftime('%F'), @group.id)
+    @invoice.seller_id = @group.default_value.client_id
 
     if params['kind'] == 'correction'
       @invoice.invoice_item_corrections.build

@@ -1,7 +1,7 @@
 class Client < ActiveRecord::Base
   groupify :group_member
   groupify :named_group_member
-  
+
   belongs_to :tax_rate
   has_one :address, as: :addressable, dependent: :destroy
   has_one :contact, as: :contactable, dependent: :destroy

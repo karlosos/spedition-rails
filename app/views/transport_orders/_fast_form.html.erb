@@ -20,7 +20,7 @@
         <span class="glyphicon glyphicon-info-sign show_client_select" data-toggle="tooltip" data-placement="top" title=""></span>
         <%= f.collection_select :client_id, Client.all.in_any_group(@group), 'id', 'name', prompt: 'Wybierz klienta' %>
         <%= f.hidden_field :carrier_id, value: carrier.id %>
-        <%= f.hidden_field :seller_id, value: Client.first.id %>
+        <%= f.hidden_field :seller_id, value: @group.default_value.client_id %>
         <%= f.hidden_field :route %>
         <%= f.hidden_field :carrier_driver_name, value: carrier.driver_name %>
         <%= f.hidden_field :car_registration_number, value: carrier.registration_number %>

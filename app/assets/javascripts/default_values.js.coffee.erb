@@ -1,6 +1,7 @@
 $(".default_values").ready ->
   mail_template_add_event()
   mail_template_remove_event()
+  client_info_get_on_client_change()
   startSelect()
 
 mail_template_add_event = () ->
@@ -38,3 +39,35 @@ startSelect = () ->
         return "<a type=\"button\" class=\"btn btn-info\" onclick='show_client_modal()'>Stwórz klienta</a>"
     escapeMarkup: (markup) ->
       return markup;
+
+#
+# Client info
+#
+client_info_get_on_client_change = () ->
+  $('#default_value_client_id').change ->
+    client_name = $('#info_name')
+    client_street = $('#info_street')
+    client_zip = $('#info_zip')
+    client_city = $('#info_city')
+    client_country = $('#info_country')
+    client_email = $('#info_email')
+    client_phone = $('#info_phone')
+    client_nip = $('#info_nip')
+    link_to_client_edit = $(".link_to_client_edit")
+    client_id = $(this).val()
+    $.ajax "/clients/#{client_id}.json",
+      type: 'GET'
+      dataType: 'json'
+      error: (jqXHR, textStatus, errorThrown) ->
+        console.log(textStatus)
+      success: (data, textStatus, jqXHR) ->
+        console.log(data['client_street'])
+        client_name.val(data['client_name'])
+        client_street.val(data['client_street'])
+        client_zip.val(data['client_zip'])
+        client_city.val(data['client_city'])
+        client_country.val(data['client_country'])
+        client_email.val(data['client_email'])
+        client_phone.val(data['client_phone'])
+        client_nip.val(data['client_nip'])
+        link_to_client_edit.prop("href", "clients/#{client_id}/edit")

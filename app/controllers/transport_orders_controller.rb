@@ -53,6 +53,8 @@ class TransportOrdersController < ApplicationController
       transport_order.build_freichtage_description
       transport_order.loading_places.build
       transport_order.unloading_places.build
+      transport_order.seller_id = @group.default_value.client_id
+
       @transport_orders << transport_order
     end
     authorize @transport_orders[0]
@@ -85,6 +87,8 @@ class TransportOrdersController < ApplicationController
     @transport_order.build_freichtage_description
     @transport_order.loading_places.build
     @transport_order.unloading_places.build
+
+    @transport_order.seller_id = @group.default_value.client_id
 
     @transport_order.arrangements = @group.default_value.arrangements
     @transport_order.vehicle_requirements = @group.default_value.vehicle_requirements

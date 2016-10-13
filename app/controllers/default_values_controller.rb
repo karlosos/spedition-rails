@@ -42,6 +42,11 @@ class DefaultValuesController < ApplicationController
     @default_value = DefaultValue.find(params[:id])
   end
 
+  # GET /default_values/1/edit_group_info
+  def edit_group_info
+    @default_value = DefaultValue.find(params[:id])
+  end
+
   # POST /default_values
   # POST /default_values.json
   def create
