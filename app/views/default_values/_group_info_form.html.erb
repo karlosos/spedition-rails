@@ -19,11 +19,11 @@
         <%= link_to raw("<button class=\"btn btn-status\">Edytuj</button>"), client_edit_path, :class => "link_to_client_edit" %>
         <br>
         <label class="string optional">Nazwa</label>
-        <input id="info_name" type="text" disabled value="<%=  @default_value.client.name %>">
+        <input id="info_name" type="text" disabled value="<%=  @default_value.client.name if @default_value.client.present? %>">
         <label class="string optional">NIP</label>
-        <input id="info_nip" type="text" disabled value="<%=  @default_value.client.nip %>">
+        <input id="info_nip" type="text" disabled value="<%=  @default_value.client.nip if @default_value.client.present? %>">
         <label class="string optional">Ulica</label>
-        <input id="info_street" type="text" disabled value="<%=  @default_value.client.address.street %>" />
+        <input id="info_street" type="text" disabled value="<%=  @default_value.client.address.street if @default_value.client.present?  %>" />
       </div>
     </div>
     <div class="col-md-6">
