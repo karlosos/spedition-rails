@@ -25,6 +25,7 @@ pageLoad = () ->
   driver_documents_status_functions()
   sidebar_functions()
   carrier_info_get_on_carrier_change()
+  change_route_on_place_change()
 
   # Speditor view
   findClientOnEmailChange()
@@ -573,3 +574,19 @@ carrier_info_get_on_carrier_change = () ->
       success: (data, textStatus, jqXHR) ->
         registration_number.val(data['registration_number'])
         driver_name.val(data['driver_name'])
+
+change_route_on_place_change = () ->
+  $(".place").change ->
+    form = $(this).parent().parent().parent().parent().parent()
+    if $('body').hasClass('speditor_view')
+      loading_zip = form.find('#transport_order_loading_places_attributes_1_zip').val()
+      loading_city = form.find('#transport_order_loading_places_attributes_1_city').val()
+      unloading_zip = form.find('#transport_order_unloading_places_attributes_1_zip').val()
+      unloading_city = form.find('#transport_order_unloading_places_attributes_1_city').val()
+    else
+      loading_zip = form.find('#transport_order_loading_places_attributes_0_zip').val()
+      loading_city = form.find('#transport_order_loading_places_attributes_0_city').val()
+      unloading_zip = form.find('#transport_order_unloading_places_attributes_0_zip').val()
+      unloading_city = form.find('#transport_order_unloading_places_attributes_0_city').val()
+    route = loading_zip + ", " + loading_city + " nach " + unloading_zip + ", " + unloading_city
+    form.find('#transport_order_route').val(route)
