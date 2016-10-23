@@ -52,7 +52,16 @@
       <div class="col-md-4">
         <p>
           <%= f.label :seller_id, "Zleceniodawca" %><br />
-          <%= f.collection_select :seller_id, Client.all.in_any_group(@group), 'id', 'name', prompt: 'Wybierz zleceniodawca' %>
+          <% seller = Client.find(@group.default_value.client_id) %>
+          <% if seller %>
+          <%= f.hidden_field :seller_id, :value => seller.id %>
+          <p>
+            <%= "#{seller.name}, #{seller.nip}, #{seller.address.street} " %>
+            <%= link_to "Edytuj dane firmy", edit_default_values_group_info_path(@group) %>
+          </p>
+          <% else %>
+            <%= link_to "Dodaj dane firmy", edit_default_values_group_info_path(@group) %>
+          <% end %>
           <%= f.error :seller_id %>
         </p>
       </div>

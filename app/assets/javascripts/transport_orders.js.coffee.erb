@@ -385,19 +385,19 @@ startSelect = () ->
     escapeMarkup: (markup) ->
       return markup;
 
-  $('#transport_order_seller_id').select2
-    theme: 'bootstrap'
-    ajax:
-      url: '/clients.json'
-      dataType: 'json'
-      processResults: (data) ->
-        return {
-        results: $.map(data, (client, i) ->
-          {
-            id: client.id
-            text: client.client_info
-          }
-        )}
+  # $('#transport_order_seller_id').select2
+  #   theme: 'bootstrap'
+  #   ajax:
+  #     url: '/clients.json'
+  #     dataType: 'json'
+  #     processResults: (data) ->
+  #       return {
+  #       results: $.map(data, (client, i) ->
+  #         {
+  #           id: client.id
+  #           text: client.client_info
+  #         }
+  #       )}
 
   $('#transport_order_carrier_id').select2
     theme: 'bootstrap'

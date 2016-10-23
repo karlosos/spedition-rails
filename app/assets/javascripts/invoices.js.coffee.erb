@@ -282,19 +282,19 @@ startSelect = () ->
     escapeMarkup: (markup) ->
       return markup;
 
-  $('#invoice_seller_id').select2
-    theme: 'bootstrap'
-    ajax:
-      url: '/clients.json'
-      dataType: 'json'
-      processResults: (data) ->
-        return {
-        results: $.map(data, (client, i) ->
-          {
-            id: client.id
-            text: client.client_info
-          }
-        )}
+  # $('#invoice_seller_id').select2
+  #   theme: 'bootstrap'
+  #   ajax:
+  #     url: '/clients.json'
+  #     dataType: 'json'
+  #     processResults: (data) ->
+  #       return {
+  #       results: $.map(data, (client, i) ->
+  #         {
+  #           id: client.id
+  #           text: client.client_info
+  #         }
+  #       )}
 
     $('#invoice_invoice_to_correct_id').select2
       theme: 'bootstrap'
