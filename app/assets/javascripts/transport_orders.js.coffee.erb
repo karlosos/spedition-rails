@@ -24,6 +24,7 @@ pageLoad = () ->
   loadings_status_functions()
   driver_documents_status_functions()
   sidebar_functions()
+  carrier_info_get_on_carrier_change()
 
   # Speditor view
   findClientOnEmailChange()
@@ -555,3 +556,20 @@ create_speditor_view_redirect_on_speditor_select = () ->
     month = d.getMonth()
     link = "/spedition/transport_orders/" + year + "/" + month + "/" + speditor_id
     location.href = link
+
+#
+# Carrier info
+#
+carrier_info_get_on_carrier_change = () ->
+  $('#transport_order_carrier_id').change ->
+    carrier_id = $(this).val()
+    registration_number = $('#transport_order_car_registration_number')
+    driver_name = $('#transport_order_carrier_driver_name')
+    $.ajax "/carriers/#{carrier_id}.json",
+      type: 'GET'
+      dataType: 'json'
+      error: (jqXHR, textStatus, errorThrown) ->
+        console.log(textStatus)
+      success: (data, textStatus, jqXHR) ->
+        registration_number.val(data['registration_number'])
+        driver_name.val(data['driver_name'])
