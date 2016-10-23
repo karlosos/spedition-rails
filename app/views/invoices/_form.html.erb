@@ -248,9 +248,16 @@
       <%= invoice_form.text_field :currency_rate_table_name, :readonly => true %>
       <%= invoice_form.error :currency_rate_table_name %>
 
-      <%= label_tag :currency_rate_date, "Z dnia" %>
-      <%= invoice_form.date_field :currency_rate_date, :readonly => true %>
-      <%= invoice_form.error :currency_rate_date %>
+      <div class="custom_currency_date">
+        <%= label_tag :currency_rate_date, "Z dnia" %>
+        <div class='input-group date' id='datetimepicker3' data-date-format="yyyy-mm-dd" locale="pl">
+          <%= invoice_form.date_field :currency_rate_date, :readonly => true %>
+          <span class="input-group-addon">
+            <span class="glyphicon glyphicon-calendar"></span>
+          </span>
+        </div>
+        <%= invoice_form.error :currency_rate_date %>
+      </div>
 
       <%= label_tag :currency_rate, "Kurs" %>
       <%= invoice_form.text_field :currency_rate, :readonly => true %>

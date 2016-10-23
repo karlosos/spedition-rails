@@ -448,6 +448,7 @@ advanced_search_clear = () ->
 currency_rate_functions = () ->
     get_currency_rate()
     get_currency_rate_on_date_change()
+    get_currency_rate_on_custom_date()
 
 get_currency_rate_on_date_change = () ->
   $('#invoice_date').change ->
@@ -466,6 +467,21 @@ change_sell_date = () ->
   date = $('#invoice_date').val()
   $('#invoice_sell_date').val(date)
   get_currency_rate()
+
+get_currency_rate_on_custom_date = () ->
+  $('#invoice_currency_rate_date').change ->
+    if $('#invoice_kind').val() == 'correction'
+      return false
+    currency = $('#invoice_currency_rate_name').val()
+    to_currency = $('#invoice_invoice_exchange_currency').val()
+    if currency == to_currency || to_currency == "Nie przeliczaj"
+      clear_currency_exchange()
+      return 0
+
+    date = $(this).val()
+    date = moment(date)
+
+    get_currency_rate_from_date(date, currency, 0)
 
 get_currency_rate = () ->
     if $('#invoice_kind').val() == 'correction'
