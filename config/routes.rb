@@ -33,6 +33,7 @@ Rails.application.routes.draw do
     get 'default_values/:id/edit_clients' => 'default_values#edit_clients', :as => :edit_default_values_clients
     get 'default_values/:id/edit_transport_orders' => 'default_values#edit_transport_orders', :as => :edit_default_values_transport_orders
     get 'default_values/:id/edit_group_info' => 'default_values#edit_group_info', :as => :edit_default_values_group_info
+    get 'gdrivetest' => 'gdrive#test', :as => :gdrive
   end
 
   root 'pages#root_home'
