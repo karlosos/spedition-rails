@@ -122,7 +122,8 @@
               :locals => {:transport_order => transport_order} %>
             </td>
             <td>
-              <%= form_tag '/gdrive/upload', multipart: true do %>
+              <%= form_tag upload_document_path, multipart: true do %>
+                <%= hidden_field_tag "transport_order_id", transport_order.id %>
                 <%= file_field_tag "file" %>
                 <%= submit_tag %>
               <% end %>

@@ -29,10 +29,10 @@ class GdriveController < ApplicationController
     })
     f = @drive.insert_file(file_obj, upload_source: file.tempfile)
     f.id
-    redirect_to root_path
+    redirect_to :back
   rescue
     nil
-    redirect_to root_path
+    redirect_to :back
   end
 
   private

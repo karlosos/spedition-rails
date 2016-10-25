@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161025161814) do
+ActiveRecord::Schema.define(version: 20161025184233) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -110,6 +110,8 @@ ActiveRecord::Schema.define(version: 20161025161814) do
     t.integer  "transport_order_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "file_id"
+    t.string   "web_content_link"
   end
 
   add_index "documents", ["transport_order_id"], name: "index_documents_on_transport_order_id", using: :btree

@@ -42,8 +42,9 @@ Rails.application.routes.draw do
     get 'default_values/:id/edit_transport_orders' => 'default_values#edit_transport_orders', :as => :edit_default_values_transport_orders
     get 'default_values/:id/edit_group_info' => 'default_values#edit_group_info', :as => :edit_default_values_group_info
     get 'gdrivetest' => 'gdrive#test', :as => :gdrive
-    post 'gdrive/upload' => 'gdrive#upload', :ad => :gdriveupload
+    post 'gdrive/upload' => 'gdrive#upload', :as => :gdriveupload
     resources :documents, only: [:index, :new, :create, :destroy]
+    post 'documents/upload' => 'documents#upload', :as => 'upload_document'
   end
 
   root 'pages#root_home'
