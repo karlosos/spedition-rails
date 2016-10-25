@@ -122,6 +122,12 @@
               :locals => {:transport_order => transport_order} %>
             </td>
             <td>
+              <%= form_tag '/gdrive/upload', multipart: true do %>
+                <%= file_field_tag "file" %>
+                <%= submit_tag %>
+              <% end %>
+            </td>
+            <td>
               <div class="btn-group" invoice-id="<%= transport_order.id %>">
                 <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown">
                   <span class="glyphicon glyphicon-cog"></span>

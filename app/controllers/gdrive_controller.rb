@@ -21,9 +21,11 @@ class GdriveController < ApplicationController
     file = params[:file]
     #byebug
     configure_client()
+    parent_folder = Google::Apis::DriveV2::ParentReference.new()
+    parent_folder.id = @group.folder_id
     file_obj = Google::Apis::DriveV2::File.new({
       title: file.original_filename,
-      #parents: file[:parent_ids]
+      parents: [parent_folder,]
     })
     f = @drive.insert_file(file_obj, upload_source: file.tempfile)
     f.id
