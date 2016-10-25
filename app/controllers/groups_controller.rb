@@ -1,4 +1,5 @@
 class GroupsController < ApplicationController
+  require 'google/apis/drive_v2'
   before_action :set_group, only: [:show, :edit, :update, :destroy]
 
   # GET /groups
@@ -33,6 +34,9 @@ class GroupsController < ApplicationController
     respond_to do |format|
       if @group.save
         @group.add(current_user, as: 'admin')
+        folder_id = create_folder(@group.subdomain)
+        @group.folder_id = folder_id
+        @group.save
         format.html { redirect_to @group, notice: 'Group was successfully created.' }
         format.json { render :show, status: :created, location: @group }
       else
@@ -70,6 +74,7 @@ class GroupsController < ApplicationController
 
   def add_users_to_group
     group = Group.find(params[:id])
+    @group = group
     emails = params["user_emails"]
     password = params["default_password"]
     role = params["membership_type"]
@@ -78,6 +83,7 @@ class GroupsController < ApplicationController
       user = User.find_by_email(email)
       if user
         group.add(user, as: role)
+
         error += "Dodano #{email} do grupy. "
       else
         user = User.new
@@ -90,6 +96,7 @@ class GroupsController < ApplicationController
           group.add(user, as: role)
         end
       end
+      share_folder(email)
     end
 
     redirect_to :back, :notice => error
@@ -121,5 +128,52 @@ class GroupsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def group_params
       params.require(:group).permit(:name, :subdomain)
+    end
+
+    def configure_client()
+      @drive = Google::Apis::DriveV2::DriveService.new
+      reauthorize()
+      access_token = AccessToken.new current_user.access_token
+      @drive.authorization = access_token # See Googleauth or Signet libraries
+    end
+
+    def reauthorize
+      options = {
+        body: {
+        client_id: ENV["google_client_id"],
+        client_secret: ENV["google_client_secret"],
+        refresh_token: "#{current_user.refresh_token}",
+        grant_type: 'refresh_token'
+        },
+        headers: {
+          'Content-Type' => 'application/x-www-form-urlencoded'
+        }
+      }
+      refresh = HTTParty.post("https://accounts.google.com/o/oauth2/token", options)
+      if refresh.code == 200
+        current_user.access_token = refresh.parsed_response['access_token']
+        current_user.save
+      end
+    end
+
+    def create_folder(folder_name)
+      configure_client()
+      folder_metadata = Google::Apis::DriveV2::File.new({
+        title: folder_name,
+        mime_type: 'application/vnd.google-apps.folder'
+      })
+
+      folder = @drive.insert_file(folder_metadata, fields: 'id')
+      return folder.id
+    end
+
+    def share_folder(email)
+      configure_client()
+      permission = Google::Apis::DriveV2::Permission.new
+      permission.value = email
+      permission.role = 'writer'
+      permission.type = 'user'
+      byebug
+      @drive.insert_permission(@group.folder_id, permission)
     end
 end
