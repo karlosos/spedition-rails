@@ -2,7 +2,7 @@ class GdriveController < ApplicationController
   require 'google/apis/drive_v2'
 
   def test
-    configure_client()
+    #configure_client()
     # # Search for files in Drive (first page only)
     # files = drive.list_files(q: "title contains 'finances'")
     # files.items.each do |file|
@@ -10,23 +10,27 @@ class GdriveController < ApplicationController
     # end
 
     # Upload a file
-    metadata = Google::Apis::DriveV2::File.new(title: 'Test')
-    metadata = @drive.insert_file(metadata, upload_source: 'Gemfile', content_type: 'text/plain')
+    #metadata = Google::Apis::DriveV2::File.new(title: 'Test')
+    #metadata = @drive.insert_file(metadata, upload_source: 'Gemfile', content_type: 'text/plain')
 
     #Download a file
-    @drive.get_file(metadata.id, download_dest: '/tmp/myfile.txt')
+    #@drive.get_file(metadata.id, download_dest: '/tmp/myfile.txt')
   end
-  
-  def upload_file(file, options = {})
+
+  def upload
+    file = params[:file]
+    #byebug
     configure_client()
     file_obj = Google::Apis::DriveV2::File.new({
-      title: file[:title]
-      parents: file[:parent_ids]
+      title: file.original_filename,
+      #parents: file[:parent_ids]
     })
-    f = @drive.insert_file(file_obj, upload_source: file[:path])
+    f = @drive.insert_file(file_obj, upload_source: file.tempfile)
     f.id
+    redirect_to root_path
   rescue
     nil
+    redirect_to root_path
   end
 
   private
@@ -50,6 +54,7 @@ class GdriveController < ApplicationController
 
   def configure_client()
     @drive = Google::Apis::DriveV2::DriveService.new
+    reauthorize()
     access_token = AccessToken.new current_user.access_token
     @drive.authorization = access_token # See Googleauth or Signet libraries
   end
