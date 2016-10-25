@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161012193014) do
+ActiveRecord::Schema.define(version: 20161025142329) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -103,6 +103,16 @@ ActiveRecord::Schema.define(version: 20161012193014) do
   add_index "default_values", ["client_id"], name: "index_default_values_on_client_id", using: :btree
   add_index "default_values", ["group_id"], name: "index_default_values_on_group_id", using: :btree
   add_index "default_values", ["tax_rate_id"], name: "index_default_values_on_tax_rate_id", using: :btree
+
+  create_table "documents", force: true do |t|
+    t.string   "name"
+    t.string   "attachment"
+    t.integer  "transport_order_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "documents", ["transport_order_id"], name: "index_documents_on_transport_order_id", using: :btree
 
   create_table "emails", force: true do |t|
     t.string   "address"

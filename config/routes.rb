@@ -1,4 +1,12 @@
 Rails.application.routes.draw do
+  get 'documents/index'
+
+  get 'documents/new'
+
+  get 'documents/create'
+
+  get 'documents/destroy'
+
   devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
   resources :groups
   post 'groups/add_users/:id' => 'groups#add_users_to_group', :as => :add_users_to_group
@@ -34,6 +42,7 @@ Rails.application.routes.draw do
     get 'default_values/:id/edit_transport_orders' => 'default_values#edit_transport_orders', :as => :edit_default_values_transport_orders
     get 'default_values/:id/edit_group_info' => 'default_values#edit_group_info', :as => :edit_default_values_group_info
     get 'gdrivetest' => 'gdrive#test', :as => :gdrive
+    resources :documents, only: [:index, :new, :create, :destroy]
   end
 
   root 'pages#root_home'
