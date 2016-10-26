@@ -1,4 +1,5 @@
 class DocumentsController < ApplicationController
+  require 'google/apis/drive_v2'
   def index
     @documents = Document.all
   end
@@ -8,28 +9,28 @@ class DocumentsController < ApplicationController
   end
 
   def create
-    @document = Document.new(document_params)
-    file = params[:document][:attachment]
     #byebug
-    configure_client()
-    parent_folder = Google::Apis::DriveV2::ParentReference.new()
-    parent_folder.id = @group.folder_id
-    file_obj = Google::Apis::DriveV2::File.new({
-      title: file.original_filename,
-      parents: [parent_folder,]
-    })
-    f = @drive.insert_file(file_obj, upload_source: file.tempfile)
-    f.id
-    if f.id.present?
-      @document.file_id = f.id
-      @document.web_content_link = f.web_content_link
-      if @document.save
-        @group.add(@document)
-        redirect_to documents_path, notice: "Dokument #{@document.name} zostal zapisany"
-      else
-        render "new"
+    params[:document][:file].each do |file|
+      document = Document.new(document_params)
+      #byebug
+      configure_client()
+      parent_folder = Google::Apis::DriveV2::ParentReference.new()
+      parent_folder.id = @group.folder_id
+      file_obj = Google::Apis::DriveV2::File.new({
+        title: file.original_filename,
+        parents: [parent_folder,]
+      })
+      f = @drive.insert_file(file_obj, upload_source: file.tempfile)
+      f.id
+      if f.id.present?
+        document.file_id = f.id
+        document.web_content_link = f.web_content_link
+        if document.save
+          @group.add(document)
+        end
       end
     end
+    redirect_to :back, notice: "Dokumenty zostały wysłane"
   end
 
   def upload
@@ -54,7 +55,11 @@ class DocumentsController < ApplicationController
       @document.web_content_link = f.web_content_link
       if @document.save
         @group.add(@document)
-        redirect_to documents_path, notice: "Dokument #{@document.name} zostal zapisany"
+        respond_to do |format|
+          format.html { redirect_to :back, notice: "Dokument #{@document.name} zostal zapisany" }
+          format.json { render :json => @document }
+        end
+
       else
         render "new"
       end

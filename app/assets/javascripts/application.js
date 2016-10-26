@@ -22,6 +22,7 @@
 //= require select2_locale_pl
 //= require moment.min.js
 //= require nested_form_fields
+//= require dropzone
 //= require_tree .
 
 function show_client_modal() {

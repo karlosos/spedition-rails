@@ -33,6 +33,13 @@
       font-size: 35px;
     }
   }
+  .dropzone {
+    min-height: 50px;
+    padding: 5px;
+    .dz-message {
+        margin: 0;
+    }
+  }
   .place_form {
     input {
       width: auto;

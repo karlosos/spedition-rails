@@ -27,6 +27,20 @@ pageLoad = () ->
   carrier_info_get_on_carrier_change()
   change_route_on_place_change()
 
+  $('.dropzone').dropzone ->
+    thumbnailWidth: 250,
+    thumbnailHeight: 150,
+    previewTemplate: '<div class="dz-preview dz-file-preview">
+      <div class="dz-details">
+        <div class="dz-filename"><span data-dz-name></span></div>
+        <div class="dz-size" data-dz-size></div>
+      </div>
+      <div class="dz-progress"><span class="dz-upload" data-dz-uploadprogress></span></div>
+      <div class="dz-success-mark"><span>✔</span></div>
+      <div class="dz-error-mark"><span>✘</span></div>
+      <div class="dz-error-message"><span data-dz-errormessage></span></div>
+    </div>'
+
   # Speditor view
   findClientOnEmailChange()
   modal_functions()

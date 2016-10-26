@@ -122,10 +122,18 @@
               :locals => {:transport_order => transport_order} %>
             </td>
             <td>
-              <%= form_tag upload_document_path, multipart: true do %>
+
+              <!-- <%= form_for Document.new do |f| %>
+                <%= f.hidden_field :transport_order_id, :value => transport_order.id %>
+                <%= f.file_field "file", multiple: true %>
+                <%= f.submit %>
+              <% end %> -->
+
+              <%= form_tag upload_document_path, multipart: true, class: "dropzone" do %>
                 <%= hidden_field_tag "transport_order_id", transport_order.id %>
-                <%= file_field_tag "file" %>
-                <%= submit_tag %>
+                <div class="fallback">
+                  <%= file_field_tag "file", multiple: true %>
+                </div>
               <% end %>
             </td>
             <td>

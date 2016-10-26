@@ -43,6 +43,7 @@ gem 'wicked_pdf', '1.0.6'
 gem 'rubyzip', '1.2.0'
 gem 'nested_form_fields', '0.7.8'
 gem 'groupify', '0.8.0'
+gem 'dropzonejs-rails'
 gem "pundit"
 
 group :development, :test do
