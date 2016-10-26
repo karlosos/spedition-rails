@@ -35,7 +35,9 @@ class DocumentsController < ApplicationController
   def upload
     @document = Document.new()
     @document.transport_order_id = params[:transport_order_id]
-    @document.type = params[:type]
+    if params[:type].present?
+      @document.type = params[:type]
+    end
     file = params[:file]
     #byebug
     configure_client()
@@ -63,24 +65,6 @@ class DocumentsController < ApplicationController
     @document = Document.find(params[:id])
     @document.destroy
     redirect_to documents_path, notice: "Dokument #{@document.name} zostal usuniety"
-  end
-
-  def upload
-    file = params[:file]
-    #byebug
-    configure_client()
-    parent_folder = Google::Apis::DriveV2::ParentReference.new()
-    parent_folder.id = @group.folder_id
-    file_obj = Google::Apis::DriveV2::File.new({
-      title: file.original_filename,
-      parents: [parent_folder,]
-    })
-    f = @drive.insert_file(file_obj, upload_source: file.tempfile)
-    f.id
-    redirect_to :back
-  rescue
-    nil
-    redirect_to :back
   end
 
   private
