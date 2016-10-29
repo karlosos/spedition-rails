@@ -37,7 +37,7 @@ class GroupsController < ApplicationController
         folder_id = create_folder(@group.subdomain)
         @group.folder_id = folder_id
         @group.save
-        format.html { redirect_to @group, notice: 'Group was successfully created.' }
+        format.html { redirect_to edit_default_values_group_info_url(@group, subdomain: @group.subdomain), notice: 'Group was successfully created.' }
         format.json { render :show, status: :created, location: @group }
       else
         format.html { render :new }

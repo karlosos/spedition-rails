@@ -1,9 +1,10 @@
+<%= render :partial => 'shared/create_client_modal' %>
 <%= simple_form_for(@default_value) do |f| %>
   <%= f.error_notification %>
 
   <div class="form-inputs">
     <%= f.label "Dane firmy", :client_id %>
-    <%= f.collection_select :client_id, Client.in_any_group(@group), 'id', 'name', prompt: 'Wybierz sprzedawce' %>
+    <%= f.collection_select :client_id, Client.in_any_group(@group), 'id', 'name', prompt: 'Wybierz dane firmy lub stwórz nowe' %>
     <%= f.error :client_id %>
   </div>
 

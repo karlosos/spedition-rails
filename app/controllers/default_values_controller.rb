@@ -44,6 +44,10 @@ class DefaultValuesController < ApplicationController
 
   # GET /default_values/1/edit_group_info
   def edit_group_info
+    @client = Client.new
+    @client.build_address
+    @client.build_contact
+    @client.contact.emails.build
     @default_value = DefaultValue.find(params[:id])
   end
 
