@@ -1,5 +1,3 @@
-<p id="notice"><%= notice %></p>
-
 <nav class="navbar menubar">
   <ul>
     <li>
@@ -28,31 +26,31 @@
     <strong>Wymiary:</strong> <%= @carrier.size %> <br>
     <strong>Imie i nazwisko kierowcy:</strong> <%= @carrier.driver_name %> <br>
     <strong>Email kierowcy:</strong> <%= @carrier.driver_email %> <br>
-    <strong>Nazwa przewoźnika:</strong> <%= @carrier.carrier_name %> <br>
+    <strong>Nazwa przewoźnika:</strong> <%= @carrier.client.name %> <br>
   </div>
   <div class="col-md-6">
     <div class="col-md-6">
       <h4>Adres:</h4>
       <p>
-        <%= @carrier.address.street %><br>
-        <%= @carrier.address.zip %>,
-        <%= @carrier.address.city %><br>
-        <%= @carrier.address.state %><br>
-        <%= @carrier.address.country %><br>
+        <%= @carrier.client.address.street %><br>
+        <%= @carrier.client.address.zip %>,
+        <%= @carrier.client.address.city %><br>
+        <%= @carrier.client.address.state %><br>
+        <%= @carrier.client.address.country %><br>
       </p>
       <h4>Kontakt:</h4>
       <p>
         Telefon:
-        <%= @carrier.contact.phone1 %>
-        <%= @carrier.contact.phone2 %><br>
+        <%= @carrier.client.contact.phone1 %>
+        <%= @carrier.client.contact.phone2 %><br>
         Fax:
-        <%= @carrier.contact.fax %><br>
+        <%= @carrier.client.contact.fax %><br>
         Email:
-        <% @carrier.contact.emails.each do |email| %>
+        <% @carrier.client.contact.emails.each do |email| %>
         <%= email.address %>
         <% end %> <br>
         WWW:
-        <%= @carrier.contact.www %><br>
+        <%= @carrier.client.contact.www %><br>
       </p>
     </div>
   </div>

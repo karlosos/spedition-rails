@@ -35,6 +35,10 @@ class CarriersController < ApplicationController
 
   # GET /carriers/1/edit
   def edit
+    @client = Client.new
+    @client.build_address
+    @client.build_contact
+    @client.contact.emails.build
     authorize @carrier
   end
 
@@ -49,6 +53,10 @@ class CarriersController < ApplicationController
         format.html { redirect_to @carrier, notice: 'Carrier was successfully created.' }
         format.json { render :show, status: :created, location: @carrier }
       else
+        @client = Client.new
+        @client.build_address
+        @client.build_contact
+        @client.contact.emails.build
         format.html { render :new }
         format.json { render json: @carrier.errors, status: :unprocessable_entity }
       end
