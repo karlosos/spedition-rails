@@ -29,6 +29,7 @@ function show_client_modal() {
   $('#new_client_modal').modal('toggle');
   $('#invoice_client_id').select2("close");
   $('#default_value_client_id').select2("close");
+  $('#carrier_client_id').select2("close");
 }
 
 function show_client_modal_transport_order() {

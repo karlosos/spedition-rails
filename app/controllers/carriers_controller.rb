@@ -22,9 +22,14 @@ class CarriersController < ApplicationController
   # GET /carriers/new
   def new
     @carrier = Carrier.new
-    @carrier.build_address
-    @carrier.build_contact
-    @carrier.contact.emails.build
+    @carrier.is_third_party = true
+    @client = Client.new
+    @client.build_address
+    @client.build_contact
+    @client.contact.emails.build
+    #@carrier.build_address
+    #@carrier.build_contact
+    #@carrier.contact.emails.build
     authorize @carrier
   end
 
@@ -93,7 +98,7 @@ class CarriersController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def carrier_params
       params.require(:carrier).permit(:registration_number, :size, :driver_name,
-      :is_third_party, :driver_email, :carrier_name, :carrier_email,
+      :is_third_party, :driver_email, :client_id, :carrier_name, :carrier_email,
       address_attributes: [:street, :line1, :line2, :city, :state, :country,
         :zip], contact_attributes: [:phone1, :phone2, :fax, :email, :www,
           emails_attributes: [:address]])

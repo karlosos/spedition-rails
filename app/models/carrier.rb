@@ -1,22 +1,24 @@
 class Carrier < ActiveRecord::Base
   groupify :group_member
   groupify :named_group_member
-  
+
   has_many :transport_orders, class_name: 'TransportOrder', foreign_key: 'carrier_id'
-  has_one :address, as: :addressable, dependent: :destroy
-  has_one :contact, as: :contactable, dependent: :destroy
+  #has_one :address, as: :addressable, dependent: :destroy
+  #has_one :contact, as: :contactable, dependent: :destroy
+  belongs_to :client
 
   has_many :users, :through => :carrier_memberships
   has_many :carrier_memberships
 
-  accepts_nested_attributes_for :address
-  accepts_nested_attributes_for :contact
+  #accepts_nested_attributes_for :address
+  #accepts_nested_attributes_for :contact
 
   validates :registration_number, presence: true
   validates :size, presence: true
   validates :carrier_name, presence: true
   validates :driver_name, presence: true
   validates :driver_email, presence: true
+  validates :client, presence: true
 
   before_destroy :check_for_transport_orders
 
@@ -34,7 +36,7 @@ class Carrier < ActiveRecord::Base
     carrier_name = search_params[:carrier_name]
     driver_name = search_params[:driver_name]
 
-    @carriers = Carrier.all
+    @carriers = Carrier.all.joins(:client)
 
     if registration_number.present?
       registration_number = registration_number.downcase
@@ -43,7 +45,7 @@ class Carrier < ActiveRecord::Base
 
     if carrier_name.present?
       carrier_name = carrier_name.downcase
-      @carriers = @carriers.where('lower(carrier_name) LIKE ?', "%#{carrier_name}%")
+      @carriers = @carriers.where('lower(clients.name) LIKE ?', "%#{carrier_name}%")
     end
 
     if driver_name.present?

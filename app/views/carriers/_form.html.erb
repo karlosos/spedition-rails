@@ -1,3 +1,4 @@
+<%= render :partial => 'shared/create_client_modal' %>
 <%= simple_form_for(@carrier) do |f| %>
   <%= f.error_notification %>
 
@@ -32,21 +33,28 @@
           <%= f.text_field :driver_email %>
           <%= f.error :driver_email, id: 'driver_email' %>
         </p>
-
-        <p>
-          <%= f.label :carrier_name %><br />
-          <%= f.text_field :carrier_name %>
-          <%= f.error :carrier_name, id: 'carrier_name' %>
-        </p>
       </div>
       <div class="col-md-6">
-        <%= f.fields_for :address do |address| %>
-          <%= render :partial => 'shared/address', :locals => {:f => address} %>
-        <% end %>
-
-        <%= f.fields_for :contact do |contact| %>
-          <%= render :partial => 'shared/contact', :locals => {:f => contact} %>
-        <% end %>
+        <div class="form-inputs">
+          <%= f.label "Dane firmy", :client_id %>
+          <%= f.collection_select :client_id, Client.in_any_group(@group), 'id', 'name', prompt: 'Wybierz dane firmy lub stwórz nowe' %>
+          <%= f.error :client_id %>
+        </div>
+        <div>
+          <br>
+          <% client_edit_path = "" %>
+          <% if @carrier.client_id %>
+          <% client_edit_path = edit_client_path(:id => @carrier.client_id) %>
+          <% end %>
+          <%= link_to raw("<button class=\"btn btn-status\">Edytuj</button>"), client_edit_path, :class => "link_to_client_edit" %>
+          <br>
+          <label class="string optional">Nazwa</label>
+          <input id="info_name" type="text" disabled value="<%=  @carrier.client.name if @carrier.client.present? %>">
+          <label class="string optional">NIP</label>
+          <input id="info_nip" type="text" disabled value="<%=  @carrier.client.nip if @carrier.client.present? %>">
+          <label class="string optional">Ulica</label>
+          <input id="info_street" type="text" disabled value="<%=  @carrier.client.address.street if @carrier.client.present?  %>" />
+        </div>
       </div>
     </div>
 
