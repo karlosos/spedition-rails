@@ -126,22 +126,22 @@ class TransportOrderTest < ActiveSupport::TestCase
     @carrier = carriers(:carrier_one)
     @transport_order.carrier = @carrier
     @transport_order.save
-    assert_equal @transport_order.carrier_name, @transport_order.carrier.carrier_name
+    assert_equal @transport_order.carrier_name, @transport_order.carrier.client.name
 
-    @carrier.carrier_name = "New carrier name"
-    @carrier.save
-    assert_not_equal @transport_order.carrier_name, @transport_order.carrier.carrier_name
+    @carrier.client.name = "New carrier name"
+    @carrier.client.save
+    assert_not_equal @transport_order.carrier_name, @transport_order.carrier.client.name
   end
 
   test "carrier nip should be fixed" do
     @carrier = carriers(:carrier_one)
     @transport_order.carrier = @carrier
     @transport_order.save
-    assert_equal @transport_order.carrier_nip, @transport_order.carrier.nip
+    assert_equal @transport_order.carrier_nip, @transport_order.carrier.client.nip
 
-    @carrier.nip = "New carrier nip"
-    @carrier.save
-    assert_not_equal @transport_order.carrier_nip, @transport_order.carrier.nip
+    @carrier.client.nip = "New carrier nip"
+    @carrier.client.save
+    assert_not_equal @transport_order.carrier_nip, @transport_order.carrier.client.nip
   end
 
   test "carrier driver name should be fixed" do
@@ -159,43 +159,44 @@ class TransportOrderTest < ActiveSupport::TestCase
     @carrier = carriers(:carrier_one)
     @transport_order.carrier = @carrier
     @transport_order.save
-    assert_equal @transport_order.carrier_street, @transport_order.carrier.address.street
+    assert_equal @transport_order.carrier_street, @transport_order.carrier.client.address.street
 
-    @carrier.address.street = "New carrier street"
-    @carrier.save
-    assert_not_equal @transport_order.carrier_street, @transport_order.carrier.address.street
+    @carrier.client.address.street = "New carrier street"
+    @carrier.client.save
+    assert_not_equal @transport_order.carrier_street, @transport_order.carrier.client.address.street
   end
 
   test "carrier zip should be fixed" do
     @carrier = carriers(:carrier_one)
     @transport_order.carrier = @carrier
     @transport_order.save
-    assert_equal @transport_order.carrier_zip, @transport_order.carrier.address.zip
+    assert_equal @transport_order.carrier_zip, @transport_order.carrier.client.address.zip
 
-    @carrier.address.zip = "New carrier zip"
-    @carrier.save
-    assert_not_equal @transport_order.carrier_zip, @transport_order.carrier.address.zip
+    @carrier.client.address.zip = "New carrier zip"
+    @carrier.client.save
+    assert_not_equal @transport_order.carrier_zip, @transport_order.carrier.client.address.zip
   end
 
   test "carrier city should be fixed" do
     @carrier = carriers(:carrier_one)
     @transport_order.carrier = @carrier
     @transport_order.save
-    assert_equal @transport_order.carrier_city, @transport_order.carrier.address.city
+    assert_equal @transport_order.carrier_city, @transport_order.carrier.client.address.city
 
-    @carrier.address.city = "New carrier city"
-    @carrier.save
-    assert_not_equal @transport_order.carrier_city, @transport_order.carrier.address.city
+    @carrier.client.address.city = "New carrier city"
+    @carrier.client.save
+    assert_not_equal @transport_order.carrier_city, @transport_order.carrier.client.address.city
   end
 
   test "carrier country should be fixed" do
     @carrier = carriers(:carrier_one)
     @transport_order.carrier = @carrier
     @transport_order.save
-    assert_equal @transport_order.carrier_country, @transport_order.carrier.address.country
 
-    @carrier.address.country = "New carrier country"
-    @carrier.save
-    assert_not_equal @transport_order.carrier_country, @transport_order.carrier.address.country
+    assert_equal @transport_order.carrier_country, @transport_order.carrier.client.address.country
+
+    @carrier.client.address.country = "New carrier country"
+    @carrier.client.save
+    assert_not_equal @transport_order.carrier_country, @transport_order.carrier.client.address.country
   end
 end

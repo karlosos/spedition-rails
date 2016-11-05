@@ -10,3 +10,4 @@ carrier_one:
   carrier_name: Transport Szczecin
   driver_name: Krzysztof Jarzyna
   driver_email: krzysztofjarzyna@szczecin.pl
+  client: client_google

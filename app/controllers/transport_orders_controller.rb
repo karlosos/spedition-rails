@@ -23,7 +23,6 @@ class TransportOrdersController < ApplicationController
       :loading_date_stop => params[:loading_date_stop],
       :unloading_date_start => params[:unloading_date_start],
       :unloading_date_stop => params[:unloading_date_stop],
-      :loading_statuses => params[:loading_statuses]
     }
 
     @transport_orders = TransportOrder.joins(:transport_order_name)

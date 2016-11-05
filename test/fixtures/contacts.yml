@@ -15,11 +15,3 @@ contact_microsoft:
   email: microsoft@google.com
   www: www.ms.com
   contactable: client_microsoft (Client)
-
-contact_carrier_one:
-  phone1: 3201-21321
-  phone2: 213231-331-2
-  fax: +432-312312-2
-  email: microsoft@google.com
-  www: www.ms.com
-  contactable: carrier_one (Carrier)

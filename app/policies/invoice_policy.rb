@@ -69,6 +69,6 @@ class InvoicePolicy < ApplicationPolicy
   end
 
   def is_in_same_group_as_an_accountant?
-    (!user.nil? && user.in_group?(invoice.groups.first, as: 'accountant')) || user.in_group?(invoice.groups.first, as: 'admin')
+    (!user.nil? && user.in_group?(invoice.groups.first, as: 'accounting')) || user.in_group?(invoice.groups.first, as: 'admin')
   end
 end

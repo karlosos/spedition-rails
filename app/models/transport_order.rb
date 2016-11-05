@@ -48,13 +48,13 @@ class TransportOrder < ActiveRecord::Base
     self.client_country = client.address.country
     self.client_phone = client.contact.phone1
 
-    self.carrier_name = carrier.carrier_name
-    self.carrier_nip = carrier.nip
+    self.carrier_name = carrier.client.name
+    self.carrier_nip = carrier.client.nip
     self.carrier_driver_name = carrier.driver_name
-    self.carrier_street = carrier.address.street
-    self.carrier_zip = carrier.address.zip
-    self.carrier_city = carrier.address.city
-    self.carrier_country = carrier.address.country
+    self.carrier_street = carrier.client.address.street
+    self.carrier_zip = carrier.client.address.zip
+    self.carrier_city = carrier.client.address.city
+    self.carrier_country = carrier.client.address.country
     self.car_registration_number = carrier.registration_number
     true
   end

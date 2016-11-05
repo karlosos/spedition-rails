@@ -57,7 +57,7 @@ class TransportOrderPolicy < ApplicationPolicy
   end
 
   def is_in_same_group_as_an_accountant?
-    (!user.nil? && user.in_group?(transport_order.groups.first, as: 'accountant')) || user.in_group?(transport_order.groups.first, as: 'admin')
+    (!user.nil? && user.in_group?(transport_order.groups.first, as: 'accounting')) || user.in_group?(transport_order.groups.first, as: 'admin')
   end
 
   def is_logged_in?

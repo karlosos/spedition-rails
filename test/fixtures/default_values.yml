@@ -3,3 +3,4 @@
 default_value_one:
   group: group_one
   invoice_place: Szczecin
+  client: client_google

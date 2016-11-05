@@ -56,7 +56,7 @@ class TransportOrdersControllerTest < ActionController::TestCase
   end
 
   test "should create transport_order_name" do
-    sign_in users(:user_speditor)
+    sign_in users(:user_accountant)
     @request.env['HTTP_REFERER'] = 'http://groupone.lvh.me:3000/transport_orders'
     @request.host = "groupone.lvh.me:3000"
     transport_order = transport_orders(:transport_order_without_name)

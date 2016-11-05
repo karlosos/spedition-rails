@@ -11,10 +11,3 @@ address_microsoft:
   country: "Poland"
   zip: "23-323"
   addressable: client_microsoft (Client)
-
-address_carrier_one:
-  street: "ul. Cicha 12"
-  city: "Gniezno"
-  country: "Poland"
-  zip: "23-323"
-  addressable: carrier_one (Carrier)

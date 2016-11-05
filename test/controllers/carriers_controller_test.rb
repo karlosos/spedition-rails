@@ -30,7 +30,7 @@ class CarriersControllerTest < ActionController::TestCase
         size: "2m x 3m",
         driver_name: "Karol Cichy",
         driver_email: "cichy@email.com",
-        carrier_name: "Trans",
+        client_id: clients(:client_microsoft).id
       }
     end
 
