@@ -13,6 +13,12 @@ Rails.application.routes.draw do
   post 'groups/remove_user/:id' => 'groups#remove_user_from_group', :as => :remove_user_from_group
   post 'groups/remove_user_role/:id'=> 'groups#remove_user_role_from_group', :as => :remove_user_role_from_group
 
+  get '/about_us' => 'pages#about_us', :as => :about_us
+  get '/for_clients' => 'pages#for_clients', :as => :for_clients
+  get '/terms_of_use' => 'pages#terms_of_use', :as => :terms_of_use
+  get '/work_for_us' => 'pages#work_for_us', :as => :work_for_us
+  get '/contact' => 'pages#work_for_us', :as => :contact
+
   constraints(Subdomain) do
     resources :clients
     resources :carriers
