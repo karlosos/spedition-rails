@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161029112707) do
+ActiveRecord::Schema.define(version: 20161105160550) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -53,6 +53,7 @@ ActiveRecord::Schema.define(version: 20161029112707) do
     t.string   "nip"
     t.boolean  "is_third_party"
     t.integer  "client_id"
+    t.string   "driver_phone"
   end
 
   add_index "carriers", ["client_id"], name: "index_carriers_on_client_id", using: :btree

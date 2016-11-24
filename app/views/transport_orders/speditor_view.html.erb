@@ -60,8 +60,8 @@
           %>
           <th>
             <%= "#{carrier.driver_name}" %>
-            <%=  "- #{carrier.contact.phone1}" if carrier.contact.phone1 .present? %>
-            <%=  "- #{carrier.contact.emails.first.address}" if carrier.contact.emails.first.present? %>
+            <%=  "- #{carrier.driver_phone}" if carrier.driver_phone.present? %>
+            <%=  "- #{carrier.client.contact.emails.first.address}" if carrier.client.contact.emails.first.present? %>
             <%=  "- #{carrier.carrier_name}" if carrier.carrier_name.present? %>
           </th>
           <th>Suma frachtu:
