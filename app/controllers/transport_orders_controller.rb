@@ -110,13 +110,18 @@ class TransportOrdersController < ApplicationController
         item.tax_rate_id = 23
         item.unit_price = @transport_order.freight_rate + @transport_order.profit_margin
         item.unit = "fracht"
-        item.save
-        @group.add(item)
-        @transport_order.save
+        if item.save
+          @group.add(item)
+          @transport_order.save
+        else
+          flash.alert = "Zlecenie nie zostało stworzone"
+        end
       end
     end
-
-    redirect_to :back, :flash => { :notice =>  can_create_name}
+    if can_create_name.size != 0
+      flash.notice = can_create_name
+    end
+    redirect_to :back
   end
 
   # GET /transport_orders/1/edit
