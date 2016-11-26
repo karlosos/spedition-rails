@@ -6,10 +6,7 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-group = Group.create()
-group.subdomain = "mtransport"
-group.name = "MTransport"
-group.save
+group = Group.first
 
 mail_template_loading = MailTemplate.new
 mail_template_loading.subject = "Ladung von {0} ist bereits geladen worden."
