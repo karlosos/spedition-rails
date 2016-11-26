@@ -57,7 +57,7 @@ create_object_links = () ->
     e.preventDefault()
 
 invoice_items_price_update_on_item_change = () ->
-  $('.invoice_items_form').find($('.select2-hidden-accessible')).change ->
+  $('.invoice_items_form').find($('.item_select')).change ->
     item_id = $(this).find(":selected").val()
     unit_price_input = $(this).parent().parent().find('.unit_price')
     parent = $(this).parent().parent()
@@ -89,7 +89,10 @@ invoice_item_calculate = (invoice_item_group, class_suffix = '') ->
     tax_rate = 0
   net_price = quantity * unit_price
   net_price = parseFloat(net_price).toFixed(2)
-  value_added_tax = net_price * (tax_rate/100)
+  value_added_tax = net_price * parseFloat(tax_rate/100)
+  console.log("Test korekcji")
+  console.log(tax_rate)
+  console.log(value_added_tax)
   value_added_tax = parseFloat(value_added_tax).toFixed(2)
   total_selling_price = parseFloat(net_price) + parseFloat(value_added_tax)
   total_selling_price = parseFloat(total_selling_price).toFixed(2)
@@ -296,26 +299,29 @@ startSelect = () ->
   #         }
   #       )}
 
-    $('#invoice_invoice_to_correct_id').select2
-      theme: 'bootstrap'
-      ajax:
-        url: '/invoices.json'
-        dataType: 'json'
-        processResults: (data) ->
-          return {
-          results: $.map(data, (invoice, i) ->
-            {
-              id: invoice.id
-              text: invoice.name
-            }
-          )}
-    .change ->
-      invoice_to_correct_id = this.value
-      link = "/invoices/new_correction/"+invoice_to_correct_id
-      location.href = link
+  $('#invoice_invoice_to_correct_id').select2
+    theme: 'bootstrap'
+    ajax:
+      url: '/invoices.json'
+      dataType: 'json'
+      processResults: (data) ->
+        return {
+        results: $.map(data, (invoice, i) ->
+          {
+            id: invoice.id
+            text: invoice.name
+          }
+        )}
+  .change ->
+    invoice_to_correct_id = this.value
+    link = "/invoices/new_correction/"+invoice_to_correct_id
+    location.href = link
 
-    $('.tax_rate').select2
-      theme: 'bootstrap'
+  $('.tax_rate').select2
+    theme: 'bootstrap'
+    
+  $('.tax_rate_correction').select2
+    theme: 'bootstrap'
 
   $('.invoice_items_form').find('.item_select').find('select').select2
     theme: 'bootstrap'

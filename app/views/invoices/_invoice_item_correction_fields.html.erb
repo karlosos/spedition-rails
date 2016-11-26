@@ -1,6 +1,6 @@
 <tr class="invoice_item_correction">
   <td class="item_select">
-    <%= f.collection_select :item_id, Item.all.in_any_group(@group), :id, :name, prompt: 'Wybierz towar' %>
+    <%= f.collection_select :item_id, Item.all.in_any_group(@group), :id, :name, { prompt: 'Wybierz towar' }, { :class => 'item_select' } %>
     <%= f.text_field :item_name_correction %>
   </td>
   <td>
@@ -20,7 +20,7 @@
   <td>
     <%= f.collection_select :tax_rate_id, TaxRate.important_only, :id, :name, {}, { :class => 'tax_rate editable_invoice_item_input' } %>
 
-    <%= f.collection_select :tax_rate_correction_id, TaxRate.important_only, :id, :name, {}, { :class => 'tax_rate tax_rate_correction editable_invoice_item_correction_input' } %>
+    <%= f.collection_select :tax_rate_correction_id, TaxRate.important_only, :id, :name, {}, { :class => 'tax_rate_correction editable_invoice_item_correction_input' } %>
   </td>
   <td>
     <%= f.number_field :net_price, { :readonly => true, class: 'net_price', :step => '0.01', :precision => 2} %>

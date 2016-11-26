@@ -127,6 +127,7 @@ class InvoicesController < ApplicationController
       invoice_item_correction.total_selling_price_correction = invoice_item.total_selling_price
       invoice_item_correction.total_selling_price_difference = Money.new(0, @invoice.net_price_currency )
       @invoice.invoice_item_corrections << invoice_item_correction
+      #byebug
     end
 
     authorize @invoice
