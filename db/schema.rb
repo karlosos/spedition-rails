@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161105160550) do
+ActiveRecord::Schema.define(version: 20161126145713) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -74,6 +74,18 @@ ActiveRecord::Schema.define(version: 20161105160550) do
   end
 
   add_index "clients", ["tax_rate_id"], name: "index_clients_on_tax_rate_id", using: :btree
+
+  create_table "communications", force: true do |t|
+    t.integer  "vindication_id"
+    t.date     "date"
+    t.text     "note"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "communications", ["user_id"], name: "index_communications_on_user_id", using: :btree
+  add_index "communications", ["vindication_id"], name: "index_communications_on_vindication_id", using: :btree
 
   create_table "contacts", force: true do |t|
     t.string   "phone1"
@@ -421,5 +433,16 @@ ActiveRecord::Schema.define(version: 20161105160550) do
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+
+  create_table "vindications", force: true do |t|
+    t.integer  "invoice_id"
+    t.string   "ticket_number"
+    t.integer  "last_email_type"
+    t.string   "emails"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "vindications", ["invoice_id"], name: "index_vindications_on_invoice_id", using: :btree
 
 end
