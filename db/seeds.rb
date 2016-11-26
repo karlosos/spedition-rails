@@ -158,12 +158,13 @@ end
 carriers_text = File.read(Rails.root.join('lib', 'seeds', 'carriers.csv'))
 carriers_csv = CSV.parse(carriers_text, :headers => true, :encoding => 'ISO-8859-1')
 carriers_csv.each_with_index do |row, i|
+  carrier_client = Client.new
+  carrier_client.build_address
+  carrier_client.build_contact
   t = Carrier.new
-  t.build_address
-  t.build_contact
   t.registration_number = row["registration_number"]
   t.size = row["size"]
-  t.carrier_name = row["carrier_name"]
+  carrier_client.name = row["carrier_name"]
   t.driver_email = row["driver_email"]
   if !t.driver_email.present?
     t.driver_email = "driver_email@gmail.com"
@@ -173,13 +174,16 @@ carriers_csv.each_with_index do |row, i|
   if !carrier_email.address.present?
     carrier_email.address = "carrier_email@example.com"
   end
-  t.contact.emails << carrier_email
+  carrier_client.contact.emails << carrier_email
   t.driver_name = row["driver_name"]
-  t.address.city = "x"
-  t.address.street = "x"
-  t.address.zip = "x"
-  t.address.country = "PL"
+  carrier_client.address.city = "x"
+  carrier_client.address.street = "x"
+  carrier_client.address.zip = "x"
+  carrier_client.address.country = "PL"
   t.valid?
+  carrier_client.save
+  group.add(carrier_client)
+  t.client = carrier_client
   t.save
   group.add(t)
 end

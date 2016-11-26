@@ -110,6 +110,7 @@ class TransportOrdersController < ApplicationController
         item.tax_rate_id = 23
         item.unit_price = @transport_order.freight_rate + @transport_order.profit_margin
         item.unit = "fracht"
+        #byebug
         if item.save
           @group.add(item)
           @transport_order.save
