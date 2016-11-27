@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161126145713) do
+ActiveRecord::Schema.define(version: 20161126161409) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -76,7 +76,7 @@ ActiveRecord::Schema.define(version: 20161126145713) do
   add_index "clients", ["tax_rate_id"], name: "index_clients_on_tax_rate_id", using: :btree
 
   create_table "communications", force: true do |t|
-    t.integer  "vindication_id"
+    t.integer  "invoice_id"
     t.date     "date"
     t.text     "note"
     t.integer  "user_id"
@@ -84,8 +84,8 @@ ActiveRecord::Schema.define(version: 20161126145713) do
     t.datetime "updated_at"
   end
 
+  add_index "communications", ["invoice_id"], name: "index_communications_on_invoice_id", using: :btree
   add_index "communications", ["user_id"], name: "index_communications_on_user_id", using: :btree
-  add_index "communications", ["vindication_id"], name: "index_communications_on_vindication_id", using: :btree
 
   create_table "contacts", force: true do |t|
     t.string   "phone1"
@@ -293,6 +293,8 @@ ActiveRecord::Schema.define(version: 20161126145713) do
     t.text     "correction_cause"
     t.datetime "currency_rate_date"
     t.datetime "sell_date"
+    t.string   "vindication_emails"
+    t.integer  "vindication_last_email_type"
   end
 
   add_index "invoices", ["kind"], name: "index_invoices_on_kind", using: :btree

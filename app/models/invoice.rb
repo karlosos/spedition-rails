@@ -10,6 +10,7 @@ class Invoice < ActiveRecord::Base
   has_many :invoice_items, inverse_of: :invoice
   has_many :invoice_item_corrections, inverse_of: :invoice
   has_many :items, through: :invoice_items
+  has_many :communications
 
   # Invoice Correction relations
   belongs_to :invoice_to_correct, class_name: 'Invoice'
@@ -20,6 +21,7 @@ class Invoice < ActiveRecord::Base
   monetize :total_selling_price_cents
 
   accepts_nested_attributes_for :invoice_name
+  accepts_nested_attributes_for :communications, allow_destroy: true
   accepts_nested_attributes_for :invoice_items, allow_destroy: true
   accepts_nested_attributes_for :invoice_item_corrections, allow_destroy: true
 

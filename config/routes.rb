@@ -32,6 +32,9 @@ Rails.application.routes.draw do
       end
     end
     resources :items
+    resources :communications
+    get 'vindication_show/:id/' => 'invoices#vindication_show', :as => :vindication_show
+    get 'vindication' => 'invoices#vindication', :as => :vindication
     get 'invoices/invoice_name/:kind/:date' => 'invoices#last_invoice_number_for_date'
     get 'spedition/transport_orders/:year/:month/:speditor_id/' => 'transport_orders#speditor_view', :as => :speditor_view
     get 'accounting/transport_orders/' => 'transport_orders#accounting_view', :as => :accounting_view

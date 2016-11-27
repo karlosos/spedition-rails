@@ -190,6 +190,9 @@ invoice_calculate = (class_suffix = '') ->
 # Modal functions
 #
 modal_functions = () ->
+  $('.show_communication_modal').click (e) ->
+    e.preventDefault()
+
   modal_success_binds()
   modal_error_binds()
   modal_actions()

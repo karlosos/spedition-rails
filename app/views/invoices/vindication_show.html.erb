@@ -1,0 +1,94 @@
+<%= render :partial => 'shared/create_communication_modal' %>
+<h2>Historia windykacji</h2>
+
+<div class="row">
+  <div class="col-md-8">
+    <% if @invoice.kind == 'correction' %>
+      <span class="bold">Faktura korygująca numer:</span>
+      <%= link_to @invoice.invoice_name.get_name, @invoice %>
+      <br>
+      <span class="bold">Dokument korygowany:</span> Faktura <%= link_to @invoice.invoice_to_correct.get_name, @invoice.invoice_to_correct %> z dnia <%= @invoice.invoice_to_correct.date.strftime('%F') %>
+      <br><br>
+    <% else %>
+      <span class="bold">Faktura numer:</span>
+      <%= @invoice.invoice_name.get_name %>
+      <br><br>
+    <% end %>
+    <span class="bold">Data wystawienia:</span>
+    <%= @invoice.place %>, <%= @invoice.date.strftime('%F') %>
+    <br>
+    <span class="bold">Data sprzedaży:</span>
+    <%= @invoice.date.strftime('%F') %>
+    <br>
+    <span class="bold">Termin płatności:</span>
+    <%= @invoice.date_deadline.strftime('%F') %>
+    <br>
+    <br>
+
+    <p class="bold">
+      Nabywca
+    </p>
+    <%= link_to @invoice.client_name, @invoice.client %>
+    <br>
+    <%= @invoice.client_street %>
+    <br>
+    <%= @invoice.client_zip %>,
+    <%= @invoice.client_city %>
+    <br>
+    <%= @invoice.client_country %>
+    <br>
+    NIP <%= @invoice.client.nip %>
+
+    <table class="invoice_summary">
+      <tr>
+        <th class="invoice_bold"> Wartość netto </th>
+        <td> <%= humanized_money_with_symbol @invoice.net_price %> </td>
+        <% Money.add_rate(@invoice.currency_rate_name, @invoice.proper_exchange_currency, @invoice.currency_rate) %>
+        <td> <%= humanized_money_with_symbol @invoice.net_price.exchange_to(@invoice.proper_exchange_currency) %></td>
+      </tr>
+      <tr>
+        <th class="invoice_bold"> Wartość VAT </th>
+        <td> <%= humanized_money_with_symbol @invoice.value_added_tax %> </td>
+        <td><%= humanized_money_with_symbol @invoice.value_added_tax.exchange_to(@invoice.proper_exchange_currency)  %> </td>
+      </tr>
+      <tr>
+        <th class="invoice_bold">Wartość brutto</th>
+        <td><%= humanized_money_with_symbol @invoice.total_selling_price %></td>
+        <td><%= humanized_money_with_symbol @invoice.total_selling_price.exchange_to(@invoice.proper_exchange_currency)  %></td>
+      </tr>
+  </table>
+
+  <div class="row">
+    <div class="col-xs-12">
+      <% if @invoice.currency_rate_table_name.present? %>
+        Kurs waluty <%= @invoice.currency_rate_name %>/<%= @invoice.proper_exchange_currency %> <%= @invoice.currency_rate.to_s.gsub(".", ",") %>, tabela kursów średnich NBP nr <%= @invoice.currency_rate_table_name %> z dnia <%= @invoice.currency_rate_date.strftime('%F') %> <br>
+        <span class="invoice_bold">Przeliczona kwota VAT: <%= @invoice.value_added_tax.exchange_to(@invoice.proper_exchange_currency).to_s.gsub(".", ",")   %> <%= @invoice.proper_exchange_currency %></span>
+        <hr>
+      <% end %>
+    </div>
+  </div>
+
+
+  <div class="row">
+    <div class="col-xs-12">
+      <table class="invoice_price_in_words">
+        <tr>
+          <th>Do zapłaty </th>
+          <td><%= humanized_money_with_symbol @invoice.total_selling_price %><br>
+          Słownie: <%= @invoice.total_price_in_words %> </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  </div>
+
+  <div class="col-md-4 invoice_communications_big">
+    <h3>Uwagi</h3>
+    <% @invoice.communications.each do |communication| %>
+      <div class="communication">
+        <span class="date"><%= communication.date %></span>, <%= communication.user.email %><br><%= communication.note %>
+      </div>
+    <% end %>
+    <button type="button" class="btn show_communication_modal" onclick="show_communication_modal(<%= @invoice.id %>)">Utwórz uwagę</button>
+  </div>
+</div>

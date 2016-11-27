@@ -32,6 +32,11 @@ function show_client_modal() {
   $('#carrier_client_id').select2("close");
 }
 
+function show_communication_modal(invoice_id) {
+  $('#new_communication_modal').modal('toggle');
+  $('#new_communication_modal').find('#communication_invoice_id').val(invoice_id)
+}
+
 function show_client_modal_transport_order() {
   $("#new_client_modal").modal("toggle");
   $("#transport_order_client_id").select2("close");

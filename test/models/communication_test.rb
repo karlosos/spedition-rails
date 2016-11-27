@@ -5,8 +5,8 @@ class CommunicationTest < ActiveSupport::TestCase
     @communication = communications(:communication_one)
   end
 
-  test "vindication _must_be_present" do
-    @communication.vindication = nil
+  test "invoice _must_be_present" do
+    @communication.invoice = nil
     assert_not @communication.valid?
   end
 end

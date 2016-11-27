@@ -21,6 +21,26 @@ class InvoicesController < ApplicationController
     end
   end
 
+  def vindication
+    search_params = params
+    @communication = Communication.new
+    @client = Client.new
+    @invoices = Invoice.joins(:invoice_name).joins(:client).joins(:groups).where('groups.id = ?', @group.id)
+    if params[:statuses].nil?
+      @invoices = @invoices.where('status IN (?)', ['1','2'])
+    end
+    @invoices = @invoices.search(search_params).order(sort_column + " " + sort_direction)
+    @invoices = @invoices.paginate(:page => params[:page], :per_page => 30)
+    authorize @invoices
+    respond_to do |format|
+      format.html
+      if params[:q].present?
+        @invoices = @invoices.where("invoice_names.number = ?", params[:q]).limit(15)
+      end
+      format.json
+    end
+  end
+
   # GET /invoices/1
   # GET /invoices/1.json
   def show
@@ -33,6 +53,12 @@ class InvoicesController < ApplicationController
       end
       format.json
     end
+  end
+
+  def vindication_show
+    @communication = Communication.new
+    @invoice = Invoice.find(params[:id])
+    authorize @invoice
   end
 
   # GET /invoices/new
@@ -258,7 +284,6 @@ class InvoicesController < ApplicationController
   end
 
   def update_multiple
-    authorize @invoice
     if params[:commit] == 'Aktualizuj status'
       Invoice.where(id: params[:invoice_ids]).update_all(["status=?", params[:status]])
       redirect_to invoices_path

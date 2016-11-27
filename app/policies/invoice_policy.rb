@@ -10,6 +10,14 @@ class InvoicePolicy < ApplicationPolicy
     is_logged_in?
   end
 
+  def vindication?
+    is_logged_in?
+  end
+
+  def vindication_show?
+    is_logged_in?
+  end
+
   def show?
     is_in_same_group? || is_site_admin?
   end

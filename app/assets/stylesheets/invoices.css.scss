@@ -146,4 +146,30 @@
   #invoice_seller_id {
     width: 100%;
   }
+  .invoice_communications {
+    .communication {
+      .date {
+          font-style: italic;
+          text-decoration: underline;
+      }
+      vertical-align: top !important;
+      padding: 3px;
+      font-size: small;
+    }
+  }
+
+  .invoice_communications_big {
+    .communication {
+      .date {
+          font-style: italic;
+          text-decoration: underline;
+      }
+      vertical-align: top !important;
+      padding: 3px;
+    }
+  }
+
+  .bold {
+    font-weight: bold;
+  }
 }
