@@ -9,6 +9,7 @@
 group = Group.first
 
 mail_template_loading = MailTemplate.new
+mial_template_loading.type = "loading"
 mail_template_loading.subject = "Ladung von {0} ist bereits geladen worden."
 mail_template_loading.content = "Sehr geehrte Damen und Herren,
 
@@ -40,6 +41,7 @@ mail_template_loading.save
 group.default_value.mail_templates << mail_template_loading
 
 mail_template_unloading = MailTemplate.new
+mail_template_unloading.type = "unloading"
 mail_template_unloading.subject = "Ladung von {0} ist bereits zugestellt worden."
 mail_template_unloading.content = "Guten Tag!
 
@@ -79,6 +81,7 @@ mail_template_unloading.save
 group.default_value.mail_templates << mail_template_unloading
 
 mail_template_documents = MailTemplate.new
+mail_template_documents.type = "documents"
 mail_template_documents.subject = "Ladung von {0} - Dokumente und Abmessungen des Wagens"
 mail_template_documents.content = "Sehr geehrte Damen und Herren
 
@@ -118,6 +121,43 @@ Internet: www.mtransport.pl"
 
 mail_template_documents.save
 group.default_value.mail_templates << mail_template_documents
+
+mail_template_vindication = MailTemplate.new
+mail_template_vindication.type = "vindication"
+mail_template_vindication.subject = "Mahnung 1 zu Rechnung Nummer {0}"
+mail_template_vindication.content = "Sehr geehrte Dammen und Herren,
+
+Unsere Rechnung {0} über den Betrag von €{1} Euro ist {2} Tage über dem Zahlungstermin und ist zur Zahlung fällig.
+Wir bitten Sie darum, den kompletten Rechnungsbetrag unverzüglich auf unser unten genanntes Bankkonto zu überweisen.
+Da wir bislang nichts von Ihnen gehört haben, hoffen wir, dass Sie mit unseren Leistungen zufrieden waren. Sollte es diesbezüglich etwaige Beanstandungen geben, dann lassen Sie uns dies bitte umgehend wissen.
+Bei Rückfragen können Sie sich jederzeit gerne an uns wenden.
+
+BANK NAME – ALIOR BANK
+EURO – PL63 2490 0005 0000 4600 5759 7795
+SWIFT – ALBPPLPW
+
+Wurde diese Rechnung bereits bezahlt, dann teilen Sie uns bitte mit, wann es geschehen ist.
+Wenn Sie diese Information nicht haben, geben Sie uns bitte die E-Mail-Adresse der Person, die für die Zahlungen zuständig ist.
+
+Mit freundlichen Grüßen / Best regards
+
+Artur Cichocki
+
+.....................................................................
+
+Mtransport Sp. z o.o., Sp. K.
+Zawiszy Czarnego 2B
+65-387 Zielona Gora
+
+Tel.: 0048 - (0) 509309280
+Fax:.0048 - (0) 68 3200690
+
+
+E - mail: artur@mtransport.pl
+Internet: www.mtransport.pl"
+
+mail_template_vindication.save
+group.default_value.mail_templates << mail_template_vindication
 
 require 'csv'
 

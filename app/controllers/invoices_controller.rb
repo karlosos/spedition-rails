@@ -217,6 +217,7 @@ class InvoicesController < ApplicationController
   # POST /invoices.json
   def create
     @invoice = Invoice.new(invoice_params)
+    @invoice.vindication_emails = @invoice.client.accounting_email
     authorize @invoice
     #@invoice.items << Item.new(params[:item])
     respond_to do |format|
@@ -318,6 +319,7 @@ class InvoicesController < ApplicationController
     def invoice_params
       #params.fetch(:invoice, {})
       params.require(:invoice).permit(
+      :vindication_emails,
       :kind,
       :date,
       :sell_date,

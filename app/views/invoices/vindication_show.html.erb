@@ -1,4 +1,46 @@
 <%= render :partial => 'shared/create_communication_modal' %>
+
+<nav class="navbar menubar menubar_vindication">
+  <ul class="left">
+    <li>
+      <%= link_to_menu("Zobacz fakturę", "glyphicon-file", invoice_path(@invoice)) %>
+    </li>
+
+    <li>
+      Ostatnio wysłany email: <%= @invoice.vindication_last_email_type %>
+    </li>
+    <li>
+      <div class="btn-group">
+       <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+         <span class="glyphicon glyphicon-envelope"></span>
+       </button>
+       <ul class="dropdown-menu" role="menu">
+         <li><%= link_to "Wyślij upomnienie 1", vindication_email_path(:id => @invoice.id, :email_type => 1), data: { confirm: "Chcesz wysłać wiadomość na adresy: #{@invoice.vindication_emails} ?" } %></li>
+         <li><%= link_to "Wyślij upomnienie 2", vindication_email_path(:id => @invoice.id, :email_type => 2), data: { confirm: "Chcesz wysłać wiadomość na adresy: #{@invoice.vindication_emails} ?" } %></li>
+         <li><%= link_to "Wyślij upomnienie 3", vindication_email_path(:id => @invoice.id, :email_type => 3), data: { confirm: "Chcesz wysłać wiadomość na adresy: #{@invoice.vindication_emails} ?" } %></li>
+       </ul>
+     </div>
+    </li>
+
+  </ul>
+
+  <ul class="right">
+    <li>
+      <span class="glyphicon glyphicon-collapse-down" id="show_hidden_menubar"></span>
+    </li>
+  </ul>
+
+  <div style="clear: both"></div>
+
+  <div class="row hidden_menubar">
+    <div class="col-sm-12">
+      <% @invoice.transport_orders.each do |transport_order| %>
+      <%= link_to transport_order.transport_order_name.get_name, transport_order_path(transport_order) %>
+      <% end %>
+    </div>
+  </div>
+</nav>
+
 <h2>Historia windykacji</h2>
 
 <div class="row">
@@ -83,6 +125,14 @@
   </div>
 
   <div class="col-md-4 invoice_communications_big">
+    <%= simple_form_for(@invoice) do |invoice_form| %>
+      <%= label_tag :vindication_emails, "Emaile do windykacji (księgowość)." %>
+      <%= invoice_form.text_field :vindication_emails %>
+      <%= invoice_form.error :vindication_emails %>
+      <div class="actions">
+        <%= invoice_form.submit "Aktualizuj" %>
+      </div>
+    <% end %>
     <h3>Uwagi</h3>
     <% @invoice.communications.each do |communication| %>
       <div class="communication">

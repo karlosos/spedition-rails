@@ -172,4 +172,15 @@
   .bold {
     font-weight: bold;
   }
+
+  .menubar_vindication {
+    line-height: 45px;
+    .dropdown-menu {
+      margin: 0px;
+      padding: 0px;
+      a {
+        display: inline;
+      }
+    }
+  }
 }

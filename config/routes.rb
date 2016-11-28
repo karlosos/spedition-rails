@@ -45,6 +45,7 @@ Rails.application.routes.draw do
     get 'mail/loading_transport_order/:id' => 'gmail#loading_transport_order_email', :as => :loading_transport_order_email
     get 'mail/unloading_transport_order/:id' => 'gmail#unloading_transport_order_email', :as => :unloading_transport_order_email
     get 'mail/invoice_email/:id' => 'gmail#invoice_email', :as => :invoice_email
+    get 'mail/vindication_email/:id/:email_type' => 'gmail#vindication_email', :as => :vindication_email
     get 'default_values/:id/edit_mail_templates' => 'default_values#edit_mail_templates', :as => :edit_default_values_mail_templates
     get 'default_values/:id/edit_invoices' => 'default_values#edit_invoices', :as => :edit_default_values_invoices
     get 'default_values/:id/edit_clients' => 'default_values#edit_clients', :as => :edit_default_values_clients

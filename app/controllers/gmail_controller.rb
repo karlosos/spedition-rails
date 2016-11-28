@@ -5,7 +5,7 @@ class GmailController < ApplicationController
 
   def loading_transport_order_email
     transport_order = TransportOrder.find(params[:id])
-    mail_template = @group.default_value.mail_templates.first
+    mail_template = @group.default_value.mail_templates.find_by(type: "loading")
     subject = replace_transport_order_message(mail_template.subject, transport_order)
     content = replace_transport_order_message(mail_template.content, transport_order)
 
@@ -16,7 +16,7 @@ class GmailController < ApplicationController
 
   def unloading_transport_order_email
     transport_order = TransportOrder.find(params[:id])
-    mail_template = @group.default_value.mail_templates.second
+    mail_template = @group.default_value.mail_templates.find_by(type: "unloading")
     subject = replace_transport_order_message(mail_template.subject, transport_order)
     content = replace_transport_order_message(mail_template.content, transport_order)
 
@@ -29,6 +29,17 @@ class GmailController < ApplicationController
     invoice = Invoice.find(params[:id])
     send_email(invoice.client.emails.last.address + "test", "subject", "content")
     invoice.status = 2
+    invoice.save
+  end
+
+  def vindication_email
+    invoice = Invoice.find(params[:id])
+    emails = invoice.vindication_emails
+    mail_template = @group.default_value.mail_templates.find_by(email_type: "vindication_#{params[:email_type]}")
+    subject = replace_vindication_message(mail_template.subject, invoice)
+    content = replace_vindication_message(mail_template.content, invoice)
+    send_email(emails + "test", subject, content)
+    invoice.vindication_last_email_type = params[:email_type]
     invoice.save
   end
 
@@ -82,6 +93,13 @@ class GmailController < ApplicationController
     message = message.gsub("{1}", transport_order.carrier.registration_number)
     message = message.gsub("{2}", transport_order.carrier.size)
     message = message.gsub("{3}", transport_order.carrier.driver_name)
+    return message
+  end
+
+  def replace_vindication_message(message, invoice)
+    message = message.gsub("{0}", invoice.get_name)
+    message = message.gsub("{1}", ActionController::Base.helpers.humanized_money(invoice.total_selling_price))
+    message = message.gsub("{2}", (invoice.overdue*(-1)).to_i.to_s)
     return message
   end
 end

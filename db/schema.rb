@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161126161409) do
+ActiveRecord::Schema.define(version: 20161127224034) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -332,6 +332,7 @@ ActiveRecord::Schema.define(version: 20161126161409) do
     t.integer  "default_value_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "email_type"
   end
 
   add_index "mail_templates", ["default_value_id"], name: "index_mail_templates_on_default_value_id", using: :btree
