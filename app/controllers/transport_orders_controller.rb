@@ -76,6 +76,15 @@ class TransportOrdersController < ApplicationController
   # GET /transport_orders/1.json
   def show
     authorize @transport_order
+
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render pdf: "#{@transport_order.transport_order_name.get_name}",
+               encoding: "UTF-8"
+      end
+      format.json
+    end
   end
 
   # GET /transport_orders/new

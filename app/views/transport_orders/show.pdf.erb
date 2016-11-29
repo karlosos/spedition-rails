@@ -1,0 +1,242 @@
+<!doctype html>
+<html>
+
+<head>
+  <%= wicked_pdf_javascript_include_tag "number_pages" %>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+  <!-- Latest compiled JavaScript -->
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+  <style>
+  table {
+    border: 0;
+    font-size: 11px;
+  }
+  th {
+    border: 1px solid black;
+    padding: 5px;
+    font-weight: normal;
+    font-size: small;
+    font-size: 11px;
+  }
+  .bold {
+    font-weight: bold;
+    font-size: larger;
+  }
+  .title {
+    font-weight: bold;
+    font-size: larger;
+    text-align: center;
+    border-bottom: 2px solid black;
+  }
+  td {
+    border: 1px solid black;
+    padding: 5px;
+  }
+  .info {
+    background-color: #f4f4f4;
+    width: 70%;
+  }
+  .logo {
+    width: 300px;
+  }
+  h5 {
+    font-weight: bold;
+    margin-top: 0px;
+    font-style: italic;
+    margin-bottom: 2px;
+    font-size: 11px;
+  }
+  .client_info {
+      padding-left: 5px;
+  }
+  .freight_desc td {
+    border: 0;
+    padding: 1px;
+    font-size: smaller;
+  }
+  .arrangements {
+    font-size: smaller;
+  }
+
+  .footer {
+    width: 100%;
+  }
+  .footer td {
+    border: 0;
+  }
+  .dotted {
+    border:none;
+    border-top:1px dotted black;
+    color:#fff;
+    background-color:#fff;
+    height:1px;
+    width:50%;
+    margin-top: 5px;
+    margin-bottom: 3px;
+  }
+
+  .signature {
+    text-align: center;
+  }
+
+  .signature_info {
+    padding-left: 100px;
+  }
+  </style>
+</head>
+
+<body>
+<div id="transport_order">
+  <table style="border: 1px solid black; width: 100%;">
+    <thead>
+      <th class="info" colspan="3">
+        <span class="bold"><%= @group.default_value.client.name %></span><br>
+        <%= "#{@group.default_value.client.address.street} #{@group.default_value.client.address.zip} #{@group.default_value.client.address.city}" %><br>
+        NIP: <%= "#{@group.default_value.client.nip}" %><br>
+        Tel.: <%= "#{@group.default_value.client.contact.phone1}" %> Fax: <%= "#{@group.default_value.client.contact.fax}" %><br>
+        e-mail: <%= "#{@group.default_value.client.accounting_email}" %><br>
+        <%= "#{@group.default_value.client.contact.www}" %><br>
+      </th>
+      <th class="logo"></th>
+    </thead>
+  </table>
+  <table style="border: 1px solid black; width: 100%;">
+    <tbody>
+    <tr>
+      <td colspan="4" class="title">
+        ZLECENIE TRANSPORTOWE NR <%= @transport_order.transport_order_name.get_name %> z dnia <%= @transport_order.created_at.strftime('%F') %> (OUT)
+      </td>
+    </tr>
+    <tr>
+      <td colspan="4">
+        <h5>1. Zleceniobiorca:</h5>
+        <p class="client_info">
+          <%= @transport_order.client_name %><br>
+          <%= @transport_order.client_street %>
+          Kraljevska 44 lok. 3 <br>
+          <%= @transport_order.client_zip %> <%= @transport_order.client_city %> <br>
+          Numer zlecenia zleceniodawcy: <%= @transport_order.reference_transport_order_name %>
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <h5>2. Załadunek:</h5>
+        <ol>
+          <% @transport_order.loading_places.each do |loading_place| %>
+          <li>
+            <%= loading_place.date.strftime('%F') %> <br>
+            <%= loading_place.zip %> <%= loading_place.city %><br>
+          </li>
+          <% end %>
+        </ol>
+      </td>
+      <td colspan="2">
+        <h5>2. Rozładunek:</h5>
+        <ol>
+          <% @transport_order.unloading_places.each do |unloading_place| %>
+          <li>
+            <%= unloading_place.date.strftime('%F') %> <br>
+            <%= unloading_place.zip %> <%= unloading_place.city %><br>
+          </li>
+          <% end %>
+        </ol>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="4">
+        <h5>4. Fracht (NETTO):</h5>
+        <%= humanized_money_with_symbol(@transport_order.freight_rate) %>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="4">
+        <h5>5. Opis ładunku</h5>
+        <table style="width: 50%; margin: 0 auto;" class="freight_desc">
+          <tr>
+            <td>Waga ładunku: <%= @transport_order.freichtage_description.weight || "0.00" %>  KG</td>
+            <td>Długość ładunku: <%= @transport_order.freichtage_description.length || "0.00" %></td>
+          </tr>
+          <tr>
+            <td>Objętość ładunku: <%= @transport_order.freichtage_description.value || "0.00" %> m3</td>
+            <td>Szerokość ładunku: <%= @transport_order.freichtage_description.width || "0.00" %></td>
+          </tr>
+          <tr>
+            <td>Opakowania: <%= @transport_order.freichtage_description.packages || 0 %> x PALETA</td>
+            <td>Wysokość ładunku: <%= @transport_order.freichtage_description.height || "0.00" %></td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="4">
+        <h5>6. Wymogi co do taboru:</h5>
+      </td>
+    </tr>
+    <% if !@transport_order.carrier.present? || @transport_order.carrier.is_third_party? %>
+    <tr>
+      <td colspan="4">
+        <h5>7. Forma płatności:</h5>
+        PRZELEW w terminie : 60 dni od daty otrzymania prawidłowo wystawionej faktury i dostarczenia CMR
+      </td>
+    </tr>
+    <tr>
+      <td colspan="4">
+        <h5>8. Uwagi dodatkowe:</h5>
+        <%= @transport_order.additional_comments %>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="4">
+        <h5>9. Ustalenia:</h5>
+        <p class="arrangements">
+          <%= @transport_order.arrangements %>
+        </p>
+      </td>
+    </tr>
+    <% else %>
+    <tr>
+      <td colspan="4">
+        <h5>7. Uwagi dodatkowe:</h5>
+        <%= @transport_order.additional_comments %>
+      </td>
+    </tr>
+    <% end %>
+
+  </tbody>
+  </table>
+
+  <table class="footer">
+    <tr>
+      <td colspan="2">Zielona Góra, 21-07-2016</td>
+    </tr>
+    <tr>
+      <td class="signature">
+        <br>
+        <hr class="dotted">
+        <span style="font-style: italic; font-size: 9px;">podpis zleceniobiorcy</span>
+      </td>
+      <td class="signature">
+        Agnieszka Żółtek<br>
+        <hr class="dotted">
+        <span style="font-style: italic; font-size: 9px;">podpis zleceniodawcy</span>
+      </td>
+    </tr>
+    <tr>
+      <td></td>
+      <td class="signature_info">
+        Tel:<br>
+        Fax:<br>
+        Email:
+      </td>
+    </tr>
+  </table>
+</div>
+</body>
+</html>
