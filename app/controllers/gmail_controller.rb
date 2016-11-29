@@ -27,7 +27,14 @@ class GmailController < ApplicationController
 
   def invoice_email
     invoice = Invoice.find(params[:id])
-    send_email(invoice.client.emails.last.address + "test", "subject", "content")
+    attachments = {}
+    # attachments["#{invoice.get_file_name}"] = { :mime_type => 'application/pdf', :content => WickedPdf.new.pdf_from_string(
+    #    render_to_string(:pdf => "#{invoice.get_name}", formats: [:pdf], :template => "invoices/show.pdf.erb", :locals => {:@invoice => invoice})) }
+
+    attachments["#{invoice.get_file_name}"] = { :mime_type => 'application/pdf', :content => WickedPdf.new.pdf_from_string(render_to_string( partial: "invoices/pdf.pdf.erb", :locals => {:@invoice => invoice}), encoding: "UTF-8") }
+
+    #attachments["#{invoice.get_file_name}"] = open(invoice_path(invoice, :format => :pdf))
+    send_email(invoice.client.emails.last.address + "test", "subject", "content", attachments)
     invoice.status = 2
     invoice.save
   end
@@ -35,7 +42,7 @@ class GmailController < ApplicationController
   def vindication_email
     invoice = Invoice.find(params[:id])
     emails = invoice.vindication_emails
-    mail_template = @group.default_value.mail_templates.find_by(email_type: "vindication_#{params[:email_type]}")
+    mail_template =  @group.default_value.mail_templates.find_by(email_type: "vindication_#{params[:email_type]}")
     subject = replace_vindication_message(mail_template.subject, invoice)
     content = replace_vindication_message(mail_template.content, invoice)
     send_email(emails + "test", subject, content)
@@ -45,13 +52,24 @@ class GmailController < ApplicationController
 
   private
 
-  def send_email(address, subject, content)
+  def send_email(address, subject, content, attachments = {})
     configure_client()
-    message = RMail::Message.new
-    message.header['To'] = address
-    message.header['From'] = current_user.email
-    message.header['Subject'] = subject
-    message.body = content
+    # message = RMail::Message.new
+    # message.header['To'] = address
+    # message.header['From'] = current_user.email
+    # message.header['Subject'] = subject
+    # message.body = content
+
+    message = Mail.new
+    message.date = Time.now
+    message.subject = subject
+    message.from = current_user.email
+    message.to = address
+
+    attachments.each  do |key, attachment|
+      message.attachments[key] = attachment
+    end
+
     begin
       flash[:notice] = "Wysłano maila"
       @service.send_user_message('me', upload_source: StringIO.new(message.to_s), content_type: 'message/rfc822')

@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+
+<head>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+  <!-- Latest compiled JavaScript -->
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+  <style>
+    #invoice {
+      font-size: 12px;
+      overflow: visible;
+      line-height: 1.428571429;
+      color: #333333;
+    }
+
+    #invoice .invoice_items th {
+      background-color: #f1f1f1;
+    }
+
+    #invoice .invoice_summary {
+      float: right;
+      width: 99%;
+    }
+
+    #invoice .invoice_summary th {
+      text-align: right;
+      padding: 5px;
+    }
+
+    #invoice .invoice_summary td {
+      width: 17%;
+      padding: 5px;
+      text-align: right;
+    }
+
+    #invoice .invoice_price_in_words tr {
+      vertical-align: top;
+    }
+
+    #invoice .invoice_price_in_words th {
+      width: 25%;
+      padding-right: 15px;
+    }
+
+    #invoice .invoice_bold {
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+  <%= render :partial => 'invoices/invoice_doc.html.erb' %>
+</body>
+
+</html>
