@@ -9,7 +9,7 @@
 group = Group.first
 
 mail_template_loading = MailTemplate.new
-mial_template_loading.type = "loading"
+mail_template_loading.type = "loading"
 mail_template_loading.subject = "Ladung von {0} ist bereits geladen worden."
 mail_template_loading.content = "Sehr geehrte Damen und Herren,
 
