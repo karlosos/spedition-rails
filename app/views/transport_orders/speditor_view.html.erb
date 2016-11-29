@@ -22,6 +22,7 @@
 
     <% if current_user.in_group?(@group, as: 'accounting') || current_user.in_group?(@group, as: 'admin') %>
     <select id="speditor_view_change">
+      <%= raw "<option value=\"#{current_user.id}\"> #{current_user.email} </option>" %>
       <% User.in_group(@group).as(:spedition).each do |user| %>
         <% selected = "" %>
         <% if params[:speditor_id] == user.id.to_s %>
