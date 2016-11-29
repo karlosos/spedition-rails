@@ -9,7 +9,7 @@
 group = Group.first
 
 mail_template_loading = MailTemplate.new
-mail_template_loading.type = "loading"
+mail_template_loading.email_type = "loading"
 mail_template_loading.subject = "Ladung von {0} ist bereits geladen worden."
 mail_template_loading.content = "Sehr geehrte Damen und Herren,
 
@@ -41,7 +41,7 @@ mail_template_loading.save
 group.default_value.mail_templates << mail_template_loading
 
 mail_template_unloading = MailTemplate.new
-mail_template_unloading.type = "unloading"
+mail_template_unloading.email_type = "unloading"
 mail_template_unloading.subject = "Ladung von {0} ist bereits zugestellt worden."
 mail_template_unloading.content = "Guten Tag!
 
@@ -81,7 +81,7 @@ mail_template_unloading.save
 group.default_value.mail_templates << mail_template_unloading
 
 mail_template_documents = MailTemplate.new
-mail_template_documents.type = "documents"
+mail_template_documents.email_type = "documents"
 mail_template_documents.subject = "Ladung von {0} - Dokumente und Abmessungen des Wagens"
 mail_template_documents.content = "Sehr geehrte Damen und Herren
 
@@ -123,7 +123,7 @@ mail_template_documents.save
 group.default_value.mail_templates << mail_template_documents
 
 mail_template_vindication = MailTemplate.new
-mail_template_vindication.type = "vindication"
+mail_template_vindication.email_type = "vindication"
 mail_template_vindication.subject = "Mahnung 1 zu Rechnung Nummer {0}"
 mail_template_vindication.content = "Sehr geehrte Dammen und Herren,
 
