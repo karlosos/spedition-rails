@@ -173,7 +173,7 @@ class GroupsController < ApplicationController
       permission.value = email
       permission.role = 'writer'
       permission.type = 'user'
-      byebug
+      #byebug
       @drive.insert_permission(@group.folder_id, permission)
     end
 end
