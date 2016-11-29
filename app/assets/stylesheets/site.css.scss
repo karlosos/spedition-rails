@@ -231,3 +231,16 @@ body { padding: 2em; }
 #flash {
   margin-top: 25px;
 }
+
+.home-form {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  input {
+    width: 600px;
+  }
+  button {
+  }
+}
