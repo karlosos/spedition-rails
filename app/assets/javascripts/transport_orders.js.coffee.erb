@@ -26,6 +26,8 @@ pageLoad = () ->
   sidebar_functions()
   carrier_info_get_on_carrier_change()
   change_route_on_place_change()
+  documents_button()
+  documents_button_collapse()
 
   $('.dropzone').dropzone ->
     thumbnailWidth: 250,
@@ -604,3 +606,15 @@ change_route_on_place_change = () ->
       unloading_city = form.find('#transport_order_unloading_places_attributes_0_city').val()
     route = loading_zip + ", " + loading_city + " nach " + unloading_zip + ", " + unloading_city
     form.find('#transport_order_route').val(route)
+
+documents_button = () ->
+  $('.show_documents_list').click (event) ->
+    $(this).parent().find('.documents_list').show("fast")
+    event.preventDefault()
+    $(this).hide()
+
+documents_button_collapse = () ->
+  $('.hide_documents_list').click (event) ->
+    $(this).parent().parent().find('.show_documents_list').show("fast")
+    $(this).parent().parent().find('.documents_list').hide("fast")
+    event.preventDefault()

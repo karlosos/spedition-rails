@@ -51,6 +51,7 @@ class DocumentsController < ApplicationController
     f = @drive.insert_file(file_obj, upload_source: file.tempfile)
     f.id
     if f.id.present?
+      @document.name = file.original_filename
       @document.file_id = f.id
       @document.web_content_link = f.web_content_link
       if @document.save

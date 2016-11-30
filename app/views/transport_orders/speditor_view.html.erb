@@ -138,6 +138,15 @@
               <% end %>
             </td>
             <td>
+              <div class="documents_list" style="display: none">
+                <% transport_order.documents.each do |document| %>
+                  <%= link_to document.name || "Dokument", document.web_content_link %>
+                <% end %>
+                <%= link_to '', '#', class: "glyphicon glyphicon-collapse-up advanced_form_button_collapse hide_documents_list" %>
+              </div>
+              <%= link_to '', '#', class: "glyphicon glyphicon-collapse-down advanced_form_button_collapse show_documents_list" %>
+            </td>
+            <td>
               <div class="btn-group" invoice-id="<%= transport_order.id %>">
                 <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown">
                   <span class="glyphicon glyphicon-cog"></span>

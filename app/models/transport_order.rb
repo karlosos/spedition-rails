@@ -8,6 +8,7 @@ class TransportOrder < ActiveRecord::Base
   has_one :freichtage_description, dependent: :destroy
   has_many :loading_places, inverse_of: :transport_order
   has_many :unloading_places, inverse_of: :transport_order
+  has_many :documents
 
   belongs_to :carrier, class_name: 'Carrier', foreign_key: 'carrier_id'
   belongs_to :client, class_name:  'Client', foreign_key: 'client_id'
